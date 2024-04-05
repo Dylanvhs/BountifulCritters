@@ -8,9 +8,9 @@ import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class StingrayRenderer extends GeoEntityRenderer<StingrayEntity> {
-    private static final ResourceLocation TEXTURE_GRAY = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/epauletteshark.png");
-    private static final ResourceLocation TEXTURE_MUDDY = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/pajama.png");
-    private static final ResourceLocation TEXTURE_BLUE_SPOTTED = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/nurse.png");
+    private static final ResourceLocation TEXTURE_GRAY = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/stingray_0.png");
+    private static final ResourceLocation TEXTURE_MUDDY = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/stingray_1.png");
+    private static final ResourceLocation TEXTURE_BLUE_SPOTTED = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/stingray_2.png");
 
 
     public StingrayRenderer(EntityRendererProvider.Context renderManagerIn) {
