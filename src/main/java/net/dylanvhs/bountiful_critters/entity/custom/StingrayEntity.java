@@ -2,12 +2,14 @@ package net.dylanvhs.bountiful_critters.entity.custom;
 
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -29,6 +31,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -193,6 +196,17 @@ public class StingrayEntity extends WaterAnimal implements GeoEntity, Bucketable
         });
     }
 
+    public void tick() {
+        super.tick();
+        if (this.onGround()) {
+            this.setDeltaMovement(this.getDeltaMovement().add((double)((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F), 0.5D, (double)((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F)));
+            this.setYRot(this.random.nextFloat() * 360.0F);
+            this.setOnGround(false);
+            this.hasImpulse = true;
+        }
+    }
+
+
 
     protected SoundEvent getAmbientSound() {
         return SoundEvents.TROPICAL_FISH_AMBIENT;
@@ -204,6 +218,9 @@ public class StingrayEntity extends WaterAnimal implements GeoEntity, Bucketable
 
     protected SoundEvent getHurtSound(DamageSource p_28281_) {
         return SoundEvents.TROPICAL_FISH_HURT;
+    }
+    protected SoundEvent getFlopSound() {
+        return SoundEvents.TROPICAL_FISH_FLOP;
     }
 
     protected PathNavigation createNavigation(Level p_27480_) {
