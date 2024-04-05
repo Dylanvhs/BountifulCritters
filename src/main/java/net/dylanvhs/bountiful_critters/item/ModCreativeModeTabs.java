@@ -12,7 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, BountifulCritters.MOD_ID);
-    public static final RegistryObject<CreativeModeTab> FOSSIL_REVIVE_TAB = CREATIVE_MODE_TABS.register("fossil_revive_tab",
+    public static final RegistryObject<CreativeModeTab> BOUNTIFUL_CRITTERS_TAB = CREATIVE_MODE_TABS.register("bountiful_critters_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.STINGRAY_BUCKET.get()))
 
                     .title(Component.translatable("creativetab.bountiful_critters_tab"))
