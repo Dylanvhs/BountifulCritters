@@ -1,0 +1,55 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.stingray",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 5,
+				"visible_bounds_height": 1.5,
+				"visible_bounds_offset": [0, 0.25, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 1, 1]
+				},
+				{
+					"name": "body",
+					"parent": "root",
+					"pivot": [0, 0.75, 0.5],
+					"cubes": [
+						{"origin": [-6, 0, -9], "size": [12, 3, 19], "uv": [36, 0]},
+						{"origin": [-6, 0, -14], "size": [12, 1, 5], "uv": [36, 43]}
+					]
+				},
+				{
+					"name": "r_wing",
+					"parent": "root",
+					"pivot": [-6, 0.5, -2],
+					"cubes": [
+						{"origin": [-12, 0, -14], "size": [6, 1, 24], "uv": [0, 0], "mirror": true}
+					]
+				},
+				{
+					"name": "l_fin",
+					"parent": "root",
+					"pivot": [6, 0.5, -2],
+					"cubes": [
+						{"origin": [6, 0, -14], "size": [6, 1, 24], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "tail",
+					"parent": "root",
+					"pivot": [0, 0.5, 9.75],
+					"cubes": [
+						{"origin": [-1, 0, 10], "size": [2, 1, 17], "uv": [36, 25]},
+						{"origin": [0, 0, 21], "size": [0, 3, 8], "uv": [0, 0]}
+					]
+				}
+			]
+		}
+	]
+}

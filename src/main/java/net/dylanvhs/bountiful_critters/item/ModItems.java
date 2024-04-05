@@ -1,0 +1,32 @@
+package net.dylanvhs.bountiful_critters.item;
+
+import net.dylanvhs.bountiful_critters.BountifulCritters;
+import net.dylanvhs.bountiful_critters.entity.ModEntities;
+import net.dylanvhs.bountiful_critters.item.custom.ItemModFishBucket;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.RecordItem;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.common.ForgeSpawnEggItem;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+
+public class ModItems {
+    public static final DeferredRegister<Item> ITEMS =
+            DeferredRegister.create(ForgeRegistries.ITEMS, BountifulCritters.MOD_ID);
+    public static final RegistryObject<Item> STINGRAY_BUCKET = ITEMS.register("stingray_bucket",
+            () -> new ItemModFishBucket(ModEntities.STINGRAY, Fluids.WATER, new Item.Properties()));
+
+    public static final RegistryObject<Item> STINGRAY_SPAWN_EGG = ITEMS.register("stingray_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.STINGRAY, 0x8e4730, 0x5c31c5, new Item.Properties()));
+
+
+
+    public static void register(IEventBus eventBus) {
+        ITEMS.register(eventBus);
+    }
+}
+

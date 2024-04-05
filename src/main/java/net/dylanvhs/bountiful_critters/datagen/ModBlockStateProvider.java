@@ -1,7 +1,6 @@
 package net.dylanvhs.bountiful_critters.datagen;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
-import net.dylanvhs.fossil_revive.FossilRevive;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.BlockStateProvider;

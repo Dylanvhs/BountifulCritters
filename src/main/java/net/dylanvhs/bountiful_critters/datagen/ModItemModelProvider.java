@@ -2,8 +2,7 @@ package net.dylanvhs.bountiful_critters.datagen;
 
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
-import net.dylanvhs.fossil_revive.FossilRevive;
-import net.dylanvhs.fossil_revive.item.ModItems;
+import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -21,8 +20,8 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
 
-
-        withExistingParent(ModItems.RANALOPHOSAURUS_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        simpleItem(ModItems.STINGRAY_BUCKET);
+        withExistingParent(ModItems.STINGRAY_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
     }
 

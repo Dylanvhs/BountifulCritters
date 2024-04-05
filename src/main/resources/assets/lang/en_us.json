@@ -1,0 +1,14 @@
+{
+  "creativetab.bountiful_critters_tab": "Rainbow Reef",
+
+
+
+  "item.bountiful_critters.stingray_bucket": "Bucket of Stingray",
+  "item.bountiful_critters.stingray_spawn_egg" : "Stingray Spawn Egg",
+
+  "entity.bountiful_critters.stingray.variant_gray": "Gray",
+  "entity.bountiful_critters.stingray.variant_muddy": "Muddy",
+  "entity.bountiful_critters.stingray.variant_blue_spotted": "Blue Spotted",
+
+  "entity.bountiful_critters.stingray" : "Stingray"
+}

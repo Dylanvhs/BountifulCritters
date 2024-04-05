@@ -1,7 +1,6 @@
 package net.dylanvhs.bountiful_critters.datagen.loot;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
-import net.dylanvhs.fossil_revive.FossilRevive;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.BlockTagsProvider;

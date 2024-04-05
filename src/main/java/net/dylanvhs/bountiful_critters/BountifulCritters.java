@@ -1,6 +1,11 @@
 package net.dylanvhs.bountiful_critters;
 
 import com.mojang.logging.LogUtils;
+import net.dylanvhs.bountiful_critters.entity.ModEntities;
+import net.dylanvhs.bountiful_critters.entity.client.StingrayRenderer;
+import net.dylanvhs.bountiful_critters.item.ModCreativeModeTabs;
+import net.dylanvhs.bountiful_critters.item.ModItems;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -25,13 +30,11 @@ public class BountifulCritters
         ModCreativeModeTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
-        ModBlocks.register(modEventBus);
 
         ModEntities.register(modEventBus);
 
-        ModMenuTypes.register(modEventBus);
 
-        ModSounds.register(modEventBus);
+
 
 
         modEventBus.addListener(this::commonSetup);
@@ -53,6 +56,9 @@ public class BountifulCritters
     {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+
+            EntityRenderers.register
+                    (ModEntities.STINGRAY.get(), StingrayRenderer:: new);
 
         }
     }

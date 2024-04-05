@@ -1,18 +1,19 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
+import net.dylanvhs.bountiful_critters.item.ModItems;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
@@ -27,14 +28,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.Animation;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
@@ -43,13 +44,22 @@ public class StingrayEntity extends WaterAnimal implements GeoEntity, Bucketable
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
-
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(StingrayEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(StingrayEntity.class, EntityDataSerializers.INT);
 
-    public RayEntity(EntityType<? extends WaterAnimal> entityType, Level level) {
+
+    public StingrayEntity(EntityType<? extends WaterAnimal> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
+    }
+
+    public static String getVariantName(int variant) {
+        return switch (variant) {
+            case 1 -> "muddy";
+            case 2 -> "blue_spotted";
+            default -> "gray";
+        };
     }
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 5.0D);
@@ -58,6 +68,7 @@ public class StingrayEntity extends WaterAnimal implements GeoEntity, Bucketable
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
+        this.entityData.define(VARIANT, 0);
         this.entityData.define(FROM_BUCKET, false);
     }
 
@@ -78,12 +89,14 @@ public class StingrayEntity extends WaterAnimal implements GeoEntity, Bucketable
         }
         Bucketable.saveDefaultDataToBucketTag(this, bucket);
         CompoundTag compoundnbt = bucket.getOrCreateTag();
+        compoundnbt.putInt("BucketVariantTag", this.getVariant());
     }
 
     @Override
     public void loadFromBucketTag(@Nonnull CompoundTag compound) {
         Bucketable.loadDefaultDataFromBucketTag(this, compound);
         if (compound.contains("BucketVariantTag", 3)) {
+            this.setVariant(compound.getInt("BucketVariantTag"));
         }
     }
 
@@ -93,14 +106,23 @@ public class StingrayEntity extends WaterAnimal implements GeoEntity, Bucketable
         return Bucketable.bucketMobPickup(player, hand, this).orElse(super.mobInteract(player, hand));
     }
 
+    public int getVariant() {
+        return this.entityData.get(VARIANT);
+    }
+
+    private void setVariant(int variant) {
+        this.entityData.set(VARIANT, variant);
+    }
 
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
+        compound.putInt("Variant", this.getVariant());
         compound.putBoolean("FromBucket", this.fromBucket());
     }
 
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
+        this.setVariant(compound.getInt("Variant"));
         this.setFromBucket(compound.getBoolean("FromBucket"));
     }
 
@@ -121,6 +143,21 @@ public class StingrayEntity extends WaterAnimal implements GeoEntity, Bucketable
     public SoundEvent getPickupSound() {
         return SoundEvents.BUCKET_FILL_FISH;
     }
+
+    @Nullable
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
+        spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+        if (dataTag == null) {
+            setVariant(random.nextInt(4));
+        } else {
+            if (dataTag.contains("Variant", 4)){
+                this.setVariant(dataTag.getInt("Variant"));
+            }
+        }
+        return spawnDataIn;
+    }
+
 
 
 
@@ -180,11 +217,11 @@ public class StingrayEntity extends WaterAnimal implements GeoEntity, Bucketable
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
         if (geoAnimatableAnimationState.isMoving()) {
-            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.eagle_ray.swim", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.stingray.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         else
-            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.eagle_ray.swim", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.stingray.swim", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
 
