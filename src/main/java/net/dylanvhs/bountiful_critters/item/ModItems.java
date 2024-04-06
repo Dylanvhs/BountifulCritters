@@ -20,8 +20,10 @@ public class ModItems {
     public static final RegistryObject<Item> STINGRAY_BUCKET = ITEMS.register("stingray_bucket",
             () -> new ItemModFishBucket(ModEntities.STINGRAY, Fluids.WATER, new Item.Properties()));
 
+    public static final RegistryObject<Item> EMU_SPAWN_EGG = ITEMS.register("emu_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.EMU, 0x4d56c5, 0x9c33c5, new Item.Properties()));
     public static final RegistryObject<Item> STINGRAY_SPAWN_EGG = ITEMS.register("stingray_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.STINGRAY, 0x8e4730, 0x5c31c5, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(ModEntities.STINGRAY, 0x3e8730, 0x7d31c5, new Item.Properties()));
 
 
 

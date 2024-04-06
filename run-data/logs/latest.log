@@ -1,56 +1,30 @@
-[05apr.2024 19:12:48.291] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\dylan\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.2.0, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, bountiful_critters, --all, --output, C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\src\generated\resources, --existing, C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\src\main\resources]
-[05apr.2024 19:12:48.299] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.8.1 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
-[05apr.2024 19:12:48.433] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
-[05apr.2024 19:12:48.502] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/dylan/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
-[05apr.2024 19:12:48.845] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.2.0\7f9181f85acc66547685a72020713fc8cbde98\javafmllanguage-1.20.1-47.2.0.jar is missing mods.toml file
-[05apr.2024 19:12:48.851] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.2.0\7872f5205685fdd26fae39b1be79b0e60ca5b7bd\lowcodelanguage-1.20.1-47.2.0.jar is missing mods.toml file
-[05apr.2024 19:12:48.857] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.2.0\d501d161cabed08b3c139a2c6217b02a39f3c3e9\mclanguage-1.20.1-47.2.0.jar is missing mods.toml file
-[05apr.2024 19:12:48.864] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.2.0\ffd3c6debac0a388c9e33ac43c9f5eafb91cb466\fmlcore-1.20.1-47.2.0.jar is missing mods.toml file
-[05apr.2024 19:12:49.081] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
-[05apr.2024 19:12:50.636] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
-[05apr.2024 19:12:50.638] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\dylan\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, bountiful_critters, --all, --output, C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\src\generated\resources, --existing, C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\src\main\resources]
-[05apr.2024 19:12:51.006] [main/INFO] [mixin/]: Remapping refMap geckolib.refmap.json using C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\build\createSrgToMcp\output.srg
-[05apr.2024 19:12:51.862] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [bountiful_critters]
-[05apr.2024 19:12:56.869] [main/FATAL] [net.minecraftforge.fml.ModLoader/CORE]: Failed to initialize mod containers
-net.minecraftforge.fml.ModLoadingException: fml.modloading.missingmetadata
-	at net.minecraftforge.fml.ModLoader.lambda$buildModContainerFromTOML$27(ModLoader.java:290) ~[fmlcore-1.20.1-47.2.0.jar:?]
-	at java.util.Optional.orElseThrow(Optional.java:403) ~[?:?]
-	at net.minecraftforge.fml.ModLoader.buildModContainerFromTOML(ModLoader.java:290) ~[fmlcore-1.20.1-47.2.0.jar:?]
-	at net.minecraftforge.fml.ModLoader.lambda$buildMods$24(ModLoader.java:258) ~[fmlcore-1.20.1-47.2.0.jar:?]
-	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197) ~[?:?]
-	at java.util.HashMap$EntrySpliterator.forEachRemaining(HashMap.java:1850) ~[?:?]
-	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509) ~[?:?]
-	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[?:?]
-	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921) ~[?:?]
-	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[?:?]
-	at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682) ~[?:?]
-	at net.minecraftforge.fml.ModLoader.buildMods(ModLoader.java:260) ~[fmlcore-1.20.1-47.2.0.jar:?]
-	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197) ~[?:?]
-	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197) ~[?:?]
-	at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625) ~[?:?]
-	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509) ~[?:?]
-	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[?:?]
-	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:575) ~[?:?]
-	at java.util.stream.AbstractPipeline.evaluateToArrayNode(AbstractPipeline.java:260) ~[?:?]
-	at java.util.stream.ReferencePipeline.toArray(ReferencePipeline.java:616) ~[?:?]
-	at java.util.stream.ReferencePipeline.toArray(ReferencePipeline.java:622) ~[?:?]
-	at java.util.stream.ReferencePipeline.toList(ReferencePipeline.java:627) ~[?:?]
-	at net.minecraftforge.fml.ModLoader.gatherAndInitializeMods(ModLoader.java:171) ~[fmlcore-1.20.1-47.2.0.jar:?]
-	at net.minecraftforge.data.loading.DatagenModLoader.begin(DatagenModLoader.java:43) ~[forge-1.20.1-47.2.0_mapped_parchment_2023.06.26-1.20.1-recomp.jar:?]
-	at net.minecraft.data.Main.main(Main.java:90) ~[forge-1.20.1-47.2.0_mapped_parchment_2023.06.26-1.20.1-recomp.jar:?]
-	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
-	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
-	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
-	at java.lang.reflect.Method.invoke(Method.java:568) ~[?:?]
-	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:111) ~[fmlloader-1.20.1-47.2.0.jar:?]
-	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.dataService(CommonLaunchHandler.java:107) ~[fmlloader-1.20.1-47.2.0.jar:?]
-	at net.minecraftforge.fml.loading.targets.ForgeDataUserdevLaunchHandler.devService(ForgeDataUserdevLaunchHandler.java:22) ~[fmlloader-1.20.1-47.2.0.jar:?]
-	at net.minecraftforge.fml.loading.targets.CommonDevLaunchHandler.lambda$makeService$7(CommonDevLaunchHandler.java:135) ~[fmlloader-1.20.1-47.2.0.jar:?]
-	at cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:30) ~[modlauncher-10.0.9.jar:?]
-	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:53) ~[modlauncher-10.0.9.jar:?]
-	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:71) ~[modlauncher-10.0.9.jar:?]
-	at cpw.mods.modlauncher.Launcher.run(Launcher.java:108) ~[modlauncher-10.0.9.jar:?]
-	at cpw.mods.modlauncher.Launcher.main(Launcher.java:78) ~[modlauncher-10.0.9.jar:?]
-	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:26) ~[modlauncher-10.0.9.jar:?]
-	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) ~[modlauncher-10.0.9.jar:?]
-	at cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:141) ~[bootstraplauncher-1.1.2.jar:?]
+[06apr.2024 22:59:53.838] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\dylan\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.2.0, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, bountiful_critters, --all, --output, C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\src\generated\resources, --existing, C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\src\main\resources]
+[06apr.2024 22:59:53.854] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.8.1 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
+[06apr.2024 22:59:53.979] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
+[06apr.2024 22:59:54.038] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/dylan/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
+[06apr.2024 22:59:54.321] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.2.0\7f9181f85acc66547685a72020713fc8cbde98\javafmllanguage-1.20.1-47.2.0.jar is missing mods.toml file
+[06apr.2024 22:59:54.325] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.2.0\7872f5205685fdd26fae39b1be79b0e60ca5b7bd\lowcodelanguage-1.20.1-47.2.0.jar is missing mods.toml file
+[06apr.2024 22:59:54.329] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.2.0\d501d161cabed08b3c139a2c6217b02a39f3c3e9\mclanguage-1.20.1-47.2.0.jar is missing mods.toml file
+[06apr.2024 22:59:54.333] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.2.0\ffd3c6debac0a388c9e33ac43c9f5eafb91cb466\fmlcore-1.20.1-47.2.0.jar is missing mods.toml file
+[06apr.2024 22:59:54.453] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
+[06apr.2024 22:59:55.546] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
+[06apr.2024 22:59:55.548] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\dylan\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, bountiful_critters, --all, --output, C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\src\generated\resources, --existing, C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\src\main\resources]
+[06apr.2024 22:59:55.887] [main/INFO] [mixin/]: Remapping refMap geckolib.refmap.json using C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\build\createSrgToMcp\output.srg
+[06apr.2024 22:59:56.169] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [bountiful_critters]
+[06apr.2024 22:59:59.883] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.2.0, for MC 1.20.1 with MCP 20230612.114412
+[06apr.2024 22:59:59.887] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.2.0 Initialized
+[06apr.2024 22:59:59.943] [modloading-worker-0/WARN] [software.bernie.geckolib.GeckoLib/]: Minecraft.getInstance() was null, could not register reload listeners
+[06apr.2024 23:00:00.449] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/dylan/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.2.0_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.2.0_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
+[06apr.2024 23:00:00.450] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/dylan/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.2.0_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.2.0_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
+[06apr.2024 23:00:00.599] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
+[06apr.2024 23:00:00.608] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 8 ms
+[06apr.2024 23:00:00.609] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: bountiful_critters
+[06apr.2024 23:00:00.609] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: bountiful_critters finished after 0 ms
+[06apr.2024 23:00:00.609] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: bountiful_critters
+[06apr.2024 23:00:00.625] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: bountiful_critters finished after 15 ms
+[06apr.2024 23:00:00.625] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id bountiful_critters
+[06apr.2024 23:00:00.763] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id bountiful_critters finished after 137 ms
+[06apr.2024 23:00:00.763] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id bountiful_critters
+[06apr.2024 23:00:00.764] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id bountiful_critters finished after 0 ms
+[06apr.2024 23:00:00.764] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 165 ms
+[06apr.2024 23:00:00.771] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 3, old count: 1, new count: 4, removed stale: 0, written: 2

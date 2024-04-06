@@ -22,6 +22,7 @@ public class ModCreativeModeTabs {
 
                         pOutput.accept(ModItems.STINGRAY_BUCKET.get());
 
+                        pOutput.accept(ModItems.EMU_SPAWN_EGG.get());
                         pOutput.accept(ModItems.STINGRAY_SPAWN_EGG.get());
 
 

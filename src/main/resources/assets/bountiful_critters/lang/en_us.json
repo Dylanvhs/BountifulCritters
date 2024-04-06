@@ -4,6 +4,8 @@
 
 
   "item.bountiful_critters.stingray_bucket": "Bucket of Stingray",
+
+  "item.bountiful_critters.emu_spawn_egg" : "Emu Spawn Egg",
   "item.bountiful_critters.stingray_spawn_egg" : "Stingray Spawn Egg",
 
   "entity.bountiful_critters.stingray.variant_gray": "Gray",
@@ -11,6 +13,7 @@
   "entity.bountiful_critters.stingray.variant_blue_spotted": "Blue Spotted",
 
   "entity.bountiful_critters.stingray" : "Stingray",
+  "entity.bountiful_critters.emu" : "Emu",
 
   "advancements.husbandry.collect_stingray.title" : "Is That A Swimming Pancake?",
   "advancements.husbandry.collect_stingray.description" : "Collect a Stingray"
