@@ -2,6 +2,7 @@ package net.dylanvhs.bountiful_critters;
 
 import com.mojang.logging.LogUtils;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
+import net.dylanvhs.bountiful_critters.entity.client.EmuRenderer;
 import net.dylanvhs.bountiful_critters.entity.client.StingrayRenderer;
 import net.dylanvhs.bountiful_critters.item.ModCreativeModeTabs;
 import net.dylanvhs.bountiful_critters.item.ModItems;
@@ -58,6 +59,9 @@ public class BountifulCritters
 
             EntityRenderers.register
                     (ModEntities.STINGRAY.get(), StingrayRenderer:: new);
+
+            EntityRenderers.register
+                    (ModEntities.EMU.get(), EmuRenderer:: new);
 
         }
     }

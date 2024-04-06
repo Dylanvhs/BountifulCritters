@@ -28,6 +28,7 @@ public final class ModEvents {
     @SubscribeEvent
     public static void entityAttributeEvent(EntityAttributeCreationEvent event) {
         event.put(ModEntities.STINGRAY.get(), StingrayEntity.setAttributes());
+        event.put(ModEntities.EMU.get(), StingrayEntity.setAttributes());
 
     }
 

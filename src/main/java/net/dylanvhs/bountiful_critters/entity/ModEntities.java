@@ -1,6 +1,7 @@
 package net.dylanvhs.bountiful_critters.entity;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
+import net.dylanvhs.bountiful_critters.entity.custom.EmuEntity;
 import net.dylanvhs.bountiful_critters.entity.custom.StingrayEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -21,6 +22,12 @@ public class ModEntities {
                     () -> EntityType.Builder.of(StingrayEntity::new, MobCategory.WATER_AMBIENT)
                             .sized(1f, 0.3f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "stingray").toString()));
+
+    public static final RegistryObject<EntityType<EmuEntity>> EMU =
+            ENTITY_TYPES.register("emu",
+                    () -> EntityType.Builder.of(EmuEntity::new, MobCategory.CREATURE)
+                            .sized(1.4f, 2f)
+                            .build(new ResourceLocation(BountifulCritters.MOD_ID, "emu").toString()));
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
     }
