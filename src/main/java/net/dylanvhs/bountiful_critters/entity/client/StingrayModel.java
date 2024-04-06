@@ -2,6 +2,7 @@ package net.dylanvhs.bountiful_critters.entity.client;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.entity.custom.StingrayEntity;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 
@@ -20,6 +21,4 @@ public class StingrayModel extends GeoModel<StingrayEntity> {
     public ResourceLocation getAnimationResource(StingrayEntity animatable) {
         return new ResourceLocation(BountifulCritters.MOD_ID, "animations/stingray.animation.json");
     }
-
-
 }

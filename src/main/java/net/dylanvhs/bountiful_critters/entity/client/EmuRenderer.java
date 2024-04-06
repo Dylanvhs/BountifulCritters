@@ -12,10 +12,14 @@ public class EmuRenderer extends GeoEntityRenderer<EmuEntity> {
     public EmuRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new EmuModel());
     }
-
+    private static final ResourceLocation TEXTURE_EMU = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/emu.png");
+    private static final ResourceLocation TEXTURE_BABY_EMU = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/baby_emu.png");
     @Override
     public ResourceLocation getTextureLocation(EmuEntity animatable) {
-        return new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/emu.png");
+        return switch (animatable.getModel()) {
+            case 1 -> TEXTURE_BABY_EMU;
+            default -> TEXTURE_EMU;
+        };
     }
 
     @Override
