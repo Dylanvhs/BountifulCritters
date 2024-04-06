@@ -2,19 +2,21 @@ package net.dylanvhs.bountiful_critters.entity.custom;
 
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -23,15 +25,13 @@ import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Bucketable;
-import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -42,16 +42,26 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
+import java.util.function.Predicate;
 
-public class StingrayEntity extends WaterAnimal implements GeoEntity, Bucketable {
+public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketable {
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+
+    private static final Predicate<LivingEntity> SCARY_MOB = (p_289442_) -> {
+        if (p_289442_ instanceof Player && ((Player)p_289442_).isCreative()) {
+            return false;
+        } else {
+            return p_289442_.getType() == EntityType.AXOLOTL || p_289442_.getMobType() != MobType.WATER;
+        }
+    };
+    static final TargetingConditions targetingConditions = TargetingConditions.forNonCombat().ignoreInvisibilityTesting().ignoreLineOfSight().selector(SCARY_MOB);
 
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(StingrayEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(StingrayEntity.class, EntityDataSerializers.INT);
 
 
-    public StingrayEntity(EntityType<? extends WaterAnimal> entityType, Level level) {
+    public StingrayEntity(EntityType<? extends AbstractFish> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
@@ -129,7 +139,41 @@ public class StingrayEntity extends WaterAnimal implements GeoEntity, Bucketable
         this.setFromBucket(compound.getBoolean("FromBucket"));
     }
 
-    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (this.isAlive()) {
+            for(Mob mob : this.level().getEntitiesOfClass(Mob.class, this.getBoundingBox().inflate(0.3D), (p_149013_) -> {
+                return targetingConditions.test(this, p_149013_);
+            })) {
+                if (mob.isAlive()) {
+                    this.touch(mob);
+                }
+            }
+        }
+
+    }
+
+    public void playerTouch(Player pEntity) {
+        if (pEntity instanceof ServerPlayer && pEntity.hurt(this.damageSources().mobAttack(this), (float)(1 ))) {
+            if (!this.isSilent()) {
+                ((ServerPlayer)pEntity).connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.PUFFER_FISH_STING, 0.0F));
+            }
+
+            pEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0), this);
+        }
+
+    }
+
+    private void touch(Mob pMob) {
+        if (pMob.hurt(this.damageSources().mobAttack(this), (float)(1))) {
+            pMob.addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0), this);
+            this.playSound(SoundEvents.PUFFER_FISH_STING, 1.0F, 1.0F);
+        }
+
+    }
+
+
+        @Override
     public boolean fromBucket() {
         return this.entityData.get(FROM_BUCKET);
     }

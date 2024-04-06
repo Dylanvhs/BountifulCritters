@@ -19,7 +19,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<StingrayEntity>> STINGRAY =
             ENTITY_TYPES.register("stingray",
                     () -> EntityType.Builder.of(StingrayEntity::new, MobCategory.WATER_AMBIENT)
-                            .sized(0.5f, 0.5f)
+                            .sized(1f, 0.3f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "stingray").toString()));
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
