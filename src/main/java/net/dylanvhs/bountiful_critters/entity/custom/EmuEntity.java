@@ -1,6 +1,7 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
+import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -13,6 +14,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -27,11 +29,6 @@ import software.bernie.geckolib.core.object.PlayState;
 public class EmuEntity extends Animal implements GeoAnimatable {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
-    private static final ResourceLocation MODEL_EMU = new ResourceLocation(BountifulCritters.MOD_ID, "geo/emu.geo.json");
-    private static final ResourceLocation MODEL_BABY_EMU = new ResourceLocation(BountifulCritters.MOD_ID, "geo/baby_emu.geo.json");
-    private static final ResourceLocation TEXTURE_EMU = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/emu.png");
-    private static final ResourceLocation TEXTURE_BABY_EMU = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/baby_emu.png");
-    private static final EntityDataAccessor<Integer> MODEL = SynchedEntityData.defineId(EmuEntity.class, EntityDataSerializers.INT);
 
     public EmuEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -40,8 +37,8 @@ public class EmuEntity extends Animal implements GeoAnimatable {
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-     return null;
-    }
+     return null; }
+
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createMobAttributes()
@@ -67,7 +64,6 @@ public class EmuEntity extends Animal implements GeoAnimatable {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(MODEL, 0);
     }
 
     @Override
@@ -85,39 +81,14 @@ public class EmuEntity extends Animal implements GeoAnimatable {
         return PlayState.CONTINUE;
     }
 
-    public int getModel() {
-        return this.entityData.get(MODEL);
-    }
-
-    private void setModel(int model) {
-        this.entityData.set(MODEL, model);
-    }
-
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        compound.putInt("Model", this.getModel());
     }
 
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        this.setModel(compound.getInt("Model"));
     }
 
-    public ResourceLocation getEmuTexture() {
-        if (getModel() == 1) {
-            return TEXTURE_BABY_EMU;
-        } else return TEXTURE_EMU;
-    }
-
-
-    public ResourceLocation getEmuModel() {
-        if(getModel() == 1){
-            return MODEL_BABY_EMU;
-        } else return MODEL_EMU;
-    }
-
-
-    @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
