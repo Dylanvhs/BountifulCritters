@@ -22,7 +22,7 @@ public class ModItems {
             () -> new ItemModFishBucket(ModEntities.STINGRAY, Fluids.WATER, new Item.Properties()));
 
     public static final RegistryObject<Item> EMU_EGG = ITEMS.register("emu_egg", () -> new ItemAnimalEgg(new Item.Properties().stacksTo(8)));
-    public static final RegistryObject<Item> BOILED_EMU_EGG = ITEMS.register("emu_egg", () -> new Item(new Item.Properties().stacksTo(8)));
+    public static final RegistryObject<Item> BOILED_EMU_EGG = ITEMS.register("boiled_emu_egg", () -> new Item(new Item.Properties().stacksTo(8)));
 
     public static final RegistryObject<Item> EMU_SPAWN_EGG = ITEMS.register("emu_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.EMU, 0x4d56c5, 0x9c33c5, new Item.Properties()));
