@@ -1,6 +1,7 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
 import net.dylanvhs.bountiful_critters.item.ModItems;
+import net.minecraft.core.Holder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
@@ -32,6 +33,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -191,23 +194,6 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
         return SoundEvents.BUCKET_FILL_FISH;
     }
 
-    @Nullable
-    @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
-        spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-        if (dataTag == null) {
-            setVariant(random.nextInt(4));
-        } else {
-            if (dataTag.contains("Variant", 4)){
-                this.setVariant(dataTag.getInt("Variant"));
-            }
-        }
-        return spawnDataIn;
-    }
-
-
-
-
     public MobType getMobType() {
         return MobType.WATER;
     }
@@ -239,6 +225,21 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
             }
         });
     }
+
+    @javax.annotation.Nullable
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @javax.annotation.Nullable SpawnGroupData spawnDataIn, @javax.annotation.Nullable CompoundTag dataTag) {
+        float variantChange = this.getRandom().nextFloat();
+        Holder<Biome> holder = worldIn.getBiome(this.blockPosition());
+        if (holder.is(Biomes.SWAMP)) {
+            this.setVariant(1);
+        } else if (holder.is(Biomes.WARM_OCEAN)) {
+            this.setVariant(2);
+        } else {
+            this.setVariant(0);
+        }
+        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+    }
+
 
 
     protected SoundEvent getAmbientSound() {

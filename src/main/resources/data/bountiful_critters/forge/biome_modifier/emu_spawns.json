@@ -1,0 +1,12 @@
+{
+  "type" :"forge:add_spawns",
+  "biomes" : [
+    "minecraft:badlands"
+  ],
+  "spawners" : {
+    "type" : "bountiful_critters:emu",
+    "weight" : 3,
+    "minCount" : 1,
+    "maxCount" : 4
+  }
+}

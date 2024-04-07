@@ -35,15 +35,19 @@ public class EmuModel extends GeoModel<EmuEntity> {
         CoreGeoBone head = this.getAnimationProcessor().getBone("head");
         CoreGeoBone root = this.getAnimationProcessor().getBone("Emu");
         if (animatable.isBaby()) {
-            head.setScaleX(1.75F);
-            head.setScaleY(1.75F);
-            head.setScaleZ(1.75F);
-
             root.setScaleX(0.5F);
             root.setScaleY(0.5F);
             root.setScaleZ(0.5F);
 
+            head.setScaleX(1.75F);
+            head.setScaleY(1.75F);
+            head.setScaleZ(1.75F);
+
         } else {
+            root.setScaleX(1.0F);
+            root.setScaleY(1.0F);
+            root.setScaleZ(1.0F);
+
             head.setScaleX(1.0F);
             head.setScaleY(1.0F);
             head.setScaleZ(1.0F);
