@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "bountiful_critters:emu_egg"
+  },
+  "result": "bountiful_critters:boiled_emu_egg",
+  "experience": 0.25,
+  "cookingtime": 80
+}

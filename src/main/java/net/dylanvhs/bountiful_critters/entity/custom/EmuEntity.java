@@ -1,9 +1,11 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
+import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -31,6 +33,7 @@ import javax.annotation.Nullable;
 public class EmuEntity extends Animal implements GeoAnimatable {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.APPLE);
+    public int timeUntilNextEgg = this.random.nextInt(6000) + 6000;
 
 
     public EmuEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
@@ -54,12 +57,12 @@ public class EmuEntity extends Animal implements GeoAnimatable {
     }
 
     protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
-        return this.isBaby() ? pSize.height * 0.95F : 2.1F;
+        return this.isBaby() ? pSize.height * 0.95F : 2.0F;
     }
 
     public static <T extends Mob> boolean canSpawn(EntityType type, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223317_3_, RandomSource random) {
         BlockState blockstate = worldIn.getBlockState(p_223317_3_.below());
-        return blockstate.is(Blocks.RED_SAND) || blockstate.is(Blocks.TERRACOTTA);
+        return blockstate.is(Blocks.GRASS_BLOCK);
     }
 
 
@@ -79,6 +82,15 @@ public class EmuEntity extends Animal implements GeoAnimatable {
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+    }
+
+    public void tick() {
+        super.tick();
+        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.timeUntilNextEgg <= 0) {
+            this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+            this.spawnAtLocation(ModItems.EMU_EGG.get());
+            this.timeUntilNextEgg = this.random.nextInt(6000) + 6000;
+        }
     }
 
     @Override

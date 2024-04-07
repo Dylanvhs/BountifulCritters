@@ -21,6 +21,8 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
 
         simpleItem(ModItems.STINGRAY_BUCKET);
+        simpleItem(ModItems.EMU_EGG);
+        simpleItem(ModItems.BOILED_EMU_EGG);
 
 
         withExistingParent(ModItems.EMU_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
