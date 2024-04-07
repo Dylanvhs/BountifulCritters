@@ -5,6 +5,7 @@ import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.client.EmuRenderer;
 import net.dylanvhs.bountiful_critters.entity.client.StingrayRenderer;
 import net.dylanvhs.bountiful_critters.item.ModCreativeModeTabs;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
@@ -62,6 +63,9 @@ public class BountifulCritters
 
             EntityRenderers.register
                     (ModEntities.EMU.get(), EmuRenderer:: new);
+
+            EntityRenderers.register
+                    (ModEntities.EMU_EGG.get(), ThrownItemRenderer::new);
 
         }
     }

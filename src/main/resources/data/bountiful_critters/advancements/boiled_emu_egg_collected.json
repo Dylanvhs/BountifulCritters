@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:husbandry",
+  "parent": "minecraft:husbandry/root",
   "display": {
     "icon": {
       "item": "bountiful_critters:boiled_emu_egg"
