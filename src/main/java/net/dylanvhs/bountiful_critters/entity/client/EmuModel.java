@@ -53,9 +53,12 @@ public class EmuModel extends GeoModel<EmuEntity> {
             head.setScaleZ(1.0F);
         }
         if (!animatable.isSprinting()) {
-            head.setRotY(extraDataOfType.netHeadYaw() * Mth.DEG_TO_RAD);
+
+            head.setRotY(extraDataOfType.netHeadYaw() * ((float)Math.PI / 180F));
+            head.setRotX(extraDataOfType.headPitch() * ((float)Math.PI / 180F));
         }
     }
+
 
 
 }
