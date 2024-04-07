@@ -3,9 +3,13 @@ package net.dylanvhs.bountiful_critters.entity.client;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.entity.custom.EmuEntity;
-import net.dylanvhs.bountiful_critters.entity.custom.StingrayEntity;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import software.bernie.geckolib.constant.DataTickets;
+import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
+import software.bernie.geckolib.model.data.EntityModelData;
 
 public class EmuModel extends GeoModel<EmuEntity> {
     @Override
@@ -21,6 +25,32 @@ public class EmuModel extends GeoModel<EmuEntity> {
     @Override
     public ResourceLocation getAnimationResource(EmuEntity animatable) {
         return new ResourceLocation(BountifulCritters.MOD_ID, "animations/emu.animation.json");
+    }
+
+    @Override
+    public void setCustomAnimations(EmuEntity animatable, long instanceId, AnimationState<EmuEntity> animationState) {
+        super.setCustomAnimations(animatable, instanceId, animationState);
+        if (animationState == null) return;
+        EntityModelData extraDataOfType = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
+        CoreGeoBone head = this.getAnimationProcessor().getBone("head");
+        CoreGeoBone root = this.getAnimationProcessor().getBone("Emu");
+        if (animatable.isBaby()) {
+            head.setScaleX(1.75F);
+            head.setScaleY(1.75F);
+            head.setScaleZ(1.75F);
+
+            root.setScaleX(0.5F);
+            root.setScaleY(0.5F);
+            root.setScaleZ(0.5F);
+
+        } else {
+            head.setScaleX(1.0F);
+            head.setScaleY(1.0F);
+            head.setScaleZ(1.0F);
+        }
+        if (!animatable.isSprinting()) {
+            head.setRotY(extraDataOfType.netHeadYaw() * Mth.DEG_TO_RAD);
+        }
     }
 
 

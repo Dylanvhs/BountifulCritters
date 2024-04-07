@@ -26,7 +26,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<EmuEntity>> EMU =
             ENTITY_TYPES.register("emu",
                     () -> EntityType.Builder.of(EmuEntity::new, MobCategory.CREATURE)
-                            .sized(1.4f, 2f)
+                            .sized(1f, 2.2f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "emu").toString()));
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
