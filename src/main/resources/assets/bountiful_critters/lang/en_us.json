@@ -16,7 +16,7 @@
 
   "entity.bountiful_critters.stingray" : "Stingray",
   "entity.bountiful_critters.emu" : "Emu",
-  "entity.bountiful_critters.emu_egg" : "Emu Egg",
+  "entity.bountiful_critters.emu_egg_projectile" : "Emu Egg",
 
   "advancements.husbandry.collect_stingray.title" : "Is That A Swimming Pancake?",
   "advancements.husbandry.collect_stingray.description" : "Collect A Stingray",

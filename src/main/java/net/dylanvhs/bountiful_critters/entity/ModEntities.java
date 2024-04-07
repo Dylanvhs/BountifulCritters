@@ -32,8 +32,8 @@ public class ModEntities {
 
 
     public static final RegistryObject<EntityType<EmuEggEntity>> EMU_EGG =
-                    ENTITY_TYPES.register("dice_projectile", () -> EntityType.Builder.<EmuEggEntity>of(EmuEggEntity::new, MobCategory.MISC)
-                            .sized(0.5f, 0.5f).build("dice_projectile"));
+                    ENTITY_TYPES.register("emu_egg_projectile", () -> EntityType.Builder.<EmuEggEntity>of(EmuEggEntity::new, MobCategory.MISC)
+                            .sized(0.5f, 0.5f).build("emu_egg_projectile"));
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
     }
