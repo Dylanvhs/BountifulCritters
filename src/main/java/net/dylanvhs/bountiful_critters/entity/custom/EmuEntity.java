@@ -2,11 +2,14 @@ package net.dylanvhs.bountiful_critters.entity.custom;
 
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.ModItems;
+import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -65,7 +68,17 @@ public class EmuEntity extends Animal implements GeoAnimatable {
         return blockstate.is(Blocks.GRASS_BLOCK);
     }
 
+    protected SoundEvent getAmbientSound() {
+        return ModSounds.EMU_AMBIENT.get();
+    }
 
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return ModSounds.EMU_HURT.get();
+    }
+
+    protected float getSoundVolume() {
+        return 0.4F;
+    }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createMobAttributes()

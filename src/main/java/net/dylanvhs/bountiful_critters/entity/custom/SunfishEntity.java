@@ -19,8 +19,10 @@ import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
+import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -34,12 +36,12 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
-public class SunfishEntity extends WaterAnimal implements GeoEntity {
+public class SunfishEntity extends AbstractFish implements GeoEntity {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(StingrayEntity.class, EntityDataSerializers.INT);
 
-    public SunfishEntity(EntityType<? extends WaterAnimal> entityType, Level level) {
+    public SunfishEntity(EntityType<? extends AbstractFish> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.05F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
@@ -151,8 +153,12 @@ public class SunfishEntity extends WaterAnimal implements GeoEntity {
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
-        if (geoAnimatableAnimationState.isMoving()) {
+        if (!(geoAnimatableAnimationState.getLimbSwingAmount() > -0.06F && geoAnimatableAnimationState.getLimbSwingAmount() < 0.06F) && this.isInWater()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.sunfish.swim", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
+        if (!this.isInWater()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.sunfish.flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         else
@@ -166,4 +172,8 @@ public class SunfishEntity extends WaterAnimal implements GeoEntity {
         return cache;
     }
 
+    @Override
+    public ItemStack getBucketItemStack() {
+        return null;
+    }
 }

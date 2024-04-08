@@ -28,7 +28,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<SunfishEntity>> SUNFISH =
             ENTITY_TYPES.register("sunfish",
                     () -> EntityType.Builder.of(SunfishEntity::new, MobCategory.WATER_AMBIENT)
-                            .sized(0.25f, 1.2f)
+                            .sized(0.8f, 1.8f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "sunfish").toString()));
 
     public static final RegistryObject<EntityType<EmuEntity>> EMU =

@@ -23,12 +23,12 @@ public class ModItems {
     public static final RegistryObject<Item> BOILED_EMU_EGG = ITEMS.register("boiled_emu_egg", () -> new Item(new Item.Properties().food(ModFoods.BOILED_EMU_EGG).stacksTo(16)));
 
     public static final RegistryObject<Item> EMU_SPAWN_EGG = ITEMS.register("emu_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.EMU, 0x643e2b, 0x2c2d36, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(ModEntities.EMU, 0x72482e, 0x21486a, new Item.Properties()));
     public static final RegistryObject<Item> STINGRAY_SPAWN_EGG = ITEMS.register("stingray_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.STINGRAY, 0x6f6e64, 0x484c4c, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(ModEntities.STINGRAY, 0x7a796a, 0x484c4c, new Item.Properties()));
 
     public static final RegistryObject<Item> SUNFISH_SPAWN_EGG = ITEMS.register("sunfish_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.SUNFISH, 0x5d4f46, 0x887a6a, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(ModEntities.SUNFISH, 0x5d4f46, 0x968d7f, new Item.Properties()));
 
 
 

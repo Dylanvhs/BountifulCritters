@@ -24,5 +24,8 @@
   "advancements.husbandry.collect_stingray.description" : "Collect A Stingray",
 
   "advancements.husbandry.collect_boiled_emu_egg.title" : "This Could've Been A Baby Emu!",
-  "advancements.husbandry.collect_boiled_emu_egg.description" : "Collect A Boiled Emu Egg"
+  "advancements.husbandry.collect_boiled_emu_egg.description" : "Collect A Boiled Emu Egg",
+
+  "sounds.bountiful_critters:emu_ambient": "Emu Grunts",
+  "sounds.bountiful_critters:emu_hurt": "Emu Hurts"
 }
