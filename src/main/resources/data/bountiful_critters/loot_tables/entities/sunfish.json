@@ -2,7 +2,7 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "rolls": 1,
+      "rolls": 3,
       "bonus_rolls": 2,
       "entries": [
         {
@@ -12,7 +12,7 @@
       ]
     },
     {
-      "rolls": 1,
+      "rolls": 2,
       "bonus_rolls": 2,
       "entries": [
         {
@@ -23,7 +23,7 @@
       "conditions": [
         {
           "condition": "minecraft:random_chance",
-          "chance": 0.05
+          "chance": 0.15
         }
       ]
     }
