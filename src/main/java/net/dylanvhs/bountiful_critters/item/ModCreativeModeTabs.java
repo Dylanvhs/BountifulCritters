@@ -21,12 +21,16 @@ public class ModCreativeModeTabs {
 
 
                         pOutput.accept(ModItems.STINGRAY_BUCKET.get());
+                        pOutput.accept(ModItems.SUNFISH_BUCKET.get());
+                        pOutput.accept(ModItems.RAW_SUNFISH_MEAT.get());
+                        pOutput.accept(ModItems.COOKED_SUNFISH_MEAT.get());
                         pOutput.accept(ModItems.EMU_EGG.get());
                         pOutput.accept(ModItems.BOILED_EMU_EGG.get());
 
-                        pOutput.accept(ModItems.EMU_SPAWN_EGG.get());
+
                         pOutput.accept(ModItems.STINGRAY_SPAWN_EGG.get());
                         pOutput.accept(ModItems.SUNFISH_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.EMU_SPAWN_EGG.get());
 
 
 

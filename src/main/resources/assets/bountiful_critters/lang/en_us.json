@@ -4,6 +4,9 @@
 
 
   "item.bountiful_critters.stingray_bucket": "Bucket of Stingray",
+  "item.bountiful_critters.sunfish_bucket": "Bucket of Sunfish",
+  "item.bountiful_critters.raw_sunfish_meat": "Raw Sunfish Meat",
+  "item.bountiful_critters.cooked_sunfish_meat": "Cooked Sunfish Meat",
   "item.bountiful_critters.emu_egg": "Emu Egg",
   "item.bountiful_critters.boiled_emu_egg": "Boiled Emu Egg",
 
@@ -15,6 +18,9 @@
   "entity.bountiful_critters.stingray.variant_muddy": "Muddy",
   "entity.bountiful_critters.stingray.variant_blue_spotted": "Blue Spotted",
 
+  "entity.bountiful_critters.sunfish.variant_chilly": "Chilly",
+  "entity.bountiful_critters.sunfish.variant_brown": "Brown",
+
   "entity.bountiful_critters.stingray" : "Stingray",
   "entity.bountiful_critters.sunfish" : "Sunfish",
   "entity.bountiful_critters.emu" : "Emu",
@@ -22,6 +28,9 @@
 
   "advancements.husbandry.collect_stingray.title" : "Is That A Swimming Pancake?",
   "advancements.husbandry.collect_stingray.description" : "Collect A Stingray",
+
+  "advancements.husbandry.collect_sunfish.title" : "I Would Bring You The Moon",
+  "advancements.husbandry.collect_sunfish.description" : "Collect A Sunfish",
 
   "advancements.husbandry.collect_boiled_emu_egg.title" : "This Could've Been A Baby Emu!",
   "advancements.husbandry.collect_boiled_emu_egg.description" : "Collect A Boiled Emu Egg",

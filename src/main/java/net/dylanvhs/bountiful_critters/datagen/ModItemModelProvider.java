@@ -21,6 +21,9 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
 
         simpleItem(ModItems.STINGRAY_BUCKET);
+        simpleItem(ModItems.SUNFISH_BUCKET);
+        simpleItem(ModItems.RAW_SUNFISH_MEAT);
+        simpleItem(ModItems.COOKED_SUNFISH_MEAT);
         simpleItem(ModItems.EMU_EGG);
         simpleItem(ModItems.BOILED_EMU_EGG);
 

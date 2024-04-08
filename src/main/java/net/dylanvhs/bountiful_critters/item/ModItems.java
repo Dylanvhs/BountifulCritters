@@ -18,9 +18,16 @@ public class ModItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, BountifulCritters.MOD_ID);
     public static final RegistryObject<Item> STINGRAY_BUCKET = ITEMS.register("stingray_bucket",
             () -> new ItemModFishBucket(ModEntities.STINGRAY, Fluids.WATER, new Item.Properties()));
-
-    public static final RegistryObject<Item> EMU_EGG = ITEMS.register("emu_egg", () -> new EmuEggItem(new Item.Properties().stacksTo(16)));
-    public static final RegistryObject<Item> BOILED_EMU_EGG = ITEMS.register("boiled_emu_egg", () -> new Item(new Item.Properties().food(ModFoods.BOILED_EMU_EGG).stacksTo(16)));
+    public static final RegistryObject<Item> SUNFISH_BUCKET = ITEMS.register("sunfish_bucket",
+            () -> new ItemModFishBucket(ModEntities.SUNFISH, Fluids.WATER, new Item.Properties()));
+    public static final RegistryObject<Item> RAW_SUNFISH_MEAT =
+            ITEMS.register("raw_sunfish_meat", () -> new Item(new Item.Properties().food(ModFoods.RAW_SUNFISH_MEAT)));
+    public static final RegistryObject<Item> COOKED_SUNFISH_MEAT =
+            ITEMS.register("cooked_sunfish_meat", () -> new Item(new Item.Properties().food(ModFoods.COOKED_SUNFISH_MEAT)));
+    public static final RegistryObject<Item> EMU_EGG =
+            ITEMS.register("emu_egg", () -> new EmuEggItem(new Item.Properties().stacksTo(16)));
+    public static final RegistryObject<Item> BOILED_EMU_EGG =
+            ITEMS.register("boiled_emu_egg", () -> new Item(new Item.Properties().food(ModFoods.BOILED_EMU_EGG).stacksTo(16)));
 
     public static final RegistryObject<Item> EMU_SPAWN_EGG = ITEMS.register("emu_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.EMU, 0x72482e, 0x21486a, new Item.Properties()));

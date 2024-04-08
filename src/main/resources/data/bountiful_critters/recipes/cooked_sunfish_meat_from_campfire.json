@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "bountiful_critters:raw_sunfish_meat"
+  },
+  "result": "bountiful_critters:cooked_sunfish_meat",
+  "experience": 0.55,
+  "cookingtime": 600
+}

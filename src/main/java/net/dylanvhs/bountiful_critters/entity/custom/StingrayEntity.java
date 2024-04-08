@@ -65,7 +65,7 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
 
     public StingrayEntity(EntityType<? extends AbstractFish> entityType, Level level) {
         super(entityType, level);
-        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.1F, 0.1F, true);
+        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.4F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
 
@@ -175,7 +175,7 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
     }
 
 
-        @Override
+    @Override
     public boolean fromBucket() {
         return this.entityData.get(FROM_BUCKET);
     }
