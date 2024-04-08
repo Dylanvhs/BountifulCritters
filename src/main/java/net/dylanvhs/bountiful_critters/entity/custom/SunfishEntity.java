@@ -70,6 +70,7 @@ public class SunfishEntity extends AbstractFish implements GeoEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(VARIANT, 0);
+        this.entityData.define(FROM_BUCKET, false);
     }
 
     @Override
