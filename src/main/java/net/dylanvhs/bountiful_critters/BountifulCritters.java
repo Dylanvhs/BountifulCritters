@@ -6,6 +6,7 @@ import net.dylanvhs.bountiful_critters.entity.client.EmuRenderer;
 import net.dylanvhs.bountiful_critters.entity.client.StingrayRenderer;
 import net.dylanvhs.bountiful_critters.entity.client.SunfishRenderer;
 import net.dylanvhs.bountiful_critters.item.ModCreativeModeTabs;
+import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -35,6 +36,8 @@ public class BountifulCritters
         ModItems.register(modEventBus);
 
         ModEntities.register(modEventBus);
+
+        ModSounds.register(modEventBus);
 
 
 

@@ -1,6 +1,6 @@
 {
   "emu_ambient": {
-    "subtitle": "sounds.bountiful_critters.emu_ambient",
+    "subtitle": "sounds.bountiful_critters:emu_ambient",
     "sounds": [
       {
         "name": "bountiful_critters:emu_ambient0"
