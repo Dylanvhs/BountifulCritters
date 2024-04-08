@@ -65,7 +65,7 @@ public class EmuEntity extends Animal implements GeoAnimatable {
 
     public static <T extends Mob> boolean canSpawn(EntityType type, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223317_3_, RandomSource random) {
         BlockState blockstate = worldIn.getBlockState(p_223317_3_.below());
-        return blockstate.is(Blocks.GRASS_BLOCK) || blockstate.is(Blocks.TERRACOTTA);
+        return blockstate.is(Blocks.GRASS_BLOCK) || blockstate.is(Blocks.ORANGE_TERRACOTTA);
     }
 
     protected SoundEvent getAmbientSound() {
