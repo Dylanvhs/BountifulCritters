@@ -26,6 +26,7 @@ public class ModCreativeModeTabs {
 
                         pOutput.accept(ModItems.EMU_SPAWN_EGG.get());
                         pOutput.accept(ModItems.STINGRAY_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.SUNFISH_SPAWN_EGG.get());
 
 
 

@@ -35,7 +35,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
-import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -66,7 +65,7 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
 
     public StingrayEntity(EntityType<? extends AbstractFish> entityType, Level level) {
         super(entityType, level);
-        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
+        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.05F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
 
@@ -78,7 +77,7 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
         };
     }
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 5.0D);
+        return AbstractFish.createMobAttributes().add(Attributes.MAX_HEALTH, 5.0D);
     }
 
     @Override
@@ -202,7 +201,7 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
 
 
     public static AttributeSupplier setAttributes() {
-        return Animal.createMobAttributes()
+        return AbstractFish.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 7D)
                 .add(Attributes.MOVEMENT_SPEED, 0.4D)
                 .build();

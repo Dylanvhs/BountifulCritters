@@ -9,12 +9,14 @@
 
   "item.bountiful_critters.emu_spawn_egg" : "Emu Spawn Egg",
   "item.bountiful_critters.stingray_spawn_egg" : "Stingray Spawn Egg",
+  "item.bountiful_critters.sunfish_spawn_egg" : "Sunfish Spawn Egg",
 
   "entity.bountiful_critters.stingray.variant_gray": "Gray",
   "entity.bountiful_critters.stingray.variant_muddy": "Muddy",
   "entity.bountiful_critters.stingray.variant_blue_spotted": "Blue Spotted",
 
   "entity.bountiful_critters.stingray" : "Stingray",
+  "entity.bountiful_critters.sunfish" : "Sunfish",
   "entity.bountiful_critters.emu" : "Emu",
   "entity.bountiful_critters.emu_egg_projectile" : "Emu Egg",
 
