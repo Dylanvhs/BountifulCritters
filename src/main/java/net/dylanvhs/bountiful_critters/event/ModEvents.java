@@ -35,6 +35,7 @@ public final class ModEvents {
         event.put(ModEntities.STINGRAY.get(), StingrayEntity.setAttributes());
         event.put(ModEntities.SUNFISH.get(), SunfishEntity.setAttributes());
         event.put(ModEntities.EMU.get(), EmuEntity.setAttributes());
+        event.put(ModEntities.KRILL.get(), KrillEntity.setAttributes());
 
     }
 
