@@ -130,8 +130,8 @@ public class KrillEntity extends AbstractSchoolingFish implements GeoEntity, Buc
 
     public static AttributeSupplier setAttributes() {
         return AbstractSchoolingFish.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 7D)
-                .add(Attributes.MOVEMENT_SPEED, 0.4D)
+                .add(Attributes.MAX_HEALTH, 4D)
+                .add(Attributes.MOVEMENT_SPEED, 0.8D)
                 .build();
     }
 

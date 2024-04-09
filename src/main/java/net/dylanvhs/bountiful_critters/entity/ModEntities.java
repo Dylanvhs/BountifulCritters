@@ -37,7 +37,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<KrillEntity>> KRILL =
             ENTITY_TYPES.register("krill",
                     () -> EntityType.Builder.of(KrillEntity::new, MobCategory.WATER_AMBIENT)
-                            .sized(0.3f, 0.3f)
+                            .sized(0.5f, 0.5f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "krill").toString()));
 
 
