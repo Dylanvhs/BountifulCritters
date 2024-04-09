@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "bountiful_critters:raw_krill"
+  },
+  "result": "bountiful_critters:fried_krill",
+  "experience": 0.15,
+  "cookingtime": 100
+}

@@ -1,10 +1,7 @@
 package net.dylanvhs.bountiful_critters.entity;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
-import net.dylanvhs.bountiful_critters.entity.custom.EmuEggEntity;
-import net.dylanvhs.bountiful_critters.entity.custom.EmuEntity;
-import net.dylanvhs.bountiful_critters.entity.custom.StingrayEntity;
-import net.dylanvhs.bountiful_critters.entity.custom.SunfishEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -37,10 +34,17 @@ public class ModEntities {
                             .sized(1f, 2f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "emu").toString()));
 
+    public static final RegistryObject<EntityType<KrillEntity>> KRILL =
+            ENTITY_TYPES.register("krill",
+                    () -> EntityType.Builder.of(KrillEntity::new, MobCategory.WATER_AMBIENT)
+                            .sized(0.3f, 0.3f)
+                            .build(new ResourceLocation(BountifulCritters.MOD_ID, "krill").toString()));
+
 
     public static final RegistryObject<EntityType<EmuEggEntity>> EMU_EGG =
                     ENTITY_TYPES.register("emu_egg_projectile", () -> EntityType.Builder.<EmuEggEntity>of(EmuEggEntity::new, MobCategory.MISC)
                             .sized(0.5f, 0.5f).build("emu_egg_projectile"));
+
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
     }

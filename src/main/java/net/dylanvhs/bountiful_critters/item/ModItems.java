@@ -23,6 +23,12 @@ public class ModItems {
             () -> new ItemModFishBucket(ModEntities.STINGRAY, Fluids.WATER, new Item.Properties()));
     public static final RegistryObject<Item> SUNFISH_BUCKET = ITEMS.register("sunfish_bucket",
             () -> new ItemModFishBucket(ModEntities.SUNFISH, Fluids.WATER, new Item.Properties()));
+    public static final RegistryObject<Item> KRILL_BUCKET = ITEMS.register("krill_bucket",
+            () -> new ItemModFishBucket(ModEntities.KRILL, Fluids.WATER, new Item.Properties()));
+    public static final RegistryObject<Item> RAW_KRILL =
+            ITEMS.register("raw_krill", () -> new Item(new Item.Properties().food(ModFoods.RAW_KRILL)));
+    public static final RegistryObject<Item> FRIED_KRILL =
+            ITEMS.register("fried_krill", () -> new Item(new Item.Properties().food(ModFoods.FRIED_KRILL)));
     public static final RegistryObject<Item> RAW_SUNFISH_MEAT =
             ITEMS.register("raw_sunfish_meat", () -> new Item(new Item.Properties().food(ModFoods.RAW_SUNFISH_MEAT)));
     public static final RegistryObject<Item> COOKED_SUNFISH_MEAT =
@@ -42,6 +48,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> SUNFISH_SPAWN_EGG = ITEMS.register("sunfish_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.SUNFISH, 0x5d4f46, 0x968d7f, new Item.Properties()));
+
+    public static final RegistryObject<Item> KRILL_SPAWN_EGG = ITEMS.register("krill_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.SUNFISH, 0xbd3a27, 0xf17448, new Item.Properties()));
 
 
 

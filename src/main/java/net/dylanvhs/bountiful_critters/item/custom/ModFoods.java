@@ -14,4 +14,9 @@ public class ModFoods {
     public static final FoodProperties COOKED_SUNFISH_MEAT = new FoodProperties.Builder().nutrition(7)
             .saturationMod(0.7f).effect(() -> new MobEffectInstance(MobEffects.WATER_BREATHING, 600), 0.8f).build();
 
+    public static final FoodProperties RAW_KRILL = new FoodProperties.Builder().nutrition(2)
+            .saturationMod(0.2f).build();
+
+    public static final FoodProperties FRIED_KRILL = new FoodProperties.Builder().nutrition(4)
+            .saturationMod(0.4f).build();
 }
