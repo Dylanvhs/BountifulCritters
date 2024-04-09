@@ -38,6 +38,6 @@
   "sounds.bountiful_critters:emu_ambient": "Emu Grunts",
   "sounds.bountiful_critters:emu_hurt": "Emu Hurts",
 
-  "item.fossil_revive.returning_memory_music_disc": "Music Disc",
-  "item.fossil_revive.returning_memory_music_disc.desc": "Dylanvhs - Returning Memory"
+  "item.bountiful_critters.returning_memory_music_disc": "Music Disc",
+  "item.bountiful_critters.returning_memory_music_disc.desc": "Dylanvhs - Returning Memory"
 }
