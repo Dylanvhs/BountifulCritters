@@ -14,10 +14,10 @@ public class KrillRenderer extends GeoEntityRenderer<KrillEntity> {
         super(renderManagerIn, new KrillModel());
     }
 
-    protected void scale(SunfishEntity entitylivingbaseIn, PoseStack matrixStackIn, float partialTickTime) {
+    protected void scale(KrillEntity entitylivingbaseIn, PoseStack matrixStackIn, float partialTickTime) {
     }
 
-    public ResourceLocation getTextureLocation(SunfishEntity entity) {
+    public ResourceLocation getTextureLocation(KrillEntity entity) {
         return new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/krill.png");
     }
 }

@@ -50,7 +50,7 @@ public class ModItems {
             () -> new ForgeSpawnEggItem(ModEntities.SUNFISH, 0x5d4f46, 0x968d7f, new Item.Properties()));
 
     public static final RegistryObject<Item> KRILL_SPAWN_EGG = ITEMS.register("krill_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.SUNFISH, 0xbd3a27, 0xf17448, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(ModEntities.KRILL, 0xbd3a27, 0xf17448, new Item.Properties()));
 
 
 
