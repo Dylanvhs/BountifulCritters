@@ -35,6 +35,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -65,7 +66,7 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
 
     public StingrayEntity(EntityType<? extends AbstractFish> entityType, Level level) {
         super(entityType, level);
-        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.4F, 0.1F, true);
+        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
 
@@ -203,7 +204,7 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
     public static AttributeSupplier setAttributes() {
         return AbstractFish.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 7D)
-                .add(Attributes.MOVEMENT_SPEED, 0.4D)
+                .add(Attributes.MOVEMENT_SPEED, 0.8D)
                 .build();
     }
 
@@ -211,12 +212,7 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
-        this.goalSelector.addGoal(2, new RandomSwimmingGoal(this, 0.8D, 1) {
-            @Override
-            public boolean canUse() {
-                return super.canUse() && isInWater();
-            }
-        });
+        this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8D, 15) {
             @Override
             public boolean canUse() {
@@ -231,7 +227,17 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
         Holder<Biome> holder = worldIn.getBiome(this.blockPosition());
         if (holder.is(Biomes.SWAMP)) {
             this.setVariant(1);
-        } else if (holder.is(Biomes.WARM_OCEAN)) {
+        } else if (holder.is(Biomes.MANGROVE_SWAMP)) {
+            this.setVariant(1);
+        } else if (holder.is(Biomes.FROZEN_RIVER)) {
+            this.setVariant(1);
+        } else if (holder.is(Biomes.RIVER)) {
+            this.setVariant(1);
+        }  else if (holder.is(Biomes.WARM_OCEAN)) {
+            this.setVariant(2);
+        } else if (holder.is(Biomes.LUKEWARM_OCEAN)) {
+            this.setVariant(2);
+        } else if (holder.is(Biomes.DEEP_LUKEWARM_OCEAN)) {
             this.setVariant(2);
         } else {
             this.setVariant(0);
@@ -239,6 +245,20 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
+
+    public void travel(Vec3 pTravelVector) {
+        if (this.isEffectiveAi() && this.isInWater()) {
+            this.moveRelative(this.getSpeed(), pTravelVector);
+            this.move(MoverType.SELF, this.getDeltaMovement());
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.9D));
+            if (this.getTarget() == null) {
+                this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.005D, 0.0D));
+            }
+        } else {
+            super.travel(pTravelVector);
+        }
+
+    }
 
 
     protected SoundEvent getAmbientSound() {

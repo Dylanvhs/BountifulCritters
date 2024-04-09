@@ -32,6 +32,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -50,13 +51,13 @@ public class SunfishEntity extends AbstractFish implements GeoEntity {
 
     public SunfishEntity(EntityType<? extends AbstractFish> entityType, Level level) {
         super(entityType, level);
-        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.05F, 0.1F, true);
+        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
 
 
     public static AttributeSupplier.Builder createAttributes() {
-        return WaterAnimal.createMobAttributes().add(Attributes.MAX_HEALTH, 15.0D);
+        return WaterAnimal.createMobAttributes().add(Attributes.MAX_HEALTH, 20.0D);
     }
 
     public static String getVariantName(int variant) {
@@ -149,8 +150,8 @@ public class SunfishEntity extends AbstractFish implements GeoEntity {
 
     public static AttributeSupplier setAttributes() {
         return WaterAnimal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 15D)
-                .add(Attributes.MOVEMENT_SPEED, 0.4D)
+                .add(Attributes.MAX_HEALTH, 20D)
+                .add(Attributes.MOVEMENT_SPEED, 0.8F)
                 .build();
     }
 
@@ -159,18 +160,27 @@ public class SunfishEntity extends AbstractFish implements GeoEntity {
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 2.0D));
-        this.goalSelector.addGoal(2, new RandomSwimmingGoal(this, 0.8D, 1) {
-            @Override
-            public boolean canUse() {
-                return super.canUse() && isInWater();
-            }
-        });
+        this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8D, 15) {
             @Override
             public boolean canUse() {
                 return !this.mob.isInWater() && super.canUse();
             }
         });
+    }
+
+    public void travel(Vec3 pTravelVector) {
+        if (this.isEffectiveAi() && this.isInWater()) {
+            this.moveRelative(this.getSpeed(), pTravelVector);
+            this.move(MoverType.SELF, this.getDeltaMovement());
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.9D));
+            if (this.getTarget() == null) {
+                this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.005D, 0.0D));
+            }
+        } else {
+            super.travel(pTravelVector);
+        }
+
     }
 
     public static <T extends Mob> boolean canSpawn(EntityType<SunfishEntity> p_223364_0_, LevelAccessor p_223364_1_, MobSpawnType reason, BlockPos p_223364_3_, RandomSource p_223364_4_) {
@@ -188,6 +198,8 @@ public class SunfishEntity extends AbstractFish implements GeoEntity {
         } else if (holder.is(Biomes.FROZEN_OCEAN)) {
             this.setVariant(1);
         } else if (holder.is(Biomes.DEEP_FROZEN_OCEAN)) {
+            this.setVariant(1);
+        } else if (holder.is(Biomes.SNOWY_BEACH)) {
             this.setVariant(1);
         } else {
             this.setVariant(0);

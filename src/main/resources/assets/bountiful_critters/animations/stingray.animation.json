@@ -3,7 +3,7 @@
 	"animations": {
 		"animation.stingray.swim": {
 			"loop": true,
-			"animation_length": 1,
+			"animation_length": 1.8,
 			"bones": {
 				"root": {
 					"rotation": {
@@ -13,14 +13,14 @@
 							},
 							"lerp_mode": "catmullrom"
 						},
-						"0.5": {
+						"0.9": {
 							"post": {
-								"vector": [1.5, 0, 0],
+								"vector": [1, 0, 0],
 								"easing": "easeInOutSine"
 							},
 							"lerp_mode": "catmullrom"
 						},
-						"1.0": {
+						"1.8": {
 							"post": {
 								"vector": [-1.5, 0, 0],
 								"easing": "easeInOutSine"
@@ -35,14 +35,14 @@
 							},
 							"lerp_mode": "catmullrom"
 						},
-						"0.5": {
+						"0.9": {
 							"post": {
 								"vector": [0, 0, 0],
 								"easing": "easeInQuart"
 							},
 							"lerp_mode": "catmullrom"
 						},
-						"1.0": {
+						"1.8": {
 							"post": {
 								"vector": [0, 2, 0],
 								"easing": "easeInQuart"
@@ -59,14 +59,14 @@
 							},
 							"lerp_mode": "catmullrom"
 						},
-						"0.5": {
+						"0.9": {
 							"post": {
 								"vector": [0, 0, -15],
 								"easing": "easeInOutSine"
 							},
 							"lerp_mode": "catmullrom"
 						},
-						"1.0": {
+						"1.8": {
 							"post": {
 								"vector": [0, 0, 15],
 								"easing": "easeInOutSine"
@@ -83,14 +83,14 @@
 							},
 							"lerp_mode": "catmullrom"
 						},
-						"0.5": {
+						"0.9": {
 							"post": {
 								"vector": [0, 0, 15],
 								"easing": "easeInOutSine"
 							},
 							"lerp_mode": "catmullrom"
 						},
-						"1.0": {
+						"1.8": {
 							"post": {
 								"vector": [0, 0, -15],
 								"easing": "easeInOutSine"
@@ -103,20 +103,20 @@
 					"rotation": {
 						"0.0": {
 							"post": {
-								"vector": [0, 5, 0]
+								"vector": [-1, 5, 0]
 							},
 							"lerp_mode": "catmullrom"
 						},
-						"0.5": {
+						"0.9": {
 							"post": {
-								"vector": [0, -5, 0],
+								"vector": [1, -5, 0],
 								"easing": "easeInOutSine"
 							},
 							"lerp_mode": "catmullrom"
 						},
-						"1.0": {
+						"1.8": {
 							"post": {
-								"vector": [0, 5, 0],
+								"vector": [-1, 5, 0],
 								"easing": "easeInOutSine"
 							},
 							"lerp_mode": "catmullrom"
