@@ -36,5 +36,8 @@
   "advancements.husbandry.collect_boiled_emu_egg.description" : "Collect A Boiled Emu Egg",
 
   "sounds.bountiful_critters:emu_ambient": "Emu Grunts",
-  "sounds.bountiful_critters:emu_hurt": "Emu Hurts"
+  "sounds.bountiful_critters:emu_hurt": "Emu Hurts",
+
+  "item.fossil_revive.returning_memory_music_disc": "Music Disc",
+  "item.fossil_revive.returning_memory_music_disc.desc": "Dylanvhs - Returning Memory"
 }

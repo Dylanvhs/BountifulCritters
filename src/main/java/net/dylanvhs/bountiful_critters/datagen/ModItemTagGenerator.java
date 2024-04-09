@@ -1,6 +1,7 @@
 package net.dylanvhs.bountiful_critters.datagen;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
+import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -19,7 +20,11 @@ public class ModItemTagGenerator extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
+        this.tag(ItemTags.MUSIC_DISCS)
+                .add(ModItems.RETURNING_MEMORY_MUSIC_DISC.get());
 
+        this.tag(ItemTags.CREEPER_DROP_MUSIC_DISCS)
+                .add(ModItems.RETURNING_MEMORY_MUSIC_DISC.get());
 
     }
 }

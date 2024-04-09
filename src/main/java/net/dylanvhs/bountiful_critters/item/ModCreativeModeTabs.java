@@ -26,6 +26,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.COOKED_SUNFISH_MEAT.get());
                         pOutput.accept(ModItems.EMU_EGG.get());
                         pOutput.accept(ModItems.BOILED_EMU_EGG.get());
+                        pOutput.accept(ModItems.RETURNING_MEMORY_MUSIC_DISC.get());
 
 
                         pOutput.accept(ModItems.STINGRAY_SPAWN_EGG.get());

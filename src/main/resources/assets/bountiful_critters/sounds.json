@@ -1,4 +1,13 @@
 {
+  "returning_memory": {
+    "sounds": [
+      {
+        "name": "bountiful_critters:returning_memory",
+        "stream": true
+      }
+    ]
+  },
+
   "emu_ambient": {
     "subtitle": "sounds.bountiful_critters:emu_ambient",
     "sounds": [

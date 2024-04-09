@@ -15,6 +15,8 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> EMU_AMBIENT = registerSoundEvents("emu_ambient");
     public static final RegistryObject<SoundEvent> EMU_HURT = registerSoundEvents("emu_hurt");
 
+    public static final RegistryObject<SoundEvent> RETURNING_MEMORY = registerSoundEvents("returning_memory");
+
 
     private static RegistryObject<SoundEvent> registerSoundEvents(String name) {
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(BountifulCritters.MOD_ID, name)));
