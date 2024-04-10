@@ -1,4 +1,4 @@
-// 1.20.1	2024-04-09T22:07:20.448742	Item Models: bountiful_critters
+// 1.20.1	2024-04-10T17:45:35.7577557	Item Models: bountiful_critters
 c932650040726c1b26c1a26dd846d1c1d05c14d0 assets/bountiful_critters/models/item/boiled_emu_egg.json
 6ec21d0cb96e4b516917bb0f9b4ea06b059cb76d assets/bountiful_critters/models/item/cooked_sunfish_meat.json
 425dd2ceb1fdabf09daa58fc5bef59c719a69e0a assets/bountiful_critters/models/item/emu_egg.json
@@ -6,6 +6,8 @@ c932650040726c1b26c1a26dd846d1c1d05c14d0 assets/bountiful_critters/models/item/b
 58ebc6c7175009c7b58aed8be1b49eaf6d397922 assets/bountiful_critters/models/item/fried_krill.json
 44f9d9811e2e0f56cc107a4ba49d0014e24016d2 assets/bountiful_critters/models/item/krill_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/krill_spawn_egg.json
+74f89972a1a18d4eca100eaf93e0cbc3f17b435a assets/bountiful_critters/models/item/marine_iguana_bucket.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/marine_iguana_spawn_egg.json
 1c4103d84b5b42b3cf3d760d5bcec2106a45e03b assets/bountiful_critters/models/item/raw_krill.json
 db248d842ff5b16c6a81e518754d73f8b65ab49c assets/bountiful_critters/models/item/raw_sunfish_meat.json
 52185f811a1049cbca95311b48142aa6d750157a assets/bountiful_critters/models/item/returning_memory_music_disc.json
