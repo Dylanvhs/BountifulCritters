@@ -32,7 +32,7 @@ public class LongHornModel extends GeoModel<LonghornEntity> {
         if (animationState == null) return;
         EntityModelData extraDataOfType = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
         CoreGeoBone head = this.getAnimationProcessor().getBone("head");
-        CoreGeoBone root = this.getAnimationProcessor().getBone("marine_iguana");
+        CoreGeoBone root = this.getAnimationProcessor().getBone("Longhorn");
         if (animatable.isBaby()) {
             root.setScaleX(0.5F);
             root.setScaleY(0.5F);

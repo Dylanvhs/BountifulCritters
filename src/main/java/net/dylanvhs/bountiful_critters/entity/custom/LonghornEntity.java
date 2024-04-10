@@ -112,6 +112,12 @@ public class LonghornEntity extends TamableAnimal implements GeoAnimatable {
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
         Item item = itemstack.getItem();
+        if (itemstack.is(Items.BUCKET) && !this.isBaby()) {
+            pPlayer.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
+            ItemStack itemstack1 = ItemUtils.createFilledResult(itemstack, pPlayer, Items.MILK_BUCKET.getDefaultInstance());
+            pPlayer.setItemInHand(pHand, itemstack1);
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
+        }
         if (this.level().isClientSide) {
             boolean flag = this.isOwnedBy(pPlayer) || this.isTame() || itemstack.is(Items.GRASS) && !this.isTame();
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
