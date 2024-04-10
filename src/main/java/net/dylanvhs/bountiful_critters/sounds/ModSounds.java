@@ -14,6 +14,7 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> EMU_AMBIENT = registerSoundEvents("emu_ambient");
     public static final RegistryObject<SoundEvent> EMU_HURT = registerSoundEvents("emu_hurt");
+    public static final RegistryObject<SoundEvent> EMU_DEATH = registerSoundEvents("emu_death");
 
     public static final RegistryObject<SoundEvent> RETURNING_MEMORY = registerSoundEvents("returning_memory");
 

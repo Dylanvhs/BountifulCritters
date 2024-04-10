@@ -30,5 +30,14 @@
         "name": "bountiful_critters:emu_hurt1"
       }
     ]
+  },
+  "emu_death": {
+    "subtitle": "sounds.bountiful_critters:emu_death",
+    "sounds": [
+      {
+        "name": "bountiful_critters:emu_death"
+      }
+    ]
   }
 }
+

@@ -78,6 +78,10 @@ public class EmuEntity extends Animal implements GeoAnimatable {
         return ModSounds.EMU_HURT.get();
     }
 
+    protected SoundEvent getDeathSound() {
+        return ModSounds.EMU_DEATH.get();
+    }
+
     protected float getSoundVolume() {
         return 0.4F;
     }
