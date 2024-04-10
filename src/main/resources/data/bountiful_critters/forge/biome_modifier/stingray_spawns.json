@@ -7,7 +7,7 @@
   ],
   "spawners" : {
     "type" : "bountiful_critters:stingray",
-    "weight" : 2,
+    "weight" : 3,
     "minCount" : 1,
     "maxCount" : 1
   }
