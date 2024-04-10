@@ -23,6 +23,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.STINGRAY_BUCKET);
         simpleItem(ModItems.SUNFISH_BUCKET);
         simpleItem(ModItems.KRILL_BUCKET);
+        simpleItem(ModItems.MARINE_IGUANA_BUCKET);
         simpleItem(ModItems.RAW_SUNFISH_MEAT);
         simpleItem(ModItems.COOKED_SUNFISH_MEAT);
         simpleItem(ModItems.RAW_KRILL);
@@ -36,6 +37,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         withExistingParent(ModItems.STINGRAY_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.SUNFISH_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.KRILL_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.MARINE_IGUANA_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
     }
 

@@ -6,6 +6,7 @@
   "item.bountiful_critters.stingray_bucket": "Bucket of Stingray",
   "item.bountiful_critters.sunfish_bucket": "Bucket of Sunfish",
   "item.bountiful_critters.krill_bucket": "Bucket of Krill",
+  "item.bountiful_critters.marine_iguana_bucket": "Bucket of Marine Iguana",
   "item.bountiful_critters.raw_sunfish_meat": "Raw Sunfish Meat",
   "item.bountiful_critters.cooked_sunfish_meat": "Cooked Sunfish Meat",
   "item.bountiful_critters.raw_krill": "Raw Krill",
@@ -17,6 +18,7 @@
   "item.bountiful_critters.stingray_spawn_egg" : "Stingray Spawn Egg",
   "item.bountiful_critters.sunfish_spawn_egg" : "Sunfish Spawn Egg",
   "item.bountiful_critters.krill_spawn_egg" : "Krill Spawn Egg",
+  "item.bountiful_critters.marine_iguana_spawn_egg" : "Marine Iguana Spawn Egg",
 
   "entity.bountiful_critters.stingray.variant_gray": "Gray",
   "entity.bountiful_critters.stingray.variant_muddy": "Muddy",
@@ -29,6 +31,7 @@
   "entity.bountiful_critters.sunfish" : "Sunfish",
   "entity.bountiful_critters.emu" : "Emu",
   "entity.bountiful_critters.krill" : "Krill",
+  "entity.bountiful_critters.marine_iguana" : "Marine Iguana",
   "entity.bountiful_critters.emu_egg_projectile" : "Emu Egg",
 
   "advancements.husbandry.collect_stingray.title" : "Is That A Swimming Pancake?",

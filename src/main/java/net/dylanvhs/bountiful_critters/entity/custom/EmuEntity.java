@@ -118,7 +118,9 @@ public class EmuEntity extends Animal implements GeoAnimatable {
         super.defineSynchedData();
     }
 
-
+    public boolean canBeLeashed(Player pPlayer) {
+        return true;
+    }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {

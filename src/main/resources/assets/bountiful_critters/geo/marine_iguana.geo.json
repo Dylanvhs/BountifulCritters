@@ -1,0 +1,97 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.marine_iguana",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 4,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "marine_iguana",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "body",
+					"parent": "marine_iguana",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "bone",
+					"parent": "body",
+					"pivot": [0, 4.25, 0],
+					"cubes": [
+						{"origin": [-4.5, 0, -6], "size": [9, 5, 12], "uv": [0, 0]},
+						{"origin": [0, 5, -4], "size": [0, 2, 10], "uv": [22, 7]}
+					]
+				},
+				{
+					"name": "tail",
+					"parent": "body",
+					"pivot": [0, 3, 6],
+					"cubes": [
+						{"origin": [-2.5, 0, 6], "size": [5, 4, 6], "uv": [24, 24]},
+						{"origin": [0, 4, 6], "size": [0, 1, 6], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "tail2",
+					"parent": "tail",
+					"pivot": [0, 1.5, 12],
+					"cubes": [
+						{"origin": [0, 0, 12], "size": [0, 3, 10], "uv": [0, 20]}
+					]
+				},
+				{
+					"name": "head",
+					"parent": "body",
+					"pivot": [0, 5, -5],
+					"cubes": [
+						{"origin": [-3.5, 4, -12], "size": [7, 5, 8], "uv": [0, 17]},
+						{"origin": [0, 9, -12], "size": [0, 2, 8], "uv": [22, 11]}
+					]
+				},
+				{
+					"name": "rleg",
+					"parent": "marine_iguana",
+					"pivot": [-4.5, 1, -5],
+					"cubes": [
+						{"origin": [-7.5, 0, -6], "size": [3, 2, 3], "uv": [0, 0], "mirror": true},
+						{"origin": [-11.5, 0, -9], "size": [6, 0, 6], "uv": [24, 0], "mirror": true}
+					]
+				},
+				{
+					"name": "lleg",
+					"parent": "marine_iguana",
+					"pivot": [4.5, 1, -5],
+					"cubes": [
+						{"origin": [4.5, 0, -6], "size": [3, 2, 3], "uv": [0, 0]},
+						{"origin": [5.5, 0, -9], "size": [6, 0, 6], "uv": [24, 0]}
+					]
+				},
+				{
+					"name": "lleg2",
+					"parent": "marine_iguana",
+					"pivot": [4.5, 1, 4],
+					"cubes": [
+						{"origin": [4.5, 0, 3], "size": [3, 2, 3], "uv": [0, 0]},
+						{"origin": [5.5, 0, 0], "size": [6, 0, 6], "uv": [24, 0]}
+					]
+				},
+				{
+					"name": "rleg2",
+					"parent": "marine_iguana",
+					"pivot": [-4.5, 1, 4],
+					"cubes": [
+						{"origin": [-7.5, 0, 3], "size": [3, 2, 3], "uv": [0, 0], "mirror": true},
+						{"origin": [-11.5, 0, 0], "size": [6, 0, 6], "uv": [24, 0], "mirror": true}
+					]
+				}
+			]
+		}
+	]
+}

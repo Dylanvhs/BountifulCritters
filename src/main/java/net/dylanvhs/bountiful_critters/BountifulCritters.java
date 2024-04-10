@@ -2,10 +2,7 @@ package net.dylanvhs.bountiful_critters;
 
 import com.mojang.logging.LogUtils;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
-import net.dylanvhs.bountiful_critters.entity.client.EmuRenderer;
-import net.dylanvhs.bountiful_critters.entity.client.KrillRenderer;
-import net.dylanvhs.bountiful_critters.entity.client.StingrayRenderer;
-import net.dylanvhs.bountiful_critters.entity.client.SunfishRenderer;
+import net.dylanvhs.bountiful_critters.entity.client.*;
 import net.dylanvhs.bountiful_critters.item.ModCreativeModeTabs;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -74,6 +71,9 @@ public class BountifulCritters
 
             EntityRenderers.register
                     (ModEntities.KRILL.get(), KrillRenderer:: new);
+
+            EntityRenderers.register
+                    (ModEntities.MARINE_IGUANA.get(), MarineIguanaRenderer:: new);
 
             EntityRenderers.register
                     (ModEntities.EMU_EGG.get(), ThrownItemRenderer::new);
