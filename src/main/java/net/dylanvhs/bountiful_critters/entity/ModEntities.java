@@ -46,6 +46,12 @@ public class ModEntities {
                             .sized(0.9f, 0.5f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "marine_iguana").toString()));
 
+    public static final RegistryObject<EntityType<LonghornEntity>> LONG_HORN =
+            ENTITY_TYPES.register("long_horn",
+                    () -> EntityType.Builder.of(LonghornEntity::new, MobCategory.AMBIENT)
+                            .sized(1.1f, 1.6f)
+                            .build(new ResourceLocation(BountifulCritters.MOD_ID, "long_horn").toString()));
+
 
     public static final RegistryObject<EntityType<EmuEggEntity>> EMU_EGG =
                     ENTITY_TYPES.register("emu_egg_projectile", () -> EntityType.Builder.<EmuEggEntity>of(EmuEggEntity::new, MobCategory.MISC)

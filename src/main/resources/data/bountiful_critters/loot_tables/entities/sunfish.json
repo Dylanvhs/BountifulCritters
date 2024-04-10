@@ -9,7 +9,19 @@
           "type": "minecraft:item",
           "name": "bountiful_critters:raw_sunfish_meat"
         }
-      ]
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "flags": {
+              "is_on_fire": true
+            }
+          }
+        }
+      ],
+      "function": "minecraft:furnace_smelt"
     },
     {
       "rolls": 2,

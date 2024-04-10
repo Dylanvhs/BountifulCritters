@@ -224,7 +224,7 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     }
 
     public int getMaxAirSupply() {
-        return 6000;
+        return 3000;
     }
 
     public boolean isPushedByFluid() {
@@ -240,7 +240,7 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.2D));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, TEMPTATION_ITEM, false));
+        this.goalSelector.addGoal(2, new TemptGoal(this, 1.25D, TEMPTATION_ITEM, false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
@@ -258,7 +258,7 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.marine_iguana.walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
-        if (!(geoAnimatableAnimationState.getLimbSwingAmount() > -0.06F && geoAnimatableAnimationState.getLimbSwingAmount() < 0.06F) && this.isInWater()) {
+        if (this.isInWater()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.marine_iguana.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
