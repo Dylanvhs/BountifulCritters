@@ -9,7 +9,7 @@
   ],
   "spawners" : {
     "type" : "bountiful_critters:krill",
-    "weight" : 1,
+    "weight" : 2,
     "minCount" : 5,
     "maxCount" : 10
   }

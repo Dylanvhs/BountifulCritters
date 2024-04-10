@@ -25,6 +25,9 @@
     "sounds": [
       {
         "name": "bountiful_critters:emu_hurt"
+      },
+      {
+        "name": "bountiful_critters:emu_hurt1"
       }
     ]
   }
