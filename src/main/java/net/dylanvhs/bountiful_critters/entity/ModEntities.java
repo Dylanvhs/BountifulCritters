@@ -43,7 +43,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<MarineIguanaEntity>> MARINE_IGUANA =
             ENTITY_TYPES.register("marine_iguana",
                     () -> EntityType.Builder.of(MarineIguanaEntity::new, MobCategory.AMBIENT)
-                            .sized(0.1f, 0.5f)
+                            .sized(0.9f, 0.5f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "marine_iguana").toString()));
 
 

@@ -17,12 +17,16 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bucketable;
+import net.minecraft.world.entity.animal.axolotl.Axolotl;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -55,11 +59,25 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         super(pEntityType, pLevel);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
         this.setPathfindingMalus(BlockPathTypes.WATER_BORDER, 0.0F);
-        this.moveControl = new MarineIguanaEntity.MarineIguanaMoveControl(this);
+        this.moveControl = new MarineIguanaEntity.IguanaMoveControl(this);
         this.setMaxUpStep(1.0F);
     }
 
-    @Override
+    static class IguanaMoveControl extends SmoothSwimmingMoveControl {
+        private final MarineIguanaEntity axolotl;
+
+        public IguanaMoveControl(MarineIguanaEntity pAxolotl) {
+            super(pAxolotl, 85, 10, 0.6F, 0.5F, false);
+            this.axolotl = pAxolotl;
+        }
+    }
+
+    public boolean isFood(ItemStack pStack) {
+        return TEMPTATION_ITEM.test(pStack);
+    }
+
+
+        @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(FROM_BUCKET, false);
@@ -88,12 +106,14 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         }
         Bucketable.saveDefaultDataToBucketTag(this, bucket);
         CompoundTag compoundnbt = bucket.getOrCreateTag();
+        compoundnbt.putInt("Age", this.getAge());
     }
 
     @Override
     public void loadFromBucketTag(@Nonnull CompoundTag compound) {
         Bucketable.loadDefaultDataFromBucketTag(this, compound);
-        if (compound.contains("BucketVariantTag", 3)) {
+        if (compound.contains("Age")) {
+            this.setAge(compound.getInt("Age"));
         }
     }
 
@@ -165,23 +185,15 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
 
     }
 
-    static class MarineIguanaMoveControl extends SmoothSwimmingMoveControl {
-        private final MarineIguanaEntity axolotl;
-
-        public MarineIguanaMoveControl(MarineIguanaEntity pAxolotl) {
-            super(pAxolotl, 85, 10, 0.1F, 0.5F, false);
-            this.axolotl = pAxolotl;
-        }
-    }
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 8D)
-                .add(Attributes.MOVEMENT_SPEED, 0.15D)
+                .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .build();
     }
     public static <T extends Mob> boolean canSpawn(EntityType type, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223317_3_, RandomSource random) {
         BlockState blockstate = worldIn.getBlockState(p_223317_3_.below());
-        return blockstate.is(Blocks.GRASS_BLOCK) || blockstate.is(Blocks.STONE);
+        return blockstate.is(Blocks.GRAVEL) || blockstate.is(Blocks.STONE);
     }
 
 
@@ -215,6 +227,10 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         return 6000;
     }
 
+    public boolean isPushedByFluid() {
+        return false;
+    }
+
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
@@ -227,7 +243,9 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, TEMPTATION_ITEM, false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8D, 15));
     }
 
     @Override
@@ -236,11 +254,11 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
-        if (geoAnimatableAnimationState.isMoving() && !this.isInWater()) {
+        if (geoAnimatableAnimationState.getLimbSwingAmount() > -0.06F && geoAnimatableAnimationState.getLimbSwingAmount() < 0.06F && !this.isInWater() && !this.isSwimming()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.marine_iguana.walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
-        if (this.isInWater()) {
+        if (!(geoAnimatableAnimationState.getLimbSwingAmount() > -0.06F && geoAnimatableAnimationState.getLimbSwingAmount() < 0.06F) && this.isInWater()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.marine_iguana.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }

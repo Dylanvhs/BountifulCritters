@@ -25,7 +25,7 @@ public final class ModEvents {
         e.register(ModEntities.KRILL.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.WORLD_SURFACE, KrillEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
         e.register(ModEntities.SUNFISH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.WORLD_SURFACE, SunfishEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
         e.register(ModEntities.EMU.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, EmuEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
-        e.register(ModEntities.MARINE_IGUANA.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, EmuEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
+        e.register(ModEntities.MARINE_IGUANA.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, MarineIguanaEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
     }
 
     @SubscribeEvent
