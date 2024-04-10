@@ -31,7 +31,7 @@ public class MarineIguanaModel extends GeoModel<MarineIguanaEntity> {
         if (animationState == null) return;
         EntityModelData extraDataOfType = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
         CoreGeoBone head = this.getAnimationProcessor().getBone("head");
-        CoreGeoBone root = this.getAnimationProcessor().getBone("Emu");
+        CoreGeoBone root = this.getAnimationProcessor().getBone("marine_iguana");
         if (animatable.isBaby()) {
             root.setScaleX(0.5F);
             root.setScaleY(0.5F);
