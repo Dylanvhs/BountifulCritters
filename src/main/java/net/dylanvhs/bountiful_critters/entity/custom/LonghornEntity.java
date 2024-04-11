@@ -23,16 +23,13 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Ghast;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -67,6 +64,9 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
     private int stunnedTick;
     private boolean canBePushed = true;
     private UUID persistentAngerTarget;
+
+    private static final float START_HEALTH = 25.0F;
+    private static final float TAME_HEALTH = 35.0F;
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
     private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData.defineId(Wolf.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> CHARGE_COOLDOWN_TICKS = SynchedEntityData.defineId(LonghornEntity.class, EntityDataSerializers.INT);
@@ -130,14 +130,27 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, TEMPTATION_ITEM, false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
+        this.goalSelector.addGoal(7, new MeleeAttackGoal(this, 1.0D, true));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
-        this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
         this.goalSelector.addGoal(1, new LongHornPrepareChargeGoal(this));
         this.goalSelector.addGoal(3, new LongHornChargeGoal(this, 2.5F));
+    }
+
+    public void setTame(boolean pTamed) {
+        super.setTame(pTamed);
+        if (pTamed) {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(35.0D);
+            this.setHealth(20.0F);
+        } else {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(25.0D);
+        }
+
+        this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(8.0D);
     }
 
     @Override
@@ -243,6 +256,23 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
         return this.entityData.get(HAS_TARGET);
     }
 
+    public boolean isAlliedTo(Entity entityIn) {
+        if (this.isTame()) {
+            LivingEntity livingentity = this.getOwner();
+            if (entityIn == livingentity) {
+                return true;
+            }
+            if (entityIn instanceof TamableAnimal) {
+                return ((TamableAnimal) entityIn).isOwnedBy(livingentity);
+            }
+            if (livingentity != null) {
+                return livingentity.isAlliedTo(entityIn);
+            }
+        }
+
+        return entityIn.is(this);
+    }
+
     @Override
     public void aiStep() {
         super.aiStep();
@@ -284,6 +314,37 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
         this.level().broadcastEntityEvent(this, (byte) 39);
         defender.push(this);
         defender.hurtMarked = true;
+    }
+
+    public void performAttack() {
+        if (!this.level().isClientSide) {
+            this.goalSelector.getRunningGoals().forEach(WrappedGoal::stop);
+            for (Entity entity : this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(4.0D))) {
+                if (!(entity instanceof LonghornEntity) && !(entity instanceof Player)) {
+                    if (this.isTame() && this.hasControllingPassenger()) {
+                        entity.hurt(this.damageSources().mobAttack(this), 10.0F);
+                    }
+                }
+            }
+            this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.23F);
+        }
+    }
+
+    public boolean wantsToAttack(LivingEntity pTarget, LivingEntity pOwner) {
+        if (!(pTarget instanceof Creeper) && !(pTarget instanceof Ghast)) {
+            if (pTarget instanceof LonghornEntity) {
+                LonghornEntity wolf = (LonghornEntity)pTarget;
+                return !wolf.isTame() || wolf.getOwner() != pOwner;
+            } else if (pTarget instanceof Player && pOwner instanceof Player && !((Player)pOwner).canHarmPlayer((Player)pTarget)) {
+                return false;
+            } else if (pTarget instanceof AbstractHorse && ((AbstractHorse)pTarget).isTamed()) {
+                return false;
+            } else {
+                return !(pTarget instanceof TamableAnimal) || !((TamableAnimal)pTarget).isTame();
+            }
+        } else {
+            return false;
+        }
     }
 
 
@@ -369,23 +430,6 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
             }
             this.path = (Path) this.mob.getNavigation().createPath(target, 0);
             return target instanceof Player && this.path != null;
-        }
-
-        public boolean wantsToAttack(LivingEntity pTarget, LivingEntity pOwner) {
-            if (!(pTarget instanceof Creeper) && !(pTarget instanceof Ghast)) {
-                if (pTarget instanceof Wolf) {
-                    Wolf wolf = (Wolf)pTarget;
-                    return !wolf.isTame() || wolf.getOwner() != pOwner;
-                } else if (pTarget instanceof Player && pOwner instanceof Player && !((Player)pOwner).canHarmPlayer((Player)pTarget)) {
-                    return false;
-                } else if (pTarget instanceof AbstractHorse && ((AbstractHorse)pTarget).isTamed()) {
-                    return false;
-                } else {
-                    return !(pTarget instanceof TamableAnimal) || !((TamableAnimal)pTarget).isTame();
-                }
-            } else {
-                return false;
-            }
         }
 
         @Override

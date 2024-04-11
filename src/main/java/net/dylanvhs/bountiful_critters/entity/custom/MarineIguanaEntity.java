@@ -254,11 +254,10 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+
         if (this.getDeltaMovement().horizontalDistanceSqr() > 1.0E-6 && !this.isSwimming()) {
-            if (geoAnimatableAnimationState.isMoving() && !this.isSwimming()) {
                 geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.marine_iguana.walk", Animation.LoopType.LOOP));
                 return PlayState.CONTINUE;
-            }
         }
         if (this.isInWater()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.marine_iguana.swim", Animation.LoopType.LOOP));
