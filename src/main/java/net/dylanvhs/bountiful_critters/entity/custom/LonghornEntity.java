@@ -29,6 +29,7 @@ import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -76,7 +77,7 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
                 .add(Attributes.MAX_HEALTH, 20.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.ATTACK_DAMAGE, 8.0D)
-                .add(Attributes.ATTACK_KNOCKBACK, 3.0D)
+                .add(Attributes.ATTACK_KNOCKBACK, 5.0D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.1D)
                 .build();
     }
@@ -86,7 +87,7 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
                 .add(Attributes.MAX_HEALTH, 20.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.ATTACK_DAMAGE, 8.0D)
-                .add(Attributes.ATTACK_KNOCKBACK, 3.0D)
+                .add(Attributes.ATTACK_KNOCKBACK, 5.0D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.1D);
     }
 
@@ -363,7 +364,7 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
             if (target == null || !target.isAlive() || this.mob.hasChargeCooldown() || this.mob.stunnedTick > 0) {
                 return false;
             }
-            this.path = (Path) this.mob.getNavigation().createPath(target, 0);
+            this.path = (Path) this.mob.getNavigation().createPath(target, 1);
             return target instanceof Player && this.path != null;
         }
 
@@ -383,12 +384,14 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
             this.chargeDirection = new Vec3(blockPosition.getX() - target.getX(), 0.0, blockPosition.getZ() - target.getZ()).normalize();
             this.mob.getNavigation().moveTo(this.path, this.speedModifier);
             this.mob.setAggressive(true);
+            this.mob.setSprinting(true);
         }
 
         @Override
         public void stop() {
             this.mob.resetChargeCooldownTicks();
             this.mob.getNavigation().stop();
+            this.mob.setSprinting(false);
         }
 
 
@@ -486,7 +489,7 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.long_horn.stunned", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else if (geoAnimatableAnimationState.isMoving()) {
-            if (this.isSprinting() && !this.isInWater()) {
+            if (this.isSprinting()) {
                 geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.long_horn.charge", Animation.LoopType.LOOP));
                 return PlayState.CONTINUE;
             } else {

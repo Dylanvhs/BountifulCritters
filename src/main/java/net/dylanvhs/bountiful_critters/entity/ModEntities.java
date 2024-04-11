@@ -49,7 +49,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<LonghornEntity>> LONG_HORN =
             ENTITY_TYPES.register("long_horn",
                     () -> EntityType.Builder.of(LonghornEntity::new, MobCategory.AMBIENT)
-                            .sized(1.1f, 1.6f)
+                            .sized(1.25f, 1.7f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "long_horn").toString()));
 
 

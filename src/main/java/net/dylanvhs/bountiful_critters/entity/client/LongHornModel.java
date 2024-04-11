@@ -44,13 +44,13 @@ public class LongHornModel extends GeoModel<LonghornEntity> {
             head.setScaleY(1.75F);
             head.setScaleZ(1.75F);
 
-            rhorn.setScaleX(0.5F);
-            rhorn.setScaleY(0.5F);
-            rhorn.setScaleZ(0.5F);
+            rhorn.setScaleX(0.0F);
+            rhorn.setScaleY(0.0F);
+            rhorn.setScaleZ(0.0F);
 
-            lhorn.setScaleX(0.5F);
-            lhorn.setScaleY(0.5F);
-            lhorn.setScaleZ(0.5F);
+            lhorn.setScaleX(0.0F);
+            lhorn.setScaleY(0.0F);
+            lhorn.setScaleZ(0.0F);
 
         } else {
             root.setScaleX(1.0F);
