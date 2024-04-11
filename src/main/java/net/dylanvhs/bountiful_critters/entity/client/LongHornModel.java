@@ -32,6 +32,8 @@ public class LongHornModel extends GeoModel<LonghornEntity> {
         if (animationState == null) return;
         EntityModelData extraDataOfType = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
         CoreGeoBone head = this.getAnimationProcessor().getBone("head");
+        CoreGeoBone rhorn = this.getAnimationProcessor().getBone("rhorn");
+        CoreGeoBone lhorn = this.getAnimationProcessor().getBone("lhorn");
         CoreGeoBone root = this.getAnimationProcessor().getBone("Longhorn");
         if (animatable.isBaby()) {
             root.setScaleX(0.5F);
@@ -42,6 +44,14 @@ public class LongHornModel extends GeoModel<LonghornEntity> {
             head.setScaleY(1.75F);
             head.setScaleZ(1.75F);
 
+            rhorn.setScaleX(0.5F);
+            rhorn.setScaleY(0.5F);
+            rhorn.setScaleZ(0.5F);
+
+            lhorn.setScaleX(0.5F);
+            lhorn.setScaleY(0.5F);
+            lhorn.setScaleZ(0.5F);
+
         } else {
             root.setScaleX(1.0F);
             root.setScaleY(1.0F);
@@ -50,6 +60,14 @@ public class LongHornModel extends GeoModel<LonghornEntity> {
             head.setScaleX(1.0F);
             head.setScaleY(1.0F);
             head.setScaleZ(1.0F);
+
+            rhorn.setScaleX(1.0F);
+            rhorn.setScaleY(1.0F);
+            rhorn.setScaleZ(1.0F);
+
+            lhorn.setScaleX(1.0F);
+            lhorn.setScaleY(1.0F);
+            lhorn.setScaleZ(1.0F);
         }
         if (!animatable.isSprinting()) {
 
