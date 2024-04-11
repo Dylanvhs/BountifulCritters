@@ -13,6 +13,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.TimeUtil;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -20,11 +22,13 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -50,13 +54,17 @@ import net.minecraft.world.level.pathfinder.Path;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.UUID;
 
-public class LonghornEntity extends TamableAnimal implements GeoAnimatable {
+public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnimatable {
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.GRASS);
     private int stunnedTick;
     private boolean canBePushed = true;
+    private UUID persistentAngerTarget;
+    private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
+    private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData.defineId(Wolf.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> CHARGE_COOLDOWN_TICKS = SynchedEntityData.defineId(LonghornEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> HAS_TARGET = SynchedEntityData.defineId(LonghornEntity.class, EntityDataSerializers.BOOLEAN);
     public LonghornEntity(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
@@ -64,12 +72,22 @@ public class LonghornEntity extends TamableAnimal implements GeoAnimatable {
     }
 
     public static AttributeSupplier setAttributes() {
-        return Mob.createMobAttributes()
+        return LonghornEntity.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.ATTACK_DAMAGE, 8.0D)
+                .add(Attributes.ATTACK_KNOCKBACK, 3.0D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.1D)
                 .build();
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        return LonghornEntity.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 20.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.3D)
+                .add(Attributes.ATTACK_DAMAGE, 8.0D)
+                .add(Attributes.ATTACK_KNOCKBACK, 3.0D)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.1D);
     }
 
     @Nullable
@@ -102,14 +120,6 @@ public class LonghornEntity extends TamableAnimal implements GeoAnimatable {
         return 0.4F;
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 20.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.3D)
-                .add(Attributes.ATTACK_DAMAGE, 8.0D)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 0.1D);
-    }
-
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.2D));
@@ -121,8 +131,8 @@ public class LonghornEntity extends TamableAnimal implements GeoAnimatable {
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<Animal>(this, Animal.class, 100, true, false, this::isAngryAt));
-        this.goalSelector.addGoal(2, new LongHornPrepareChargeGoal(this));
+        this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+        this.goalSelector.addGoal(1, new LongHornPrepareChargeGoal(this));
         this.goalSelector.addGoal(3, new LongHornChargeGoal(this, 2.5F));
     }
 
@@ -161,6 +171,27 @@ public class LonghornEntity extends TamableAnimal implements GeoAnimatable {
         return shouldHurt;
     }
 
+    public int getRemainingPersistentAngerTime() {
+        return this.entityData.get(DATA_REMAINING_ANGER_TIME);
+    }
+
+    public void setRemainingPersistentAngerTime(int pTime) {
+        this.entityData.set(DATA_REMAINING_ANGER_TIME, pTime);
+    }
+
+    public void startPersistentAngerTimer() {
+        this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.random));
+    }
+
+    @Nullable
+    public UUID getPersistentAngerTarget() {
+        return this.persistentAngerTarget;
+    }
+
+    public void setPersistentAngerTarget(@Nullable UUID pTarget) {
+        this.persistentAngerTarget = pTarget;
+    }
+
     public boolean isAngryAt(LivingEntity p_21675_) {
         return this.canAttack(p_21675_);
     }
@@ -179,11 +210,9 @@ public class LonghornEntity extends TamableAnimal implements GeoAnimatable {
         return true;
     }
 
-
     private void attack(LivingEntity entity) {
         entity.hurt(this.damageSources().mobAttack(this), 8.0F);
     }
-
 
     public void setChargeCooldownTicks(int ticks) {
         this.entityData.set(CHARGE_COOLDOWN_TICKS, ticks);
@@ -198,7 +227,7 @@ public class LonghornEntity extends TamableAnimal implements GeoAnimatable {
     }
 
     public void resetChargeCooldownTicks() {
-        this.entityData.set(CHARGE_COOLDOWN_TICKS, 50);
+        this.entityData.set(CHARGE_COOLDOWN_TICKS, 40);
     }
 
 
@@ -335,7 +364,7 @@ public class LonghornEntity extends TamableAnimal implements GeoAnimatable {
                 return false;
             }
             this.path = (Path) this.mob.getNavigation().createPath(target, 0);
-            return target instanceof Animal && this.path != null;
+            return target instanceof Player && this.path != null;
         }
 
         @Override
@@ -465,7 +494,7 @@ public class LonghornEntity extends TamableAnimal implements GeoAnimatable {
                 return PlayState.CONTINUE;
             }
         } else if (this.hasChargeCooldown() && this.hasTarget()) {
-            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.long_horn.prep", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.long_horn.prep", Animation.LoopType.PLAY_ONCE));
             return PlayState.CONTINUE;
         }
         else

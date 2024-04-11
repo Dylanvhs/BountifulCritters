@@ -58,7 +58,7 @@ public class ModItems {
             () -> new ForgeSpawnEggItem(ModEntities.MARINE_IGUANA, 0x403b3d, 0x94908b, new Item.Properties()));
 
     public static final RegistryObject<Item> LONG_HORN_SPAWN_EGG = ITEMS.register("long_horn_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.MARINE_IGUANA, 0xad4e1a, 0xedd9b5, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(ModEntities.LONG_HORN, 0xad4e1a, 0xedd9b5, new Item.Properties()));
 
 
 
