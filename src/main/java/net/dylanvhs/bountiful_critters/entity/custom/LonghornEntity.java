@@ -29,6 +29,9 @@ import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -364,8 +367,25 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
             if (target == null || !target.isAlive() || this.mob.hasChargeCooldown() || this.mob.stunnedTick > 0) {
                 return false;
             }
-            this.path = (Path) this.mob.getNavigation().createPath(target, 1);
+            this.path = (Path) this.mob.getNavigation().createPath(target, 0);
             return target instanceof Player && this.path != null;
+        }
+
+        public boolean wantsToAttack(LivingEntity pTarget, LivingEntity pOwner) {
+            if (!(pTarget instanceof Creeper) && !(pTarget instanceof Ghast)) {
+                if (pTarget instanceof Wolf) {
+                    Wolf wolf = (Wolf)pTarget;
+                    return !wolf.isTame() || wolf.getOwner() != pOwner;
+                } else if (pTarget instanceof Player && pOwner instanceof Player && !((Player)pOwner).canHarmPlayer((Player)pTarget)) {
+                    return false;
+                } else if (pTarget instanceof AbstractHorse && ((AbstractHorse)pTarget).isTamed()) {
+                    return false;
+                } else {
+                    return !(pTarget instanceof TamableAnimal) || !((TamableAnimal)pTarget).isTame();
+                }
+            } else {
+                return false;
+            }
         }
 
         @Override
