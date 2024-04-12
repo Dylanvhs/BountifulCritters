@@ -63,6 +63,9 @@ public class ModItems {
     public static final RegistryObject<Item> LONG_HORN_SPAWN_EGG = ITEMS.register("long_horn_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.LONG_HORN, 0xad4e1a, 0xedd9b5, new Item.Properties()));
 
+    public static final RegistryObject<Item> TOUCAN_SPAWN_EGG = ITEMS.register("toucan_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.TOUCAN, 0x1d1d21, 0xff8c1d, new Item.Properties()));
+
 
 
     public static void register(IEventBus eventBus) {

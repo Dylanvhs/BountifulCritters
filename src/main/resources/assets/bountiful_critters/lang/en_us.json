@@ -22,6 +22,7 @@
   "item.bountiful_critters.krill_spawn_egg" : "Krill Spawn Egg",
   "item.bountiful_critters.marine_iguana_spawn_egg" : "Marine Iguana Spawn Egg",
   "item.bountiful_critters.long_horn_spawn_egg" : "Long Horn Cow Spawn Egg",
+  "item.bountiful_critters.toucan_spawn_egg" : "Toucan Spawn Egg",
 
   "entity.bountiful_critters.stingray.variant_gray": "Gray",
   "entity.bountiful_critters.stingray.variant_muddy": "Muddy",
@@ -36,6 +37,7 @@
   "entity.bountiful_critters.krill" : "Krill",
   "entity.bountiful_critters.marine_iguana" : "Marine Iguana",
   "entity.bountiful_critters.long_horn" : "Long Horn Cow",
+  "entity.bountiful_critters.toucan" : "Toucan",
   "entity.bountiful_critters.emu_egg_projectile" : "Emu Egg",
 
   "advancements.husbandry.collect_stingray.title" : "Is That A Swimming Pancake?",
@@ -51,7 +53,7 @@
   "sounds.bountiful_critters:emu_hurt": "Emu Hurts",
   "sounds.bountiful_critters:emu_death": "Emu Dies",
 
-  "sounds.bountiful_critters:long_horn_didgeridoo": "Didgeridoo Is Being Blown",
+  "sounds.bountiful_critters:long_horn_didgeridoo": "Blows Didgeridoo",
 
   "item.bountiful_critters.returning_memory_music_disc": "Music Disc",
   "item.bountiful_critters.returning_memory_music_disc.desc": "Dylanvhs - Returning Memory"

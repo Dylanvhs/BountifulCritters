@@ -1,0 +1,100 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.toucan",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "Toucan",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "body",
+					"parent": "Toucan",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "bone",
+					"parent": "body",
+					"pivot": [0, 3, 0],
+					"cubes": [
+						{"origin": [-4, 3, -4], "size": [8, 13, 7], "uv": [1, 18]}
+					]
+				},
+				{
+					"name": "upperbeak",
+					"parent": "bone",
+					"pivot": [0, 12, -4],
+					"cubes": [
+						{"origin": [-2, 10, -15], "size": [4, 6, 11], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "lowerbeak",
+					"parent": "bone",
+					"pivot": [0, 11.5, -4],
+					"cubes": [
+						{"origin": [-2, 10, -13], "size": [4, 2, 9], "uv": [27, 0]}
+					]
+				},
+				{
+					"name": "tongue",
+					"parent": "bone",
+					"pivot": [0, 12, -4],
+					"cubes": [
+						{"origin": [-1, 12, -8], "size": [2, 0, 4], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "tail",
+					"parent": "body",
+					"pivot": [0, 3.5, 3],
+					"cubes": [
+						{"origin": [-2.5, 4, 3], "size": [5, 0, 8], "uv": [30, 11]}
+					]
+				},
+				{
+					"name": "rwing",
+					"parent": "body",
+					"pivot": [-4, 7, 0],
+					"cubes": [
+						{"origin": [-5, 5, 0], "size": [1, 4, 6], "uv": [26, 32], "mirror": true},
+						{"origin": [-5, 5, 6], "size": [0, 4, 1], "uv": [41, 37], "mirror": true}
+					]
+				},
+				{
+					"name": "lwing",
+					"parent": "body",
+					"pivot": [4, 7, 0],
+					"cubes": [
+						{"origin": [4, 5, 0], "size": [1, 4, 6], "uv": [26, 32]},
+						{"origin": [5, 5, 6], "size": [0, 4, 1], "uv": [41, 37]}
+					]
+				},
+				{
+					"name": "rleg",
+					"parent": "Toucan",
+					"pivot": [-2.5, 3, 2],
+					"cubes": [
+						{"origin": [-4, 0, -1], "size": [3, 3, 3], "uv": [32, 20], "mirror": true}
+					]
+				},
+				{
+					"name": "lleg",
+					"parent": "Toucan",
+					"pivot": [2.5, 3, 2],
+					"cubes": [
+						{"origin": [1, 0, -1], "size": [3, 3, 3], "uv": [32, 20]}
+					]
+				}
+			]
+		}
+	]
+}

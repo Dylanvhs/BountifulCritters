@@ -78,6 +78,8 @@ public class BountifulCritters
             EntityRenderers.register
                     (ModEntities.LONG_HORN.get(), LongHornRenderer:: new);
 
+            EntityRenderers.register
+                    (ModEntities.TOUCAN.get(), ToucanRenderer:: new);
 
             EntityRenderers.register
                     (ModEntities.EMU_EGG.get(), ThrownItemRenderer::new);

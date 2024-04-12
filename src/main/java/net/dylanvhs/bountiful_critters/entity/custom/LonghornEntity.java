@@ -22,14 +22,14 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.*;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Ghast;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -38,6 +38,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.pathfinder.Target;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -56,6 +57,7 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnimatable {
 
@@ -96,7 +98,20 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
 
     @Nullable
     public LonghornEntity getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        return ModEntities.LONG_HORN.get().create(pLevel);
+        LonghornEntity longhorn = ModEntities.LONG_HORN.get().create(pLevel);
+        if (longhorn != null) {
+            UUID uuid = this.getOwnerUUID();
+            if (uuid != null) {
+                longhorn.setOwnerUUID(uuid);
+                longhorn.setTame(true);
+            }
+        }
+
+        return longhorn;
+    }
+
+    protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
+        return pSize.height * 0.8F;
     }
 
     public boolean isFood(ItemStack pStack) {
@@ -118,6 +133,10 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
 
     protected SoundEvent getDeathSound() {
         return SoundEvents.COW_DEATH;
+    }
+
+    protected void playStepSound(BlockPos p_28301_, BlockState p_28302_) {
+        this.playSound(SoundEvents.COW_STEP, 0.15F, 1.0F);
     }
 
     protected float getSoundVolume() {
@@ -169,15 +188,14 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
         super.defineSynchedData();
         this.entityData.define(CHARGE_COOLDOWN_TICKS, 0);
         this.entityData.define(HAS_TARGET, false);
-
     }
 
     @Override
     public boolean doHurtTarget(Entity target) {
-        boolean shouldHurt;
+        boolean shouldHurt = true;
         float damage = (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE);
         float knockback = (float) this.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
-        if (shouldHurt = target.hurt(this.damageSources().mobAttack(this), damage)) {
+        if (shouldHurt == target.hurt(this.damageSources().mobAttack(this), damage)) {
             if (knockback > 0.0f && target instanceof LivingEntity) {
                 ((LivingEntity) target).knockback(knockback * 0.5f, Mth.sin(this.getYRot() * ((float) Math.PI / 180)), -Mth.cos(this.getYRot() * ((float) Math.PI / 180)));
                 this.setDeltaMovement(this.getDeltaMovement().multiply(0.6, 1.0, 0.6));
@@ -251,7 +269,6 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
     public void setHasTarget(boolean hasTarget) {
         this.entityData.set(HAS_TARGET, hasTarget);
     }
-
     public boolean hasTarget() {
         return this.entityData.get(HAS_TARGET);
     }
@@ -378,7 +395,7 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
                 this.longhorn.resetChargeCooldownTicks();
                 return false;
             }
-            return target instanceof Player && longhorn.hasChargeCooldown();
+            return target instanceof Player && longhorn.hasChargeCooldown() ;
         }
 
         @Override
@@ -493,6 +510,10 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
         return true;
     }
 
+    public Vec3 getLeashOffset() {
+        return new Vec3(0.0D, (double)(0.6F * this.getEyeHeight()), (double)(this.getBbWidth() * 0.4F));
+    }
+
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
         Item item = itemstack.getItem();
@@ -522,11 +543,11 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
                 return interactionresult;
             }
 
-        } else if (itemstack.is(Items.GRASS)) {
+        } else if (itemstack.is(Items.GRASS) && this.stunnedTick > 0 ) {
             if (!pPlayer.getAbilities().instabuild) {
                 itemstack.shrink(1);
             }
-            if (this.random.nextInt(3) == 0 && this.stunnedTick > 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, pPlayer)) {
+            if (this.random.nextInt(3) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, pPlayer)) {
                 this.tame(pPlayer);
                 this.navigation.stop();
                 this.setTarget((LivingEntity)null);

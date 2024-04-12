@@ -1,12 +1,12 @@
 {
   "type" :"forge:add_spawns",
   "biomes" : [
-    "minecraft:savanna"
+    "minecraft:jungle"
   ],
   "spawners" : {
-    "type" : "bountiful_critters:long_horn",
+    "type" : "bountiful_critters:toucan",
     "weight" : 1,
     "minCount" : 1,
-    "maxCount" : 3
+    "maxCount" : 2
   }
 }

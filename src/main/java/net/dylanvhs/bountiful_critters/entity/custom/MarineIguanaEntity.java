@@ -219,6 +219,7 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8D, 15));
+        this.goalSelector.addGoal(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
     }
 
     @Override
