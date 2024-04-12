@@ -526,7 +526,7 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
             if (!pPlayer.getAbilities().instabuild) {
                 itemstack.shrink(1);
             }
-            if (this.random.nextInt(3) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, pPlayer)) {
+            if (this.random.nextInt(3) == 0 && this.stunnedTick > 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, pPlayer)) {
                 this.tame(pPlayer);
                 this.navigation.stop();
                 this.setTarget((LivingEntity)null);

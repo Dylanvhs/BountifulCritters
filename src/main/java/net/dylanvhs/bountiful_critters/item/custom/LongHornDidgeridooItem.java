@@ -17,8 +17,8 @@ public class LongHornDidgeridooItem extends Item {
         super(pProperties);
     }
 
-    public UseAnim getUseAnimation(ItemStack pStack) {
-        return UseAnim.DRINK;
+    public UseAnim getUseAnimation(ItemStack itemstack) {
+        return UseAnim.TOOT_HORN;
     }
 
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {

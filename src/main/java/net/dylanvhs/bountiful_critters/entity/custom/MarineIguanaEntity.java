@@ -51,7 +51,6 @@ import javax.annotation.Nonnull;
 public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable {
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
-    private static final int AXOLOTL_TOTAL_AIR_SUPPLY = 6000;
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(StingrayEntity.class, EntityDataSerializers.BOOLEAN);
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.SEAGRASS);
 
@@ -201,32 +200,6 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         return true;
     }
 
-    public void baseTick() {
-        int i = this.getAirSupply();
-        super.baseTick();
-        if (!this.isNoAi()) {
-            this.handleAirSupply(i);
-        }
-
-    }
-
-    protected void handleAirSupply(int pAirSupply) {
-        if (this.isAlive() && !this.isInWaterRainOrBubble()) {
-            this.setAirSupply(pAirSupply - 1);
-            if (this.getAirSupply() == -20) {
-                this.setAirSupply(0);
-                this.hurt(this.damageSources().dryOut(), 2.0F);
-            }
-        } else {
-            this.setAirSupply(this.getMaxAirSupply());
-        }
-
-    }
-
-    public int getMaxAirSupply() {
-        return 3000;
-    }
-
     public boolean isPushedByFluid() {
         return false;
     }
@@ -255,11 +228,11 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
 
-        if (this.getDeltaMovement().horizontalDistanceSqr() > 1.0E-6 && !this.isSwimming()) {
+        if (this.getDeltaMovement().horizontalDistanceSqr() > 1.0E-6 && !this.isInWater()) {
                 geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.marine_iguana.walk", Animation.LoopType.LOOP));
                 return PlayState.CONTINUE;
         }
-        if (this.getDeltaMovement().horizontalDistanceSqr() > 1.0E-6 && this.isInWater()) {
+        if (this.isInWater()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.marine_iguana.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
