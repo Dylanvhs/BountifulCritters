@@ -2,9 +2,7 @@ package net.dylanvhs.bountiful_critters.item;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
-import net.dylanvhs.bountiful_critters.item.custom.EmuEggItem;
-import net.dylanvhs.bountiful_critters.item.custom.ItemModFishBucket;
-import net.dylanvhs.bountiful_critters.item.custom.ModFoods;
+import net.dylanvhs.bountiful_critters.item.custom.*;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -27,6 +25,11 @@ public class ModItems {
             () -> new ItemModFishBucket(ModEntities.KRILL, Fluids.WATER, new Item.Properties()));
     public static final RegistryObject<Item> MARINE_IGUANA_BUCKET = ITEMS.register("marine_iguana_bucket",
             () -> new ItemModFishBucket(ModEntities.MARINE_IGUANA, Fluids.WATER, new Item.Properties()));
+
+    public static final RegistryObject<Item> LONG_HORN_DIDGERIDOO = ITEMS.register("long_horn_didgeridoo",
+            () -> new LongHornDidgeridooItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> LONG_HORN_HORN =
+            ITEMS.register("long_horn_horn", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> RAW_KRILL =
             ITEMS.register("raw_krill", () -> new Item(new Item.Properties().food(ModFoods.RAW_KRILL)));
     public static final RegistryObject<Item> FRIED_KRILL =

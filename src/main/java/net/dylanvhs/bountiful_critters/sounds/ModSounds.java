@@ -17,6 +17,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> EMU_DEATH = registerSoundEvents("emu_death");
 
     public static final RegistryObject<SoundEvent> RETURNING_MEMORY = registerSoundEvents("returning_memory");
+    public static final RegistryObject<SoundEvent> LONG_HORN_DIDGERIDOO = registerSoundEvents("long_horn_didgeridoo");
 
 
     private static RegistryObject<SoundEvent> registerSoundEvents(String name) {

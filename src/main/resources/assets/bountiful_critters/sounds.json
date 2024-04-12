@@ -38,6 +38,21 @@
         "name": "bountiful_critters:emu_death"
       }
     ]
+  },
+
+  "long_horn_didgeridoo": {
+    "subtitle": "sounds.bountiful_critters:long_horn_didgeridoo",
+    "sounds": [
+      {
+        "name": "bountiful_critters:didgeridoo1"
+      },
+      {
+        "name": "bountiful_critters:didgeridoo2"
+      },
+      {
+        "name": "bountiful_critters:didgeridoo3"
+      }
+    ]
   }
 }
 

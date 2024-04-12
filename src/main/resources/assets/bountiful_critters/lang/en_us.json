@@ -13,6 +13,8 @@
   "item.bountiful_critters.fried_krill": "Fried Krill",
   "item.bountiful_critters.emu_egg": "Emu Egg",
   "item.bountiful_critters.boiled_emu_egg": "Boiled Emu Egg",
+  "item.bountiful_critters.long_horn_horn": "Long Horn Horn",
+  "item.bountiful_critters.long_horn_didgeridoo": "Long Horn Didgeridoo",
 
   "item.bountiful_critters.emu_spawn_egg" : "Emu Spawn Egg",
   "item.bountiful_critters.stingray_spawn_egg" : "Stingray Spawn Egg",
@@ -48,6 +50,8 @@
   "sounds.bountiful_critters:emu_ambient": "Emu Grunts",
   "sounds.bountiful_critters:emu_hurt": "Emu Hurts",
   "sounds.bountiful_critters:emu_death": "Emu Dies",
+
+  "sounds.bountiful_critters:long_horn_didgeridoo": "Didgeridoo Is Being Blown",
 
   "item.bountiful_critters.returning_memory_music_disc": "Music Disc",
   "item.bountiful_critters.returning_memory_music_disc.desc": "Dylanvhs - Returning Memory"

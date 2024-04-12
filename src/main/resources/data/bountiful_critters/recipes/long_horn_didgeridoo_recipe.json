@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:blue_dye"
+    },
+    "X": {
+      "item": "bountiful_critters:long_horn_horn"
+    },
+    "B": {
+      "item": "minecraft:honeycomb"
+    }
+  },
+  "pattern": [
+    " B ",
+    "#X#",
+    " B "
+  ],
+  "result": {
+    "item": "minecraft:item_frame"
+  },
+  "show_notification": true
+}
