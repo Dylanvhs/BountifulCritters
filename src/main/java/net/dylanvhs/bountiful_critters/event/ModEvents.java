@@ -38,7 +38,7 @@ public final class ModEvents {
         event.put(ModEntities.KRILL.get(), KrillEntity.setAttributes());
         event.put(ModEntities.MARINE_IGUANA.get(), MarineIguanaEntity.setAttributes());
         event.put(ModEntities.LONG_HORN.get(), LonghornEntity.setAttributes());
-        event.put(ModEntities.TOUCAN.get(), LonghornEntity.setAttributes());
+        event.put(ModEntities.TOUCAN.get(), ToucanEntity.setAttributes());
 
     }
 
