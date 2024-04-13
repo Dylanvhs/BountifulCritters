@@ -55,7 +55,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<ToucanEntity>> TOUCAN =
             ENTITY_TYPES.register("toucan",
                     () -> EntityType.Builder.of(ToucanEntity::new, MobCategory.AMBIENT)
-                            .sized(1.25f, 1.7f)
+                            .sized(0.5f, 1f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "toucan").toString()));
 
 
