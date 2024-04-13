@@ -56,17 +56,11 @@ public class ToucanEntity extends Animal implements GeoEntity, FlyingAnimal {
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(StingrayEntity.class, EntityDataSerializers.INT);
     public ToucanEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        switchNavigator(true);
+        this.moveControl = new FlyingMoveControl(this, 10, false);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.COCOA, -1.0F);
     }
-
-    public static final EntityDataAccessor<Boolean> FLYING = SynchedEntityData.defineId(ToucanEntity.class, EntityDataSerializers.BOOLEAN);
-    public float prevFlyProgress;
-    public float flyProgress;
-    private boolean isLandNavigator;
-    private int timeFlying;
 
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
@@ -119,45 +113,6 @@ public class ToucanEntity extends Animal implements GeoEntity, FlyingAnimal {
         return false;
     }
 
-    public void setFlying(boolean flying) {
-        this.entityData.set(FLYING, flying);
-    }
-
-    public void tick() {
-        super.tick();
-
-        this.prevFlyProgress = flyProgress;
-        if (this.isFlying() && flyProgress < 5F) {
-            flyProgress++;
-        }
-        if (!this.isFlying() && flyProgress > 0F) {
-            flyProgress--;
-        }
-
-        if (!level().isClientSide) {
-            if (isFlying() && this.isLandNavigator) {
-                switchNavigator(false);
-            }
-            if (!isFlying() && !this.isLandNavigator) {
-                switchNavigator(true);
-            }
-            if (this.isFlying()) {
-                if (this.isFlying() && !this.onGround()) {
-                    if (!this.isInWaterOrBubble()) {
-                        this.setDeltaMovement(this.getDeltaMovement().multiply(1F, 0.6F, 1F));
-
-                    }
-                }
-                if (this.onGround() && timeFlying > 20) {
-                    this.setFlying(false);
-                }
-                this.timeFlying++;
-            } else {
-                this.timeFlying = 0;
-            }
-        }
-    }
-
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 6.0D).add(Attributes.FLYING_SPEED, (double)0.4F).add(Attributes.MOVEMENT_SPEED, (double)0.2F);
     }
@@ -187,13 +142,11 @@ public class ToucanEntity extends Animal implements GeoEntity, FlyingAnimal {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("Variant", this.getVariant());
-        compound.putBoolean("Flying", this.isFlying());
     }
 
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.setVariant(compound.getInt("Variant"));
-        this.setFlying(compound.getBoolean("Flying"));
     }
 
     public static boolean canSpawn(EntityType<ToucanEntity> pParrot, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom) {
@@ -221,10 +174,7 @@ public class ToucanEntity extends Animal implements GeoEntity, FlyingAnimal {
     }
 
     public boolean isFlying() {
-        if (!this.onGround()) {
-            return this.entityData.get(FLYING);
-        }
-        else return false;
+        return !this.onGround();
     }
 
     public Vec3 getLeashOffset() {
@@ -251,107 +201,8 @@ public class ToucanEntity extends Animal implements GeoEntity, FlyingAnimal {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(VARIANT, 0);
-        this.entityData.define(FLYING, false);
     }
-
-    private void switchNavigator(boolean onLand) {
-        if (onLand) {
-            this.moveControl = new MoveControl(this);
-            this.navigation = new GroundPathNavigation(this, level());
-            this.isLandNavigator = true;
-        } else {
-            this.moveControl = new FlyingMoveController(this, 0.6F, false, true);
-            this.navigation = new FlyingPathNavigation(this, level()) {
-                public boolean isStableDestination(BlockPos pos) {
-                    return !this.level.getBlockState(pos.below(2)).isAir();
-                }
-            };
-            navigation.setCanFloat(false);
-            this.isLandNavigator = false;
-        }
-    }
-
-    public Vec3 getBlockGrounding(Vec3 fleePos) {
-        final float radius = 3.15F * -3 - this.getRandom().nextInt(24);
-        float neg = this.getRandom().nextBoolean() ? 1 : -1;
-        float renderYawOffset = this.yBodyRot;
-        float angle = (0.01745329251F * renderYawOffset) + 3.15F + (this.getRandom().nextFloat() * neg);
-        final double extraX = radius * Mth.sin(Mth.PI + angle);
-        final double extraZ = radius * Mth.cos(angle);
-        final BlockPos radialPos = new BlockPos((int) (fleePos.x() + extraX), (int) getY(), (int) (fleePos.z() + extraZ));
-        BlockPos ground = this.getQuetzalGround(radialPos);
-        if (ground.getY() == -64) {
-            return this.position();
-        } else {
-            ground = this.blockPosition();
-            while (ground.getY() > -64 && !level().getBlockState(ground).isSolid()) {
-                ground = ground.below();
-            }
-        }
-        if (!this.isTargetBlocked(Vec3.atCenterOf(ground.above()))) {
-            return Vec3.atCenterOf(ground);
-        }
-        return null;
-    }
-
-    public Vec3 getBlockInViewAway(Vec3 fleePos, float radiusAdd) {
-        float radius = 5 + radiusAdd + this.getRandom().nextInt(5);
-        float neg = this.getRandom().nextBoolean() ? 1 : -1;
-        float renderYawOffset = this.yBodyRot;
-        float angle = (0.01745329251F * renderYawOffset) + 3.15F + (this.getRandom().nextFloat() * neg);
-        double extraX = radius * Mth.sin((float) (Math.PI + angle));
-        double extraZ = radius * Mth.cos(angle);
-        final BlockPos radialPos = new BlockPos((int) (fleePos.x() + extraX), (int) getY(), (int) (fleePos.z() + extraZ));
-        BlockPos ground = getQuetzalGround(radialPos);
-        int distFromGround = (int) this.getY() - ground.getY();
-        int flightHeight = 5 + this.getRandom().nextInt(5);
-        int j = this.getRandom().nextInt(5) + 5;
-
-        BlockPos newPos = ground.above(distFromGround > 5 ? flightHeight : j);
-        if (!this.isTargetBlocked(Vec3.atCenterOf(newPos)) && this.distanceToSqr(Vec3.atCenterOf(newPos)) > 1) {
-            return Vec3.atCenterOf(newPos);
-        }
-        return null;
-    }
-
-
-
-    public boolean isTargetBlocked(Vec3 target) {
-        Vec3 Vector3d = new Vec3(this.getX(), this.getEyeY(), this.getZ());
-
-        return this.level().clip(new ClipContext(Vector3d, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)).getType() != HitResult.Type.MISS;
-    }
-
-    public boolean causeFallDamage(float distance, float damageMultiplier) {
-        return false;
-    }
-
-    protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
-    }
-
-    private boolean isOverWaterOrVoid() {
-        BlockPos position = this.blockPosition();
-        while (position.getY() > -65 && level().isEmptyBlock(position)) {
-            position = position.below();
-        }
-        return !level().getFluidState(position).isEmpty() || level().getBlockState(position).is(Blocks.VINE) || position.getY() <= -65;
-    }
-
-    public BlockPos getQuetzalGround(BlockPos in) {
-        BlockPos position = new BlockPos(in.getX(), (int) this.getY(), in.getZ());
-        while (position.getY() > -64 && !level().getBlockState(position).isSolid() && level().getFluidState(position).isEmpty()) {
-            position = position.below();
-        }
-        return position;
-    }
-
-    public boolean canBlockBeSeen(BlockPos pos) {
-        double x = pos.getX() + 0.5F;
-        double y = pos.getY() + 0.5F;
-        double z = pos.getZ() + 0.5F;
-        HitResult result = this.level().clip(new ClipContext(new Vec3(this.getX(), this.getY() + (double) this.getEyeHeight(), this.getZ()), new Vec3(x, y, z), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
-        double dist = result.getLocation().distanceToSqr(x, y, z);
-        return dist <= 1.0D || result.getType() == HitResult.Type.MISS;
+    protected void checkFallDamage(double pY, boolean pOnGround, BlockState pState, BlockPos pPos) {
     }
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
