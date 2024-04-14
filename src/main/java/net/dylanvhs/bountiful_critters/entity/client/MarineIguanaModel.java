@@ -58,10 +58,6 @@ public class MarineIguanaModel extends GeoModel<MarineIguanaEntity> {
             head.setRotY(extraDataOfType.netHeadYaw() * ((float)Math.PI / 180F));
             head.setRotX(extraDataOfType.headPitch() * ((float)Math.PI / 180F));
         }
-        if (animatable.isInWater()) {
-            root.setRotX(extraDataOfType.netHeadYaw() * ((float) Math.PI / 180F));
-            root.setRotY(extraDataOfType.headPitch() * ((float) Math.PI / 180F));
-        }
     }
 
 

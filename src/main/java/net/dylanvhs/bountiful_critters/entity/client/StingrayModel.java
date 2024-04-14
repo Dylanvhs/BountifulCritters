@@ -26,13 +26,4 @@ public class StingrayModel extends GeoModel<StingrayEntity> {
     public ResourceLocation getAnimationResource(StingrayEntity animatable) {
         return new ResourceLocation(BountifulCritters.MOD_ID, "animations/stingray.animation.json");
     }
-    public void setCustomAnimations(StingrayEntity animatable, long instanceId, AnimationState<StingrayEntity> animationState) {
-        super.setCustomAnimations(animatable, instanceId, animationState);
-        if (animationState == null) return;
-        EntityModelData extraDataOfType = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
-        CoreGeoBone root = this.getAnimationProcessor().getBone("root");
-        root.setRotX(extraDataOfType.netHeadYaw() * ((float) Math.PI / 180F));
-        root.setRotY(extraDataOfType.headPitch() * ((float) Math.PI / 180F));
-    }
-
 }

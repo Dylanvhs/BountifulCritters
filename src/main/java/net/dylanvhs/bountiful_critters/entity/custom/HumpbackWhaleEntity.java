@@ -94,7 +94,7 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, TEMPTATION_ITEM, false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
-        this.goalSelector.addGoal(6, new HumpbackWhaleJumpGoal(this, 1));
+        this.goalSelector.addGoal(4, new HumpbackWhaleJumpGoal(this, 1));
         this.goalSelector.addGoal(6, new MeleeAttackGoal(this, (double)1.2F, true));
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(0, new RandomSwimmingGoal(this, 1.0D, 10));
