@@ -1,0 +1,109 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.Humpback Whale",
+				"texture_width": 512,
+				"texture_height": 512,
+				"visible_bounds_width": 12,
+				"visible_bounds_height": 4.5,
+				"visible_bounds_offset": [0, 1.75, 0]
+			},
+			"bones": [
+				{
+					"name": "HumpbackWhale",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "body",
+					"parent": "HumpbackWhale",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "bone",
+					"parent": "body",
+					"pivot": [0, 19.5, -9],
+					"cubes": [
+						{"origin": [-25, 0, -24.5], "size": [50, 41, 49], "uv": [0, 0]},
+						{"origin": [-21, 33, -71.5], "size": [42, 8, 47], "uv": [151, 43]},
+						{"origin": [-2, 36, 17.5], "size": [4, 8, 11], "uv": [0, 13]}
+					]
+				},
+				{
+					"name": "blowhole",
+					"parent": "bone",
+					"pivot": [0, 19.5, -9],
+					"cubes": [
+						{"origin": [-6, 41, -33.5], "size": [12, 2, 11], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "baleen",
+					"parent": "bone",
+					"pivot": [0, 29, -48],
+					"cubes": [
+						{"origin": [-16.5, 25, -71.5], "size": [33, 8, 47], "uv": [10, 217]}
+					]
+				},
+				{
+					"name": "lowerjaw",
+					"parent": "bone",
+					"pivot": [-24, 10, -22.5],
+					"cubes": [
+						{"origin": [-25, 10, -75.5], "size": [50, 23, 51], "uv": [0, 90]},
+						{"origin": [-25, 23, -75.55], "size": [50, 1, 51], "uv": [218, 146]}
+					]
+				},
+				{
+					"name": "tongue",
+					"parent": "lowerjaw",
+					"pivot": [0, 26, -25],
+					"cubes": [
+						{"origin": [-7, 23, -50.5], "size": [14, 6, 27], "uv": [347, 141]}
+					]
+				},
+				{
+					"name": "tail",
+					"parent": "body",
+					"pivot": [0, 22.5, 24.5],
+					"cubes": [
+						{"origin": [-15, 9, 24.5], "size": [30, 27, 22], "uv": [0, 164]}
+					]
+				},
+				{
+					"name": "tail2",
+					"parent": "tail",
+					"pivot": [0, 16, 47],
+					"cubes": [
+						{"origin": [-10, 9, 46.5], "size": [20, 14, 17], "uv": [104, 170]}
+					]
+				},
+				{
+					"name": "tailfin",
+					"parent": "tail2",
+					"pivot": [0, 14.5, 61.5],
+					"cubes": [
+						{"origin": [-22, 12, 58.5], "size": [44, 5, 22], "uv": [149, 0]}
+					]
+				},
+				{
+					"name": "rfin",
+					"parent": "body",
+					"pivot": [-24.5, 7, -12.5],
+					"cubes": [
+						{"origin": [-56, 6, -20.5], "size": [31, 2, 16], "uv": [151, 98], "mirror": true}
+					]
+				},
+				{
+					"name": "lfin",
+					"parent": "body",
+					"pivot": [24.5, 7, -12.5],
+					"cubes": [
+						{"origin": [25, 6, -20.5], "size": [31, 2, 16], "uv": [151, 98]}
+					]
+				}
+			]
+		}
+	]
+}

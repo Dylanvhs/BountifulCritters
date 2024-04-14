@@ -47,10 +47,6 @@ public class KrillEntity extends AbstractSchoolingFish implements GeoEntity, Buc
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return AbstractSchoolingFish.createMobAttributes().add(Attributes.MAX_HEALTH, 4.0D);
-    }
-
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
