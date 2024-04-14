@@ -67,10 +67,12 @@ public class HumpbackWhaleJumpGoal extends JumpGoal {
         Direction direction = this.liopleurodon.getMotionDirection();
         this.liopleurodon.setDeltaMovement(this.liopleurodon.getDeltaMovement().add((double) direction.getStepX() * 0.6D, 1D, (double) direction.getStepZ() * 0.6D));
         this.liopleurodon.getNavigation().stop();
+        this.liopleurodon.setSprinting(true);
     }
 
     public void stop() {
         this.liopleurodon.setXRot(0.0F);
+        this.liopleurodon.setSprinting(false);
     }
 
     public void tick() {

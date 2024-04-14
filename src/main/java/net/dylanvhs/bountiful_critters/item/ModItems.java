@@ -66,6 +66,9 @@ public class ModItems {
     public static final RegistryObject<Item> TOUCAN_SPAWN_EGG = ITEMS.register("toucan_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.TOUCAN, 0x1d1d21, 0xff8c1d, new Item.Properties()));
 
+    public static final RegistryObject<Item> HUMPBACK_WHALE_SPAWN_EGG = ITEMS.register("humpback_whale_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.HUMPBACK_WHALE, 0x2e4044, 0x90959a, new Item.Properties()));
+
 
 
     public static void register(IEventBus eventBus) {

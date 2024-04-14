@@ -23,6 +23,7 @@
   "item.bountiful_critters.marine_iguana_spawn_egg" : "Marine Iguana Spawn Egg",
   "item.bountiful_critters.long_horn_spawn_egg" : "Long Horn Cow Spawn Egg",
   "item.bountiful_critters.toucan_spawn_egg" : "Toucan Spawn Egg",
+  "item.bountiful_critters.humpback_whale_spawn_egg" : "Humpback Whale Spawn Egg",
 
   "entity.bountiful_critters.stingray.variant_gray": "Gray",
   "entity.bountiful_critters.stingray.variant_muddy": "Muddy",
@@ -38,6 +39,7 @@
   "entity.bountiful_critters.marine_iguana" : "Marine Iguana",
   "entity.bountiful_critters.long_horn" : "Long Horn Cow",
   "entity.bountiful_critters.toucan" : "Toucan",
+  "entity.bountiful_critters.humpback_whale" : "Humpback Whale",
   "entity.bountiful_critters.emu_egg_projectile" : "Emu Egg",
 
   "advancements.husbandry.collect_stingray.title" : "Is That A Swimming Pancake?",

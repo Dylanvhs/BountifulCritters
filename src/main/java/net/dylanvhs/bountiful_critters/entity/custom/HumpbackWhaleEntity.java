@@ -39,6 +39,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -52,7 +54,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import javax.annotation.Nullable;
 
 public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
-
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(ModItems.RAW_KRILL.get());
@@ -103,10 +104,9 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
         return ModEntities.HUMPBACK_WHALE.get().create(pLevel);
     }
 
-    public static boolean canSpawn(EntityType<HumpbackWhaleEntity> pDrowned, ServerLevelAccessor pServerLevel, MobSpawnType pMobSpawnType, BlockPos pPos, RandomSource pRandom) {
-        if (pServerLevel.getFluidState(pPos.below()).is(FluidTags.WATER)) {
-            return true;
-        } else return false;
+    public static <T extends Mob> boolean canSpawn(EntityType type, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223317_3_, RandomSource random) {
+        BlockState blockstate = worldIn.getBlockState(p_223317_3_.below());
+        return blockstate.is(Blocks.WATER);
     }
     protected PathNavigation createNavigation(Level p_27480_) {
         return new WaterBoundPathNavigation(this, p_27480_);
@@ -299,12 +299,15 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
     }
 
     private <T extends GeoAnimatable> PlayState predicate(software.bernie.geckolib.core.animation.AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
-       if (geoAnimatableAnimationState.isMoving()) {
-
-           geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.humpback_whale.swim", Animation.LoopType.LOOP));
-           return PlayState.CONTINUE;
-
-       } else
+        if (geoAnimatableAnimationState.isMoving()) {
+            if (this.isSprinting()) {
+                geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.humpback_whale.jump", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            } else {
+                geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.humpback_whale.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            }
+        } else
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.humpback_whale.swim", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }

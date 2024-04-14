@@ -82,6 +82,9 @@ public class BountifulCritters
                     (ModEntities.TOUCAN.get(), ToucanRenderer:: new);
 
             EntityRenderers.register
+                    (ModEntities.HUMPBACK_WHALE.get(), HumpbackWhaleRenderer:: new);
+
+            EntityRenderers.register
                     (ModEntities.EMU_EGG.get(), ThrownItemRenderer::new);
 
         }

@@ -28,6 +28,7 @@ public final class ModEvents {
         e.register(ModEntities.MARINE_IGUANA.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, MarineIguanaEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
         e.register(ModEntities.LONG_HORN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, LonghornEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
         e.register(ModEntities.TOUCAN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, ToucanEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
+        e.register(ModEntities.HUMPBACK_WHALE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, HumpbackWhaleEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
     }
 
     @SubscribeEvent
@@ -39,6 +40,7 @@ public final class ModEvents {
         event.put(ModEntities.MARINE_IGUANA.get(), MarineIguanaEntity.setAttributes());
         event.put(ModEntities.LONG_HORN.get(), LonghornEntity.setAttributes());
         event.put(ModEntities.TOUCAN.get(), ToucanEntity.setAttributes());
+        event.put(ModEntities.HUMPBACK_WHALE.get(), HumpbackWhaleEntity.setAttributes());
 
     }
 
