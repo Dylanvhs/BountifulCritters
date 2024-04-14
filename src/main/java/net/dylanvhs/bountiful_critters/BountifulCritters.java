@@ -19,6 +19,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Mod(BountifulCritters.MOD_ID)
 public class BountifulCritters
 {
@@ -26,6 +29,7 @@ public class BountifulCritters
     public static final String MOD_ID = "bountiful_critters";
 
     private static final Logger LOGGER = LogUtils.getLogger();
+    public static final List<Runnable> CALLBACKS = new ArrayList<>();
     public BountifulCritters()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -86,6 +90,9 @@ public class BountifulCritters
 
             EntityRenderers.register
                     (ModEntities.HUMPBACK_WHALE.get(), HumpbackWhaleRenderer:: new);
+
+            EntityRenderers.register
+                    (ModEntities.PILLBUG.get(), PillbugRenderer:: new);
 
             EntityRenderers.register
                     (ModEntities.EMU_EGG.get(), ThrownItemRenderer::new);

@@ -5,10 +5,7 @@ import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.custom.*;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.RecordItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -30,7 +27,7 @@ public class ModItems {
             () -> new ItemModFishBucket(ModEntities.MARINE_IGUANA, Fluids.WATER, new Item.Properties()));
 
     public static final RegistryObject<Item> POTTED_PILLBUG = ITEMS.register("potted_pillbug",
-            () -> new PottedPillBugItem(new Item.Properties().stacksTo(1)));
+            () ->  new ModCatchableItem(ModEntities.PILLBUG::get, Items.FLOWER_POT, false, new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> LONG_HORN_DIDGERIDOO = ITEMS.register("long_horn_didgeridoo",
             () -> new LongHornDidgeridooItem(new Item.Properties().stacksTo(1)));
@@ -48,9 +45,8 @@ public class ModItems {
             ITEMS.register("emu_egg", () -> new EmuEggItem(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> BOILED_EMU_EGG =
             ITEMS.register("boiled_emu_egg", () -> new Item(new Item.Properties().food(ModFoods.BOILED_EMU_EGG).stacksTo(16)));
-
     public static final RegistryObject<Item> RAW_PILLBUG =
-            ITEMS.register("raw_pillbug", () -> new Item(new Item.Properties()));
+            ITEMS.register("raw_pillbug", () -> new Item(new Item.Properties().food(ModFoods.RAW_PILLBUG)));
     public static final RegistryObject<Item> ROASTED_PILLBUG =
             ITEMS.register("roasted_pillbug", () -> new BlockItem(ModBlocks.ROASTED_PILLBUG_BLOCK.get(), (new Item.Properties()).stacksTo(1)));
 
@@ -79,6 +75,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> HUMPBACK_WHALE_SPAWN_EGG = ITEMS.register("humpback_whale_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.HUMPBACK_WHALE, 0x2e4044, 0x90959a, new Item.Properties()));
+
+    public static final RegistryObject<Item> PILLBUG_SPAWN_EGG = ITEMS.register("pillbug_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.PILLBUG, 0x464e4b, 0x182020, new Item.Properties()));
 
 
 

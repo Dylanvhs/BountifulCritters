@@ -301,7 +301,7 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
             --this.stunnedTick;
             this.stunEffect();
             if (random.nextFloat() <= 0.01F) {
-                if (random.nextFloat() < 0.01F) {
+                if (random.nextFloat() < 0.05F) {
                     this.spawnAtLocation(ModItems.LONG_HORN_HORN.get());
                 }
             }

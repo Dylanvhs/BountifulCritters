@@ -64,6 +64,12 @@ public class ModEntities {
                             .sized(3.75f, 3.75f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "humpback_whale").toString()));
 
+    public static final RegistryObject<EntityType<PillbugEntity>> PILLBUG =
+            ENTITY_TYPES.register("pillbug",
+                    () -> EntityType.Builder.of(PillbugEntity::new, MobCategory.MONSTER)
+                            .sized(3.75f, 3.75f)
+                            .build(new ResourceLocation(BountifulCritters.MOD_ID, "pillbug").toString()));
+
 
     public static final RegistryObject<EntityType<EmuEggEntity>> EMU_EGG =
                     ENTITY_TYPES.register("emu_egg_projectile", () -> EntityType.Builder.<EmuEggEntity>of(EmuEggEntity::new, MobCategory.MISC)
