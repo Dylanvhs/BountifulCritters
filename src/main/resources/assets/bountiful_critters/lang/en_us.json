@@ -15,9 +15,10 @@
   "item.bountiful_critters.boiled_emu_egg": "Boiled Emu Egg",
   "item.bountiful_critters.long_horn_horn": "Long Horn Horn",
   "item.bountiful_critters.long_horn_didgeridoo": "Long Horn Didgeridoo",
-  "item.bountiful_critters.roasted_pillbug": "Roasted Pillbug",
+  "item.bountiful_critters.raw_pillbug": "Raw Pill Bug",
+  "item.bountiful_critters.roasted_pillbug": "Roasted Pill Bug",
 
-  "block.bountiful_critters.roasted_pillbug_block": "Roasted Pillbug",
+  "block.bountiful_critters.roasted_pillbug_block": "Roasted Pill Bug",
 
   "item.bountiful_critters.emu_spawn_egg" : "Emu Spawn Egg",
   "item.bountiful_critters.stingray_spawn_egg" : "Stingray Spawn Egg",
@@ -27,6 +28,7 @@
   "item.bountiful_critters.long_horn_spawn_egg" : "Long Horn Cow Spawn Egg",
   "item.bountiful_critters.toucan_spawn_egg" : "Toucan Spawn Egg",
   "item.bountiful_critters.humpback_whale_spawn_egg" : "Humpback Whale Spawn Egg",
+  "item.bountiful_critters.pillbug_spawn_egg" : "Pill Bug Spawn Egg",
 
   "entity.bountiful_critters.stingray.variant_gray": "Gray",
   "entity.bountiful_critters.stingray.variant_muddy": "Muddy",
@@ -43,6 +45,7 @@
   "entity.bountiful_critters.long_horn" : "Long Horn Cow",
   "entity.bountiful_critters.toucan" : "Toucan",
   "entity.bountiful_critters.humpback_whale" : "Humpback Whale",
+  "entity.bountiful_critters.pillbug" : "Pill Bug",
   "entity.bountiful_critters.emu_egg_projectile" : "Emu Egg",
 
   "advancements.husbandry.collect_stingray.title" : "Is That A Swimming Pancake?",
@@ -52,7 +55,10 @@
   "advancements.husbandry.collect_sunfish.description" : "Collect A Sunfish",
 
   "advancements.husbandry.collect_boiled_emu_egg.title" : "This Could've Been A Baby Emu!",
-  "advancements.husbandry.collect_boiled_emu_egg.description" : "Collect A Boiled Emu Egg",
+  "advancements.husbandry.collect_boiled_emu_egg.description" : "Cook A Emu Egg Into A Boiled Emu Egg",
+
+  "advancements.husbandry.collect_pillbug.title" : "Unusual Catch",
+  "advancements.husbandry.collect_pillbug.description" : "Collect A Pill Bug",
 
   "sounds.bountiful_critters:emu_ambient": "Emu Grunts",
   "sounds.bountiful_critters:emu_hurt": "Emu Hurts",

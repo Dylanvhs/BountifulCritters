@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "bountiful_critters:raw_pillbug"
+  },
+  "result": "bountiful_critters:roasted_pillbug",
+  "experience": 0.25,
+  "cookingtime": 120
+}

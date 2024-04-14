@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "bountiful_critters:raw_pillbug"
+  },
+  "result": "bountiful_critters:roasted_pillbug",
+  "experience": 0.30,
+  "cookingtime": 140
+}
