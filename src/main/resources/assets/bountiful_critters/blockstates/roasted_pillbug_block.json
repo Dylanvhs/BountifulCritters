@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "bites=0": {
+      "model": "bountiful_critters:block/roasted_pillbug"
+    },
+    "bites=1": {
+      "model": "bountiful_critters:block/roasted_pillbug_1"
+    },
+    "bites=2": {
+      "model": "bountiful_critters:block/roasted_pillbug_2"
+    },
+    "bites=3": {
+      "model": "bountiful_critters:block/roasted_pillbug_3"
+    }
+  }
+}

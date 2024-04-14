@@ -1,12 +1,15 @@
 package net.dylanvhs.bountiful_critters.item;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
+import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.custom.*;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.RecordItem;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -42,6 +45,9 @@ public class ModItems {
             ITEMS.register("emu_egg", () -> new EmuEggItem(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> BOILED_EMU_EGG =
             ITEMS.register("boiled_emu_egg", () -> new Item(new Item.Properties().food(ModFoods.BOILED_EMU_EGG).stacksTo(16)));
+
+    public static final RegistryObject<Item> ROASTED_PILLBUG =
+            ITEMS.register("roasted_pillbug", () -> new BlockItem(ModBlocks.ROASTED_PILLBUG_BLOCK.get(), (new Item.Properties()).stacksTo(1)));
 
     public static final RegistryObject<Item> RETURNING_MEMORY_MUSIC_DISC = ITEMS.register("returning_memory_music_disc",
             () -> new RecordItem(15, ModSounds.RETURNING_MEMORY, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 6280));

@@ -1,11 +1,16 @@
 package net.dylanvhs.bountiful_critters.block;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
+import net.dylanvhs.bountiful_critters.block.custom.RoastedPillbugBlock;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CakeBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -16,12 +21,8 @@ import java.util.function.Supplier;
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,
             BountifulCritters.MOD_ID);
-
-
-
-
-
-
+    public static final RegistryObject<Block> ROASTED_PILLBUG_BLOCK = registerBlock("roasted_pillbug_block", () ->
+            new RoastedPillbugBlock(BlockBehaviour.Properties.of().forceSolidOn().strength(0.5F).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY).noOcclusion()));
 
 
 

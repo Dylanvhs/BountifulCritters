@@ -32,6 +32,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.BOILED_EMU_EGG.get());
                         pOutput.accept(ModItems.LONG_HORN_HORN.get());
                         pOutput.accept(ModItems.LONG_HORN_DIDGERIDOO.get());
+                        pOutput.accept(ModItems.ROASTED_PILLBUG.get());
                         pOutput.accept(ModItems.RETURNING_MEMORY_MUSIC_DISC.get());
 
 

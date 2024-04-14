@@ -1,6 +1,7 @@
 package net.dylanvhs.bountiful_critters;
 
 import com.mojang.logging.LogUtils;
+import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.client.*;
 import net.dylanvhs.bountiful_critters.item.ModCreativeModeTabs;
@@ -36,6 +37,8 @@ public class BountifulCritters
         ModEntities.register(modEventBus);
 
         ModSounds.register(modEventBus);
+
+        ModBlocks.BLOCKS.register(modEventBus);
 
 
 
