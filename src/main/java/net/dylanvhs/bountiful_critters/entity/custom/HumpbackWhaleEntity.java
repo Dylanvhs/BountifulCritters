@@ -67,11 +67,21 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
         this.lookControl = new SmoothSwimmingLookControl(this, 15);
     }
 
-    public static AttributeSupplier setAttributes() {
-        return WaterAnimal.createMobAttributes()
+    public static AttributeSupplier.Builder createAttributes() {
+        return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 85D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
-                .add(Attributes.MOVEMENT_SPEED, 1D)
+                .add(Attributes.MOVEMENT_SPEED, 1.5D)
+                .add(Attributes.ARMOR_TOUGHNESS, 0.2f)
+                .add(Attributes.ATTACK_DAMAGE, 4f);
+
+    }
+
+    public static AttributeSupplier setAttributes() {
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 85D)
+                .add(Attributes.FOLLOW_RANGE, 24D)
+                .add(Attributes.MOVEMENT_SPEED, 1.5D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.2f)
                 .add(Attributes.ATTACK_DAMAGE, 4f)
                 .build();
@@ -87,15 +97,8 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
         this.goalSelector.addGoal(6, new HumpbackWhaleJumpGoal(this, 1));
         this.goalSelector.addGoal(6, new MeleeAttackGoal(this, (double)1.2F, true));
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
-        this.goalSelector.addGoal(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
-        this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8D, 15) {
-            @Override
-            public boolean canUse() {
-                return !this.mob.isInWater() && super.canUse();
-            }
-        });
-        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-        this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
+        this.goalSelector.addGoal(0, new RandomSwimmingGoal(this, 1.0D, 10));
+        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, KrillEntity.class, true));
     }
@@ -125,7 +128,7 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
     }
 
     protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
-        return 0.8F;
+        return 1.8F;
     }
 
     public int getMaxHeadXRot() {

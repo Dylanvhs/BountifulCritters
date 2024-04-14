@@ -183,9 +183,14 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         }
 
     }
+    public static AttributeSupplier.Builder createAttributes() {
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 8D)
+                .add(Attributes.MOVEMENT_SPEED, 0.2D);
+    }
 
     public static AttributeSupplier setAttributes() {
-        return Animal.createMobAttributes()
+        return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 8D)
                 .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .build();
@@ -219,7 +224,6 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8D, 15));
-        this.goalSelector.addGoal(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
     }
 
     @Override

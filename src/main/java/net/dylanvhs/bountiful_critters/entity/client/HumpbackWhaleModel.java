@@ -2,7 +2,6 @@ package net.dylanvhs.bountiful_critters.entity.client;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.entity.custom.HumpbackWhaleEntity;
-import net.dylanvhs.bountiful_critters.entity.custom.MarineIguanaEntity;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
@@ -32,6 +31,8 @@ public class HumpbackWhaleModel extends GeoModel<HumpbackWhaleEntity> {
         if (animationState == null) return;
         EntityModelData extraDataOfType = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
         CoreGeoBone root = this.getAnimationProcessor().getBone("HumpbackWhale");
+        root.setRotX(extraDataOfType.netHeadYaw() * ((float) Math.PI / 180F));
+        root.setRotY(extraDataOfType.headPitch() * ((float) Math.PI / 180F));
         if (animatable.isBaby()) {
             root.setScaleX(0.5F);
             root.setScaleY(0.5F);
