@@ -29,6 +29,9 @@ public class ModItems {
     public static final RegistryObject<Item> MARINE_IGUANA_BUCKET = ITEMS.register("marine_iguana_bucket",
             () -> new ItemModFishBucket(ModEntities.MARINE_IGUANA, Fluids.WATER, new Item.Properties()));
 
+    public static final RegistryObject<Item> POTTED_PILLBUG = ITEMS.register("potted_pillbug",
+            () -> new PottedPillBugItem(new Item.Properties().stacksTo(1)));
+
     public static final RegistryObject<Item> LONG_HORN_DIDGERIDOO = ITEMS.register("long_horn_didgeridoo",
             () -> new LongHornDidgeridooItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> LONG_HORN_HORN =
@@ -46,6 +49,8 @@ public class ModItems {
     public static final RegistryObject<Item> BOILED_EMU_EGG =
             ITEMS.register("boiled_emu_egg", () -> new Item(new Item.Properties().food(ModFoods.BOILED_EMU_EGG).stacksTo(16)));
 
+    public static final RegistryObject<Item> RAW_PILLBUG =
+            ITEMS.register("raw_pillbug", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> ROASTED_PILLBUG =
             ITEMS.register("roasted_pillbug", () -> new BlockItem(ModBlocks.ROASTED_PILLBUG_BLOCK.get(), (new Item.Properties()).stacksTo(1)));
 
