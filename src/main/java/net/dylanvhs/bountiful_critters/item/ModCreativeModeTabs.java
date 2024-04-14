@@ -24,6 +24,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.SUNFISH_BUCKET.get());
                         pOutput.accept(ModItems.KRILL_BUCKET.get());
                         pOutput.accept(ModItems.MARINE_IGUANA_BUCKET.get());
+                        pOutput.accept(ModItems.POTTED_PILLBUG.get());
                         pOutput.accept(ModItems.RAW_KRILL.get());
                         pOutput.accept(ModItems.FRIED_KRILL.get());
                         pOutput.accept(ModItems.RAW_SUNFISH_MEAT.get());

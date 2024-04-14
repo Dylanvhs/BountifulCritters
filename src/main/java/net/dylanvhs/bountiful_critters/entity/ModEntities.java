@@ -67,7 +67,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<PillbugEntity>> PILLBUG =
             ENTITY_TYPES.register("pillbug",
                     () -> EntityType.Builder.of(PillbugEntity::new, MobCategory.MONSTER)
-                            .sized(3.75f, 3.75f)
+                            .sized(0.75f, 0.6f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "pillbug").toString()));
 
 

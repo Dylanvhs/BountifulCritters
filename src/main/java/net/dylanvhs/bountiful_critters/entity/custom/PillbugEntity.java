@@ -4,6 +4,7 @@ import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -47,6 +48,7 @@ import java.util.Objects;
 public class PillbugEntity extends Animal implements GeoEntity {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final EntityDataAccessor<Boolean> IS_ROLLED_UP = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BOOLEAN);
+    private int rollingTick;
     public PillbugEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
     }
@@ -126,6 +128,18 @@ public class PillbugEntity extends Animal implements GeoEntity {
         }
     }
 
+    @Override
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+        compound.putInt("RollingTick", this.rollingTick);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        this.rollingTick = compound.getInt("RollingTick");
+    }
+
 
     @Override
     protected void defineSynchedData() {
@@ -143,9 +157,10 @@ public class PillbugEntity extends Animal implements GeoEntity {
             Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(5);
         } else Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(1);
     }
+
     @Override
     protected boolean isImmobile() {
-        return super.isImmobile() || this.isRolledUp();
+        return super.isImmobile() || this.isRolledUp() || this.rollingTick > 0;
     }
     @Override
     public void aiStep() {
@@ -154,6 +169,9 @@ public class PillbugEntity extends Animal implements GeoEntity {
             return;
         }
         this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.isImmobile() ? 0.0 : 0.2);
+        if (this.rollingTick > 0) {
+            --this.rollingTick;
+        }
     }
     @Override
     public void tick() {
@@ -163,20 +181,19 @@ public class PillbugEntity extends Animal implements GeoEntity {
 
         if (!list.isEmpty()) {
             if (list.stream().noneMatch(Entity::isCrouching)) {
-                setRollUp(true);
+                this.rollingTick = 18;
                 getNavigation().stop();
-
+            } else {
+                this.rollingTick = 0;
             }
-            else {
+            if (this.rollingTick == 18) {
+                setRollUp(true);
+            } else {
                 setRollUp(false);
             }
         }
         else {
-            setRollUp(false);
-        }
-
-        if (this.isRolledUp()) {
-
+            this.rollingTick = 0;;
         }
     }
 
@@ -186,8 +203,10 @@ public class PillbugEntity extends Animal implements GeoEntity {
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
-
-        if (isRolledUp()) {
+        if (this.rollingTick == 18 && !this.isRolledUp()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.pillbug.roll_up", Animation.LoopType.PLAY_ONCE));
+            return PlayState.CONTINUE;
+        } else if (this.isRolledUp() && !(this.rollingTick > 0)) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.pillbug.rolled_up", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else if (geoAnimatableAnimationState.isMoving()) {
