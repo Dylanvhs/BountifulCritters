@@ -11,6 +11,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -47,26 +48,14 @@ public class RoastedPillbugBlock extends Block {
 
     }
 
-
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+    }
 
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
         Item item = itemstack.getItem();
-        if (itemstack.is(ItemTags.CANDLES) && pState.getValue(BITES) == 0) {
-            Block block = Block.byItem(item);
-            if (block instanceof CandleBlock) {
-                if (!pPlayer.isCreative()) {
-                    itemstack.shrink(1);
-                }
-
-                pLevel.playSound((Player)null, pPos, SoundEvents.CAKE_ADD_CANDLE, SoundSource.BLOCKS, 1.0F, 1.0F);
-                pLevel.setBlockAndUpdate(pPos, CandleCakeBlock.byCandle(block));
-                pLevel.gameEvent(pPlayer, GameEvent.BLOCK_CHANGE, pPos);
-                pPlayer.awardStat(Stats.ITEM_USED.get(item));
-                return InteractionResult.SUCCESS;
-            }
-        }
-
         if (pLevel.isClientSide) {
             if (eat(pLevel, pPos, pState, pPlayer).consumesAction()) {
                 return InteractionResult.SUCCESS;

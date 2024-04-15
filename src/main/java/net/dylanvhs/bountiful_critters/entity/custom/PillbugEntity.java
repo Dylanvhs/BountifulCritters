@@ -192,14 +192,6 @@ public class PillbugEntity extends Animal implements GeoEntity {
         entityData.set(IS_ROLLED_UP, rollUp);
     }
 
-    public boolean isPoisonTexture() {
-        return entityData.get(IS_POISONED);
-    }
-
-    public void setPoisonTexture(boolean poisonTexture) {
-        entityData.set(IS_ROLLED_UP, poisonTexture);
-    }
-
     @Override
     protected boolean isImmobile() {
         return super.isImmobile() || this.isRolledUp();
@@ -228,6 +220,24 @@ public class PillbugEntity extends Animal implements GeoEntity {
         this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.isImmobile() ? 0.0 : 0.2);
         this.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(this.isRolledUp() ? 0.0 : 0.2);
     }
+
+    public boolean doHurtTarget(Entity pEntity) {
+        boolean flag = pEntity.hurt(this.damageSources().mobAttack(this), (float)((int)this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
+        if (flag) {
+            this.doEnchantDamageEffects(this, pEntity);
+        }
+
+        return flag;
+    }
+
+    public void die(DamageSource pCause) {
+        if (this.hasEffect(MobEffects.POISON)) {
+            setRollUp(false);
+            spawnAtLocation(ModItems.POISONOUS_PILLBUG.get());
+        } else spawnAtLocation(ModItems.RAW_PILLBUG.get());
+        super.die(pCause);
+    }
+
     @Override
     public void tick() {
         super.tick();
@@ -236,9 +246,10 @@ public class PillbugEntity extends Animal implements GeoEntity {
         }
 
         if (this.hasEffect(MobEffects.POISON)) {
+            setRollUp(true);
+        } else {
             setRollUp(false);
-            setPoisonTexture(true);
-        } else setPoisonTexture(false);
+        }
 
         List<Player> list = level().getNearbyEntities(Player.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
 

@@ -17,7 +17,7 @@ public class PillbugRenderer extends GeoEntityRenderer<PillbugEntity> {
     private static final ResourceLocation TEXTURE_POISONOUS = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/pillbug_poisonous.png");
     @Override
     public ResourceLocation getTextureLocation(PillbugEntity animatable) {
-        if (animatable.isPoisonTexture()) {
+        if (!animatable.hasEffect(MobEffects.POISON)) {
             return TEXTURE;
         } else return TEXTURE_POISONOUS;
     }
