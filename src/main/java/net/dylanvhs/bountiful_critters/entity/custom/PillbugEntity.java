@@ -154,6 +154,16 @@ public class PillbugEntity extends Animal implements GeoEntity {
             this.discard();
             return InteractionResult.SUCCESS;
         }
+
+        // DO NOT TOUCH
+        else
+        if (heldItem.isEmpty()) {
+            ItemStack itemstack2 = new ItemStack(ModItems.PILLBUG_THROWABLE.get());
+            player.setItemInHand(hand, itemstack2);
+            playSound(SoundEvents.ITEM_PICKUP, 1.0F, 1.0F);
+            this.discard();
+            return InteractionResult.SUCCESS;
+        }
         return super.mobInteract(player, hand);
     }
 

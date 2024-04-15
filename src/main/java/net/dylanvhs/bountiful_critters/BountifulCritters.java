@@ -97,6 +97,9 @@ public class BountifulCritters
             EntityRenderers.register
                     (ModEntities.EMU_EGG.get(), ThrownItemRenderer::new);
 
+            EntityRenderers.register
+                    (ModEntities.THROWABLE_PILLBUG.get(), ThrownItemRenderer::new);
+
         }
     }
 }
