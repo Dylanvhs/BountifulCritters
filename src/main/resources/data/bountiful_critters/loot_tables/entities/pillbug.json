@@ -3,14 +3,32 @@
   "pools": [
     {
       "rolls": 1,
-      "bonus_rolls": 0,
       "entries": [
         {
           "type": "minecraft:item",
           "name": "bountiful_critters:raw_pillbug"
         }
       ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "bountiful_critters:poisonous_pillbug",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "effects": {
+                  "minecraft:poison": {}
+                }
+              }
+            }
+          ]
+        }
+      ]
     }
-  ],
-  "random_sequence": "minecraft:entities/spider"
+  ]
 }

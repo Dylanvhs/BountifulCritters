@@ -33,6 +33,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.BOILED_EMU_EGG);
         simpleItem(ModItems.RAW_PILLBUG);
         simpleItem(ModItems.ROASTED_PILLBUG);
+        simpleItem(ModItems.POISONOUS_PILLBUG);
         simpleItem(ModItems.POTTED_PILLBUG);
         simpleItem(ModItems.RETURNING_MEMORY_MUSIC_DISC);
 

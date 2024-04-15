@@ -57,6 +57,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BYTE);
     private static final float SPIDER_SPECIAL_EFFECT_CHANCE = 0.1F;
     private static final EntityDataAccessor<Boolean> IS_ROLLED_UP = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IS_POISONED = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BOOLEAN);
     public PillbugEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
     }
@@ -179,6 +180,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(IS_ROLLED_UP, false);
+        this.entityData.define(IS_POISONED, false);
         this.entityData.define(DATA_FLAGS_ID, (byte)0);
     }
 
@@ -186,8 +188,16 @@ public class PillbugEntity extends Animal implements GeoEntity {
         return entityData.get(IS_ROLLED_UP);
     }
 
-    public void setRollUp(boolean hiding) {
-        entityData.set(IS_ROLLED_UP, hiding);
+    public void setRollUp(boolean rollUp) {
+        entityData.set(IS_ROLLED_UP, rollUp);
+    }
+
+    public boolean isPoisonTexture() {
+        return entityData.get(IS_POISONED);
+    }
+
+    public void setPoisonTexture(boolean poisonTexture) {
+        entityData.set(IS_ROLLED_UP, poisonTexture);
     }
 
     @Override
@@ -196,12 +206,11 @@ public class PillbugEntity extends Animal implements GeoEntity {
     }
 
     public boolean hurt(DamageSource pSource, float pAmount) {
+        this.setRollUp(false);
         if (this.isInvulnerableTo(pSource)) {
             return false;
         } else {
             Entity entity = pSource.getEntity();
-            this.setRollUp(false);
-
             if (entity != null && !(entity instanceof Player) && !(entity instanceof AbstractArrow)) {
                 pAmount = (pAmount + 1.0F) / 2.0F;
             }
@@ -225,6 +234,11 @@ public class PillbugEntity extends Animal implements GeoEntity {
         if (!this.level().isClientSide) {
             this.setClimbing(this.horizontalCollision);
         }
+
+        if (this.hasEffect(MobEffects.POISON)) {
+            setRollUp(false);
+            setPoisonTexture(true);
+        } else setPoisonTexture(false);
 
         List<Player> list = level().getNearbyEntities(Player.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
 

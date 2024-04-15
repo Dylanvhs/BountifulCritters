@@ -47,6 +47,8 @@ public class ModItems {
             ITEMS.register("boiled_emu_egg", () -> new Item(new Item.Properties().food(ModFoods.BOILED_EMU_EGG).stacksTo(16)));
     public static final RegistryObject<Item> RAW_PILLBUG =
             ITEMS.register("raw_pillbug", () -> new Item(new Item.Properties().food(ModFoods.RAW_PILLBUG)));
+    public static final RegistryObject<Item> POISONOUS_PILLBUG =
+            ITEMS.register("poisonous_pillbug", () -> new Item(new Item.Properties().food(ModFoods.POISONOUS_PILLBUG)));
     public static final RegistryObject<Item> ROASTED_PILLBUG =
             ITEMS.register("roasted_pillbug", () -> new BlockItem(ModBlocks.ROASTED_PILLBUG_BLOCK.get(), (new Item.Properties()).stacksTo(1)));
 

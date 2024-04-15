@@ -22,4 +22,7 @@ public class ModFoods {
 
     public static final FoodProperties RAW_PILLBUG = new FoodProperties.Builder().nutrition(2)
             .saturationMod(0.2f).effect(() -> new MobEffectInstance(MobEffects.HUNGER, 200), 0.6f).build();
+
+    public static final FoodProperties POISONOUS_PILLBUG = new FoodProperties.Builder().nutrition(1)
+            .saturationMod(0.1f).effect(() -> new MobEffectInstance(MobEffects.POISON, 200), 1f).effect(() -> new MobEffectInstance(MobEffects.HUNGER, 200), 1f).effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 200), 1f).build();
 }
