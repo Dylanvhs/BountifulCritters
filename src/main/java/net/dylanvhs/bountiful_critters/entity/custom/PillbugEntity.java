@@ -12,23 +12,33 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -44,6 +54,8 @@ import java.util.List;
 
 public class PillbugEntity extends Animal implements GeoEntity {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BYTE);
+    private static final float SPIDER_SPECIAL_EFFECT_CHANCE = 0.1F;
     private static final EntityDataAccessor<Boolean> IS_ROLLED_UP = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BOOLEAN);
     public PillbugEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
@@ -52,6 +64,29 @@ public class PillbugEntity extends Animal implements GeoEntity {
     public static <T extends Mob> boolean canSpawn(EntityType type, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223317_3_, RandomSource random) {
         BlockState blockstate = worldIn.getBlockState(p_223317_3_.below());
         return blockstate.is(Blocks.STONE) || blockstate.is(Blocks.DEEPSLATE) || blockstate.is(Blocks.DRIPSTONE_BLOCK);
+    }
+
+    protected PathNavigation createNavigation(Level pLevel) {
+        return new WallClimberNavigation(this, pLevel);
+    }
+
+    public boolean onClimbable() {
+        return this.isClimbing();
+    }
+
+    public boolean isClimbing() {
+        return (this.entityData.get(DATA_FLAGS_ID) & 1) != 0;
+    }
+
+    public void setClimbing(boolean pClimbing) {
+        byte b0 = this.entityData.get(DATA_FLAGS_ID);
+        if (pClimbing) {
+            b0 = (byte)(b0 | 1);
+        } else {
+            b0 = (byte)(b0 & -2);
+        }
+
+        this.entityData.set(DATA_FLAGS_ID, b0);
     }
 
     protected void registerGoals() {
@@ -102,7 +137,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack heldItem = player.getItemInHand(hand);
 
-        if (heldItem.getItem() == Items.FLOWER_POT && this.isAlive() && !this.isBaby()) {
+        if (heldItem.getItem() == Items.FLOWER_POT && this.isAlive() && !isRolledUp()) {
             playSound(SoundEvents.DECORATED_POT_PLACE, 1.0F, 1.0F);
             heldItem.shrink(1);
             ItemStack itemstack1 = new ItemStack(ModItems.POTTED_PILLBUG.get());
@@ -144,6 +179,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(IS_ROLLED_UP, false);
+        this.entityData.define(DATA_FLAGS_ID, (byte)0);
     }
 
     public boolean isRolledUp() {
@@ -158,6 +194,22 @@ public class PillbugEntity extends Animal implements GeoEntity {
     protected boolean isImmobile() {
         return super.isImmobile() || this.isRolledUp();
     }
+
+    public boolean hurt(DamageSource pSource, float pAmount) {
+        if (this.isInvulnerableTo(pSource)) {
+            return false;
+        } else {
+            Entity entity = pSource.getEntity();
+            this.setRollUp(false);
+
+            if (entity != null && !(entity instanceof Player) && !(entity instanceof AbstractArrow)) {
+                pAmount = (pAmount + 1.0F) / 2.0F;
+            }
+
+            return super.hurt(pSource, pAmount);
+        }
+    }
+
     @Override
     public void aiStep() {
         super.aiStep();
@@ -170,6 +222,9 @@ public class PillbugEntity extends Animal implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
+        if (!this.level().isClientSide) {
+            this.setClimbing(this.horizontalCollision);
+        }
 
         List<Player> list = level().getNearbyEntities(Player.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
 
@@ -189,6 +244,54 @@ public class PillbugEntity extends Animal implements GeoEntity {
     }
 
     @Override
+    public boolean canAttack(LivingEntity entity) {
+        boolean prev = super.canAttack(entity);
+        if (isBaby()) {
+            return false;
+        }
+        return prev;
+    }
+
+    public static class PillbugEffectsGroupData implements SpawnGroupData {
+        @javax.annotation.Nullable
+        public MobEffect effect;
+
+        public void setRandomEffect(RandomSource pRandom) {
+            int i = pRandom.nextInt(5);
+            if (i <= 1) {
+                this.effect = MobEffects.MOVEMENT_SPEED;
+            } else if (i <= 2) {
+                this.effect = MobEffects.POISON;
+            } else if (i <= 3) {
+                this.effect = MobEffects.REGENERATION;
+            } else if (i <= 4) {
+                this.effect = MobEffects.FIRE_RESISTANCE;
+            }
+
+        }
+    }
+
+    @javax.annotation.Nullable
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @javax.annotation.Nullable SpawnGroupData pSpawnData, @javax.annotation.Nullable CompoundTag pDataTag) {
+        pSpawnData = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+        RandomSource randomsource = pLevel.getRandom();
+        if (pSpawnData == null) {
+            pSpawnData = new PillbugEntity.PillbugEffectsGroupData();
+            if (pLevel.getDifficulty() == Difficulty.HARD && randomsource.nextFloat() < 0.1F * pDifficulty.getSpecialMultiplier()) {
+                ((PillbugEntity.PillbugEffectsGroupData)pSpawnData).setRandomEffect(randomsource);
+            }
+        }
+
+        if (pSpawnData instanceof PillbugEntity.PillbugEffectsGroupData pillbug$pillbugeffectsgroupdata) {
+            MobEffect mobeffect =  pillbug$pillbugeffectsgroupdata.effect;
+            if (mobeffect != null) {
+                this.addEffect(new MobEffectInstance(mobeffect, -1));
+            }
+        }
+        return pSpawnData;
+    }
+
+    @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 5, this::predicate));
     }
@@ -197,6 +300,12 @@ public class PillbugEntity extends Animal implements GeoEntity {
 
         if (this.isRolledUp()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.pillbug.rolled_up", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        } else if (this.isClimbing() && geoAnimatableAnimationState.isMoving()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.pillbug.climb", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        } else if (this.isClimbing() && !geoAnimatableAnimationState.isMoving()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.pillbug.climb_idle", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else if (geoAnimatableAnimationState.isMoving()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.pillbug.walk", Animation.LoopType.LOOP));

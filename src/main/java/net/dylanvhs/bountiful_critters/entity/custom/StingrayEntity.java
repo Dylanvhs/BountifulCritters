@@ -77,9 +77,6 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
             default -> "gray";
         };
     }
-    public static AttributeSupplier.Builder createAttributes() {
-        return AbstractFish.createMobAttributes().add(Attributes.MAX_HEALTH, 7.0D);
-    }
 
     @Override
     protected void defineSynchedData() {
@@ -185,6 +182,7 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
     public void setFromBucket(boolean p_203706_1_) {
         this.entityData.set(FROM_BUCKET, p_203706_1_);
     }
+
     public static <T extends Mob> boolean canSpawn(EntityType<StingrayEntity> p_223364_0_, LevelAccessor p_223364_1_, MobSpawnType reason, BlockPos p_223364_3_, RandomSource p_223364_4_) {
         return WaterAnimal.checkSurfaceWaterAnimalSpawnRules(p_223364_0_, p_223364_1_, reason, p_223364_3_, p_223364_4_);
     }

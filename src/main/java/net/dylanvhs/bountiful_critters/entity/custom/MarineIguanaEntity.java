@@ -183,11 +183,6 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         }
 
     }
-    public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 8D)
-                .add(Attributes.MOVEMENT_SPEED, 0.2D);
-    }
 
     public static AttributeSupplier setAttributes() {
         return Mob.createMobAttributes()

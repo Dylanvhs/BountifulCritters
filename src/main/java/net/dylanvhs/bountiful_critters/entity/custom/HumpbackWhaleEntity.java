@@ -26,11 +26,13 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -61,23 +63,14 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
         this.lookControl = new SmoothSwimmingLookControl(this, 15);
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 85D)
-                .add(Attributes.FOLLOW_RANGE, 24D)
-                .add(Attributes.MOVEMENT_SPEED, 1.5D)
-                .add(Attributes.ARMOR_TOUGHNESS, 0.2f)
-                .add(Attributes.ATTACK_DAMAGE, 4f);
-
-    }
-
     public static AttributeSupplier setAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 85D)
-                .add(Attributes.FOLLOW_RANGE, 24D)
+                .add(Attributes.FOLLOW_RANGE, 75D)
                 .add(Attributes.MOVEMENT_SPEED, 1.5D)
-                .add(Attributes.ARMOR_TOUGHNESS, 0.2f)
+                .add(Attributes.ARMOR_TOUGHNESS, 0.5f)
                 .add(Attributes.ATTACK_DAMAGE, 4f)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 5f)
                 .build();
     }
 
@@ -91,7 +84,7 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
         this.goalSelector.addGoal(4, new HumpbackWhaleJumpGoal(this, 1));
         this.goalSelector.addGoal(6, new MeleeAttackGoal(this, (double)1.2F, true));
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
-        this.goalSelector.addGoal(0, new RandomSwimmingGoal(this, 1.0D, 10));
+        this.goalSelector.addGoal(3, new RandomSwimmingGoal(this, 1.0D, 10));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, KrillEntity.class, true));
@@ -101,10 +94,16 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
         return ModEntities.HUMPBACK_WHALE.get().create(pLevel);
     }
 
-    public static <T extends Mob> boolean canSpawn(EntityType type, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223317_3_, RandomSource random) {
-        BlockState blockstate = worldIn.getBlockState(p_223317_3_.below());
-        return blockstate.is(Blocks.WATER);
+    public static boolean checkFishSpawnRules(EntityType<? extends HumpbackWhaleEntity> type, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223363_3_, RandomSource randomIn) {
+        return worldIn.getBlockState(p_223363_3_).is(Blocks.WATER) && worldIn.getBlockState(p_223363_3_.above()).is(Blocks.WATER);
     }
+
+    @Override
+    public boolean checkSpawnObstruction(LevelReader worldIn) {
+        return worldIn.isUnobstructed(this);
+    }
+
+
     protected PathNavigation createNavigation(Level p_27480_) {
         return new WaterBoundPathNavigation(this, p_27480_);
     }
@@ -122,7 +121,7 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
     }
 
     protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
-        return 1.8F;
+        return 1.75F;
     }
 
     public int getMaxHeadXRot() {
@@ -141,8 +140,6 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
         return false;
     }
 
-    protected void handleAirSupply(int pAirSupply) {
-    }
     public int getMoistnessLevel() {
         return this.entityData.get(MOISTNESS_LEVEL);
     }
@@ -166,6 +163,16 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
         this.setMoisntessLevel(pCompound.getInt("Moistness"));
+    }
+
+    @Override
+    public boolean isPushedByFluid() {
+        return false;
+    }
+
+    @Override
+    public boolean canBeLeashed(Player player) {
+        return false;
     }
 
     public boolean isFeeding() {

@@ -86,12 +86,6 @@ public class EmuEntity extends Animal implements GeoAnimatable {
         return 0.4F;
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 20.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.3D);
-    }
-
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.2D));

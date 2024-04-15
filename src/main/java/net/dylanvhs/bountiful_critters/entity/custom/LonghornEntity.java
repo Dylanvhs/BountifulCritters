@@ -87,15 +87,6 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
                 .build();
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return LonghornEntity.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 20.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.3D)
-                .add(Attributes.ATTACK_DAMAGE, 8.0D)
-                .add(Attributes.ATTACK_KNOCKBACK, 5.0D)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 0.1D);
-    }
-
     @Nullable
     public LonghornEntity getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
         LonghornEntity longhorn = ModEntities.LONG_HORN.get().create(pLevel);

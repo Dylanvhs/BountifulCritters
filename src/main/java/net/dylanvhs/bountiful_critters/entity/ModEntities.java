@@ -61,7 +61,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<HumpbackWhaleEntity>> HUMPBACK_WHALE =
             ENTITY_TYPES.register("humpback_whale",
                     () -> EntityType.Builder.of(HumpbackWhaleEntity::new, MobCategory.WATER_CREATURE)
-                            .sized(3.75f, 3.75f)
+                            .sized(3.5f, 3.5f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "humpback_whale").toString()));
 
     public static final RegistryObject<EntityType<PillbugEntity>> PILLBUG =
