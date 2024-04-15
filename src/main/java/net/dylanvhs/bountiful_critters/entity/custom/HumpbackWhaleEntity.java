@@ -4,7 +4,6 @@ import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.ai.HumpbackWhaleJumpGoal;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -13,11 +12,8 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.BiomeTags;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -25,20 +21,16 @@ import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.WaterAnimal;
-import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -52,12 +44,14 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(ModItems.RAW_KRILL.get());
     private static final EntityDataAccessor<Integer> MOISTNESS_LEVEL = SynchedEntityData.defineId(HumpbackWhaleEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> IS_FEEDING = SynchedEntityData.defineId(HumpbackWhaleEntity.class, EntityDataSerializers.BOOLEAN);
     public static final int TOTAL_AIR_SUPPLY = 4800;
     private static final int TOTAL_MOISTNESS_LEVEL = 2400;
 
@@ -160,6 +154,7 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(MOISTNESS_LEVEL, 2400);
+        this.entityData.define(IS_FEEDING, false);
     }
 
     public void addAdditionalSaveData(CompoundTag pCompound) {
@@ -167,16 +162,29 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
         pCompound.putInt("Moistness", this.getMoistnessLevel());
     }
 
-    /**
-     * (abstract) Protected helper method to read subclass entity data from NBT.
-     */
+
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
         this.setMoisntessLevel(pCompound.getInt("Moistness"));
     }
 
+    public boolean isFeeding() {
+        return entityData.get(IS_FEEDING);
+    }
+
+    public void setFeeding(boolean feeding) {
+        entityData.set(IS_FEEDING, feeding);
+    }
+
     public void tick() {
         super.tick();
+        List<KrillEntity> list = level().getNearbyEntities(KrillEntity.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
+
+        if (!list.isEmpty()) {
+            setFeeding(true);
+        } else {
+            setFeeding(false);
+        }
 
         if (this.isNoAi()) {
             this.setAirSupply(this.getMaxAirSupply());
@@ -305,6 +313,9 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
         if (geoAnimatableAnimationState.isMoving()) {
             if (this.isSprinting()) {
                 geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.humpback_whale.jump", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            } else if (this.isFeeding()) {
+                geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.humpback_whale.eat", Animation.LoopType.LOOP));
                 return PlayState.CONTINUE;
             } else {
                 geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.humpback_whale.swim", Animation.LoopType.LOOP));

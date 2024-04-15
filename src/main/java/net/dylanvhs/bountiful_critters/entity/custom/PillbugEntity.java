@@ -43,12 +43,10 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.List;
-import java.util.Objects;
 
 public class PillbugEntity extends Animal implements GeoEntity {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final EntityDataAccessor<Boolean> IS_ROLLED_UP = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BOOLEAN);
-    private int rollingTick;
     public PillbugEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
     }
@@ -131,13 +129,11 @@ public class PillbugEntity extends Animal implements GeoEntity {
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        compound.putInt("RollingTick", this.rollingTick);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        this.rollingTick = compound.getInt("RollingTick");
     }
 
 
@@ -153,14 +149,11 @@ public class PillbugEntity extends Animal implements GeoEntity {
 
     public void setRollUp(boolean hiding) {
         entityData.set(IS_ROLLED_UP, hiding);
-        if (this.isRolledUp()) {
-            Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(5);
-        } else Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(1);
     }
 
     @Override
     protected boolean isImmobile() {
-        return super.isImmobile() || this.isRolledUp() || this.rollingTick > 0;
+        return super.isImmobile() || this.isRolledUp();
     }
     @Override
     public void aiStep() {
@@ -169,9 +162,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
             return;
         }
         this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.isImmobile() ? 0.0 : 0.2);
-        if (this.rollingTick > 0) {
-            --this.rollingTick;
-        }
+        this.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(this.isRolledUp() ? 0.0 : 0.2);
     }
     @Override
     public void tick() {
@@ -181,19 +172,16 @@ public class PillbugEntity extends Animal implements GeoEntity {
 
         if (!list.isEmpty()) {
             if (list.stream().noneMatch(Entity::isCrouching)) {
-                this.rollingTick = 18;
-                getNavigation().stop();
-            } else {
-                this.rollingTick = 0;
-            }
-            if (this.rollingTick == 18) {
                 setRollUp(true);
-            } else {
+                getNavigation().stop();
+
+            }
+            else {
                 setRollUp(false);
             }
         }
         else {
-            this.rollingTick = 0;;
+            setRollUp(false);
         }
     }
 
@@ -203,10 +191,8 @@ public class PillbugEntity extends Animal implements GeoEntity {
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
-        if (this.rollingTick == 18 && !this.isRolledUp()) {
-            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.pillbug.roll_up", Animation.LoopType.PLAY_ONCE));
-            return PlayState.CONTINUE;
-        } else if (this.isRolledUp() && !(this.rollingTick > 0)) {
+
+        if (this.isRolledUp()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.pillbug.rolled_up", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else if (geoAnimatableAnimationState.isMoving()) {
