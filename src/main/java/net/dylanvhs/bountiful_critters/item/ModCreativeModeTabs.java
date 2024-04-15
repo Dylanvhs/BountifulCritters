@@ -36,6 +36,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.RAW_PILLBUG.get());
                         pOutput.accept(ModItems.ROASTED_PILLBUG.get());
                         pOutput.accept(ModItems.POISONOUS_PILLBUG.get());
+                        pOutput.accept(ModItems.PILLBUG_THROWABLE.get());
                         pOutput.accept(ModItems.RETURNING_MEMORY_MUSIC_DISC.get());
 
 

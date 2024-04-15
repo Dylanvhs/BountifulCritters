@@ -51,6 +51,8 @@ public class ModItems {
             ITEMS.register("poisonous_pillbug", () -> new Item(new Item.Properties().food(ModFoods.POISONOUS_PILLBUG)));
     public static final RegistryObject<Item> ROASTED_PILLBUG =
             ITEMS.register("roasted_pillbug", () -> new BlockItem(ModBlocks.ROASTED_PILLBUG_BLOCK.get(), (new Item.Properties()).stacksTo(1)));
+    public static final RegistryObject<Item> PILLBUG_THROWABLE =
+            ITEMS.register("pillbug_throwable", () -> new PillbugProjectileItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> RETURNING_MEMORY_MUSIC_DISC = ITEMS.register("returning_memory_music_disc",
             () -> new RecordItem(15, ModSounds.RETURNING_MEMORY, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 6280));

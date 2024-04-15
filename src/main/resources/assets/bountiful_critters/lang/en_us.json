@@ -19,6 +19,8 @@
   "item.bountiful_critters.roasted_pillbug": "Roasted Pill Bug",
   "item.bountiful_critters.poisonous_pillbug": "Poisonous Pill Bug",
   "item.bountiful_critters.potted_pillbug": "Potted Pill Bug",
+  "item.bountiful_critters.pillbug_throwable": "Pill Bug",
+
 
   "block.bountiful_critters.roasted_pillbug_block": "Roasted Pill Bug",
 
@@ -73,5 +75,7 @@
   "sounds.bountiful_critters:long_horn_didgeridoo": "Blows Didgeridoo",
 
   "item.bountiful_critters.returning_memory_music_disc": "Music Disc",
-  "item.bountiful_critters.returning_memory_music_disc.desc": "Dylanvhs - Returning Memory"
+  "item.bountiful_critters.returning_memory_music_disc.desc": "Dylanvhs - Returning Memory",
+
+  "death.attack.pillball_0.entity": "%s got dunked on by a pillbug"
 }
