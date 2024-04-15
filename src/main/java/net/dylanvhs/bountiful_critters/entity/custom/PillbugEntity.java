@@ -22,9 +22,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.monster.Husk;
-import net.minecraft.world.entity.monster.Skeleton;
-import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -53,7 +51,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
 
     public static <T extends Mob> boolean canSpawn(EntityType type, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223317_3_, RandomSource random) {
         BlockState blockstate = worldIn.getBlockState(p_223317_3_.below());
-        return blockstate.is(Blocks.STONE);
+        return blockstate.is(Blocks.STONE) || blockstate.is(Blocks.DEEPSLATE) || blockstate.is(Blocks.DRIPSTONE_BLOCK);
     }
 
     protected void registerGoals() {
@@ -64,9 +62,12 @@ public class PillbugEntity extends Animal implements GeoEntity {
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, Spider.class, 8.0F, 1.2D, 1.2D));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Zombie.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Husk.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Drowned.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Skeleton.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Stray.class, true));
     }
 
     public static AttributeSupplier setAttributes() {
@@ -124,6 +125,8 @@ public class PillbugEntity extends Animal implements GeoEntity {
         if (this.hasCustomName()) {
             bucket.setHoverName(this.getCustomName());
         }
+        CompoundTag compoundnbt = bucket.getOrCreateTag();
+        compoundnbt.putInt("Age", this.getAge());
     }
 
     @Override
