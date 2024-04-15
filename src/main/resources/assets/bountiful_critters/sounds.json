@@ -40,6 +40,41 @@
     ]
   },
 
+  "toucan_ambient": {
+    "subtitle": "sounds.bountiful_critters:toucan_ambient",
+    "sounds": [
+      {
+        "name": "bountiful_critters:toucan_ambient1"
+      },
+      {
+        "name": "bountiful_critters:toucan_ambient2"
+      },
+      {
+        "name": "bountiful_critters:toucan_ambient3"
+      }
+    ]
+  },
+
+  "toucan_hurt": {
+    "subtitle": "sounds.bountiful_critters:toucan_hurt",
+    "sounds": [
+      {
+        "name": "bountiful_critters:toucan_hurt1"
+      },
+      {
+        "name": "bountiful_critters:toucan_hurt2"
+      }
+    ]
+  },
+  "toucan_death": {
+    "subtitle": "sounds.bountiful_critters:toucan_death",
+    "sounds": [
+      {
+        "name": "bountiful_critters:toucan_death"
+      }
+    ]
+  },
+
   "long_horn_didgeridoo": {
     "subtitle": "sounds.bountiful_critters:long_horn_didgeridoo",
     "sounds": [

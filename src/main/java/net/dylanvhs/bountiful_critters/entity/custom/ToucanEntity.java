@@ -1,6 +1,7 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
 import net.dylanvhs.bountiful_critters.entity.ai.FlyingMoveController;
+import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -158,20 +159,25 @@ public class ToucanEntity extends Animal implements GeoEntity, FlyingAnimal {
     }
 
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.PARROT_AMBIENT;
+        return ModSounds.TOUCAN_AMBIENT.get();
     }
 
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        return SoundEvents.PARROT_HURT;
+        return ModSounds.TOUCAN_HURT.get();
     }
 
     protected SoundEvent getDeathSound() {
-        return SoundEvents.PARROT_DEATH;
+        return ModSounds.TOUCAN_DEATH.get();
     }
 
     protected void playStepSound(BlockPos pPos, BlockState pBlock) {
         this.playSound(SoundEvents.PARROT_STEP, 0.15F, 1.0F);
     }
+
+    protected float getSoundVolume() {
+        return 0.6F;
+    }
+
 
     public boolean isFlying() {
         return !this.onGround();

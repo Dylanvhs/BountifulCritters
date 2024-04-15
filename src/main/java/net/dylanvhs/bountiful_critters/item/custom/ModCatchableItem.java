@@ -73,6 +73,7 @@ public class ModCatchableItem extends BucketItem {
             }
             Supplier<? extends EntityType<?>> entitytype = entityType;
             Entity entityType = entitytype.get().spawn((ServerLevel) world, itemstack, context.getPlayer(), blockpos1, MobSpawnType.BUCKET, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP);
+
             if (entityType != null) {
                 if(!context.getPlayer().getAbilities().instabuild) {
                     itemstack.shrink(1);

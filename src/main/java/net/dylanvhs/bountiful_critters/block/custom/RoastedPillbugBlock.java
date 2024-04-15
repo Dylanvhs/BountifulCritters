@@ -31,7 +31,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class RoastedPillbugBlock extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public static final int MAX_BITES = 4;
+    public static final int MAX_BITES = 3;
     public static final IntegerProperty BITES = BlockStateProperties.BITES;
     public static final int FULL_CAKE_SIGNAL = getOutputSignal(0);
     protected static final float AABB_OFFSET = 1.0F;
@@ -77,7 +77,7 @@ public class RoastedPillbugBlock extends Block {
             pPlayer.getFoodData().eat(2, 0.1F);
             int i = pState.getValue(BITES);
             pLevel.gameEvent(pPlayer, GameEvent.EAT, pPos);
-            if (i < 4) {
+            if (i < 3) {
                 pLevel.setBlock(pPos, pState.setValue(BITES, Integer.valueOf(i + 1)), 3);
             } else {
                 pLevel.removeBlock(pPos, false);

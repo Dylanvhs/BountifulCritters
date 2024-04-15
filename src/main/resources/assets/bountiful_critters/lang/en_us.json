@@ -66,6 +66,10 @@
   "sounds.bountiful_critters:emu_hurt": "Emu Hurts",
   "sounds.bountiful_critters:emu_death": "Emu Dies",
 
+  "sounds.bountiful_critters:toucan_ambient": "Toucan Chirps",
+  "sounds.bountiful_critters:toucan_hurt": "Toucan Hurts",
+  "sounds.bountiful_critters:toucan_death": "Toucan Dies",
+
   "sounds.bountiful_critters:long_horn_didgeridoo": "Blows Didgeridoo",
 
   "item.bountiful_critters.returning_memory_music_disc": "Music Disc",

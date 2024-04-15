@@ -83,7 +83,7 @@ public class EmuEntity extends Animal implements GeoAnimatable {
     }
 
     protected float getSoundVolume() {
-        return 0.4F;
+        return 0.6F;
     }
 
     protected void registerGoals() {

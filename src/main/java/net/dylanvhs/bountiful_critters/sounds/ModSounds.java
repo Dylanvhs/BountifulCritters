@@ -16,6 +16,10 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> EMU_HURT = registerSoundEvents("emu_hurt");
     public static final RegistryObject<SoundEvent> EMU_DEATH = registerSoundEvents("emu_death");
 
+    public static final RegistryObject<SoundEvent> TOUCAN_AMBIENT = registerSoundEvents("toucan_ambient");
+    public static final RegistryObject<SoundEvent> TOUCAN_HURT = registerSoundEvents("toucan_hurt");
+    public static final RegistryObject<SoundEvent> TOUCAN_DEATH = registerSoundEvents("toucan_death");
+
     public static final RegistryObject<SoundEvent> RETURNING_MEMORY = registerSoundEvents("returning_memory");
     public static final RegistryObject<SoundEvent> LONG_HORN_DIDGERIDOO = registerSoundEvents("long_horn_didgeridoo");
 

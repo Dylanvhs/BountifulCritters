@@ -30,12 +30,14 @@ import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.FireAspectEnchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -57,7 +59,6 @@ public class PillbugEntity extends Animal implements GeoEntity {
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BYTE);
     private static final float SPIDER_SPECIAL_EFFECT_CHANCE = 0.1F;
     private static final EntityDataAccessor<Boolean> IS_ROLLED_UP = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> IS_POISONED = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BOOLEAN);
     public PillbugEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
     }
@@ -138,7 +139,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack heldItem = player.getItemInHand(hand);
 
-        if (heldItem.getItem() == Items.FLOWER_POT && this.isAlive() && !isRolledUp()) {
+        if (heldItem.getItem() == Items.FLOWER_POT && this.isAlive() && !isBaby() && !isRolledUp()) {
             playSound(SoundEvents.DECORATED_POT_PLACE, 1.0F, 1.0F);
             heldItem.shrink(1);
             ItemStack itemstack1 = new ItemStack(ModItems.POTTED_PILLBUG.get());
@@ -161,8 +162,6 @@ public class PillbugEntity extends Animal implements GeoEntity {
         if (this.hasCustomName()) {
             bucket.setHoverName(this.getCustomName());
         }
-        CompoundTag compoundnbt = bucket.getOrCreateTag();
-        compoundnbt.putInt("Age", this.getAge());
     }
 
     @Override
@@ -180,7 +179,6 @@ public class PillbugEntity extends Animal implements GeoEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(IS_ROLLED_UP, false);
-        this.entityData.define(IS_POISONED, false);
         this.entityData.define(DATA_FLAGS_ID, (byte)0);
     }
 
@@ -198,7 +196,6 @@ public class PillbugEntity extends Animal implements GeoEntity {
     }
 
     public boolean hurt(DamageSource pSource, float pAmount) {
-        this.setRollUp(false);
         if (this.isInvulnerableTo(pSource)) {
             return false;
         } else {
@@ -231,10 +228,14 @@ public class PillbugEntity extends Animal implements GeoEntity {
     }
 
     public void die(DamageSource pCause) {
-        if (this.hasEffect(MobEffects.POISON)) {
-            setRollUp(false);
-            spawnAtLocation(ModItems.POISONOUS_PILLBUG.get());
-        } else spawnAtLocation(ModItems.RAW_PILLBUG.get());
+        if (!this.isBaby()) {
+            if (this.hasEffect(MobEffects.POISON)) {
+                spawnAtLocation(ModItems.POISONOUS_PILLBUG.get());
+            } else if (isOnFire()) {
+                spawnAtLocation(ModItems.ROASTED_PILLBUG.get());
+            } else spawnAtLocation(ModItems.RAW_PILLBUG.get());
+        }
+        setRollUp(false);
         super.die(pCause);
     }
 
@@ -245,9 +246,13 @@ public class PillbugEntity extends Animal implements GeoEntity {
             this.setClimbing(this.horizontalCollision);
         }
 
-        if (this.hasEffect(MobEffects.POISON)) {
+        if (this.hasEffect(MobEffects.POISON) && isRolledUp()) {
             setRollUp(true);
         } else {
+            setRollUp(false);
+        }
+
+        if (!this.onGround() && isRolledUp()) {
             setRollUp(false);
         }
 
