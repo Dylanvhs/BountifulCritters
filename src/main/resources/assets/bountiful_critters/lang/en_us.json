@@ -17,6 +17,7 @@
   "item.bountiful_critters.long_horn_didgeridoo": "Long Horn Didgeridoo",
   "item.bountiful_critters.raw_pillbug": "Raw Pill Bug",
   "item.bountiful_critters.roasted_pillbug": "Roasted Pill Bug",
+  "item.bountiful_critters.potted_pillbug": "Potted Pill Bug",
 
   "block.bountiful_critters.roasted_pillbug_block": "Roasted Pill Bug",
 
@@ -49,16 +50,16 @@
   "entity.bountiful_critters.emu_egg_projectile" : "Emu Egg",
 
   "advancements.husbandry.collect_stingray.title" : "Is That A Swimming Pancake?",
-  "advancements.husbandry.collect_stingray.description" : "Collect A Stingray",
+  "advancements.husbandry.collect_stingray.description" : "Collect a Stingray",
 
   "advancements.husbandry.collect_sunfish.title" : "I Would Bring You The Sun",
-  "advancements.husbandry.collect_sunfish.description" : "Collect A Sunfish",
+  "advancements.husbandry.collect_sunfish.description" : "Collect a Sunfish",
 
   "advancements.husbandry.collect_boiled_emu_egg.title" : "This Could've Been A Baby Emu!",
-  "advancements.husbandry.collect_boiled_emu_egg.description" : "Cook A Emu Egg Into A Boiled Emu Egg",
+  "advancements.husbandry.collect_boiled_emu_egg.description" : "Cook a Emu Egg into a Boiled Emu Egg",
 
   "advancements.husbandry.collect_pillbug.title" : "Unusual Catch",
-  "advancements.husbandry.collect_pillbug.description" : "Collect A Pill Bug",
+  "advancements.husbandry.collect_pillbug.description" : "Collect a Pill Bug",
 
   "sounds.bountiful_critters:emu_ambient": "Emu Grunts",
   "sounds.bountiful_critters:emu_hurt": "Emu Hurts",
