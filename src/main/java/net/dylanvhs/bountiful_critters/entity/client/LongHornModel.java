@@ -35,6 +35,7 @@ public class LongHornModel extends GeoModel<LonghornEntity> {
         CoreGeoBone rhorn = this.getAnimationProcessor().getBone("rhorn");
         CoreGeoBone lhorn = this.getAnimationProcessor().getBone("lhorn");
         CoreGeoBone root = this.getAnimationProcessor().getBone("Longhorn");
+
         if (animatable.isBaby()) {
             root.setScaleX(0.5F);
             root.setScaleY(0.5F);
@@ -44,14 +45,6 @@ public class LongHornModel extends GeoModel<LonghornEntity> {
             head.setScaleY(1.75F);
             head.setScaleZ(1.75F);
 
-            rhorn.setScaleX(0.0F);
-            rhorn.setScaleY(0.0F);
-            rhorn.setScaleZ(0.0F);
-
-            lhorn.setScaleX(0.0F);
-            lhorn.setScaleY(0.0F);
-            lhorn.setScaleZ(0.0F);
-
         } else {
             root.setScaleX(1.0F);
             root.setScaleY(1.0F);
@@ -60,22 +53,40 @@ public class LongHornModel extends GeoModel<LonghornEntity> {
             head.setScaleX(1.0F);
             head.setScaleY(1.0F);
             head.setScaleZ(1.0F);
+        }
+
+        if (!animatable.hasLeftHorn()) {
+
+            lhorn.setScaleX(0F);
+            lhorn.setScaleY(0F);
+            lhorn.setScaleZ(0F);
+
+        } else {
+
+            lhorn.setScaleX(1.0F);
+            lhorn.setScaleY(1.0F);
+            lhorn.setScaleZ(1.0F);
+
+        }
+
+        if (!animatable.hasRightHorn()) {
+
+            rhorn.setScaleX(0F);
+            rhorn.setScaleY(0F);
+            rhorn.setScaleZ(0F);
+
+        } else {
 
             rhorn.setScaleX(1.0F);
             rhorn.setScaleY(1.0F);
             rhorn.setScaleZ(1.0F);
 
-            lhorn.setScaleX(1.0F);
-            lhorn.setScaleY(1.0F);
-            lhorn.setScaleZ(1.0F);
         }
+
         if (!animatable.isSprinting()) {
 
-            head.setRotY(extraDataOfType.netHeadYaw() * ((float)Math.PI / 180F));
-            head.setRotX(extraDataOfType.headPitch() * ((float)Math.PI / 180F));
+            head.setRotY(extraDataOfType.netHeadYaw() * ((float) Math.PI / 180F));
+            head.setRotX(extraDataOfType.headPitch() * ((float) Math.PI / 180F));
         }
     }
-
-
-
 }

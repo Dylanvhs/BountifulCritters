@@ -150,7 +150,6 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
                 }
             }
         }
-
     }
 
     public void playerTouch(Player pEntity) {

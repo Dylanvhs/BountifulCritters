@@ -24,12 +24,11 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.*;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Ghast;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -38,8 +37,8 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.pathfinder.Target;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fml.common.Mod;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -57,12 +56,14 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Predicate;
 
 public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnimatable {
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.GRASS);
+
+    private static final EntityDataAccessor<Boolean> DATA_HAS_LEFT_HORN = SynchedEntityData.defineId(LonghornEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_HAS_RIGHT_HORN = SynchedEntityData.defineId(LonghornEntity.class, EntityDataSerializers.BOOLEAN);
     private int stunnedTick;
     private boolean canBePushed = true;
     private UUID persistentAngerTarget;
@@ -167,18 +168,32 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("StunTick", this.stunnedTick);
+        compound.putBoolean("HasLeftHorn", this.hasLeftHorn());
+        compound.putBoolean("HasRightHorn", this.hasRightHorn());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.stunnedTick = compound.getInt("StunTick");
+        this.entityData.set(DATA_HAS_LEFT_HORN, compound.getBoolean("HasLeftHorn"));
+        this.entityData.set(DATA_HAS_RIGHT_HORN, compound.getBoolean("HasRightHorn"));
     }
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(CHARGE_COOLDOWN_TICKS, 0);
         this.entityData.define(HAS_TARGET, false);
+        this.entityData.define(DATA_HAS_LEFT_HORN, true);
+        this.entityData.define(DATA_HAS_RIGHT_HORN, true);
+    }
+
+    public boolean hasLeftHorn() {
+        return this.entityData.get(DATA_HAS_LEFT_HORN);
+    }
+
+    public boolean hasRightHorn() {
+        return this.entityData.get(DATA_HAS_RIGHT_HORN);
     }
 
     @Override
@@ -222,6 +237,16 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
         return this.canAttack(p_21675_);
     }
 
+    protected void ageBoundaryReached() {
+        if (this.isBaby()) {
+            this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(1.0D);
+            this.removeHorns();
+        } else {
+            this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(8.0D);
+            this.addHorns();
+        }
+
+    }
 
     @Override
     public boolean canAttack(LivingEntity entity) {
@@ -291,12 +316,49 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
         if (this.stunnedTick > 0) {
             --this.stunnedTick;
             this.stunEffect();
-            if (random.nextFloat() <= 0.01F) {
+            if (random.nextFloat() <= 0.05F) {
                 if (random.nextFloat() < 0.05F) {
-                    this.spawnAtLocation(ModItems.LONG_HORN_HORN.get());
+                    this.dropHorn();
                 }
             }
         }
+    }
+
+    public boolean dropHorn() {
+        boolean flag = this.hasLeftHorn();
+        boolean flag1 = this.hasRightHorn();
+        if (!flag && !flag1) {
+            return false;
+        } else {
+            EntityDataAccessor<Boolean> entitydataaccessor;
+            if (!flag) {
+                entitydataaccessor = DATA_HAS_RIGHT_HORN;
+            } else if (!flag1) {
+                entitydataaccessor = DATA_HAS_LEFT_HORN;
+            } else {
+                entitydataaccessor = this.random.nextBoolean() ? DATA_HAS_LEFT_HORN : DATA_HAS_RIGHT_HORN;
+            }
+
+            this.entityData.set(entitydataaccessor, false);
+            Vec3 vec3 = this.position();
+            ItemStack itemstack = new ItemStack(ModItems.LONG_HORN_HORN.get());
+            double d0 = (double)Mth.randomBetween(this.random, -0.2F, 0.2F);
+            double d1 = (double)Mth.randomBetween(this.random, 0.3F, 0.7F);
+            double d2 = (double)Mth.randomBetween(this.random, -0.2F, 0.2F);
+            ItemEntity itementity = new ItemEntity(this.level(), vec3.x(), vec3.y(), vec3.z(), itemstack, d0, d1, d2);
+            this.level().addFreshEntity(itementity);
+            return true;
+        }
+    }
+
+    public void addHorns() {
+        this.entityData.set(DATA_HAS_LEFT_HORN, true);
+        this.entityData.set(DATA_HAS_RIGHT_HORN, true);
+    }
+
+    public void removeHorns() {
+        this.entityData.set(DATA_HAS_LEFT_HORN, false);
+        this.entityData.set(DATA_HAS_RIGHT_HORN, false);
     }
 
     private void stunEffect() {

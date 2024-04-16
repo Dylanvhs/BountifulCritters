@@ -12,6 +12,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -59,7 +60,9 @@ public class ModCatchableItem extends BucketItem {
             return InteractionResult.SUCCESS;
         }
         else {
-            ItemStack itemstack = context.getItemInHand();
+            Player player = context.getPlayer();
+            InteractionHand hand = context.getHand();
+            ItemStack heldItem = player.getItemInHand(hand);
             BlockPos blockpos = context.getClickedPos();
             Direction direction = context.getClickedFace();
             BlockState blockstate = world.getBlockState(blockpos);
@@ -72,12 +75,14 @@ public class ModCatchableItem extends BucketItem {
                 blockpos1 = blockpos.relative(direction);
             }
             Supplier<? extends EntityType<?>> entitytype = entityType;
-            Entity entityType = entitytype.get().spawn((ServerLevel) world, itemstack, context.getPlayer(), blockpos1, MobSpawnType.BUCKET, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP);
+            Entity entityType = entitytype.get().spawn((ServerLevel) world, heldItem, context.getPlayer(), blockpos1, MobSpawnType.BUCKET, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP);
 
             if (entityType != null) {
                 if(!context.getPlayer().getAbilities().instabuild) {
-                    itemstack.shrink(1);
-                    context.getPlayer().addItem(new ItemStack(item1));
+                    heldItem.shrink(1);
+                    if (heldItem.isEmpty()) {
+                        player.setItemInHand(hand, item1.getDefaultInstance());
+                    }
                 }
 
                 playEmptySound(context.getPlayer(), world, blockpos);

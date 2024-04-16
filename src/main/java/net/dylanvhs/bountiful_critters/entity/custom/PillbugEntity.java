@@ -63,6 +63,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BYTE);
     private static final float SPIDER_SPECIAL_EFFECT_CHANCE = 0.1F;
     private static final EntityDataAccessor<Boolean> IS_ROLLED_UP = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BOOLEAN);
+
     public PillbugEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
     }
@@ -87,9 +88,9 @@ public class PillbugEntity extends Animal implements GeoEntity {
     public void setClimbing(boolean pClimbing) {
         byte b0 = this.entityData.get(DATA_FLAGS_ID);
         if (pClimbing) {
-            b0 = (byte)(b0 | 1);
+            b0 = (byte) (b0 | 1);
         } else {
-            b0 = (byte)(b0 & -2);
+            b0 = (byte) (b0 & -2);
         }
 
         this.entityData.set(DATA_FLAGS_ID, b0);
@@ -103,6 +104,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(6, new MeleeAttackGoal(this, (double) 1.2F, true));
         this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, Spider.class, 8.0F, 1.2D, 1.2D));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Zombie.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Husk.class, true));
@@ -177,8 +179,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
         }
 
         // DO NOT TOUCH
-        else
-        if (heldItem.isEmpty() && !isBaby() && isRolledUp()) {
+        else if (heldItem.isEmpty() && !isBaby() && isRolledUp()) {
             ItemStack itemstack2 = new ItemStack(ModItems.PILLBUG_THROWABLE.get());
             player.setItemInHand(hand, itemstack2);
             playSound(SoundEvents.ITEM_PICKUP, 1.0F, 1.0F);
@@ -209,7 +210,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(IS_ROLLED_UP, false);
-        this.entityData.define(DATA_FLAGS_ID, (byte)0);
+        this.entityData.define(DATA_FLAGS_ID, (byte) 0);
     }
 
     public boolean isRolledUp() {

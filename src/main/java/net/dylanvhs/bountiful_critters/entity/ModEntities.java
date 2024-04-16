@@ -19,7 +19,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<StingrayEntity>> STINGRAY =
             ENTITY_TYPES.register("stingray",
                     () -> EntityType.Builder.of(StingrayEntity::new, MobCategory.WATER_CREATURE)
-                            .sized(0.8f, 0.25f)
+                            .sized(0.8f, 0.3f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "stingray").toString()));
 
     public static final RegistryObject<EntityType<SunfishEntity>> SUNFISH =
@@ -67,7 +67,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<PillbugEntity>> PILLBUG =
             ENTITY_TYPES.register("pillbug",
                     () -> EntityType.Builder.of(PillbugEntity::new, MobCategory.MONSTER)
-                            .sized(0.75f, 0.6f)
+                            .sized(0.75f, 0.65f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "pillbug").toString()));
 
 
