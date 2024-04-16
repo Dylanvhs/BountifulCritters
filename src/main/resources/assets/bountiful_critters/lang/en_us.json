@@ -72,6 +72,12 @@
   "sounds.bountiful_critters:toucan_hurt": "Toucan Hurts",
   "sounds.bountiful_critters:toucan_death": "Toucan Dies",
 
+  "sounds.bountiful_critters:pillbug_ambient": "Pill Bug Hisses",
+  "sounds.bountiful_critters:pillbug_hurt": "Pill Bug Hurts",
+  "sounds.bountiful_critters:pillbug_step": "Footsteps",
+  "sounds.bountiful_critters:pillbug_death": "Pill Bug Dies",
+  "sounds.bountiful_critters:pillbug_bounce": "Pill Bug Bounces",
+
   "sounds.bountiful_critters:long_horn_didgeridoo": "Blows Didgeridoo",
 
   "item.bountiful_critters.returning_memory_music_disc": "Music Disc",

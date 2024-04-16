@@ -175,7 +175,7 @@ public class ToucanEntity extends Animal implements GeoEntity, FlyingAnimal {
     }
 
     protected float getSoundVolume() {
-        return 0.6F;
+        return 0.4F;
     }
 
 

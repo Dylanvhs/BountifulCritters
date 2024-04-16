@@ -2,6 +2,7 @@ package net.dylanvhs.bountiful_critters.entity.custom;
 
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.ModItems;
+import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -10,6 +11,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
@@ -37,7 +39,6 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.enchantment.FireAspectEnchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -54,6 +55,9 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.List;
 
+import static net.minecraft.world.entity.monster.Monster.isDarkEnoughToSpawn;
+
+
 public class PillbugEntity extends Animal implements GeoEntity {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BYTE);
@@ -65,7 +69,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
 
     public static <T extends Mob> boolean canSpawn(EntityType type, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223317_3_, RandomSource random) {
         BlockState blockstate = worldIn.getBlockState(p_223317_3_.below());
-        return blockstate.is(Blocks.STONE) || blockstate.is(Blocks.DEEPSLATE) || blockstate.is(Blocks.DRIPSTONE_BLOCK);
+        return blockstate.is(Blocks.GRASS_BLOCK) || blockstate.is(Blocks.STONE) || blockstate.is(Blocks.DEEPSLATE);
     }
 
     protected PathNavigation createNavigation(Level pLevel) {
@@ -124,8 +128,24 @@ public class PillbugEntity extends Animal implements GeoEntity {
         return MobType.ARTHROPOD;
     }
 
+    protected SoundEvent getAmbientSound() {
+        return ModSounds.PILLBUG_AMBIENT.get();
+    }
+
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return ModSounds.PILLBUG_HURT.get();
+    }
+
+    protected SoundEvent getDeathSound() {
+        return ModSounds.PILLBUG_DEATH.get();
+    }
+
     protected void playStepSound(BlockPos p_28301_, BlockState p_28302_) {
-        this.playSound(SoundEvents.SPIDER_STEP, 0.15F, 1.0F);
+        this.playSound(ModSounds.PILLBUG_STEP.get(), 0.15F, 1.0F);
+    }
+
+    protected float getSoundVolume() {
+        return 0.4F;
     }
 
     @Nullable
@@ -158,7 +178,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
 
         // DO NOT TOUCH
         else
-        if (heldItem.isEmpty()) {
+        if (heldItem.isEmpty() && !isBaby() && isRolledUp()) {
             ItemStack itemstack2 = new ItemStack(ModItems.PILLBUG_THROWABLE.get());
             player.setItemInHand(hand, itemstack2);
             playSound(SoundEvents.ITEM_PICKUP, 1.0F, 1.0F);
@@ -221,11 +241,11 @@ public class PillbugEntity extends Animal implements GeoEntity {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (!this.isAlive()) {
-            return;
+        if (this.isAlive()) {
+            this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.isImmobile() ? 0.0 : 0.2);
+            this.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(this.isImmobile() ? 2.0 : 0.0);
+            this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(this.isImmobile() ? 0.6 : 0.0);
         }
-        this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.isImmobile() ? 0.0 : 0.2);
-        this.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(this.isRolledUp() ? 0.0 : 0.2);
     }
 
     public boolean doHurtTarget(Entity pEntity) {
@@ -247,6 +267,10 @@ public class PillbugEntity extends Animal implements GeoEntity {
         }
         setRollUp(false);
         super.die(pCause);
+    }
+
+    protected boolean isSunSensitive() {
+        return true;
     }
 
     @Override

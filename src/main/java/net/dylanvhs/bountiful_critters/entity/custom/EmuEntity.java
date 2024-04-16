@@ -82,8 +82,11 @@ public class EmuEntity extends Animal implements GeoAnimatable {
         return ModSounds.EMU_DEATH.get();
     }
 
+    protected void playStepSound(BlockPos p_28301_, BlockState p_28302_) {
+        this.playSound(SoundEvents.CHICKEN_STEP, 0.15F, 1.0F);
+    }
     protected float getSoundVolume() {
-        return 0.6F;
+        return 0.5F;
     }
 
     protected void registerGoals() {

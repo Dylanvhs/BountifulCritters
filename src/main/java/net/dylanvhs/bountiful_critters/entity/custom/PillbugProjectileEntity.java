@@ -3,6 +3,7 @@ package net.dylanvhs.bountiful_critters.entity.custom;
 import net.dylanvhs.bountiful_critters.damage.ModDamageTypes;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.ModItems;
+import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -78,6 +79,7 @@ public class PillbugProjectileEntity extends ThrowableItemProjectile {
 
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
+        playSound(ModSounds.PILLBUG_BOUNCE.get(), 1.0F, 1.0F);
         Entity entity = pResult.getEntity();
         Entity owner = this.getOwner();
         DamageSource damageSource = ModDamageTypes.causePillballDamage(entity.level().registryAccess(), owner);
@@ -100,6 +102,7 @@ int bounces = 0;
     protected void onHitBlock(BlockHitResult hit) {
         super.onHitBlock(hit);
         this.setBounces(bounces ++);
+        playSound(ModSounds.PILLBUG_BOUNCE.get(), 1.0F, 1.0F);
         Vec3 deltaMovement = this.getDeltaMovement();
         Vec3 vec3 = deltaMovement.subtract(deltaMovement.x / 5, 0.0D, deltaMovement.z / 5);
         Direction direction = hit.getDirection();

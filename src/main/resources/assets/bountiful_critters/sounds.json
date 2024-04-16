@@ -75,6 +75,69 @@
     ]
   },
 
+  "pillbug_ambient": {
+    "subtitle": "sounds.bountiful_critters:pillbug_ambient",
+    "sounds": [
+      {
+        "name": "bountiful_critters:pillbug_ambient1"
+      },
+      {
+        "name": "bountiful_critters:pillbug_ambient2"
+      },
+      {
+        "name": "bountiful_critters:pillbug_ambient3"
+      }
+    ]
+  },
+
+  "pillbug_hurt": {
+    "subtitle": "sounds.bountiful_critters:pillbug_hurt",
+    "sounds": [
+      {
+        "name": "bountiful_critters:pillbug_ambient1"
+      },
+      {
+        "name": "bountiful_critters:pillbug_ambient2"
+      },
+      {
+        "name": "bountiful_critters:pillbug_ambient3"
+      }
+    ]
+  },
+
+  "pillbug_step": {
+    "subtitle": "sounds.bountiful_critters:pillbug_step",
+    "sounds": [
+      {
+        "name": "bountiful_critters:pillbug_step1"
+      },
+      {
+        "name": "bountiful_critters:pillbug_step2"
+      }
+    ]
+  },
+
+  "pillbug_death": {
+    "subtitle": "sounds.bountiful_critters:pillbug_death",
+    "sounds": [
+      {
+        "name": "bountiful_critters:pillbug_death"
+      }
+    ]
+  },
+
+  "pillbug_bounce": {
+    "subtitle": "sounds.bountiful_critters:pillbug_bounce",
+    "sounds": [
+      {
+        "name": "bountiful_critters:pillbug_bounce1"
+      },
+      {
+        "name": "bountiful_critters:pillbug_bounce2"
+      }
+    ]
+  },
+
   "long_horn_didgeridoo": {
     "subtitle": "sounds.bountiful_critters:long_horn_didgeridoo",
     "sounds": [
