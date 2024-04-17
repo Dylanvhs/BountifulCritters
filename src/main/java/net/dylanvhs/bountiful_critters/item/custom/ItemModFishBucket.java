@@ -1,6 +1,7 @@
 package net.dylanvhs.bountiful_critters.item.custom;
 
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
+import net.dylanvhs.bountiful_critters.entity.custom.MarineIguanaEntity;
 import net.dylanvhs.bountiful_critters.entity.custom.StingrayEntity;
 import net.dylanvhs.bountiful_critters.entity.custom.SunfishEntity;
 import net.minecraft.ChatFormatting;
@@ -43,6 +44,15 @@ public class ItemModFishBucket extends MobBucketItem {
             if (compoundnbt != null && compoundnbt.contains("BucketVariantTag", 3)) {
                 int i = compoundnbt.getInt("BucketVariantTag");
                 String s = "entity.bountiful_critters.sunfish.variant_" + SunfishEntity.getVariantName(i);
+                tooltip.add((Component.translatable(s)).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
+            }
+        }
+
+        if (fishType == ModEntities.MARINE_IGUANA.get()) {
+            CompoundTag compoundnbt = stack.getTag();
+            if (compoundnbt != null && compoundnbt.contains("BucketVariantTag", 3)) {
+                int i = compoundnbt.getInt("BucketVariantTag");
+                String s = "entity.bountiful_critters.marine_iguana.variant_" + MarineIguanaEntity.getVariantName(i);
                 tooltip.add((Component.translatable(s)).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
             }
         }

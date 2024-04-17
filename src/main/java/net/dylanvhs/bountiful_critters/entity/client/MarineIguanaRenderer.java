@@ -9,13 +9,19 @@ import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class MarineIguanaRenderer extends GeoEntityRenderer<MarineIguanaEntity> {
+
+    private static final ResourceLocation TEXTURE_STONY = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana.png");
+    private static final ResourceLocation TEXTURE_NEON = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana_neon.png");
     public MarineIguanaRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new MarineIguanaModel());
     }
 
     @Override
     public ResourceLocation getTextureLocation(MarineIguanaEntity animatable) {
-       return new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana.png");
+        return switch (animatable.getVariant()) {
+            case 1 -> TEXTURE_NEON;
+            default -> TEXTURE_STONY;
+        };
     }
 
     @Override

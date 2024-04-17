@@ -3,16 +3,18 @@
   "biomes" : [
     "minecraft:deep_dark",
     "minecraft:dripstone_caves",
+    "minecraft:lush_caves",
     "minecraft:taiga",
     "minecraft:old_growth_spruce_taiga",
     "minecraft:forest",
+    "minecraft:flower_forest",
     "minecraft:birch_forest",
     "minecraft:old_growth_birch_forest",
     "minecraft:dark_forest"
   ],
   "spawners" : {
     "type" : "bountiful_critters:pillbug",
-    "weight" : 8,
+    "weight" : 5,
     "minCount" : 1,
     "maxCount" : 3
   }

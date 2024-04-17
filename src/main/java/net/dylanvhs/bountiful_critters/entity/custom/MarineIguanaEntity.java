@@ -11,28 +11,26 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.MoveControl;
-import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
-import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bucketable;
-import net.minecraft.world.entity.animal.axolotl.Axolotl;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
@@ -51,6 +49,7 @@ import javax.annotation.Nonnull;
 public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable {
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(MarineIguanaEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(StingrayEntity.class, EntityDataSerializers.BOOLEAN);
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.SEAGRASS);
 
@@ -71,6 +70,13 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         }
     }
 
+    public static String getVariantName(int variant) {
+        return switch (variant) {
+            case 1 -> "neon";
+            default -> "stony";
+        };
+    }
+
     public boolean isFood(ItemStack pStack) {
         return TEMPTATION_ITEM.test(pStack);
     }
@@ -79,7 +85,16 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
+        this.entityData.define(VARIANT, 0);
         this.entityData.define(FROM_BUCKET, false);
+    }
+
+    public int getVariant() {
+        return this.entityData.get(VARIANT);
+    }
+
+    private void setVariant(int variant) {
+        this.entityData.set(VARIANT, variant);
     }
 
     @Override
@@ -106,6 +121,7 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         Bucketable.saveDefaultDataToBucketTag(this, bucket);
         CompoundTag compoundnbt = bucket.getOrCreateTag();
         compoundnbt.putInt("Age", this.getAge());
+        compoundnbt.putInt("BucketVariantTag", this.getVariant());
     }
 
     @Override
@@ -113,6 +129,9 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         Bucketable.loadDefaultDataFromBucketTag(this, compound);
         if (compound.contains("Age")) {
             this.setAge(compound.getInt("Age"));
+        }
+        if (compound.contains("BucketVariantTag", 3)) {
+            this.setVariant(compound.getInt("BucketVariantTag"));
         }
     }
 
@@ -125,11 +144,13 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
 
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
+        compound.putInt("Variant", this.getVariant());
         compound.putBoolean("FromBucket", this.fromBucket());
     }
 
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
+        this.setVariant(compound.getInt("Variant"));
         this.setFromBucket(compound.getBoolean("FromBucket"));
     }
 
@@ -141,6 +162,16 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     @Override
     public void setFromBucket(boolean p_203706_1_) {
         this.entityData.set(FROM_BUCKET, p_203706_1_);
+    }
+
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @javax.annotation.Nullable SpawnGroupData spawnDataIn, @javax.annotation.Nullable CompoundTag dataTag) {
+        float variantChange = this.getRandom().nextFloat();
+        if(variantChange <= 0.005F){
+            this.setVariant(1);
+        }else{
+            this.setVariant(0);
+        }
+        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
     public boolean canBeLeashed(Player pPlayer) {

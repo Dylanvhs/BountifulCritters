@@ -78,8 +78,8 @@
 					"parent": "marine_iguana",
 					"pivot": [4.5, 1, 4],
 					"cubes": [
-						{"origin": [4.5, 0, 3], "size": [3, 2, 3], "uv": [0, 0]},
-						{"origin": [5.5, 0, 0], "size": [6, 0, 6], "uv": [24, 0]}
+						{"origin": [4.5, 0, 3], "size": [3, 2, 3], "uv": [48, 11]},
+						{"origin": [5.5, 0, 0], "size": [6, 0, 6], "uv": [42, 0]}
 					]
 				},
 				{
@@ -87,8 +87,8 @@
 					"parent": "marine_iguana",
 					"pivot": [-4.5, 1, 4],
 					"cubes": [
-						{"origin": [-7.5, 0, 3], "size": [3, 2, 3], "uv": [0, 0], "mirror": true},
-						{"origin": [-11.5, 0, 0], "size": [6, 0, 6], "uv": [24, 0], "mirror": true}
+						{"origin": [-7.5, 0, 3], "size": [3, 2, 3], "uv": [48, 11], "mirror": true},
+						{"origin": [-11.5, 0, 0], "size": [6, 0, 6], "uv": [42, 0], "mirror": true}
 					]
 				}
 			]

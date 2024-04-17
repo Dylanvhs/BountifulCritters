@@ -41,6 +41,9 @@
   "entity.bountiful_critters.sunfish.variant_chilly": "Chilly",
   "entity.bountiful_critters.sunfish.variant_brown": "Brown",
 
+  "entity.bountiful_critters.marine_iguana.variant_stony": "Stony",
+  "entity.bountiful_critters.marine_iguana.variant_neon": "Neon",
+
   "entity.bountiful_critters.stingray" : "Stingray",
   "entity.bountiful_critters.sunfish" : "Sunfish",
   "entity.bountiful_critters.emu" : "Emu",
@@ -64,6 +67,12 @@
 
   "advancements.husbandry.collect_pillbug.title" : "Unusual Catch",
   "advancements.husbandry.collect_pillbug.description" : "Collect a Pill Bug",
+
+  "advancements.adventure.kill_with_pillbug.title" : "Get Dunked On",
+  "advancements.adventure.kill_with_pillbug.description" : "Kill a Mob by throwing a Pill Bug",
+
+  "advancements.husbandry.eating_poisonous_pillbug.title" : "Tough Pill To Swallow",
+  "advancements.husbandry.eating_poisonous_pillbug.description" : "Consume a Poisonous Pill Bug",
 
   "sounds.bountiful_critters:emu_ambient": "Emu Grunts",
   "sounds.bountiful_critters:emu_hurt": "Emu Hurts",

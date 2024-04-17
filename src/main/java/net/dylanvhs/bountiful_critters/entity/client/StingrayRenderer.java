@@ -21,8 +21,8 @@ public class StingrayRenderer extends GeoEntityRenderer<StingrayEntity> {
     }
 
 
-    public ResourceLocation getTextureLocation(StingrayEntity entity) {
-        return switch (entity.getVariant()) {
+    public ResourceLocation getTextureLocation(StingrayEntity animatable) {
+        return switch (animatable.getVariant()) {
             case 1 -> TEXTURE_MUDDY;
             case 2 -> TEXTURE_BLUE_SPOTTED;
             default -> TEXTURE_GRAY;
