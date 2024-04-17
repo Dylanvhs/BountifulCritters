@@ -30,7 +30,7 @@ public class LongHornDidgeridooItem extends Item {
         ItemStack itemstack = pPlayer.getItemInHand(pUsedHand);
         pPlayer.gameEvent(GameEvent.ITEM_INTERACT_START);
         pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), ModSounds.LONG_HORN_DIDGERIDOO.get(), SoundSource.PLAYERS, 1.8f, 1f);
-        pPlayer.getCooldowns().addCooldown(this, 40);
+        pPlayer.getCooldowns().addCooldown(this, 100);
         pPlayer.awardStat(Stats.ITEM_USED.get(this));
         itemstack.hurtAndBreak(1, pPlayer, (player) -> {
             player.broadcastBreakEvent(pPlayer.getUsedItemHand());

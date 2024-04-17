@@ -75,17 +75,17 @@ public class ModCatchableItem extends BucketItem {
                 blockpos1 = blockpos.relative(direction);
             }
             Supplier<? extends EntityType<?>> entitytype = entityType;
-            Entity entityType = entitytype.get().spawn((ServerLevel) world, heldItem, context.getPlayer(), blockpos1, MobSpawnType.BUCKET, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP);
+            Entity entityType = entitytype.get().spawn((ServerLevel) world, heldItem, player, blockpos1, MobSpawnType.BUCKET, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP);
 
             if (entityType != null) {
-                if(!context.getPlayer().getAbilities().instabuild) {
+                if(!player.getAbilities().instabuild) {
                     heldItem.shrink(1);
                     if (heldItem.isEmpty()) {
                         player.setItemInHand(hand, item1.getDefaultInstance());
                     }
                 }
 
-                playEmptySound(context.getPlayer(), world, blockpos);
+                playEmptySound(player, world, blockpos);
             }
             return InteractionResult.SUCCESS;
         }

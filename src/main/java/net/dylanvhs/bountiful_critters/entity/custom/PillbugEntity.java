@@ -2,6 +2,7 @@ package net.dylanvhs.bountiful_critters.entity.custom;
 
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.ModItems;
+import net.minecraft.world.level.Level;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -32,14 +33,12 @@ import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
@@ -54,9 +53,6 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.List;
-
-import static net.minecraft.world.entity.monster.Monster.isDarkEnoughToSpawn;
-
 
 public class PillbugEntity extends Animal implements GeoEntity {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
@@ -98,6 +94,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
 
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1.2D));
         this.goalSelector.addGoal(1, new BreedGoal(this, 1.0f));
         this.goalSelector.addGoal(2, new TemptGoal(this, 1.25D, Ingredient.of(Items.ROTTEN_FLESH), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
@@ -155,7 +152,6 @@ public class PillbugEntity extends Animal implements GeoEntity {
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob ageable) {
         return ModEntities.PILLBUG.get().create(world);
     }
-
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
@@ -268,10 +264,6 @@ public class PillbugEntity extends Animal implements GeoEntity {
         }
         setRollUp(false);
         super.die(pCause);
-    }
-
-    protected boolean isSunSensitive() {
-        return true;
     }
 
     @Override

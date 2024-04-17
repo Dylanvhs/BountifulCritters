@@ -29,6 +29,7 @@ import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Ghast;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -198,18 +199,22 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
 
     @Override
     public boolean doHurtTarget(Entity target) {
-        boolean shouldHurt = true;
-        float damage = (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE);
-        float knockback = (float) this.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
-        if (shouldHurt == target.hurt(this.damageSources().mobAttack(this), damage)) {
-            if (knockback > 0.0f && target instanceof LivingEntity) {
-                ((LivingEntity) target).knockback(knockback * 0.5f, Mth.sin(this.getYRot() * ((float) Math.PI / 180)), -Mth.cos(this.getYRot() * ((float) Math.PI / 180)));
-                this.setDeltaMovement(this.getDeltaMovement().multiply(0.6, 1.0, 0.6));
+        if (this.isBaby()) {
+            return false;
+        } else {
+            boolean shouldHurt = true;
+            float damage = (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE);
+            float knockback = (float) this.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
+            if (shouldHurt == target.hurt(this.damageSources().mobAttack(this), damage)) {
+                if (knockback > 0.0f && target instanceof LivingEntity) {
+                    ((LivingEntity) target).knockback(knockback * 0.5f, Mth.sin(this.getYRot() * ((float) Math.PI / 180)), -Mth.cos(this.getYRot() * ((float) Math.PI / 180)));
+                    this.setDeltaMovement(this.getDeltaMovement().multiply(0.6, 1.0, 0.6));
+                }
+                this.doEnchantDamageEffects(this, target);
+                this.setLastHurtMob(target);
             }
-            this.doEnchantDamageEffects(this, target);
-            this.setLastHurtMob(target);
+            return shouldHurt;
         }
-        return shouldHurt;
     }
 
     public int getRemainingPersistentAngerTime() {
@@ -444,11 +449,11 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
         @Override
         public boolean canUse() {
             LivingEntity target = this.longhorn.getTarget();
-            if (target == null || !target.isAlive() || this.longhorn.stunnedTick > 0 || !this.longhorn.isWithinYRange(target)) {
+            if (target == null || !target.isAlive() || this.longhorn.stunnedTick > 0 || !this.longhorn.isWithinYRange(target) || this.longhorn.isBaby()) {
                 this.longhorn.resetChargeCooldownTicks();
                 return false;
             }
-            return target instanceof Player && longhorn.hasChargeCooldown() ;
+            return target instanceof Player || target instanceof Monster && longhorn.hasChargeCooldown() ;
         }
 
         @Override
@@ -495,11 +500,11 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
         @Override
         public boolean canUse() {
             LivingEntity target = this.mob.getTarget();
-            if (target == null || !target.isAlive() || this.mob.hasChargeCooldown() || this.mob.stunnedTick > 0) {
+            if (target == null || !target.isAlive() || this.mob.hasChargeCooldown() || this.mob.stunnedTick > 0 || this.mob.isBaby()) {
                 return false;
             }
             this.path = (Path) this.mob.getNavigation().createPath(target, 0);
-            return target instanceof Player && this.path != null;
+            return target instanceof Player || target instanceof Monster && this.path != null;
         }
 
         @Override
