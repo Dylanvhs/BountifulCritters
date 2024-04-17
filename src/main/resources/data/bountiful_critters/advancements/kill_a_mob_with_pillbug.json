@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:adventure/root",
+  "display": {
+    "icon": {
+      "item": "bountiful_critters:pillbug_throwable"
+    },
+    "title": {
+      "translate": "advancements.adventure.kill_with_pillbug.title"
+    },
+    "description": {
+      "translate": "advancements.adventure.kill_with_pillbug.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "criteria": {
+      "conditions": {
+        "damage": {
+          "type": {
+            "direct_entity": {
+              "type": "bountiful_critters:pillbug_projectile"
+            },
+            "tags": [
+              {
+                "expected": true,
+                "id": "minecraft:is_projectile"
+              }
+            ]
+          }
+        }
+      },
+      "trigger": "minecraft:player_hurt_entity"
+    },
+  "requirements": [
+    ["1"]
+  ],
+  "sends_telemetry_event": true
+}

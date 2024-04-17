@@ -50,6 +50,7 @@
   "entity.bountiful_critters.toucan" : "Toucan",
   "entity.bountiful_critters.humpback_whale" : "Humpback Whale",
   "entity.bountiful_critters.pillbug" : "Pill Bug",
+  "entity.bountiful_critters.pillbug_projectile" : "Pill Bug",
   "entity.bountiful_critters.emu_egg_projectile" : "Emu Egg",
 
   "advancements.husbandry.collect_stingray.title" : "Is That A Swimming Pancake?",

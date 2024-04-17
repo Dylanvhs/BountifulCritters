@@ -152,7 +152,6 @@ public class PillbugEntity extends Animal implements GeoEntity {
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob ageable) {
         return ModEntities.PILLBUG.get().create(world);
     }
-
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack heldItem = player.getItemInHand(hand);
@@ -240,8 +239,10 @@ public class PillbugEntity extends Animal implements GeoEntity {
         super.aiStep();
         if (this.isAlive()) {
             this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.isImmobile() ? 0.0 : 0.2);
-            this.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(this.isImmobile() ? 2.0 : 0.0);
             this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(this.isImmobile() ? 0.6 : 0.0);
+            if (this.isImmobile()) {
+                this.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(10.0D);
+            }
         }
     }
 
@@ -273,7 +274,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
             this.setClimbing(this.horizontalCollision);
         }
 
-        if (this.hasEffect(MobEffects.POISON) && isRolledUp()) {
+        if (this.hasEffect(MobEffects.POISON) || isRolledUp()) {
             setRollUp(true);
         } else {
             setRollUp(false);

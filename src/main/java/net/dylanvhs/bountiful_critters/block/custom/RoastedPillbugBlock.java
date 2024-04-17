@@ -1,11 +1,9 @@
 package net.dylanvhs.bountiful_critters.block.custom;
 
+import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -26,17 +24,30 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class RoastedPillbugBlock extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public static final int MAX_BITES = 4;
+
     public static final IntegerProperty BITES = BlockStateProperties.BITES;
-    public static final int FULL_CAKE_SIGNAL = getOutputSignal(0);
-    protected static final float AABB_OFFSET = 1.0F;
-    protected static final float AABB_SIZE_PER_BITE = 2.0F;
-    protected static final VoxelShape[] SHAPE_BY_BITE = new VoxelShape[]{Block.box(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.box(3.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.box(5.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.box(7.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.box(9.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.box(11.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.box(13.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D)};
+    protected static final VoxelShape[] SHAPE_BY_BITE = new VoxelShape[]{
+            Block.box(4.0D, 0.0D, 3.0D, 12.0D, 7.0D, 14.0D),
+
+            Block.box(4.0D, 0.0D, 6.0D, 12.0D, 7.0D, 14.0D),
+
+            Block.box(4.0D, 0.0D, 9.0D, 12.0D, 7.0D, 14.0D),
+
+            Block.box(4.0D, 0.0D, 12.0D, 12.0D, 7.0D, 14.0D),
+
+            Block.box(4.0D, 0.0D, 3.0D, 12.0D, 7.0D, 14.0D),
+
+            Block.box(4.0D, 0.0D, 12.0D, 12.0D, 7.0D, 14.0D),
+
+            Block.box(4.0D, 0.0D, 12.0D, 12.0D, 7.0D, 14.0D)
+    };
+
 
     public  RoastedPillbugBlock(BlockBehaviour.Properties pProperties) {
         super(pProperties);
@@ -45,6 +56,12 @@ public class RoastedPillbugBlock extends Block {
 
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return SHAPE_BY_BITE[pState.getValue(BITES)];
+
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+        return new ItemStack(ModItems.ROASTED_PILLBUG.get());
 
     }
 
@@ -88,12 +105,7 @@ public class RoastedPillbugBlock extends Block {
         }
     }
 
-    /**
-     * Update the provided state given the provided neighbor direction and neighbor state, returning a new state.
-     * For example, fences make their connections to the passed in state if possible, and wet concrete powder immediately
-     * returns its solidified counterpart.
-     * Note that this method should ideally consider only the specific direction passed in.
-     */
+
     public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
         return pFacing == Direction.DOWN && !pState.canSurvive(pLevel, pCurrentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(pState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
     }
@@ -114,11 +126,7 @@ public class RoastedPillbugBlock extends Block {
         pBuilder.add(FACING);
     }
 
-    /**
-     * @deprecated call via {@link
-     * net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase#getAnalogOutputSignal} whenever possible.
-     * Implementing/overriding is fine.
-     */
+
     public int getAnalogOutputSignal(BlockState pBlockState, Level pLevel, BlockPos pPos) {
         return getOutputSignal(pBlockState.getValue(BITES));
     }
@@ -127,11 +135,7 @@ public class RoastedPillbugBlock extends Block {
         return (7 - pEaten) * 2;
     }
 
-    /**
-     * @deprecated call via {@link
-     * net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase#hasAnalogOutputSignal} whenever possible.
-     * Implementing/overriding is fine.
-     */
+
     public boolean hasAnalogOutputSignal(BlockState pState) {
         return true;
     }
