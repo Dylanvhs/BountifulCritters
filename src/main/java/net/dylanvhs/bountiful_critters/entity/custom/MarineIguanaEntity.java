@@ -1,7 +1,9 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
+import com.mojang.serialization.Codec;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.ModItems;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -10,7 +12,9 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.ByIdMap;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -46,6 +50,8 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.function.IntFunction;
 
 public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable {
 
@@ -75,8 +81,32 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         return switch (variant) {
             case 1 -> "neon";
             case 2 -> "warm";
+            case 3 -> "red";
             default -> "stony";
         };
+    }
+
+    protected void registerGoals() {
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1.2D));
+        this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
+        this.goalSelector.addGoal(2, new TemptGoal(this, 1.25D, TEMPTATION_ITEM, false));
+        this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
+        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8D, 15));
+    }
+
+    public static AttributeSupplier setAttributes() {
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 8D)
+                .add(Attributes.MOVEMENT_SPEED, 0.2D)
+                .build();
+    }
+
+    public static <T extends Mob> boolean canSpawn(EntityType type, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223317_3_, RandomSource random) {
+        BlockState blockstate = worldIn.getBlockState(p_223317_3_.below());
+        return blockstate.is(Blocks.GRAVEL) || blockstate.is(Blocks.STONE);
     }
 
     public boolean isFood(ItemStack pStack) {
@@ -112,7 +142,7 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     @Override
     @Nonnull
     public SoundEvent getPickupSound() {
-        return SoundEvents.BUCKET_FILL_FISH;
+        return SoundEvents.BUCKET_FILL_AXOLOTL;
     }
 
     @Override
@@ -219,18 +249,6 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
 
     }
 
-    public static AttributeSupplier setAttributes() {
-        return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 8D)
-                .add(Attributes.MOVEMENT_SPEED, 0.2D)
-                .build();
-    }
-    public static <T extends Mob> boolean canSpawn(EntityType type, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223317_3_, RandomSource random) {
-        BlockState blockstate = worldIn.getBlockState(p_223317_3_.below());
-        return blockstate.is(Blocks.GRAVEL) || blockstate.is(Blocks.STONE);
-    }
-
-
     public boolean canBreatheUnderwater() {
         return true;
     }
@@ -239,29 +257,20 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         return false;
     }
 
+    public boolean removeWhenFarAway(double pDistanceToClosestPlayer) {
+        return !this.fromBucket() && !this.hasCustomName();
+    }
+
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        MarineIguanaEntity axolotl = ModEntities.MARINE_IGUANA.get().create(pLevel);
-        if (axolotl != null) {
-            MarineIguanaEntity. axolotl$variant;
-            axolotl$variant = this.random.nextBoolean() ? this.getVariant() : ((MarineIguanaEntity)pOtherParent).getVariant();
-            axolotl.setVariant(axolotl$variant);
-            axolotl.setPersistenceRequired();
+        MarineIguanaEntity iguana = ModEntities.MARINE_IGUANA.get().create(pLevel);
+        if (iguana != null) {
+            int i = this.random.nextBoolean() ? this.getVariant() : ((MarineIguanaEntity) pOtherParent).getVariant();
+            iguana.setVariant(i);
+            iguana.setPersistenceRequired();
         }
-
-        return axolotl;
-    }
-
-    protected void registerGoals() {
-        this.goalSelector.addGoal(1, new PanicGoal(this, 1.2D));
-        this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(2, new TemptGoal(this, 1.25D, TEMPTATION_ITEM, false));
-        this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
-        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
-        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8D, 15));
+        return iguana;
     }
 
     @Override

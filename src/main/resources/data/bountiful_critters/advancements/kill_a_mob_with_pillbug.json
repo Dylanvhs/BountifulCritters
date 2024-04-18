@@ -6,7 +6,7 @@
         "damage": {
           "type": {
             "direct_entity": {
-              "type": "bountiful_critters:pillbug_projectile"
+              "type": "bountiful_critters:pillball"
             },
             "tags": [
               {
