@@ -24,6 +24,7 @@ import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bucketable;
+import net.minecraft.world.entity.animal.axolotl.Axolotl;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -73,6 +74,7 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     public static String getVariantName(int variant) {
         return switch (variant) {
             case 1 -> "neon";
+            case 2 -> "warm";
             default -> "stony";
         };
     }
@@ -168,6 +170,8 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         float variantChange = this.getRandom().nextFloat();
         if(variantChange <= 0.005F){
             this.setVariant(1);
+        } else if(variantChange <= 0.5F){
+            this.setVariant(2);
         }else{
             this.setVariant(0);
         }
@@ -238,7 +242,15 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        return ModEntities.MARINE_IGUANA.get().create(pLevel);
+        MarineIguanaEntity axolotl = ModEntities.MARINE_IGUANA.get().create(pLevel);
+        if (axolotl != null) {
+            MarineIguanaEntity. axolotl$variant;
+            axolotl$variant = this.random.nextBoolean() ? this.getVariant() : ((MarineIguanaEntity)pOtherParent).getVariant();
+            axolotl.setVariant(axolotl$variant);
+            axolotl.setPersistenceRequired();
+        }
+
+        return axolotl;
     }
 
     protected void registerGoals() {

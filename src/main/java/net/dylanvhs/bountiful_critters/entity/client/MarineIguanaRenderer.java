@@ -12,6 +12,7 @@ public class MarineIguanaRenderer extends GeoEntityRenderer<MarineIguanaEntity> 
 
     private static final ResourceLocation TEXTURE_STONY = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana.png");
     private static final ResourceLocation TEXTURE_NEON = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana_neon.png");
+    private static final ResourceLocation TEXTURE_WARM = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana_1.png");
     public MarineIguanaRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new MarineIguanaModel());
     }
@@ -20,6 +21,7 @@ public class MarineIguanaRenderer extends GeoEntityRenderer<MarineIguanaEntity> 
     public ResourceLocation getTextureLocation(MarineIguanaEntity animatable) {
         return switch (animatable.getVariant()) {
             case 1 -> TEXTURE_NEON;
+            case 2 -> TEXTURE_WARM;
             default -> TEXTURE_STONY;
         };
     }
