@@ -19,7 +19,16 @@
     "experience": 100
   },
   "criteria": {
-    "1": { "trigger": "minecraft:consume_item", "conditions": { "items": [ { "items": ["bountiful_critters:poisonous_pillbug"]} ] } }
+    "1": {
+      "conditions": {
+        "item": {
+          "items": [
+            "bountiful_critters:poisonous_pillbug"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
   },
   "requirements": [
     ["1"]

@@ -59,6 +59,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BYTE);
     private static final float SPIDER_SPECIAL_EFFECT_CHANCE = 0.1F;
     private static final EntityDataAccessor<Boolean> IS_ROLLED_UP = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IS_POISONOUS = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BOOLEAN);
 
     public PillbugEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
@@ -205,6 +206,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(IS_ROLLED_UP, false);
+        this.entityData.define(IS_POISONOUS, false);
         this.entityData.define(DATA_FLAGS_ID, (byte) 0);
     }
 
@@ -214,6 +216,14 @@ public class PillbugEntity extends Animal implements GeoEntity {
 
     public void setRollUp(boolean rollUp) {
         entityData.set(IS_ROLLED_UP, rollUp);
+    }
+
+    public boolean isPoisonous() {
+        return entityData.get(IS_POISONOUS);
+    }
+
+    public void setPoisonous(boolean poisonous) {
+        entityData.set(IS_POISONOUS, poisonous);
     }
 
     @Override
@@ -274,10 +284,16 @@ public class PillbugEntity extends Animal implements GeoEntity {
             this.setClimbing(this.horizontalCollision);
         }
 
-        if (this.hasEffect(MobEffects.POISON) || isRolledUp()) {
+        if (isRolledUp()) {
             setRollUp(true);
         } else {
             setRollUp(false);
+        }
+
+        if (this.hasEffect(MobEffects.POISON)) {
+            setPoisonous(true);
+        } else {
+            setPoisonous(false);
         }
 
         if (!this.onGround() && isRolledUp()) {

@@ -82,6 +82,7 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
             case 1 -> "neon";
             case 2 -> "warm";
             case 3 -> "red";
+            case 4 -> "ash";
             default -> "stony";
         };
     }
@@ -198,11 +199,15 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
 
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @javax.annotation.Nullable SpawnGroupData spawnDataIn, @javax.annotation.Nullable CompoundTag dataTag) {
         float variantChange = this.getRandom().nextFloat();
-        if(variantChange <= 0.005F){
+        if(variantChange <= 0.009F){
             this.setVariant(1);
-        } else if(variantChange <= 0.5F){
+        } else if(variantChange <= 0.48F){
             this.setVariant(2);
-        }else{
+        } else if(variantChange <= 0.49F){
+            this.setVariant(3);
+        } else if(variantChange <= 0.50F){
+            this.setVariant(4);
+        } else{
             this.setVariant(0);
         }
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);

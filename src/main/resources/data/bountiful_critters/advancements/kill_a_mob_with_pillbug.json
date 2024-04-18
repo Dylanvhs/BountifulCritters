@@ -23,8 +23,7 @@
 
   "display": {
     "icon": {
-      "item": "bountiful_critters:pillbug_throwable",
-      "nbt": "{Damage:0}"
+      "item": "bountiful_critters:pillbug_throwable"
     },
     "title": {
       "translate": "advancements.adventure.kill_with_pillbug.title"
