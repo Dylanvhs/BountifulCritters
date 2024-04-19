@@ -1,4 +1,4 @@
-// 1.20.1	2024-04-15T18:34:38.1663524	Item Models: bountiful_critters
+// 1.20.1	2024-04-19T14:43:43.6150928	Item Models: bountiful_critters
 c932650040726c1b26c1a26dd846d1c1d05c14d0 assets/bountiful_critters/models/item/boiled_emu_egg.json
 6ec21d0cb96e4b516917bb0f9b4ea06b059cb76d assets/bountiful_critters/models/item/cooked_sunfish_meat.json
 425dd2ceb1fdabf09daa58fc5bef59c719a69e0a assets/bountiful_critters/models/item/emu_egg.json
@@ -19,6 +19,8 @@ e9570321174ff013cfd1784d4b181c3d1147cbb3 assets/bountiful_critters/models/item/p
 db248d842ff5b16c6a81e518754d73f8b65ab49c assets/bountiful_critters/models/item/raw_sunfish_meat.json
 52185f811a1049cbca95311b48142aa6d750157a assets/bountiful_critters/models/item/returning_memory_music_disc.json
 556eb11252f3b34cbf2e3e2a29845529946aca39 assets/bountiful_critters/models/item/roasted_pillbug.json
+8fe874132130f27d9cc625f5cf8fba5031333ca3 assets/bountiful_critters/models/item/salt.json
+49ca52f7c5d5b38f601cb26bd15eecb6a7bd7674 assets/bountiful_critters/models/item/salted_kelp.json
 7b80975cc618f6d6d91e18c7ce6868e70ff929e8 assets/bountiful_critters/models/item/stingray_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/stingray_spawn_egg.json
 e739a3982ab87b30648e98a193c782924e29b70f assets/bountiful_critters/models/item/sunfish_bucket.json

@@ -12,7 +12,7 @@ public class ModFoods {
             .saturationMod(0.3f).build();
 
     public static final FoodProperties COOKED_SUNFISH_MEAT = new FoodProperties.Builder().nutrition(7)
-            .saturationMod(0.7f).effect(() -> new MobEffectInstance(MobEffects.WATER_BREATHING, 600), 0.8f).build();
+            .saturationMod(0.7f).effect(() -> new MobEffectInstance(MobEffects.WATER_BREATHING, 600), 0.75f).build();
 
     public static final FoodProperties RAW_KRILL = new FoodProperties.Builder().nutrition(2)
             .saturationMod(0.2f).build();
@@ -21,8 +21,11 @@ public class ModFoods {
             .saturationMod(0.4f).build();
 
     public static final FoodProperties RAW_PILLBUG = new FoodProperties.Builder().nutrition(2)
-            .saturationMod(0.2f).effect(() -> new MobEffectInstance(MobEffects.HUNGER, 200), 0.6f).build();
+            .saturationMod(0.2f).effect(() -> new MobEffectInstance(MobEffects.HUNGER, 200), 0.5f).build();
 
     public static final FoodProperties POISONOUS_PILLBUG = new FoodProperties.Builder().nutrition(1)
             .saturationMod(0.1f).effect(() -> new MobEffectInstance(MobEffects.POISON, 200), 1f).effect(() -> new MobEffectInstance(MobEffects.HUNGER, 200), 1f).effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 200), 1f).build();
+
+    public static final FoodProperties SALTED_KELP = new FoodProperties.Builder().nutrition(5)
+            .saturationMod(0.5f).effect(() -> new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 600), 0.75f).build();
 }

@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:golden_ingot",
+    "minecraft:copper_ingot",
+    "minecraft:iron_ingot",
+    "minecraft:moss",
+    "minecraft:bone",
+    "minecraft:bonemeal",
+    "minecraft:iron_nugget",
+    "minecraft:stick",
+    "minecraft:golden_nugget"
+
+  ]
+}

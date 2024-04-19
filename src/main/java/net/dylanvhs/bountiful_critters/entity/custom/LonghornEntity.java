@@ -453,7 +453,7 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
                 this.longhorn.resetChargeCooldownTicks();
                 return false;
             }
-            return target instanceof Player || target instanceof Monster && longhorn.hasChargeCooldown() ;
+            return target instanceof Player && longhorn.hasChargeCooldown() ;
         }
 
         @Override
@@ -504,7 +504,7 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
                 return false;
             }
             this.path = (Path) this.mob.getNavigation().createPath(target, 0);
-            return target instanceof Player || target instanceof Monster && this.path != null;
+            return target instanceof Player && this.path != null;
         }
 
         @Override

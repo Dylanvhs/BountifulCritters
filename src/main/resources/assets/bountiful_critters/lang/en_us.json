@@ -14,6 +14,8 @@
   "item.bountiful_critters.emu_egg": "Emu Egg",
   "item.bountiful_critters.boiled_emu_egg": "Boiled Emu Egg",
   "item.bountiful_critters.long_horn_horn": "Longhorn Horn",
+  "item.bountiful_critters.salt": "Salt",
+  "item.bountiful_critters.salted_kelp": "Salted Kelp",
   "item.bountiful_critters.long_horn_didgeridoo": "Longhorn Didgeridoo",
   "item.bountiful_critters.raw_pillbug": "Raw Pill Bug",
   "item.bountiful_critters.roasted_pillbug": "Roasted Pill Bug",
@@ -45,6 +47,7 @@
   "entity.bountiful_critters.marine_iguana.variant_neon": "Neon",
   "entity.bountiful_critters.marine_iguana.variant_warm": "Warm",
   "entity.bountiful_critters.marine_iguana.variant_red": "Red",
+  "entity.bountiful_critters.marine_iguana.variant_ash": "Ash",
 
   "entity.bountiful_critters.stingray" : "Stingray",
   "entity.bountiful_critters.sunfish" : "Sunfish",

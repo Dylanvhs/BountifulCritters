@@ -33,6 +33,12 @@ public class ModItems {
             () -> new LongHornDidgeridooItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> LONG_HORN_HORN =
             ITEMS.register("long_horn_horn", () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> SALT =
+            ITEMS.register("salt", () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> SALTED_KELP =
+            ITEMS.register("salted_kelp", () -> new Item(new Item.Properties().food(ModFoods.SALTED_KELP)));
     public static final RegistryObject<Item> RAW_KRILL =
             ITEMS.register("raw_krill", () -> new Item(new Item.Properties().food(ModFoods.RAW_KRILL)));
     public static final RegistryObject<Item> FRIED_KRILL =

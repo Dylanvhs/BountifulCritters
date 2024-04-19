@@ -5,7 +5,9 @@ import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -58,7 +60,10 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(MarineIguanaEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(StingrayEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IS_SNEEZING = SynchedEntityData.defineId(MarineIguanaEntity.class, EntityDataSerializers.BOOLEAN);
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.SEAGRASS);
+
+    public int timeUntilNextSneeze = this.random.nextInt(2500) + 2500;
 
     public MarineIguanaEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -120,6 +125,7 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         super.defineSynchedData();
         this.entityData.define(VARIANT, 0);
         this.entityData.define(FROM_BUCKET, false);
+        this.entityData.define(IS_SNEEZING, false);
     }
 
     public int getVariant() {
@@ -279,6 +285,37 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     }
 
     @Override
+    protected boolean isImmobile() {
+        return super.isImmobile() || this.isSneezing();
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (this.isAlive()) {
+            this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.isImmobile() ? 0.0 : 0.2);
+        }
+    }
+
+    public boolean isSneezing() {
+        return entityData.get(IS_SNEEZING);
+    }
+
+    public void setSneezing(boolean sneezing) {
+        entityData.set(IS_SNEEZING, sneezing);
+    }
+
+    public void tick() {
+        super.tick();
+        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.timeUntilNextSneeze <= 0) {
+            this.playSound(SoundEvents.AXOLOTL_HURT, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+            this.spawnAtLocation(ModItems.SALT.get());
+            setSneezing(true);
+            this.timeUntilNextSneeze = this.random.nextInt(2500) + 2500;
+        }
+    }
+
+    @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 5, this::predicate));
     }
@@ -288,6 +325,10 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         if (this.getDeltaMovement().horizontalDistanceSqr() > 1.0E-6 && !this.isInWater()) {
                 geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.marine_iguana.walk", Animation.LoopType.LOOP));
                 return PlayState.CONTINUE;
+        }
+        if (this.onGround() && isSneezing()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.marine_iguana.sneeze", Animation.LoopType.PLAY_ONCE));
+            return PlayState.CONTINUE;
         }
         if (this.isInWater()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.marine_iguana.swim", Animation.LoopType.LOOP));
