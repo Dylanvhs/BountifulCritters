@@ -12,8 +12,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 
 public class ModTags {
 
-    public static final TagKey<Item> WHALE_TREASURE = registerItemTag("whale_treasure");
-    public static final TagKey<Item> WHALE_FILTER = registerItemTag("whale_filter");
+
 
     private static TagKey<EntityType<?>> registerEntityTag(String name) {
         return TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(BountifulCritters.MOD_ID, name));

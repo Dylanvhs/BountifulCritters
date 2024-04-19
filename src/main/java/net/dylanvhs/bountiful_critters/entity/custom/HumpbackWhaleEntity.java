@@ -3,7 +3,6 @@ package net.dylanvhs.bountiful_critters.entity.custom;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.ai.HumpbackWhaleJumpGoal;
 import net.dylanvhs.bountiful_critters.item.ModItems;
-import net.dylanvhs.bountiful_critters.tags.ModTags;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -31,7 +30,6 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -40,7 +38,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -88,7 +85,7 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, TEMPTATION_ITEM, false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
         this.goalSelector.addGoal(4, new HumpbackWhaleJumpGoal(this, 1));
-        this.goalSelector.addGoal(6, new MeleeAttackGoal(this, (double)1.2F, true));
+        this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.2F, true));
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(3, new RandomSwimmingGoal(this, 1.0D, 10));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
@@ -244,7 +241,244 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
         } else {
             super.travel(travelVector);
         }
+    }
 
+    @Override
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack heldItem = player.getItemInHand(hand);
+
+        if (heldItem.getItem() == Items.SAND && this.isAlive() && !isBaby()) {
+            playSound(SoundEvents.DOLPHIN_EAT, 1.0F, 1.0F);
+            heldItem.shrink(1);
+            float lootChange = this.getRandom().nextFloat();
+            if(lootChange <= 0.94F){
+                spawnAtLocation(Items.DIAMOND);
+                if(lootChange <= 0.45F){
+                    spawnAtLocation(Items.HEART_OF_THE_SEA, 3);
+                }
+                if(lootChange <= 0.45){
+                    spawnAtLocation(Items.DIAMOND, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.SLIME_BALL, 3);
+                }
+                if(lootChange <= 0.45F){
+                    spawnAtLocation(Items.EMERALD, 3);
+                }
+            } else if(lootChange <= 0.95F){
+                spawnAtLocation(Items.EMERALD, 3);
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.LAPIS_BLOCK, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.COAL, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.SLIME_BALL, 3);
+                }
+            } else if(lootChange <= 0.96F){
+                spawnAtLocation(Items.IRON_INGOT, 3);
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.GOLD_BLOCK, 3);
+                }
+            } else if(lootChange <= 0.97F){
+                spawnAtLocation(Items.GOLD_INGOT, 3);
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.IRON_NUGGET, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.COAL, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.SLIME_BALL, 3);
+                }
+            } else if(lootChange <= 0.98F){
+                spawnAtLocation(Items.GOLD_NUGGET, 3);
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.COPPER_INGOT, 3);
+                }
+
+            } else if(lootChange <= 0.99F){
+                spawnAtLocation(Items.BONE_MEAL, 3);
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.COD, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.SLIME_BALL, 3);
+                }
+
+            } else if(lootChange <= 1F){
+                spawnAtLocation(Items.COAL, 3);
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.SLIME_BALL, 3);
+                }
+            } else{
+                spawnAtLocation(Items.SAND, 3);
+
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.COAL, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.BONE_MEAL, 3);
+                }
+            }
+            return InteractionResult.SUCCESS;
+        } else if
+        (heldItem.getItem() == Items.RED_SAND && this.isAlive() && !isBaby()) {
+            playSound(SoundEvents.DOLPHIN_EAT, 1.0F, 1.0F);
+            heldItem.shrink(1);
+            float lootChange = this.getRandom().nextFloat();
+            if(lootChange <= 0.5F){
+                spawnAtLocation(Items.DIAMOND);
+                if(lootChange <= 0.45F){
+                    spawnAtLocation(Items.HEART_OF_THE_SEA, 3);
+                }
+                if(lootChange <= 0.45){
+                    spawnAtLocation(Items.DIAMOND, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.SLIME_BALL, 3);
+                }
+                if(lootChange <= 0.45F){
+                    spawnAtLocation(Items.EMERALD, 3);
+                }
+            } else if(lootChange <= 0.95F){
+                spawnAtLocation(Items.EMERALD, 3);
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.LAPIS_BLOCK, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.COAL, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.SLIME_BALL, 3);
+                }
+            } else if(lootChange <= 0.96F){
+                spawnAtLocation(Items.IRON_INGOT, 3);
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.GOLD_BLOCK, 3);
+                }
+            } else if(lootChange <= 0.97F){
+                spawnAtLocation(Items.GOLD_INGOT, 3);
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.IRON_NUGGET, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.COAL, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.SLIME_BALL, 3);
+                }
+            } else if(lootChange <= 0.98F){
+                spawnAtLocation(Items.GOLD_NUGGET, 3);
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.COPPER_INGOT, 3);
+                }
+
+            } else if(lootChange <= 0.99F){
+                spawnAtLocation(Items.BONE_MEAL, 3);
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.COD, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.SLIME_BALL, 3);
+                }
+
+            } else if(lootChange <= 1F){
+                spawnAtLocation(Items.COAL, 3);
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.SLIME_BALL, 3);
+                }
+            } else{
+                spawnAtLocation(Items.RED_SAND, 3);
+
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.COAL, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.BONE_MEAL, 3);
+                }
+            }
+            return InteractionResult.SUCCESS;
+        } else if
+        (heldItem.getItem() == Items.GRAVEL && this.isAlive() && !isBaby()) {
+            playSound(SoundEvents.DOLPHIN_EAT, 1.0F, 1.0F);
+            heldItem.shrink(1);
+            float lootChange = this.getRandom().nextFloat();
+            if(lootChange <= 0.94F){
+                spawnAtLocation(Items.DIAMOND);
+                if(lootChange <= 0.45F){
+                    spawnAtLocation(Items.HEART_OF_THE_SEA, 3);
+                }
+                if(lootChange <= 0.45){
+                    spawnAtLocation(Items.DIAMOND, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.SLIME_BALL, 3);
+                }
+                if(lootChange <= 0.45F){
+                    spawnAtLocation(Items.EMERALD, 3);
+                }
+            } else if(lootChange <= 0.95F){
+                spawnAtLocation(Items.EMERALD, 3);
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.LAPIS_BLOCK, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.COAL, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.SLIME_BALL, 3);
+                }
+            } else if(lootChange <= 0.96F){
+                spawnAtLocation(Items.IRON_INGOT, 3);
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.GOLD_BLOCK, 3);
+                }
+            } else if(lootChange <= 0.97F){
+                spawnAtLocation(Items.GOLD_INGOT, 3);
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.IRON_NUGGET, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.COAL, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.SLIME_BALL, 3);
+                }
+            } else if(lootChange <= 0.98F){
+                spawnAtLocation(Items.GOLD_NUGGET, 3);
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.COPPER_INGOT, 3);
+                }
+
+            } else if(lootChange <= 0.99F){
+                spawnAtLocation(Items.BONE_MEAL, 3);
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.COD, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.SLIME_BALL, 3);
+                }
+
+            } else if(lootChange <= 1F){
+                spawnAtLocation(Items.COAL, 3);
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.SLIME_BALL, 3);
+                }
+            } else{
+                spawnAtLocation(Items.GRAVEL, 3);
+
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.COAL, 3);
+                }
+                if(lootChange <= 0.5){
+                    spawnAtLocation(Items.BONE_MEAL, 3);
+                }
+            }
+            return InteractionResult.SUCCESS;
+        }
+        return super.mobInteract(player, hand);
     }
 
     public MobType getMobType() {
@@ -258,11 +492,6 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
     protected SoundEvent getSwimSound() {
         return SoundEvents.DOLPHIN_SWIM;
     }
-
-    public static boolean isFilter(ItemStack stack) {
-        return stack.is(ModTags.WHALE_FILTER);
-    }
-
 
     static class MoveHelperController extends MoveControl {
         private final HumpbackWhaleEntity dolphin;

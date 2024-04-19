@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "salted_kelp",
+  "ingredients": [
+    {
+      "item": "bountiful_critters:salt"
+    },
+    {
+      "item": "minecraft:kelp"
+    }
+  ],
+  "result": {
+    "item": "bountiful_critters:salted_kelp"
+  },
+  "show_notification": true
+}
