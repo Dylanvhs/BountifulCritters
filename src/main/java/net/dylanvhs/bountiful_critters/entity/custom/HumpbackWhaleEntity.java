@@ -3,7 +3,6 @@ package net.dylanvhs.bountiful_critters.entity.custom;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.ai.HumpbackWhaleJumpGoal;
 import net.dylanvhs.bountiful_critters.item.ModItems;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -11,7 +10,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -57,6 +55,7 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(ModItems.RAW_KRILL.get());
     private static final EntityDataAccessor<Integer> MOISTNESS_LEVEL = SynchedEntityData.defineId(HumpbackWhaleEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> IS_FEEDING = SynchedEntityData.defineId(HumpbackWhaleEntity.class, EntityDataSerializers.BOOLEAN);
+    public int filterCooldown;
     public static final int TOTAL_AIR_SUPPLY = 4800;
     private static final int TOTAL_MOISTNESS_LEVEL = 2400;
 
@@ -160,12 +159,14 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putInt("Moistness", this.getMoistnessLevel());
+        pCompound.putInt("FilterCooldown", this.filterCooldown);
     }
 
 
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
         this.setMoisntessLevel(pCompound.getInt("Moistness"));
+        this.filterCooldown = pCompound.getInt("FilterCooldown");
     }
 
     @Override
@@ -185,6 +186,17 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
     public void setFeeding(boolean feeding) {
         entityData.set(IS_FEEDING, feeding);
     }
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (!this.isAlive()) {
+            return;
+        }
+        if (this.filterCooldown > 0) {
+            --this.filterCooldown;
+        }
+    }
+
 
     public void tick() {
         super.tick();
@@ -244,28 +256,37 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
     }
 
     @Override
+    public void handleEntityEvent(byte id) {
+        if (id == 39) {
+            this.filterCooldown = 1000;
+        }
+        super.handleEntityEvent(id);
+    }
+
+    @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack heldItem = player.getItemInHand(hand);
 
-        if (heldItem.getItem() == Items.SAND && this.isAlive() && !isBaby()) {
+        if (heldItem.getItem() == Items.SAND && this.isAlive() && !isBaby() && this.filterCooldown == 0) {
             playSound(SoundEvents.DOLPHIN_EAT, 1.0F, 1.0F);
             heldItem.shrink(1);
+            this.filterCooldown = 1000;
             float lootChange = this.getRandom().nextFloat();
-            if(lootChange <= 0.94F){
+            if(lootChange <= 0.05F){
                 spawnAtLocation(Items.DIAMOND);
-                if(lootChange <= 0.45F){
+                if(lootChange <= 0.04F){
                     spawnAtLocation(Items.HEART_OF_THE_SEA, 3);
                 }
-                if(lootChange <= 0.45){
+                if(lootChange <= 0.05){
                     spawnAtLocation(Items.DIAMOND, 3);
                 }
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.SLIME_BALL, 3);
                 }
-                if(lootChange <= 0.45F){
+                if(lootChange <= 0.04F){
                     spawnAtLocation(Items.EMERALD, 3);
                 }
-            } else if(lootChange <= 0.95F){
+            } else if(lootChange <= 0.08F){
                 spawnAtLocation(Items.EMERALD, 3);
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.LAPIS_BLOCK, 3);
@@ -276,12 +297,12 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.SLIME_BALL, 3);
                 }
-            } else if(lootChange <= 0.96F){
+            } else if(lootChange <= 0.3F){
                 spawnAtLocation(Items.IRON_INGOT, 3);
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.GOLD_BLOCK, 3);
                 }
-            } else if(lootChange <= 0.97F){
+            } else if(lootChange <= 0.5F){
                 spawnAtLocation(Items.GOLD_INGOT, 3);
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.IRON_NUGGET, 3);
@@ -292,13 +313,13 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.SLIME_BALL, 3);
                 }
-            } else if(lootChange <= 0.98F){
+            } else if(lootChange <= 0.65F){
                 spawnAtLocation(Items.GOLD_NUGGET, 3);
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.COPPER_INGOT, 3);
                 }
 
-            } else if(lootChange <= 0.99F){
+            } else if(lootChange <= 0.75F){
                 spawnAtLocation(Items.BONE_MEAL, 3);
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.COD, 3);
@@ -307,7 +328,7 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
                     spawnAtLocation(Items.SLIME_BALL, 3);
                 }
 
-            } else if(lootChange <= 1F){
+            } else if(lootChange <= 0.9F){
                 spawnAtLocation(Items.COAL, 3);
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.SLIME_BALL, 3);
@@ -323,26 +344,26 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
                 }
             }
             return InteractionResult.SUCCESS;
-        } else if
-        (heldItem.getItem() == Items.RED_SAND && this.isAlive() && !isBaby()) {
+        } else if (heldItem.getItem() == Items.RED_SAND && this.isAlive() && !isBaby() && this.filterCooldown == 0) {
             playSound(SoundEvents.DOLPHIN_EAT, 1.0F, 1.0F);
             heldItem.shrink(1);
+            this.filterCooldown = 1000;
             float lootChange = this.getRandom().nextFloat();
-            if(lootChange <= 0.5F){
+            if(lootChange <= 0.05F){
                 spawnAtLocation(Items.DIAMOND);
-                if(lootChange <= 0.45F){
+                if(lootChange <= 0.04F){
                     spawnAtLocation(Items.HEART_OF_THE_SEA, 3);
                 }
-                if(lootChange <= 0.45){
+                if(lootChange <= 0.05){
                     spawnAtLocation(Items.DIAMOND, 3);
                 }
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.SLIME_BALL, 3);
                 }
-                if(lootChange <= 0.45F){
+                if(lootChange <= 0.03F){
                     spawnAtLocation(Items.EMERALD, 3);
                 }
-            } else if(lootChange <= 0.95F){
+            } else if(lootChange <= 0.08F){
                 spawnAtLocation(Items.EMERALD, 3);
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.LAPIS_BLOCK, 3);
@@ -353,12 +374,12 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.SLIME_BALL, 3);
                 }
-            } else if(lootChange <= 0.96F){
+            } else if(lootChange <= 0.3F){
                 spawnAtLocation(Items.IRON_INGOT, 3);
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.GOLD_BLOCK, 3);
                 }
-            } else if(lootChange <= 0.97F){
+            } else if(lootChange <= 0.5F){
                 spawnAtLocation(Items.GOLD_INGOT, 3);
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.IRON_NUGGET, 3);
@@ -369,13 +390,13 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.SLIME_BALL, 3);
                 }
-            } else if(lootChange <= 0.98F){
+            } else if(lootChange <= 0.65F){
                 spawnAtLocation(Items.GOLD_NUGGET, 3);
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.COPPER_INGOT, 3);
                 }
 
-            } else if(lootChange <= 0.99F){
+            } else if(lootChange <= 0.75F){
                 spawnAtLocation(Items.BONE_MEAL, 3);
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.COD, 3);
@@ -384,7 +405,7 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
                     spawnAtLocation(Items.SLIME_BALL, 3);
                 }
 
-            } else if(lootChange <= 1F){
+            } else if(lootChange <= 0.9F){
                 spawnAtLocation(Items.COAL, 3);
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.SLIME_BALL, 3);
@@ -400,26 +421,26 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
                 }
             }
             return InteractionResult.SUCCESS;
-        } else if
-        (heldItem.getItem() == Items.GRAVEL && this.isAlive() && !isBaby()) {
+        } else if (heldItem.getItem() == Items.GRAVEL && this.isAlive() && !isBaby() && this.filterCooldown == 0) {
             playSound(SoundEvents.DOLPHIN_EAT, 1.0F, 1.0F);
             heldItem.shrink(1);
+            this.filterCooldown = 1000;
             float lootChange = this.getRandom().nextFloat();
-            if(lootChange <= 0.94F){
+            if(lootChange <= 0.05F){
                 spawnAtLocation(Items.DIAMOND);
-                if(lootChange <= 0.45F){
+                if(lootChange <= 0.04F){
                     spawnAtLocation(Items.HEART_OF_THE_SEA, 3);
                 }
-                if(lootChange <= 0.45){
+                if(lootChange <= 0.05){
                     spawnAtLocation(Items.DIAMOND, 3);
                 }
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.SLIME_BALL, 3);
                 }
-                if(lootChange <= 0.45F){
+                if(lootChange <= 0.04F){
                     spawnAtLocation(Items.EMERALD, 3);
                 }
-            } else if(lootChange <= 0.95F){
+            } else if(lootChange <= 0.08F){
                 spawnAtLocation(Items.EMERALD, 3);
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.LAPIS_BLOCK, 3);
@@ -430,12 +451,12 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.SLIME_BALL, 3);
                 }
-            } else if(lootChange <= 0.96F){
+            } else if(lootChange <= 0.3F){
                 spawnAtLocation(Items.IRON_INGOT, 3);
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.GOLD_BLOCK, 3);
                 }
-            } else if(lootChange <= 0.97F){
+            } else if(lootChange <= 0.5F){
                 spawnAtLocation(Items.GOLD_INGOT, 3);
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.IRON_NUGGET, 3);
@@ -446,13 +467,13 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.SLIME_BALL, 3);
                 }
-            } else if(lootChange <= 0.98F){
+            } else if(lootChange <= 0.65F){
                 spawnAtLocation(Items.GOLD_NUGGET, 3);
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.COPPER_INGOT, 3);
                 }
 
-            } else if(lootChange <= 0.99F){
+            } else if(lootChange <= 0.75F){
                 spawnAtLocation(Items.BONE_MEAL, 3);
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.COD, 3);
@@ -461,7 +482,7 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
                     spawnAtLocation(Items.SLIME_BALL, 3);
                 }
 
-            } else if(lootChange <= 1F){
+            } else if(lootChange <= 0.9F){
                 spawnAtLocation(Items.COAL, 3);
                 if(lootChange <= 0.5){
                     spawnAtLocation(Items.SLIME_BALL, 3);
