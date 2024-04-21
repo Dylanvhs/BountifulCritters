@@ -184,7 +184,7 @@ public class KrillEntity extends AbstractSchoolingFish implements GeoEntity, Buc
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.krill.idle", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
-        if (!this.isInWater()) {
+        else if (this.onGround()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.krill.flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }

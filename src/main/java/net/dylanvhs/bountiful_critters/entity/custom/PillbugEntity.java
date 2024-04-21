@@ -60,6 +60,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
     private static final float SPIDER_SPECIAL_EFFECT_CHANCE = 0.1F;
     private static final EntityDataAccessor<Boolean> IS_ROLLED_UP = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_POISONOUS = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BOOLEAN);
+    private boolean canBePushed = true;
 
     public PillbugEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
@@ -118,6 +119,11 @@ public class PillbugEntity extends Animal implements GeoEntity {
                 .add(Attributes.ATTACK_DAMAGE, 3D)
                 .add(Attributes.ARMOR_TOUGHNESS, 1D)
                 .build();
+    }
+
+    @Override
+    public boolean isPushable() {
+        return this.canBePushed;
     }
 
     public boolean isFood(ItemStack stack) {
@@ -286,8 +292,10 @@ public class PillbugEntity extends Animal implements GeoEntity {
 
         if (isRolledUp()) {
             setRollUp(true);
+            this.canBePushed = false;
         } else {
             setRollUp(false);
+            this.canBePushed = true;
         }
 
         if (this.hasEffect(MobEffects.POISON)) {

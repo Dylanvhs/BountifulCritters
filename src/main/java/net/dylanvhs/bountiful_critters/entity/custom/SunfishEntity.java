@@ -152,7 +152,7 @@ public class SunfishEntity extends AbstractFish implements GeoEntity {
     public static AttributeSupplier setAttributes() {
         return WaterAnimal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20D)
-                .add(Attributes.MOVEMENT_SPEED, 0.8F)
+                .add(Attributes.MOVEMENT_SPEED, 0.55F)
                 .build();
     }
 
@@ -220,6 +220,7 @@ public class SunfishEntity extends AbstractFish implements GeoEntity {
     protected SoundEvent getHurtSound(DamageSource p_28281_) {
         return SoundEvents.COD_HURT;
     }
+
     protected SoundEvent getFlopSound() {
         return SoundEvents.COD_FLOP;
     }
@@ -238,7 +239,7 @@ public class SunfishEntity extends AbstractFish implements GeoEntity {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.sunfish.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
-        if (!this.isInWater()) {
+        else if (this.onGround()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.sunfish.flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }

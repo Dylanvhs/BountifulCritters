@@ -59,6 +59,8 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
     public static final int TOTAL_AIR_SUPPLY = 4800;
     private static final int TOTAL_MOISTNESS_LEVEL = 2400;
 
+    private boolean canBePushed = false;
+
     public HumpbackWhaleEntity(EntityType<? extends HumpbackWhaleEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
@@ -105,6 +107,10 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
         return worldIn.isUnobstructed(this);
     }
 
+    @Override
+    public boolean isPushable() {
+        return this.canBePushed;
+    }
 
     protected PathNavigation createNavigation(Level p_27480_) {
         return new WaterBoundPathNavigation(this, p_27480_);

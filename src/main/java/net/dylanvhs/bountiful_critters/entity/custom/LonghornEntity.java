@@ -116,6 +116,11 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
         return blockstate.is(Blocks.GRASS_BLOCK);
     }
 
+    @Override
+    public boolean isPushable() {
+        return this.canBePushed;
+    }
+
     protected SoundEvent getAmbientSound() {
         return SoundEvents.COW_AMBIENT;
     }
