@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "bountiful_critters:block/salt_lamp"
+    },
+    "lit=true": {
+      "model": "bountiful_critters:block/salt_lamp_lit"
+    }
+  }
+}

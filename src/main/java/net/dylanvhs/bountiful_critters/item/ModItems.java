@@ -6,7 +6,6 @@ import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.custom.*;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -33,10 +32,8 @@ public class ModItems {
             () -> new LongHornDidgeridooItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> LONG_HORN_HORN =
             ITEMS.register("long_horn_horn", () -> new Item(new Item.Properties()));
-
     public static final RegistryObject<Item> SALT =
             ITEMS.register("salt", () -> new Item(new Item.Properties()));
-
     public static final RegistryObject<Item> SALTED_KELP =
             ITEMS.register("salted_kelp", () -> new Item(new Item.Properties().food(ModFoods.SALTED_KELP)));
     public static final RegistryObject<Item> RAW_KRILL =

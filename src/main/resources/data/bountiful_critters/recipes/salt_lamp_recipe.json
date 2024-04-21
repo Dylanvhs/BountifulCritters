@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:redstone"
+    },
+    "X": {
+      "item": "bountiful_critters:salt"
+    },
+    "B": {
+      "tag": "minecraft:wooden_slabs"
+    }
+  },
+  "pattern": [
+    " X ",
+    "X#X",
+    " B "
+  ],
+  "result": {
+    "item": "bountiful_critters:salt_lamp"
+  },
+  "show_notification": true
+}

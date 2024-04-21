@@ -1,6 +1,7 @@
 package net.dylanvhs.bountiful_critters.item;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
+import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -34,6 +35,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.LONG_HORN_HORN.get());
                         pOutput.accept(ModItems.LONG_HORN_DIDGERIDOO.get());
                         pOutput.accept(ModItems.SALT.get());
+                        pOutput.accept(ModBlocks.SALT_LAMP.get());
                         pOutput.accept(ModItems.SALTED_KELP.get());
                         pOutput.accept(ModItems.RAW_PILLBUG.get());
                         pOutput.accept(ModItems.ROASTED_PILLBUG.get());
