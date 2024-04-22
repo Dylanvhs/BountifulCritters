@@ -18,6 +18,7 @@
   "item.bountiful_critters.longhorn_didgeridoo": "Longhorn Didgeridoo",
   "item.bountiful_critters.salt": "Salt",
   "item.bountiful_critters.salted_kelp": "Salted Kelp",
+  "item.bountiful_critters.seagrass_ball": "Seagrass Ball",
   "item.bountiful_critters.raw_pillbug": "Raw Pill Bug",
   "item.bountiful_critters.roasted_pillbug": "Roasted Pill Bug",
   "item.bountiful_critters.poisonous_pillbug": "Poisonous Pill Bug",
@@ -27,6 +28,7 @@
 
   "block.bountiful_critters.roasted_pillbug_block": "Roasted Pill Bug",
   "block.bountiful_critters.salt_lamp": "Salt Lamp",
+  "block.bountiful_critters.seagrass_ball_block": "Block Of Seagrass Ball",
 
   "item.bountiful_critters.emu_spawn_egg" : "Emu Spawn Egg",
   "item.bountiful_critters.stingray_spawn_egg" : "Stingray Spawn Egg",
@@ -83,6 +85,12 @@
 
   "advancements.husbandry.collect_longhorn_horn.title" : "Could Be A Great Didgeridoo",
   "advancements.husbandry.collect_longhorn_horn.description" : "Collect a Longhorn Horn",
+
+  "advancements.husbandry.collect_krill_cocktail.title" : "Shrimple As That",
+  "advancements.husbandry.collect_krill_cocktail.description" : "Craft a Krill Cocktail",
+
+  "advancements.husbandry.collect_seagrass_ball.title" : "Sticky Substance",
+  "advancements.husbandry.collect_seagrass_ball.description" : "Get a Seagrass Ball",
 
   "sounds.bountiful_critters:emu_ambient": "Emu Grunts",
   "sounds.bountiful_critters:emu_hurt": "Emu Hurts",

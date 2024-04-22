@@ -32,7 +32,8 @@ public class ModBlocks {
     public static final RegistryObject<Block> SALT_LAMP = registerBlock("salt_lamp", () ->
             new SaltLampBlock(BlockBehaviour.Properties.of().lightLevel(litBlockEmission(15)).strength(0.3F).sound(SoundType.GLASS).noOcclusion().isValidSpawn(ModBlocks::always)));
 
-
+    public static final RegistryObject<Block> SEAGRASS_BALL_BLOCK = registerBlock("seagrass_ball_block",
+            () -> new Block(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.WET_GRASS).noOcclusion()));
 
     public static <B extends Block> RegistryObject<B> registerBlock(String name, Supplier<? extends B> supplier) {
         RegistryObject<B> block = BLOCKS.register(name, supplier);

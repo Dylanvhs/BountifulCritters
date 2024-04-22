@@ -38,6 +38,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.SALT.get());
                         pOutput.accept(ModBlocks.SALT_LAMP.get());
                         pOutput.accept(ModItems.SALTED_KELP.get());
+                        pOutput.accept(ModItems.SEAGRASS_BALL.get());
+                        pOutput.accept(ModBlocks.SEAGRASS_BALL_BLOCK.get());
                         pOutput.accept(ModItems.RAW_PILLBUG.get());
                         pOutput.accept(ModItems.ROASTED_PILLBUG.get());
                         pOutput.accept(ModItems.POISONOUS_PILLBUG.get());

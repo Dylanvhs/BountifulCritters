@@ -177,7 +177,16 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     @Override
     @Nonnull
     public InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
-        return Bucketable.bucketMobPickup(player, hand, this).orElse(super.mobInteract(player, hand));
+        Bucketable.bucketMobPickup(player, hand, this).orElse(super.mobInteract(player, hand));
+        ItemStack heldItem = player.getItemInHand(hand);
+        if (heldItem.getItem() == Items.SEAGRASS && this.isAlive() && !isBaby()) {
+            playSound(SoundEvents.FROG_EAT, 1.0F, 1.0F);
+            heldItem.shrink(1);
+            spawnAtLocation(ModItems.SEAGRASS_BALL.get());
+            return InteractionResult.SUCCESS;
+
+        }
+        return super.mobInteract(player, hand);
     }
 
 

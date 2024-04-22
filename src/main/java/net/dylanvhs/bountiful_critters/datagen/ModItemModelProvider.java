@@ -27,6 +27,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.LONGHORN_HORN);
         simpleItem(ModItems.SALT);
         simpleItem(ModItems.SALTED_KELP);
+        simpleItem(ModItems.SEAGRASS_BALL);
         simpleItem(ModItems.RAW_SUNFISH_MEAT);
         simpleItem(ModItems.COOKED_SUNFISH_MEAT);
         simpleItem(ModItems.RAW_KRILL);
