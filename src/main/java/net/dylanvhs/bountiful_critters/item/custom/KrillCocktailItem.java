@@ -14,11 +14,7 @@ public class KrillCocktailItem extends Item {
     public KrillCocktailItem(Properties pProperties) {
         super(pProperties);
     }
-    public UseAnim getUseAnimation(ItemStack pStack) {
-        return UseAnim.DRINK;
-    }
     public ItemStack finishUsingItem(ItemStack pStack, Level pLevel, LivingEntity pEntityLiving) {
-        if (!pLevel.isClientSide) pEntityLiving.curePotionEffects(pStack);
         if (pEntityLiving instanceof Player && !((Player)pEntityLiving).getAbilities().instabuild) {
             pStack.shrink(1);
         }
