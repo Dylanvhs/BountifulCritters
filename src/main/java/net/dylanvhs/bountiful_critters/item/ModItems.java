@@ -41,7 +41,7 @@ public class ModItems {
     public static final RegistryObject<Item> FRIED_KRILL =
             ITEMS.register("fried_krill", () -> new Item(new Item.Properties().food(ModFoods.FRIED_KRILL)));
     public static final RegistryObject<Item> KRILL_COCKTAIL =
-            ITEMS.register("krill_cocktail", () -> new KrillCocktailItem(new Item.Properties().food(ModFoods.KRILL_COCKTAIL)));
+            ITEMS.register("krill_cocktail", () -> new KrillCocktailItem(new Item.Properties().food(ModFoods.KRILL_COCKTAIL).stacksTo(1)));
     public static final RegistryObject<Item> RAW_SUNFISH_MEAT =
             ITEMS.register("raw_sunfish_meat", () -> new Item(new Item.Properties().food(ModFoods.RAW_SUNFISH_MEAT)));
     public static final RegistryObject<Item> COOKED_SUNFISH_MEAT =

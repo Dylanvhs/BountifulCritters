@@ -239,7 +239,7 @@ public class SunfishEntity extends AbstractFish implements GeoEntity {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.sunfish.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
-        else if (this.onGround()) {
+        else if (!this.isInWater()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.sunfish.flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }

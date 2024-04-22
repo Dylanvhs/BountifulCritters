@@ -288,25 +288,9 @@ public class PillbugEntity extends Animal implements GeoEntity {
         super.tick();
         if (!this.level().isClientSide) {
             this.setClimbing(this.horizontalCollision);
+            setPoisonous(hasEffect(MobEffects.POISON));
         }
-
-        if (isRolledUp()) {
-            setRollUp(true);
-            this.canBePushed = false;
-        } else {
-            setRollUp(false);
-            this.canBePushed = true;
-        }
-
-        if (this.hasEffect(MobEffects.POISON)) {
-            setPoisonous(true);
-        } else {
-            setPoisonous(false);
-        }
-
-        if (!this.onGround() && isRolledUp()) {
-            setRollUp(false);
-        }
+        setRollUp(isRolledUp());
 
         List<Player> list = level().getNearbyEntities(Player.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
 
@@ -339,17 +323,12 @@ public class PillbugEntity extends Animal implements GeoEntity {
         public MobEffect effect;
 
         public void setRandomEffect(RandomSource pRandom) {
-            int i = pRandom.nextInt(5);
+            int i = pRandom.nextInt(2);
             if (i <= 1) {
                 this.effect = MobEffects.MOVEMENT_SPEED;
             } else if (i <= 2) {
                 this.effect = MobEffects.POISON;
-            } else if (i <= 3) {
-                this.effect = MobEffects.REGENERATION;
-            } else if (i <= 4) {
-                this.effect = MobEffects.FIRE_RESISTANCE;
             }
-
         }
     }
 

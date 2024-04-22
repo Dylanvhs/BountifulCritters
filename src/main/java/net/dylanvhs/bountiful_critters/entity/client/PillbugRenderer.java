@@ -9,6 +9,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
+import java.util.logging.Level;
+
 public class PillbugRenderer extends GeoEntityRenderer<PillbugEntity> {
     public PillbugRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new PillbugModel());

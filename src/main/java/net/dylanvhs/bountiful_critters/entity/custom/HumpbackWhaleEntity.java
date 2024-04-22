@@ -224,13 +224,6 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
                 if (this.getMoistnessLevel() <= 0) {
                     this.hurt(this.damageSources().dryOut(), 1.0F);
                 }
-
-                if (this.onGround()) {
-                    this.setDeltaMovement(this.getDeltaMovement().add((double)((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F), 0.5D, (double)((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F)));
-                    this.setYRot(this.random.nextFloat() * 360.0F);
-                    this.setOnGround(false);
-                    this.hasImpulse = true;
-                }
             }
 
             if (this.level().isClientSide && this.isInWater() && this.getDeltaMovement().lengthSqr() > 0.03D) {
@@ -595,6 +588,10 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
                 geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.humpback_whale.swim", Animation.LoopType.LOOP));
                 return PlayState.CONTINUE;
             }
+        }
+        if (!this.isInWater()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.humpback_whale.idle", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
         } else
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.humpback_whale.swim", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
