@@ -83,7 +83,7 @@ public class BountifulCritters
                     (ModEntities.MARINE_IGUANA.get(), MarineIguanaRenderer:: new);
 
             EntityRenderers.register
-                    (ModEntities.LONG_HORN.get(), LongHornRenderer:: new);
+                    (ModEntities.LONGHORN.get(), LongHornRenderer:: new);
 
             EntityRenderers.register
                     (ModEntities.TOUCAN.get(), ToucanRenderer:: new);

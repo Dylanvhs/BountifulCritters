@@ -28,10 +28,10 @@ public class ModItems {
     public static final RegistryObject<Item> POTTED_PILLBUG = ITEMS.register("potted_pillbug",
             () ->  new ModCatchableItem(ModEntities.PILLBUG::get, Items.FLOWER_POT, false, new Item.Properties().stacksTo(1)));
 
-    public static final RegistryObject<Item> LONG_HORN_DIDGERIDOO = ITEMS.register("long_horn_didgeridoo",
+    public static final RegistryObject<Item> LONGHORN_DIDGERIDOO = ITEMS.register("longhorn_didgeridoo",
             () -> new LongHornDidgeridooItem(new Item.Properties().stacksTo(1)));
-    public static final RegistryObject<Item> LONG_HORN_HORN =
-            ITEMS.register("long_horn_horn", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> LONGHORN_HORN =
+            ITEMS.register("longhorn_horn", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SALT =
             ITEMS.register("salt", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SALTED_KELP =
@@ -40,6 +40,8 @@ public class ModItems {
             ITEMS.register("raw_krill", () -> new Item(new Item.Properties().food(ModFoods.RAW_KRILL)));
     public static final RegistryObject<Item> FRIED_KRILL =
             ITEMS.register("fried_krill", () -> new Item(new Item.Properties().food(ModFoods.FRIED_KRILL)));
+    public static final RegistryObject<Item> KRILL_COCKTAIL =
+            ITEMS.register("krill_cocktail", () -> new KrillCocktailItem(new Item.Properties().food(ModFoods.KRILL_COCKTAIL)));
     public static final RegistryObject<Item> RAW_SUNFISH_MEAT =
             ITEMS.register("raw_sunfish_meat", () -> new Item(new Item.Properties().food(ModFoods.RAW_SUNFISH_MEAT)));
     public static final RegistryObject<Item> COOKED_SUNFISH_MEAT =
@@ -74,8 +76,8 @@ public class ModItems {
     public static final RegistryObject<Item> MARINE_IGUANA_SPAWN_EGG = ITEMS.register("marine_iguana_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.MARINE_IGUANA, 0x403b3d, 0x94908b, new Item.Properties()));
 
-    public static final RegistryObject<Item> LONG_HORN_SPAWN_EGG = ITEMS.register("long_horn_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.LONG_HORN, 0xad4e1a, 0xedd9b5, new Item.Properties()));
+    public static final RegistryObject<Item> LONG_HORN_SPAWN_EGG = ITEMS.register("longhorn_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.LONGHORN, 0xad4e1a, 0xedd9b5, new Item.Properties()));
 
     public static final RegistryObject<Item> TOUCAN_SPAWN_EGG = ITEMS.register("toucan_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.TOUCAN, 0x1d1d21, 0xff8c1d, new Item.Properties()));

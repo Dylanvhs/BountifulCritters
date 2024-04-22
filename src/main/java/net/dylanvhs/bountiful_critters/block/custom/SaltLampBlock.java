@@ -31,8 +31,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SaltLampBlock extends Block {
 
-    protected static final VoxelShape BASE = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 14.0D, 12.0D);
-    protected static final VoxelShape SALT = Block.box(8.0D, 0.0D, 8.0D, 8.0D, 3.0D, 8.0D);
+    protected static final VoxelShape BASE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 2.0D, 14.0D);
+    protected static final VoxelShape SALT = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 13.0D, 12.0D);
     public static final VoxelShape SHAPE_COMMON = Shapes.or(BASE, SALT);
     public static final BooleanProperty LIT = RedstoneTorchBlock.LIT;
 

@@ -28,12 +28,13 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.POTTED_PILLBUG.get());
                         pOutput.accept(ModItems.RAW_KRILL.get());
                         pOutput.accept(ModItems.FRIED_KRILL.get());
+                        pOutput.accept(ModItems.KRILL_COCKTAIL.get());
                         pOutput.accept(ModItems.RAW_SUNFISH_MEAT.get());
                         pOutput.accept(ModItems.COOKED_SUNFISH_MEAT.get());
                         pOutput.accept(ModItems.EMU_EGG.get());
                         pOutput.accept(ModItems.BOILED_EMU_EGG.get());
-                        pOutput.accept(ModItems.LONG_HORN_HORN.get());
-                        pOutput.accept(ModItems.LONG_HORN_DIDGERIDOO.get());
+                        pOutput.accept(ModItems.LONGHORN_HORN.get());
+                        pOutput.accept(ModItems.LONGHORN_DIDGERIDOO.get());
                         pOutput.accept(ModItems.SALT.get());
                         pOutput.accept(ModBlocks.SALT_LAMP.get());
                         pOutput.accept(ModItems.SALTED_KELP.get());

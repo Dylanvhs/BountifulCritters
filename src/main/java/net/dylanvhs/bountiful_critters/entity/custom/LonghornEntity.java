@@ -91,7 +91,7 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
 
     @Nullable
     public LonghornEntity getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        LonghornEntity longhorn = ModEntities.LONG_HORN.get().create(pLevel);
+        LonghornEntity longhorn = ModEntities.LONGHORN.get().create(pLevel);
         if (longhorn != null) {
             UUID uuid = this.getOwnerUUID();
             if (uuid != null) {
@@ -351,7 +351,7 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
 
             this.entityData.set(entitydataaccessor, false);
             Vec3 vec3 = this.position();
-            ItemStack itemstack = new ItemStack(ModItems.LONG_HORN_HORN.get());
+            ItemStack itemstack = new ItemStack(ModItems.LONGHORN_HORN.get());
             double d0 = (double)Mth.randomBetween(this.random, -0.2F, 0.2F);
             double d1 = (double)Mth.randomBetween(this.random, 0.3F, 0.7F);
             double d2 = (double)Mth.randomBetween(this.random, -0.2F, 0.2F);

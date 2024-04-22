@@ -24,13 +24,14 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.SUNFISH_BUCKET);
         simpleItem(ModItems.KRILL_BUCKET);
         simpleItem(ModItems.MARINE_IGUANA_BUCKET);
-        simpleItem(ModItems.LONG_HORN_HORN);
+        simpleItem(ModItems.LONGHORN_HORN);
         simpleItem(ModItems.SALT);
         simpleItem(ModItems.SALTED_KELP);
         simpleItem(ModItems.RAW_SUNFISH_MEAT);
         simpleItem(ModItems.COOKED_SUNFISH_MEAT);
         simpleItem(ModItems.RAW_KRILL);
         simpleItem(ModItems.FRIED_KRILL);
+        simpleItem(ModItems.KRILL_COCKTAIL);
         simpleItem(ModItems.EMU_EGG);
         simpleItem(ModItems.BOILED_EMU_EGG);
         simpleItem(ModItems.RAW_PILLBUG);

@@ -17,8 +17,11 @@ public class ModFoods {
     public static final FoodProperties RAW_KRILL = new FoodProperties.Builder().nutrition(2)
             .saturationMod(0.2f).build();
 
-    public static final FoodProperties FRIED_KRILL = new FoodProperties.Builder().nutrition(4)
+    public static final FoodProperties FRIED_KRILL = new FoodProperties.Builder().nutrition(3)
             .saturationMod(0.4f).build();
+
+    public static final FoodProperties KRILL_COCKTAIL = new FoodProperties.Builder().nutrition(4)
+            .saturationMod(0.5f).build();
 
     public static final FoodProperties RAW_PILLBUG = new FoodProperties.Builder().nutrition(2)
             .saturationMod(0.2f).effect(() -> new MobEffectInstance(MobEffects.HUNGER, 200), 0.5f).build();

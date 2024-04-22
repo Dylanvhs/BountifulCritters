@@ -1,4 +1,4 @@
-// 1.20.1	2024-04-19T14:43:43.6150928	Item Models: bountiful_critters
+// 1.20.1	2024-04-22T16:40:52.7061482	Item Models: bountiful_critters
 c932650040726c1b26c1a26dd846d1c1d05c14d0 assets/bountiful_critters/models/item/boiled_emu_egg.json
 6ec21d0cb96e4b516917bb0f9b4ea06b059cb76d assets/bountiful_critters/models/item/cooked_sunfish_meat.json
 425dd2ceb1fdabf09daa58fc5bef59c719a69e0a assets/bountiful_critters/models/item/emu_egg.json
@@ -6,9 +6,10 @@ c932650040726c1b26c1a26dd846d1c1d05c14d0 assets/bountiful_critters/models/item/b
 58ebc6c7175009c7b58aed8be1b49eaf6d397922 assets/bountiful_critters/models/item/fried_krill.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/humpback_whale_spawn_egg.json
 44f9d9811e2e0f56cc107a4ba49d0014e24016d2 assets/bountiful_critters/models/item/krill_bucket.json
+8b47a25aa81284afc3497f9bb6a5172ec4afbf3d assets/bountiful_critters/models/item/krill_cocktail.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/krill_spawn_egg.json
-bd57d066d12f03c73bac644307ba52a52918f767 assets/bountiful_critters/models/item/long_horn_horn.json
-63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/long_horn_spawn_egg.json
+a24c9d6747f3af8e67fc3c07aa31c82d2d91dea6 assets/bountiful_critters/models/item/longhorn_horn.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/longhorn_spawn_egg.json
 74f89972a1a18d4eca100eaf93e0cbc3f17b435a assets/bountiful_critters/models/item/marine_iguana_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/marine_iguana_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/pillbug_spawn_egg.json

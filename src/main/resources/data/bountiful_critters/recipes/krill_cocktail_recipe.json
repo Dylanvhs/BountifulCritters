@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "salted_kelp",
+  "ingredients": [
+    {
+      "item": "bountiful_critters:raw_krill"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "result": {
+    "item": "bountiful_critters:krill_cocktail"
+  },
+  "show_notification": true
+}
