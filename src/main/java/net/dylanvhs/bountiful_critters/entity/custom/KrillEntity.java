@@ -1,6 +1,7 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
 import net.dylanvhs.bountiful_critters.item.ModItems;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -153,6 +154,11 @@ public class KrillEntity extends AbstractSchoolingFish implements GeoEntity, Buc
             super.travel(pTravelVector);
         }
 
+    }
+
+    public boolean isName() {
+        String n = ChatFormatting.stripFormatting(this.getName().getString());
+        return n != null && (n.toLowerCase().contains("graus"));
     }
 
     protected SoundEvent getAmbientSound() {

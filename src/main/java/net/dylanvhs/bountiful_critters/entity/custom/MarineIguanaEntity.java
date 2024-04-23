@@ -61,7 +61,7 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(MarineIguanaEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(StingrayEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_SNEEZING = SynchedEntityData.defineId(MarineIguanaEntity.class, EntityDataSerializers.BOOLEAN);
-    public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.SEAGRASS);
+    public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.KELP);
 
     public int timeUntilNextSneeze = this.random.nextInt(2500) + 2500;
 
@@ -177,7 +177,7 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     @Override
     @Nonnull
     public InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
-        Bucketable.bucketMobPickup(player, hand, this).orElse(super.mobInteract(player, hand));
+        Bucketable.bucketMobPickup(player, hand, this);
         ItemStack heldItem = player.getItemInHand(hand);
         if (heldItem.getItem() == Items.SEAGRASS && this.isAlive() && !isBaby()) {
             playSound(SoundEvents.FROG_EAT, 1.0F, 1.0F);
@@ -185,8 +185,9 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
             spawnAtLocation(ModItems.SEAGRASS_BALL.get());
             return InteractionResult.SUCCESS;
 
+        }  else {
+            return super.mobInteract(player, hand);
         }
-        return super.mobInteract(player, hand);
     }
 
 

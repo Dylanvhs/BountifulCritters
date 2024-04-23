@@ -9,7 +9,8 @@ import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class KrillRenderer extends GeoEntityRenderer<KrillEntity> {
-
+    private static final ResourceLocation DEFAULT = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/krill.png");
+    private static final ResourceLocation GRAUS = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/krill_graus.png");
     public KrillRenderer(EntityRendererProvider.Context renderManagerIn) {
         super(renderManagerIn, new KrillModel());
     }
@@ -18,6 +19,10 @@ public class KrillRenderer extends GeoEntityRenderer<KrillEntity> {
     }
 
     public ResourceLocation getTextureLocation(KrillEntity entity) {
-        return new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/krill.png");
+        if(entity.isName()){
+            return GRAUS;
+        }else{
+            return DEFAULT;
+        }
     }
 }
