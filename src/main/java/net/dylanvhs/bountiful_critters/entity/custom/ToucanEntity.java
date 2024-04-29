@@ -167,7 +167,7 @@ public class ToucanEntity extends Animal implements GeoEntity, FlyingAnimal {
     }
 
     protected float getSoundVolume() {
-        return 0.4F;
+        return 0.25F;
     }
 
 
@@ -200,8 +200,10 @@ public class ToucanEntity extends Animal implements GeoEntity, FlyingAnimal {
         super.defineSynchedData();
         this.entityData.define(VARIANT, 0);
     }
+
     protected void checkFallDamage(double pY, boolean pOnGround, BlockState pState, BlockPos pPos) {
     }
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 0, this::predicate));

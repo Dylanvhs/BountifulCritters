@@ -63,7 +63,7 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     private static final EntityDataAccessor<Boolean> IS_SNEEZING = SynchedEntityData.defineId(MarineIguanaEntity.class, EntityDataSerializers.BOOLEAN);
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.KELP);
 
-    public int timeUntilNextSneeze = this.random.nextInt(2500) + 2500;
+    public int timeUntilNextSneeze = this.random.nextInt(3500) + 3500;
 
     public MarineIguanaEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -321,7 +321,7 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
             this.playSound(SoundEvents.AXOLOTL_HURT, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             this.spawnAtLocation(ModItems.SALT.get());
             setSneezing(true);
-            this.timeUntilNextSneeze = this.random.nextInt(2500) + 2500;
+            this.timeUntilNextSneeze = this.random.nextInt(3500) + 3500;
         }
     }
 

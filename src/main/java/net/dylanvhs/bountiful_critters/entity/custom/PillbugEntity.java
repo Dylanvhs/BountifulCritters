@@ -94,6 +94,9 @@ public class PillbugEntity extends Animal implements GeoEntity {
         this.entityData.set(DATA_FLAGS_ID, b0);
     }
 
+    protected void checkFallDamage(double pY, boolean pOnGround, BlockState pState, BlockPos pPos) {
+    }
+
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.2D));
