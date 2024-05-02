@@ -1,5 +1,6 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
+import com.google.common.collect.Sets;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,7 +15,11 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -26,6 +31,9 @@ import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -42,12 +50,15 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nullable;
+import java.util.Set;
 
-public class ToucanEntity extends Animal implements GeoEntity, FlyingAnimal {
+public class ToucanEntity extends TamableAnimal implements GeoEntity, FlyingAnimal {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
-
+    private static final Item POISONOUS_FOOD = Items.COOKIE;
+    private static final Set<Item> TAME_FOOD = Sets.newHashSet(Items.MELON_SLICE);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(StingrayEntity.class, EntityDataSerializers.INT);
-    public ToucanEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
+
+    public ToucanEntity(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.moveControl = new FlyingMoveControl(this, 10, false);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
@@ -58,6 +69,7 @@ public class ToucanEntity extends Animal implements GeoEntity, FlyingAnimal {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new PanicGoal(this, 1.4D));
         this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         this.goalSelector.addGoal(2, new ToucanEntity.ToucanWanderGoal(this, 1.0D));
         this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
@@ -99,6 +111,74 @@ public class ToucanEntity extends Animal implements GeoEntity, FlyingAnimal {
             }
 
             return null;
+        }
+    }
+
+    public boolean isPushable() {
+        return true;
+    }
+
+    protected void doPush(Entity pEntity) {
+        if (!(pEntity instanceof Player)) {
+            super.doPush(pEntity);
+        }
+    }
+
+    public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
+        ItemStack itemstack = pPlayer.getItemInHand(pHand);
+        InteractionResult interactionresult = super.mobInteract(pPlayer, pHand);
+        if (!this.isTame() && TAME_FOOD.contains(itemstack.getItem())) {
+            if (!pPlayer.getAbilities().instabuild) {
+                itemstack.shrink(1);
+            }
+            if (!this.isSilent()) {
+                this.level().playSound((Player) null, this.getX(), this.getY(), this.getZ(), SoundEvents.PARROT_EAT, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+            }
+
+            if (!this.level().isClientSide) {
+                if (this.random.nextInt(5) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, pPlayer)) {
+                    this.tame(pPlayer);
+                    this.setTarget((LivingEntity) null);
+                    this.level().broadcastEntityEvent(this, (byte) 7);
+                } else {
+                    this.level().broadcastEntityEvent(this, (byte) 6);
+                }
+            }
+
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
+        } else if (itemstack.is(POISONOUS_FOOD)) {
+            if (!pPlayer.getAbilities().instabuild) {
+                itemstack.shrink(1);
+            }
+
+            this.addEffect(new MobEffectInstance(MobEffects.POISON, 900));
+            if (pPlayer.isCreative() || !this.isInvulnerable()) {
+                this.hurt(this.damageSources().playerAttack(pPlayer), Float.MAX_VALUE);
+
+
+            }
+        } else if ((!interactionresult.consumesAction() || this.isBaby()) && this.isOwnedBy(pPlayer)) {
+            this.setOrderedToSit(!this.isOrderedToSit());
+            this.jumping = false;
+            this.navigation.stop();
+            this.setTarget((LivingEntity) null);
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
+        }
+        return interactionresult;
+    }
+
+    public void die(DamageSource pCause) {
+        this.stopRiding();
+        this.removeEffect(MobEffects.SLOW_FALLING);
+        super.die(pCause);
+    }
+
+    public boolean hurt(DamageSource pSource, float pAmount) {
+        if (this.isInvulnerableTo(pSource)) {
+            return false;
+        } else {
+            this.setOrderedToSit(false);
+            return super.hurt(pSource, pAmount);
         }
     }
 
@@ -212,6 +292,10 @@ public class ToucanEntity extends Animal implements GeoEntity, FlyingAnimal {
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
         if (geoAnimatableAnimationState.isMoving() && !this.isFlying()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.toucan.walk", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
+        if (this.isOrderedToSit()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.toucan.sit", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         if (this.isFlying()) {
