@@ -3,6 +3,7 @@ package net.dylanvhs.bountiful_critters.block;
 import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.block.custom.RoastedPillbugBlock;
 import net.dylanvhs.bountiful_critters.block.custom.SaltLampBlock;
+import net.dylanvhs.bountiful_critters.block.custom.SeagrassBallBlock;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
@@ -30,10 +31,13 @@ public class ModBlocks {
             new RoastedPillbugBlock(BlockBehaviour.Properties.of().forceSolidOn().strength(0.5F).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY).noOcclusion()));
 
     public static final RegistryObject<Block> SALT_LAMP = registerBlock("salt_lamp", () ->
-            new SaltLampBlock(BlockBehaviour.Properties.of().lightLevel(litBlockEmission(15)).strength(0.3F).sound(SoundType.GLASS).noOcclusion().isValidSpawn(ModBlocks::always)));
+            new SaltLampBlock(BlockBehaviour.Properties.of().lightLevel(litBlockEmission(15)).strength(0.3F).sound(SoundType.GLASS).isValidSpawn(ModBlocks::always)));
 
     public static final RegistryObject<Block> SEAGRASS_BALL_BLOCK = registerBlock("seagrass_ball_block",
-            () -> new Block(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.WET_GRASS).noOcclusion()));
+            () -> new Block(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.WET_GRASS)));
+
+    public static final RegistryObject<Block> SEAGRASS_BALL_PLACED = registerBlock("seagrass_ball_placed",
+            () -> new SeagrassBallBlock(BlockBehaviour.Properties.of().strength(0.2F).sound(SoundType.WET_GRASS).replaceable().noCollission().speedFactor(0.4F).jumpFactor(0.5F)));
 
     public static <B extends Block> RegistryObject<B> registerBlock(String name, Supplier<? extends B> supplier) {
         RegistryObject<B> block = BLOCKS.register(name, supplier);

@@ -38,7 +38,7 @@ public class ModItems {
             ITEMS.register("salted_kelp", () -> new Item(new Item.Properties().food(ModFoods.SALTED_KELP)));
 
     public static final RegistryObject<Item> SEAGRASS_BALL =
-            ITEMS.register("seagrass_ball", () -> new Item(new Item.Properties()));
+            ITEMS.register("seagrass_ball", () -> new BlockItem(ModBlocks.SEAGRASS_BALL_PLACED.get(),(new Item.Properties())));
     public static final RegistryObject<Item> RAW_KRILL =
             ITEMS.register("raw_krill", () -> new Item(new Item.Properties().food(ModFoods.RAW_KRILL)));
     public static final RegistryObject<Item> FRIED_KRILL =
