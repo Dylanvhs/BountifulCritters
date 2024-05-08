@@ -5,6 +5,7 @@
 		"0": "bountiful_critters:block/roasted_pillbug_2",
 		"particle": "bountiful_critters:block/roasted_pillbug_break"
 	},
+	"ambientocclusion": false,
 	"render_type": "cutout",
 	"elements": [
 		{

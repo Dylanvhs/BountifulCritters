@@ -110,5 +110,7 @@
   "item.bountiful_critters.returning_memory_music_disc": "Music Disc",
   "item.bountiful_critters.returning_memory_music_disc.desc": "Dylanvhs - Returning Memory",
 
-  "death.attack.pillball_0.entity": "%s got dunked on by a pillbug"
+  "death.attack.pillball_0.entity": "%s got dunked on by a pillbug",
+
+  "bountiful_critters.glued": "Glued"
 }

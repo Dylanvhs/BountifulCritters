@@ -1,16 +1,8 @@
 {
 	"ambientocclusion": false,
+	"render_type": "cutout",
+	"parent": "bountiful_critters:block/template_layer_block",
 	"textures": {
-		"particle": "bountiful_critters:block/seagrass_ball_placed",
-		"seagrass_ball": "bountiful_critters:block/seagrass_ball_placed"
-	},
-	"elements": [
-		{   "from": [ 0, 0, 0.1 ],
-			"to": [ 16, 16, 0.1 ],
-			"faces": {
-				"north": { "uv": [ 16, 0, 0, 16 ], "texture": "#seagrass_ball" },
-				"south": { "uv": [ 0, 0, 16, 16 ], "texture": "#seagrass_ball" }
-			}
-		}
-	]
+		"all": "bountiful_critters:block/seagrass_ball_placed"
+	}
 }
