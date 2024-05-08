@@ -34,6 +34,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -56,6 +57,7 @@ public class ToucanEntity extends TamableAnimal implements GeoEntity, FlyingAnim
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final Item POISONOUS_FOOD = Items.COOKIE;
     private static final Set<Item> TAME_FOOD = Sets.newHashSet(Items.MELON_SLICE);
+    public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.MELON_SLICE);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(ToucanEntity.class, EntityDataSerializers.INT);
 
     public ToucanEntity(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
@@ -69,6 +71,7 @@ public class ToucanEntity extends TamableAnimal implements GeoEntity, FlyingAnim
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new PanicGoal(this, 1.4D));
         this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(2, new TemptGoal(this, 1.25D, TEMPTATION_ITEM, false));
         this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         this.goalSelector.addGoal(2, new ToucanEntity.ToucanWanderGoal(this, 1.0D));
         this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 8.0F));
@@ -158,7 +161,7 @@ public class ToucanEntity extends TamableAnimal implements GeoEntity, FlyingAnim
 
 
             }
-        } else if ((!interactionresult.consumesAction() || this.isBaby()) && this.isOwnedBy(pPlayer)) {
+        } else if ((!interactionresult.consumesAction() || this.isBaby()) && this.isOwnedBy(pPlayer) && !this.isFlying()) {
             this.setOrderedToSit(!this.isOrderedToSit());
             this.jumping = false;
             this.navigation.stop();
@@ -247,7 +250,7 @@ public class ToucanEntity extends TamableAnimal implements GeoEntity, FlyingAnim
     }
 
     protected float getSoundVolume() {
-        return 0.25F;
+        return 0.15F;
     }
 
 

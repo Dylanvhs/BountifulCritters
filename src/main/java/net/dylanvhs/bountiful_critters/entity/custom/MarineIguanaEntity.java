@@ -217,9 +217,9 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         float variantChange = this.getRandom().nextFloat();
         if(variantChange <= 0.009F){
             this.setVariant(1);
-        } else if(variantChange <= 0.48F){
-            this.setVariant(2);
         } else if(variantChange <= 0.49F){
+            this.setVariant(2);
+        } else if(variantChange <= 0.499F){
             this.setVariant(3);
         } else if(variantChange <= 0.50F){
             this.setVariant(4);
@@ -271,7 +271,7 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     }
 
     public boolean canBreatheUnderwater() {
-        return true;
+        return false;
     }
 
     public boolean isPushedByFluid() {
@@ -315,14 +315,20 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         entityData.set(IS_SNEEZING, sneezing);
     }
 
+
     public void tick() {
         super.tick();
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && this.onGround() && --this.timeUntilNextSneeze <= 0) {
             this.playSound(SoundEvents.AXOLOTL_HURT, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             this.spawnAtLocation(ModItems.SALT.get());
-            setSneezing(true);
             this.timeUntilNextSneeze = this.random.nextInt(3500) + 3500;
-        } else setSneezing(false);
+            setSneezing(true);
+            double d0 = 0;
+            double d1 = Math.max(0.0D, 1.0D - d0);
+            this.setDeltaMovement(this.getDeltaMovement().add(0.0D, (double)0.4F * d1, 0.0D));
+        } else if (this.timeUntilNextSneeze > 0) {
+            setSneezing(false);
+        }
     }
 
     @Override
@@ -336,11 +342,11 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
                 geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.marine_iguana.walk", Animation.LoopType.LOOP));
                 return PlayState.CONTINUE;
         }
-        if (this.onGround() && isSneezing()) {
+        if (this.isSneezing()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.marine_iguana.sneeze", Animation.LoopType.PLAY_ONCE));
             return PlayState.CONTINUE;
         }
-        if (this.isInWater()) {
+        if (this.isInWater() && !this.onGround()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.marine_iguana.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
