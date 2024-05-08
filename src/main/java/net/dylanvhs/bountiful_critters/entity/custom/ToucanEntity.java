@@ -56,7 +56,7 @@ public class ToucanEntity extends TamableAnimal implements GeoEntity, FlyingAnim
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final Item POISONOUS_FOOD = Items.COOKIE;
     private static final Set<Item> TAME_FOOD = Sets.newHashSet(Items.MELON_SLICE);
-    private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(StingrayEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(ToucanEntity.class, EntityDataSerializers.INT);
 
     public ToucanEntity(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -169,8 +169,6 @@ public class ToucanEntity extends TamableAnimal implements GeoEntity, FlyingAnim
     }
 
     public void die(DamageSource pCause) {
-        this.stopRiding();
-        this.removeEffect(MobEffects.SLOW_FALLING);
         super.die(pCause);
     }
 
@@ -197,6 +195,7 @@ public class ToucanEntity extends TamableAnimal implements GeoEntity, FlyingAnim
                 (double)0.4F).add(Attributes.MOVEMENT_SPEED, (double)0.2F)
                  .build();
     }
+
     protected PathNavigation createNavigation(Level pLevel) {
         FlyingPathNavigation flyingpathnavigation = new FlyingPathNavigation(this, pLevel);
         flyingpathnavigation.setCanOpenDoors(false);
