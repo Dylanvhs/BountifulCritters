@@ -31,6 +31,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.KRILL_COCKTAIL.get());
                         pOutput.accept(ModItems.RAW_SUNFISH_MEAT.get());
                         pOutput.accept(ModItems.COOKED_SUNFISH_MEAT.get());
+                        pOutput.accept(ModItems.SUNFISH_SUSHI.get());
                         pOutput.accept(ModItems.EMU_EGG.get());
                         pOutput.accept(ModItems.BOILED_EMU_EGG.get());
                         pOutput.accept(ModItems.LONGHORN_HORN.get());

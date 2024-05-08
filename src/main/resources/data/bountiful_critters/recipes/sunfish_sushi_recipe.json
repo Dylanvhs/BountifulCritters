@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "sunfish_sushi",
+  "ingredients": [
+    {
+      "item": "bountiful_critters:raw_sunfish_meat"
+    },
+    {
+      "item": "minecraft:dried_kelp"
+    }
+  ],
+  "result": {
+    "item": "bountiful_critters:sunfish_sushi"
+  },
+  "show_notification": true
+}

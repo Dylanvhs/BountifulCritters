@@ -49,6 +49,8 @@ public class ModItems {
             ITEMS.register("raw_sunfish_meat", () -> new Item(new Item.Properties().food(ModFoods.RAW_SUNFISH_MEAT)));
     public static final RegistryObject<Item> COOKED_SUNFISH_MEAT =
             ITEMS.register("cooked_sunfish_meat", () -> new Item(new Item.Properties().food(ModFoods.COOKED_SUNFISH_MEAT)));
+    public static final RegistryObject<Item> SUNFISH_SUSHI =
+            ITEMS.register("sunfish_sushi", () -> new Item(new Item.Properties().food(ModFoods.SUNFISH_SUSHI)));
     public static final RegistryObject<Item> EMU_EGG =
             ITEMS.register("emu_egg", () -> new EmuEggItem(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> BOILED_EMU_EGG =

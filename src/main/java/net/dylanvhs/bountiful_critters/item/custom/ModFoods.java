@@ -12,7 +12,10 @@ public class ModFoods {
             .saturationMod(0.3f).build();
 
     public static final FoodProperties COOKED_SUNFISH_MEAT = new FoodProperties.Builder().nutrition(7)
-            .saturationMod(0.7f).effect(() -> new MobEffectInstance(MobEffects.WATER_BREATHING, 600), 0.75f).build();
+            .saturationMod(0.7f).effect(() -> new MobEffectInstance(MobEffects.WATER_BREATHING, 600), 0.5f).build();
+
+    public static final FoodProperties SUNFISH_SUSHI = new FoodProperties.Builder().nutrition(5)
+            .saturationMod(0.85f).effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 300), 0.75f).effect(() -> new MobEffectInstance(MobEffects.LUCK, 300), 0.75f).build();
 
     public static final FoodProperties RAW_KRILL = new FoodProperties.Builder().nutrition(2)
             .saturationMod(0.2f).build();
