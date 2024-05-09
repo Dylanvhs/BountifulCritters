@@ -34,7 +34,7 @@ public class SeagrassBallBlock extends MultifaceBlock {
     @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
         if (entity instanceof LivingEntity) {
-            entity.makeStuckInBlock(blockState, new Vec3(0.75D, 1.0D, 0.75D));
+            entity.makeStuckInBlock(blockState, new Vec3(0.1D, 0.1D, 0.1D));
         }
     }
 
