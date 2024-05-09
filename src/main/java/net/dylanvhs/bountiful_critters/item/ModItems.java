@@ -93,6 +93,9 @@ public class ModItems {
     public static final RegistryObject<Item> PILLBUG_SPAWN_EGG = ITEMS.register("pillbug_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.PILLBUG, 0x464e4b, 0x182020, new Item.Properties()));
 
+    public static final RegistryObject<Item> BLUNT_HEADED_TREE_SNAKE_SPAWN_EGG = ITEMS.register("blunt_headed_tree_snake_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.BLUNT_HEADED_TREE_SNAKE, 0x864e2c, 0x4d2314, new Item.Properties()));
+
 
 
     public static void register(IEventBus eventBus) {

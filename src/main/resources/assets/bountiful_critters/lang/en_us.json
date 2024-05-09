@@ -23,6 +23,8 @@
   "item.bountiful_critters.poisonous_pillbug": "Poisonous Pill Bug",
   "item.bountiful_critters.potted_pillbug": "Potted Pill Bug",
   "item.bountiful_critters.pillbug_throwable": "Pill Bug",
+  "item.bountiful_critters.snake_hook": "Snake Hook",
+  "item.bountiful_critters.snake_bag": "Snake Bag",
 
 
   "block.bountiful_critters.roasted_pillbug_block": "Roasted Pill Bug",
@@ -39,6 +41,7 @@
   "item.bountiful_critters.toucan_spawn_egg" : "Toucan Spawn Egg",
   "item.bountiful_critters.humpback_whale_spawn_egg" : "Humpback Whale Spawn Egg",
   "item.bountiful_critters.pillbug_spawn_egg" : "Pill Bug Spawn Egg",
+  "item.bountiful_critters.blunt_headed_tree_snake_spawn_egg" : "Fiddle String Snake Spawn Egg",
 
   "entity.bountiful_critters.stingray.variant_gray": "Gray",
   "entity.bountiful_critters.stingray.variant_muddy": "Muddy",
@@ -62,6 +65,7 @@
   "entity.bountiful_critters.toucan" : "Toucan",
   "entity.bountiful_critters.humpback_whale" : "Humpback Whale",
   "entity.bountiful_critters.pillbug" : "Pill Bug",
+  "entity.bountiful_critters.blunt_headed_tree_snake" : "Fiddle String Snake",
   "entity.bountiful_critters.pillbug_projectile" : "Pill Bug",
   "entity.bountiful_critters.emu_egg_projectile" : "Emu Egg",
 
@@ -102,6 +106,8 @@
   "sounds.bountiful_critters:pillbug_step": "Footsteps",
   "sounds.bountiful_critters:pillbug_death": "Pill Bug Dies",
   "sounds.bountiful_critters:pillbug_bounce": "Pill Bug Bounces",
+
+  "sounds.bountiful_critters:snake_hiss": "Snake hisses",
 
   "sounds.bountiful_critters:longhorn_didgeridoo": "Blows Didgeridoo",
 

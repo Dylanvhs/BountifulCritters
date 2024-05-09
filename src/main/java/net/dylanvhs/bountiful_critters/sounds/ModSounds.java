@@ -26,6 +26,8 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> PILLBUG_DEATH = registerSoundEvents("pillbug_death");
     public static final RegistryObject<SoundEvent> PILLBUG_BOUNCE = registerSoundEvents("pillbug_bounce");
 
+    public static final RegistryObject<SoundEvent> SNAKE_HISS = registerSoundEvents("snake_hiss");
+
     public static final RegistryObject<SoundEvent> RETURNING_MEMORY = registerSoundEvents("returning_memory");
     public static final RegistryObject<SoundEvent> LONG_HORN_DIDGERIDOO = registerSoundEvents("longhorn_didgeridoo");
 

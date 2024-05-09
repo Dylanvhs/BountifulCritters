@@ -188,10 +188,6 @@ public class ToucanEntity extends TamableAnimal implements GeoEntity, FlyingAnim
         return false;
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 6.0D).add(Attributes.FLYING_SPEED, (double)0.4F).add(Attributes.MOVEMENT_SPEED, (double)0.2F);
-    }
-
     public static AttributeSupplier setAttributes() {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH,
                 6.0D).add(Attributes.FLYING_SPEED,

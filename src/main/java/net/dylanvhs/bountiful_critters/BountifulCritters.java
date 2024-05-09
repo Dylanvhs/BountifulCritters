@@ -98,6 +98,9 @@ public class BountifulCritters
                     (ModEntities.PILLBUG.get(), PillbugRenderer:: new);
 
             EntityRenderers.register
+                    (ModEntities.BLUNT_HEADED_TREE_SNAKE.get(), BluntHeadedTreeSnakeRenderer:: new);
+
+            EntityRenderers.register
                     (ModEntities.EMU_EGG.get(), ThrownItemRenderer::new);
 
             EntityRenderers.register

@@ -70,6 +70,12 @@ public class ModEntities {
                             .sized(0.75f, 0.65f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "pillbug").toString()));
 
+    public static final RegistryObject<EntityType<BluntHeadedTreeSnakeEntity>> BLUNT_HEADED_TREE_SNAKE =
+            ENTITY_TYPES.register("blunt_headed_tree_snake",
+                    () -> EntityType.Builder.of(BluntHeadedTreeSnakeEntity::new, MobCategory.AMBIENT)
+                            .sized(1.5f, 1f)
+                            .build(new ResourceLocation(BountifulCritters.MOD_ID, "blunt_headed_tree_snake").toString()));
+
 
     public static final RegistryObject<EntityType<EmuEggEntity>> EMU_EGG =
                     ENTITY_TYPES.register("emu_egg_projectile", () -> EntityType.Builder.<EmuEggEntity>of(EmuEggEntity::new, MobCategory.MISC)
