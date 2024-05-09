@@ -1,6 +1,5 @@
 package net.dylanvhs.bountiful_critters.item.custom;
 
-import net.dylanvhs.bountiful_critters.entity.custom.EmuEggEntity;
 import net.dylanvhs.bountiful_critters.entity.custom.PillbugProjectileEntity;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;

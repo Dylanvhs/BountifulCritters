@@ -2,7 +2,6 @@ package net.dylanvhs.bountiful_critters.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.dylanvhs.bountiful_critters.BountifulCritters;
-import net.dylanvhs.bountiful_critters.entity.custom.StingrayEntity;
 import net.dylanvhs.bountiful_critters.entity.custom.ToucanEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;

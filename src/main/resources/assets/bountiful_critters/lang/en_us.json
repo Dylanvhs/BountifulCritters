@@ -1,8 +1,6 @@
 {
   "creativetab.bountiful_critters_tab": "Bountiful Critters",
 
-
-
   "item.bountiful_critters.stingray_bucket": "Bucket of Stingray",
   "item.bountiful_critters.sunfish_bucket": "Bucket of Sunfish",
   "item.bountiful_critters.krill_bucket": "Bucket of Krill",
@@ -110,7 +108,5 @@
   "item.bountiful_critters.returning_memory_music_disc": "Music Disc",
   "item.bountiful_critters.returning_memory_music_disc.desc": "Dylanvhs - Returning Memory",
 
-  "death.attack.pillball_0.entity": "%s got dunked on by a pillbug",
-
-  "bountiful_critters.glued": "Glued"
+  "death.attack.pillball_0.entity": "%s got dunked on by a pillbug"
 }

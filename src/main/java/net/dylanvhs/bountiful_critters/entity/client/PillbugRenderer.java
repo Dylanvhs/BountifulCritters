@@ -6,10 +6,7 @@ import net.dylanvhs.bountiful_critters.entity.custom.PillbugEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffects;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
-
-import java.util.logging.Level;
 
 public class PillbugRenderer extends GeoEntityRenderer<PillbugEntity> {
     public PillbugRenderer(EntityRendererProvider.Context renderManager) {
