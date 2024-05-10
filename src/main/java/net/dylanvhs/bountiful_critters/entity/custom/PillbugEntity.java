@@ -35,7 +35,6 @@ import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -118,7 +117,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
     public static AttributeSupplier setAttributes() {
         return AbstractSchoolingFish.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 6D)
-                .add(Attributes.MOVEMENT_SPEED, 0.8D)
+                .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.ATTACK_DAMAGE, 3D)
                 .add(Attributes.ARMOR_TOUGHNESS, 1D)
                 .build();
@@ -240,28 +239,12 @@ public class PillbugEntity extends Animal implements GeoEntity {
         return super.isImmobile() || this.isRolledUp();
     }
 
-    public boolean hurt(DamageSource pSource, float pAmount) {
-        if (this.isInvulnerableTo(pSource)) {
-            return false;
-        } else {
-            Entity entity = pSource.getEntity();
-            if (entity != null && !(entity instanceof Player) && !(entity instanceof AbstractArrow)) {
-                pAmount = (pAmount + 1.0F) / 2.0F;
-            }
-
-            return super.hurt(pSource, pAmount);
-        }
-    }
-
     @Override
     public void aiStep() {
         super.aiStep();
         if (this.isAlive()) {
             this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.isImmobile() ? 0.0 : 0.2);
             this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(this.isImmobile() ? 0.6 : 0.0);
-            if (this.isImmobile()) {
-                this.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(10.0D);
-            }
         }
     }
 
@@ -301,14 +284,13 @@ public class PillbugEntity extends Animal implements GeoEntity {
         setRollUp(isRolledUp());
 
         List<Player> list = level().getNearbyEntities(Player.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
-        List<ServerPlayer> list2 = level().getNearbyEntities(ServerPlayer.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
         List<BluntHeadedTreeSnakeEntity> list1 = level().getNearbyEntities(BluntHeadedTreeSnakeEntity.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
 
-        if (!list.isEmpty() || !list1.isEmpty() || !list2.isEmpty()) {
-            if (list.stream().noneMatch(Entity::isCrouching) || list1.stream().noneMatch(Entity::isCrouching) || list2.stream().noneMatch(Entity::isCrouching)) {
-                setRollUp(true);
-                getNavigation().stop();
 
+        if (!list.isEmpty() || !list1.isEmpty()) {
+            if (list.stream().noneMatch(Entity::isCrouching)) {
+                    setRollUp(true);
+                    getNavigation().stop();
             }
             else {
                 setRollUp(false);

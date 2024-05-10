@@ -58,6 +58,7 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.POWDER_SNOW, -1.0F);
+        this.setMaxUpStep(1F);
     }
 
     @Nullable
@@ -69,6 +70,15 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
             snake.setPersistenceRequired();
         }
         return snake;
+    }
+
+    public static String getVariantName(int variant) {
+        return switch (variant) {
+            case 1 -> "white_brown";
+            case 2 -> "yellow";
+            case 3 -> "melinda";
+            default -> "brown";
+        };
     }
 
     @Override
@@ -111,43 +121,7 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
                 .build();
     }
 
-    protected PathNavigation createNavigation(Level pLevel) {
-        return new WallClimberNavigation(this, pLevel);
-    }
-
-    public boolean onClimbable() {
-        return this.isClimbing();
-    }
-
-    public boolean isClimbing() {
-        return (this.entityData.get(DATA_FLAGS_ID) & 1) != 0;
-    }
-
-    public void setClimbing(boolean pClimbing) {
-        byte b0 = this.entityData.get(DATA_FLAGS_ID);
-        if (pClimbing) {
-            b0 = (byte) (b0 | 1);
-        } else {
-            b0 = (byte) (b0 & -2);
-        }
-
-        this.entityData.set(DATA_FLAGS_ID, b0);
-    }
-
     protected void checkFallDamage(double pY, boolean pOnGround, BlockState pState, BlockPos pPos) {
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-        if (!this.level().isClientSide) {
-            this.setClimbing(this.horizontalCollision);
-        }
-    }
-
-    @Override
-    protected float getJumpPower() {
-        return 0.0F;
     }
 
     public boolean isFood(ItemStack pStack) {
@@ -210,8 +184,10 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
         float variantChange = this.getRandom().nextFloat();
         if(variantChange <= 0.1F){
+            this.setVariant(3);
+        } else if(variantChange <= 0.25F){
             this.setVariant(2);
-        }else if(variantChange <= 0.50F){
+        } else if(variantChange <= 0.50F){
             this.setVariant(1);
         } else {
             this.setVariant(0);
@@ -228,10 +204,6 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
         if (geoAnimatableAnimationState.isMoving()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.blunt_headed_tree_snake.walk", Animation.LoopType.LOOP));
-            geoAnimatableAnimationState.getController().setAnimationSpeed(1.3F);
-            return PlayState.CONTINUE;
-        } else if (this.isClimbing()) {
-            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.blunt_headed_tree_snake.climb", Animation.LoopType.LOOP));
             geoAnimatableAnimationState.getController().setAnimationSpeed(1.3F);
             return PlayState.CONTINUE;
         }

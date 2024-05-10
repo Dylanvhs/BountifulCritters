@@ -4,7 +4,7 @@
     "minecraft:savanna"
   ],
   "spawners" : {
-    "type" : "bountiful_critters:long_horn",
+    "type" : "bountiful_critters:longhorn",
     "weight" : 1,
     "minCount" : 1,
     "maxCount" : 3
