@@ -274,6 +274,11 @@ public class PillbugEntity extends Animal implements GeoEntity {
         return flag;
     }
 
+    @Override
+    protected float getJumpPower() {
+        return 0.0F;
+    }
+
     public void die(DamageSource pCause) {
         if (!this.isBaby()) {
             if (this.hasEffect(MobEffects.POISON)) {

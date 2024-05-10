@@ -107,7 +107,7 @@
 		},
 		"animation.blunt_headed_tree_snake.walk": {
 			"loop": true,
-			"animation_length": 2.41667,
+			"animation_length": 2.4167,
 			"bones": {
 				"bluntheadedtreesnake": {
 					"position": {
@@ -198,6 +198,162 @@
 				"body_part": {
 					"rotation": {
 						"vector": [0, "Math.cos(40+query.anim_time*150)*22", 0]
+					}
+				}
+			}
+		},
+		"animation.blunt_headed_tree_snake.climb": {
+			"loop": true,
+			"animation_length": 2.4167,
+			"bones": {
+				"bluntheadedtreesnake": {
+					"position": {
+						"vector": ["Math.cos(40+query.anim_time*150)*5", 0, -4]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [0, "Math.cos(80+query.anim_time*150)*12", 0]
+					}
+				},
+				"tongue": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.8333": {
+							"vector": [12.5, 0, 0],
+							"easing": "easeInBack"
+						},
+						"0.875": {
+							"vector": [-10, 0, 0],
+							"easing": "easeInOutSine"
+						},
+						"0.9583": {
+							"vector": [10, 0, 0],
+							"easing": "easeInOutSine"
+						},
+						"1.0417": {
+							"vector": [-10, 0, 0],
+							"easing": "easeInOutSine"
+						},
+						"1.125": {
+							"vector": [10, 0, 0],
+							"easing": "easeInOutSine"
+						},
+						"1.2083": {
+							"vector": [-10, 0, 0],
+							"easing": "easeInOutSine"
+						},
+						"1.25": {
+							"vector": [-5, 0, 0],
+							"easing": "easeInBack"
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 1, 0]
+						},
+						"0.5833": {
+							"vector": [0, 2, 0],
+							"easing": "easeInOutSine"
+						},
+						"0.8333": {
+							"vector": [0, 1, -6],
+							"easing": "easeInOutBack"
+						},
+						"1.25": {
+							"vector": [0, 1, -6],
+							"easing": "easeInOutBack"
+						},
+						"1.3333": {
+							"vector": [0, 0.25, 0],
+							"easing": "easeInOutBack"
+						}
+					}
+				},
+				"body_part2": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, "Math.cos(-40+query.anim_time*150)*5", 0]
+						},
+						"0.2083": {
+							"vector": [-90, "Math.cos(-40+query.anim_time*150)*5", 0],
+							"easing": "easeInOutSine"
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.2083": {
+							"vector": [0, 0, -16],
+							"easing": "easeInOutSine"
+						}
+					}
+				},
+				"body_part3": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, "Math.cos(-80+query.anim_time*150)*15", 0]
+						},
+						"0.3333": {
+							"vector": [90, "Math.cos(-80+query.anim_time*150)*15", 0],
+							"easing": "easeInOutSine"
+						},
+						"0.4583": {
+							"vector": [0, "Math.cos(-80+query.anim_time*150)*15", 0],
+							"easing": "easeInOutSine"
+						}
+					}
+				},
+				"body_part4": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, "Math.cos(-120+query.anim_time*150)*20", 0]
+						},
+						"0.3333": {
+							"vector": [0, "Math.cos(-120+query.anim_time*150)*20", 0],
+							"easing": "easeInOutSine"
+						},
+						"0.4583": {
+							"vector": [90, "Math.cos(-120+query.anim_time*150)*20", 0],
+							"easing": "easeInOutSine"
+						},
+						"0.5833": {
+							"vector": [0, "Math.cos(-120+query.anim_time*150)*20", 0],
+							"easing": "easeInOutSine"
+						}
+					}
+				},
+				"body_part5": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, "Math.cos(-160+query.anim_time*150)*30", 0]
+						},
+						"0.4583": {
+							"vector": [0, "Math.cos(-160+query.anim_time*150)*30", 0],
+							"easing": "easeInOutSine"
+						},
+						"0.5833": {
+							"vector": [90, "Math.cos(-160+query.anim_time*150)*30", 0],
+							"easing": "easeInOutSine"
+						},
+						"0.7083": {
+							"vector": [0, "Math.cos(-160+query.anim_time*150)*30", 0],
+							"easing": "easeInOutSine"
+						}
+					}
+				},
+				"body_part": {
+					"rotation": {
+						"0.0": {
+							"vector": [-90, "Math.cos(40+query.anim_time*150)*22", 0]
+						},
+						"0.25": {
+							"vector": [0, "Math.cos(40+query.anim_time*150)*22", 0],
+							"easing": "easeInOutSine"
+						}
 					}
 				}
 			}
