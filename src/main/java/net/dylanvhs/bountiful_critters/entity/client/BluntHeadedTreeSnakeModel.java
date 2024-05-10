@@ -35,9 +35,9 @@ public class BluntHeadedTreeSnakeModel extends GeoModel<BluntHeadedTreeSnakeEnti
         CoreGeoBone head = this.getAnimationProcessor().getBone("head");
         CoreGeoBone root = this.getAnimationProcessor().getBone("bluntheadedtreesnake");
         if (animatable.isBaby()) {
-            root.setScaleX(0.5F);
-            root.setScaleY(0.5F);
-            root.setScaleZ(0.5F);
+            root.setScaleX(0.4F);
+            root.setScaleY(0.4F);
+            root.setScaleZ(0.4F);
 
             head.setScaleX(1.75F);
             head.setScaleY(1.75F);

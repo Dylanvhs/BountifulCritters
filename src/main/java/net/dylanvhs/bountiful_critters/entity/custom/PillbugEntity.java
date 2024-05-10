@@ -296,9 +296,11 @@ public class PillbugEntity extends Animal implements GeoEntity {
         setRollUp(isRolledUp());
 
         List<Player> list = level().getNearbyEntities(Player.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
+        List<ServerPlayer> list2 = level().getNearbyEntities(ServerPlayer.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
+        List<BluntHeadedTreeSnakeEntity> list1 = level().getNearbyEntities(BluntHeadedTreeSnakeEntity.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
 
-        if (!list.isEmpty()) {
-            if (list.stream().noneMatch(Entity::isCrouching)) {
+        if (!list.isEmpty() || !list1.isEmpty() || !list2.isEmpty()) {
+            if (list.stream().noneMatch(Entity::isCrouching) || list1.stream().noneMatch(Entity::isCrouching) || list2.stream().noneMatch(Entity::isCrouching)) {
                 setRollUp(true);
                 getNavigation().stop();
 
@@ -357,7 +359,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 5, this::predicate));
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 4, this::predicate));
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {

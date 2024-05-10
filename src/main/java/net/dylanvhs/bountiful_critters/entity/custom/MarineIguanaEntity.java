@@ -97,7 +97,7 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     public static AttributeSupplier setAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 8D)
-                .add(Attributes.MOVEMENT_SPEED, 0.2D)
+                .add(Attributes.MOVEMENT_SPEED, 0.25D)
                 .build();
     }
 
@@ -276,13 +276,13 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        MarineIguanaEntity iguana = ModEntities.MARINE_IGUANA.get().create(pLevel);
-        if (iguana != null) {
-            int i = this.random.nextBoolean() ? this.getVariant() : ((MarineIguanaEntity) pOtherParent).getVariant();
-            iguana.setVariant(i);
-            iguana.setPersistenceRequired();
-        }
-        return iguana;
+            MarineIguanaEntity iguana = ModEntities.MARINE_IGUANA.get().create(pLevel);
+            if (iguana != null) {
+                int i = this.random.nextBoolean() ? this.getVariant() : ((MarineIguanaEntity) pOtherParent).getVariant();
+                iguana.setVariant(i);
+                iguana.setPersistenceRequired();
+            }
+            return iguana;
     }
 
     @Override
@@ -324,7 +324,7 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 5, this::predicate));
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 4, this::predicate));
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {

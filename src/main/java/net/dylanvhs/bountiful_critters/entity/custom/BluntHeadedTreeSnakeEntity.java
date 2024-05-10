@@ -22,7 +22,9 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -53,22 +55,32 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.POWDER_SNOW, -1.0F);
+        this.setMaxUpStep(1F);
     }
 
     @Nullable
     public BluntHeadedTreeSnakeEntity getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        return ModEntities.BLUNT_HEADED_TREE_SNAKE.get().create(pLevel);
+        BluntHeadedTreeSnakeEntity snake = ModEntities.BLUNT_HEADED_TREE_SNAKE.get().create(pLevel);
+        if (snake != null) {
+            int i = this.random.nextBoolean() ? this.getVariant() : ((BluntHeadedTreeSnakeEntity) pOtherParent).getVariant();
+            snake.setVariant(i);
+            snake.setPersistenceRequired();
+        }
+        return snake;
     }
 
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new PanicGoal(this, 0.5D));
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(2, new BreedGoal(this, 0.5D));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.5D));
-        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 5.0F));
-        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 0.5D));
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 5.0F));
+        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 0.5D));
-        this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, Player.class, 5.0F, 0.5D, 0.5D));
+        this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Player.class, 5.0F, 0.5D, 0.5D));
+        this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 0.5F, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Frog.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PillbugEntity.class, true));
     }
 
     public static AttributeSupplier setAttributes() {
@@ -85,10 +97,12 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
     }
 
     protected void usePlayerItem(Player pPlayer, InteractionHand pHand, ItemStack pStack) {
-        if (pStack.is(ModItems.POTTED_PILLBUG.get())) {
-            pPlayer.setItemInHand(pHand, new ItemStack(Items.FLOWER_POT));
-        } else {
-            super.usePlayerItem(pPlayer, pHand, pStack);
+        if (!pPlayer.isCreative()) {
+            if (pStack.is(ModItems.POTTED_PILLBUG.get())) {
+                pPlayer.setItemInHand(pHand, new ItemStack(Items.FLOWER_POT));
+            } else {
+                super.usePlayerItem(pPlayer, pHand, pStack);
+            }
         }
     }
 
@@ -105,10 +119,6 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
     public static <T extends Mob> boolean canSpawn(EntityType type, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223317_3_, RandomSource random) {
         BlockState blockstate = worldIn.getBlockState(p_223317_3_.below());
         return blockstate.is(Blocks.GRASS_BLOCK) || blockstate.is(BlockTags.LOGS) || blockstate.is(BlockTags.LEAVES);
-    }
-
-    protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
-        return 1.25F;
     }
 
     protected SoundEvent getAmbientSound() {
@@ -169,17 +179,31 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 5, this::predicate));
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 4, this::predicate));
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "attackController", 4, this::attackPredicate));
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
         if (geoAnimatableAnimationState.isMoving()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.blunt_headed_tree_snake.walk", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(1.3F);
             return PlayState.CONTINUE;
         }
         else
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.blunt_headed_tree_snake.idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
+    }
+
+    private <T extends GeoAnimatable> PlayState attackPredicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+        if (this.swinging && geoAnimatableAnimationState.isMoving() && geoAnimatableAnimationState.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
+            geoAnimatableAnimationState.getController().forceAnimationReset();
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.blunt_headed_tree_snake.walk_attack", Animation.LoopType.PLAY_ONCE));
+            this.swinging = false;
+        } else if (this.swinging && !geoAnimatableAnimationState.isMoving() && geoAnimatableAnimationState.getController().getAnimationState().equals(AnimationController.State.STOPPED)){
+            geoAnimatableAnimationState.getController().forceAnimationReset();
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.blunt_headed_tree_snake.idle_attack", Animation.LoopType.PLAY_ONCE));
+            this.swinging = false;
+        }  return PlayState.CONTINUE;
     }
 
     public AnimatableInstanceCache getAnimatableInstanceCache() {
