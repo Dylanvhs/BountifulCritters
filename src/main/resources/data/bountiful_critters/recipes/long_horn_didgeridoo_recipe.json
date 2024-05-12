@@ -6,7 +6,7 @@
       "item": "minecraft:blue_dye"
     },
     "X": {
-      "item": "bountiful_critters:long_horn_horn"
+      "item": "bountiful_critters:longhorn_horn"
     },
     "B": {
       "item": "minecraft:honeycomb"
@@ -18,7 +18,7 @@
     " B "
   ],
   "result": {
-    "item": "bountiful_critters:long_horn_didgeridoo"
+    "item": "bountiful_critters:longhorn_didgeridoo"
   },
   "show_notification": true
 }

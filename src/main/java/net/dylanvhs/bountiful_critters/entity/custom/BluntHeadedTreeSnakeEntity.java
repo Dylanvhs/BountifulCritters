@@ -99,15 +99,15 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
     }
 
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new PanicGoal(this, 0.5D));
+        this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new BreedGoal(this, 0.5D));
-        this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 0.5D));
+        this.goalSelector.addGoal(2, new BreedGoal(this, 1.25D));
+        this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 1.25D));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 5.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(4, new FollowParentGoal(this, 0.5D));
-        this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Player.class, 5.0F, 0.5D, 0.5D));
-        this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 0.5F, true));
+        this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
+        this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Player.class, 5.0F, 1.0D, 1.25D));
+        this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.25F, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Frog.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PillbugEntity.class, true));
     }
@@ -115,9 +115,8 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 8.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.1D)
+                .add(Attributes.MOVEMENT_SPEED, 0.35D)
                 .add(Attributes.ATTACK_DAMAGE, 1D)
-                .add(Attributes.ATTACK_KNOCKBACK, 0.8D)
                 .build();
     }
 
@@ -206,9 +205,7 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.blunt_headed_tree_snake.walk", Animation.LoopType.LOOP));
             geoAnimatableAnimationState.getController().setAnimationSpeed(1.3F);
             return PlayState.CONTINUE;
-        }
-        else
-            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.blunt_headed_tree_snake.idle", Animation.LoopType.LOOP));
+        } else geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.blunt_headed_tree_snake.idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
 

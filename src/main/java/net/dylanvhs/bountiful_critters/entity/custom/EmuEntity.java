@@ -37,7 +37,7 @@ public class EmuEntity extends Animal implements GeoAnimatable {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.APPLE);
     public int timeUntilNextEgg = this.random.nextInt(6000) + 6000;
-
+    private PanicGoal panicGoal;
 
     public EmuEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -89,12 +89,13 @@ public class EmuEntity extends Animal implements GeoAnimatable {
 
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new PanicGoal(this, 1.2D));
+        this.panicGoal = new PanicGoal(this, 1.3D);
+        this.goalSelector.addGoal(0, this.panicGoal);
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, TEMPTATION_ITEM, false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
-        this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, Wolf.class, 8.0F, 1.2D, 1.2D));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Wolf.class, 8.0F, 1.3D, 1.3D));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.1D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }
@@ -106,6 +107,11 @@ public class EmuEntity extends Animal implements GeoAnimatable {
             this.spawnAtLocation(ModItems.EMU_EGG.get());
             this.timeUntilNextEgg = this.random.nextInt(6000) + 6000;
         }
+        setSprinting(isPanicking());
+    }
+
+    private boolean isPanicking() {
+        return this.panicGoal != null && this.panicGoal.isRunning();
     }
 
     @Override
@@ -125,10 +131,11 @@ public class EmuEntity extends Animal implements GeoAnimatable {
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
         if (geoAnimatableAnimationState.isMoving()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.emu.sprint", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(5F);
             return PlayState.CONTINUE;
-        }
-        else
-            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.emu.idle", Animation.LoopType.LOOP));
+
+        } else geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.emu.idle", Animation.LoopType.LOOP));
+        geoAnimatableAnimationState.getController().setAnimationSpeed(1F);
         return PlayState.CONTINUE;
     }
 

@@ -52,7 +52,7 @@ public class HumpbackWhaleJumpGoal extends JumpGoal {
 
     public boolean canContinueToUse() {
         double d0 = this.liopleurodon.getDeltaMovement().y;
-        return (!(d0 * d0 < (double) 0.03F) || this.liopleurodon.getXRot() == 0.0F || !(Math.abs(this.liopleurodon.getXRot()) < 10.0F) || !this.liopleurodon.isInWater()) && !this.liopleurodon.onGround();
+        return (!(d0 * d0 < (double) 0.1F) || this.liopleurodon.getXRot() == 0.0F || !(Math.abs(this.liopleurodon.getXRot()) < 10.0F) || !this.liopleurodon.isInWater()) && !this.liopleurodon.onGround();
     }
 
     public boolean isInterruptable() {
@@ -87,7 +87,7 @@ public class HumpbackWhaleJumpGoal extends JumpGoal {
         }
 
         Vec3 vec3 = this.liopleurodon.getDeltaMovement();
-        if (vec3.y * vec3.y < (double) 0.03F && this.liopleurodon.getXRot() != 0.0F) {
+        if (vec3.y * vec3.y < (double) 0.1F && this.liopleurodon.getXRot() != 0.0F) {
             this.liopleurodon.setXRot(Mth.rotLerp(0.2F, this.liopleurodon.getXRot(), 0.0F));
         } else if (vec3.length() > (double) 1.0E-5F) {
             double d0 = vec3.horizontalDistance();
