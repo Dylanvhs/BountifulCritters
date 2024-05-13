@@ -45,6 +45,7 @@ public final class ModEvents {
         event.put(ModEntities.HUMPBACK_WHALE.get(), HumpbackWhaleEntity.setAttributes());
         event.put(ModEntities.PILLBUG.get(), PillbugEntity.setAttributes());
         event.put(ModEntities.BLUNT_HEADED_TREE_SNAKE.get(), BluntHeadedTreeSnakeEntity.setAttributes());
+        event.put(ModEntities.GECKO.get(), GeckoEntity.setAttributes());
 
     }
 
