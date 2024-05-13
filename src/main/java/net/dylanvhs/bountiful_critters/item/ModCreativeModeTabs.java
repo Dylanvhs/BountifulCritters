@@ -45,6 +45,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.ROASTED_PILLBUG.get());
                         pOutput.accept(ModItems.POISONOUS_PILLBUG.get());
                         pOutput.accept(ModItems.PILLBUG_THROWABLE.get());
+                        pOutput.accept(ModItems.REPTILE_BAG.get());
+                        pOutput.accept(ModItems.BAGGED_GECKO.get());
                         pOutput.accept(ModItems.RETURNING_MEMORY_MUSIC_DISC.get());
 
 
@@ -58,6 +60,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.HUMPBACK_WHALE_SPAWN_EGG.get());
                         pOutput.accept(ModItems.PILLBUG_SPAWN_EGG.get());
                         pOutput.accept(ModItems.BLUNT_HEADED_TREE_SNAKE_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.GECKO_SPAWN_EGG.get());
 
 
 

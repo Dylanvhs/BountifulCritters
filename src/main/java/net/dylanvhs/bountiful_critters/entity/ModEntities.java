@@ -76,6 +76,12 @@ public class ModEntities {
                             .sized(1f, 1.25f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "blunt_headed_tree_snake").toString()));
 
+    public static final RegistryObject<EntityType<GeckoEntity>> GECKO =
+            ENTITY_TYPES.register("gecko",
+                    () -> EntityType.Builder.of(GeckoEntity::new, MobCategory.AMBIENT)
+                            .sized(1f, 1.25f)
+                            .build(new ResourceLocation(BountifulCritters.MOD_ID, "gecko").toString()));
+
 
     public static final RegistryObject<EntityType<EmuEggEntity>> EMU_EGG =
                     ENTITY_TYPES.register("emu_egg_projectile", () -> EntityType.Builder.<EmuEggEntity>of(EmuEggEntity::new, MobCategory.MISC)

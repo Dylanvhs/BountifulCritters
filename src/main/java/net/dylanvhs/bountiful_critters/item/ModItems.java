@@ -5,6 +5,8 @@ import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.custom.*;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -24,14 +26,19 @@ public class ModItems {
             () -> new ItemModFishBucket(ModEntities.KRILL, Fluids.WATER, new Item.Properties()));
     public static final RegistryObject<Item> MARINE_IGUANA_BUCKET = ITEMS.register("marine_iguana_bucket",
             () -> new ItemModFishBucket(ModEntities.MARINE_IGUANA, Fluids.WATER, new Item.Properties()));
-
     public static final RegistryObject<Item> POTTED_PILLBUG = ITEMS.register("potted_pillbug",
             () ->  new ModCatchableItem(ModEntities.PILLBUG::get, Items.FLOWER_POT, false, new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> REPTILE_BAG = ITEMS.register("reptile_bag",
+            () ->  new Item(new Item.Properties().stacksTo(16)));
+    public static final RegistryObject<Item> BAGGED_GECKO = ITEMS.register("bagged_gecko",
+            () ->  new BagItem(ModEntities.GECKO::get, ModItems.REPTILE_BAG.get(), (new Item.Properties()).stacksTo(1)));
 
     public static final RegistryObject<Item> LONGHORN_DIDGERIDOO = ITEMS.register("longhorn_didgeridoo",
             () -> new LongHornDidgeridooItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> LONGHORN_HORN =
             ITEMS.register("longhorn_horn", () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> SALT =
             ITEMS.register("salt", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SALTED_KELP =
@@ -39,22 +46,26 @@ public class ModItems {
 
     public static final RegistryObject<Item> SEAGRASS_BALL =
             ITEMS.register("seagrass_ball", () -> new BlockItem(ModBlocks.SEAGRASS_BALL_PLACED.get(),(new Item.Properties())));
+
     public static final RegistryObject<Item> RAW_KRILL =
             ITEMS.register("raw_krill", () -> new Item(new Item.Properties().food(ModFoods.RAW_KRILL)));
     public static final RegistryObject<Item> FRIED_KRILL =
             ITEMS.register("fried_krill", () -> new Item(new Item.Properties().food(ModFoods.FRIED_KRILL)));
     public static final RegistryObject<Item> KRILL_COCKTAIL =
             ITEMS.register("krill_cocktail", () -> new KrillCocktailItem(new Item.Properties().food(ModFoods.KRILL_COCKTAIL).stacksTo(1)));
+
     public static final RegistryObject<Item> RAW_SUNFISH_MEAT =
             ITEMS.register("raw_sunfish_meat", () -> new Item(new Item.Properties().food(ModFoods.RAW_SUNFISH_MEAT)));
     public static final RegistryObject<Item> COOKED_SUNFISH_MEAT =
             ITEMS.register("cooked_sunfish_meat", () -> new Item(new Item.Properties().food(ModFoods.COOKED_SUNFISH_MEAT)));
     public static final RegistryObject<Item> SUNFISH_SUSHI =
             ITEMS.register("sunfish_sushi", () -> new Item(new Item.Properties().food(ModFoods.SUNFISH_SUSHI)));
+
     public static final RegistryObject<Item> EMU_EGG =
             ITEMS.register("emu_egg", () -> new EmuEggItem(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> BOILED_EMU_EGG =
             ITEMS.register("boiled_emu_egg", () -> new Item(new Item.Properties().food(ModFoods.BOILED_EMU_EGG).stacksTo(16)));
+
     public static final RegistryObject<Item> RAW_PILLBUG =
             ITEMS.register("raw_pillbug", () -> new Item(new Item.Properties().food(ModFoods.RAW_PILLBUG)));
     public static final RegistryObject<Item> POISONOUS_PILLBUG =
@@ -63,6 +74,7 @@ public class ModItems {
             ITEMS.register("roasted_pillbug", () -> new BlockItem(ModBlocks.ROASTED_PILLBUG_BLOCK.get(), (new Item.Properties()).stacksTo(1)));
     public static final RegistryObject<Item> PILLBUG_THROWABLE =
             ITEMS.register("pillbug_throwable", () -> new PillbugProjectileItem(new Item.Properties().stacksTo(1)));
+
 
     public static final RegistryObject<Item> RETURNING_MEMORY_MUSIC_DISC = ITEMS.register("returning_memory_music_disc",
             () -> new RecordItem(15, ModSounds.RETURNING_MEMORY, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 6280));
@@ -95,6 +107,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> BLUNT_HEADED_TREE_SNAKE_SPAWN_EGG = ITEMS.register("blunt_headed_tree_snake_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.BLUNT_HEADED_TREE_SNAKE, 0x864e2c, 0x4d2314, new Item.Properties()));
+
+    public static final RegistryObject<Item> GECKO_SPAWN_EGG = ITEMS.register("gecko_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.GECKO, 0xdfb643, 0x5f5356, new Item.Properties()));
 
 
 

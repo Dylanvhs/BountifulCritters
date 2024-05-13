@@ -1,10 +1,12 @@
-// 1.20.1	2024-05-09T22:49:36.0912242	Item Models: bountiful_critters
+// 1.20.1	2024-05-13T22:01:55.7607239	Item Models: bountiful_critters
+3372fd7eb8d4e459b4596aa68bb1ddc5d070e193 assets/bountiful_critters/models/item/bagged_gecko.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/blunt_headed_tree_snake_spawn_egg.json
 c932650040726c1b26c1a26dd846d1c1d05c14d0 assets/bountiful_critters/models/item/boiled_emu_egg.json
 6ec21d0cb96e4b516917bb0f9b4ea06b059cb76d assets/bountiful_critters/models/item/cooked_sunfish_meat.json
 425dd2ceb1fdabf09daa58fc5bef59c719a69e0a assets/bountiful_critters/models/item/emu_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/emu_spawn_egg.json
 58ebc6c7175009c7b58aed8be1b49eaf6d397922 assets/bountiful_critters/models/item/fried_krill.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/gecko_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/humpback_whale_spawn_egg.json
 44f9d9811e2e0f56cc107a4ba49d0014e24016d2 assets/bountiful_critters/models/item/krill_bucket.json
 8b47a25aa81284afc3497f9bb6a5172ec4afbf3d assets/bountiful_critters/models/item/krill_cocktail.json
@@ -19,6 +21,7 @@ e9570321174ff013cfd1784d4b181c3d1147cbb3 assets/bountiful_critters/models/item/p
 1c4103d84b5b42b3cf3d760d5bcec2106a45e03b assets/bountiful_critters/models/item/raw_krill.json
 3a555b90c618b0bb631f8326714ab696d73c1906 assets/bountiful_critters/models/item/raw_pillbug.json
 db248d842ff5b16c6a81e518754d73f8b65ab49c assets/bountiful_critters/models/item/raw_sunfish_meat.json
+93b115a8e4f28e0fe4d4992b7075d2fe5081ccd3 assets/bountiful_critters/models/item/reptile_bag.json
 52185f811a1049cbca95311b48142aa6d750157a assets/bountiful_critters/models/item/returning_memory_music_disc.json
 556eb11252f3b34cbf2e3e2a29845529946aca39 assets/bountiful_critters/models/item/roasted_pillbug.json
 8fe874132130f27d9cc625f5cf8fba5031333ca3 assets/bountiful_critters/models/item/salt.json

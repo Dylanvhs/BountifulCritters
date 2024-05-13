@@ -40,6 +40,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.ROASTED_PILLBUG);
         simpleItem(ModItems.POISONOUS_PILLBUG);
         simpleItem(ModItems.POTTED_PILLBUG);
+        simpleItem(ModItems.REPTILE_BAG);
+        simpleItem(ModItems.BAGGED_GECKO);
         simpleItem(ModItems.RETURNING_MEMORY_MUSIC_DISC);
 
 
@@ -53,6 +55,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         withExistingParent(ModItems.HUMPBACK_WHALE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.PILLBUG_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.BLUNT_HEADED_TREE_SNAKE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.GECKO_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
     }
 

@@ -24,7 +24,8 @@
   "item.bountiful_critters.potted_pillbug": "Potted Pill Bug",
   "item.bountiful_critters.pillbug_throwable": "Pill Bug",
   "item.bountiful_critters.snake_hook": "Snake Hook",
-  "item.bountiful_critters.snake_bag": "Snake Bag",
+  "item.bountiful_critters.reptile_bag": "Reptile Bag",
+  "item.bountiful_critters.bagged_gecko": "Bagged Gecko",
 
 
   "block.bountiful_critters.roasted_pillbug_block": "Roasted Pill Bug",
@@ -42,6 +43,7 @@
   "item.bountiful_critters.humpback_whale_spawn_egg" : "Humpback Whale Spawn Egg",
   "item.bountiful_critters.pillbug_spawn_egg" : "Pill Bug Spawn Egg",
   "item.bountiful_critters.blunt_headed_tree_snake_spawn_egg" : "Fiddle String Snake Spawn Egg",
+  "item.bountiful_critters.gecko_spawn_egg" : "Gecko Spawn Egg",
 
   "entity.bountiful_critters.stingray.variant_gray": "Gray",
   "entity.bountiful_critters.stingray.variant_muddy": "Muddy",
@@ -56,6 +58,14 @@
   "entity.bountiful_critters.marine_iguana.variant_red": "Red",
   "entity.bountiful_critters.marine_iguana.variant_ash": "Ash",
 
+  "entity.bountiful_critters.blunt_headed_tree_snake.variant_white_brown": "White Brown",
+  "entity.bountiful_critters.blunt_headed_tree_snake.variant_yellow": "Yellow",
+  "entity.bountiful_critters.blunt_headed_tree_snake.variant_melinda": "Melinda",
+  "entity.bountiful_critters.blunt_headed_tree_snake.variant_brown": "Brown",
+
+  "entity.bountiful_critters.gecko.variant_leopard": "Leopard",
+  "entity.bountiful_critters.gecko.variant_green": "Green",
+
   "entity.bountiful_critters.stingray" : "Stingray",
   "entity.bountiful_critters.sunfish" : "Sunfish",
   "entity.bountiful_critters.emu" : "Emu",
@@ -66,6 +76,7 @@
   "entity.bountiful_critters.humpback_whale" : "Humpback Whale",
   "entity.bountiful_critters.pillbug" : "Pill Bug",
   "entity.bountiful_critters.blunt_headed_tree_snake" : "Fiddle String Snake",
+  "entity.bountiful_critters.gecko" : "Gecko",
   "entity.bountiful_critters.pillbug_projectile" : "Pill Bug",
   "entity.bountiful_critters.emu_egg_projectile" : "Emu Egg",
 

@@ -31,6 +31,7 @@ public final class ModEvents {
         e.register(ModEntities.HUMPBACK_WHALE.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.WORLD_SURFACE, HumpbackWhaleEntity::checkFishSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
         e.register(ModEntities.PILLBUG.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PillbugEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
         e.register(ModEntities.BLUNT_HEADED_TREE_SNAKE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BluntHeadedTreeSnakeEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
+        e.register(ModEntities.GECKO.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, GeckoEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
     }
 
     @SubscribeEvent

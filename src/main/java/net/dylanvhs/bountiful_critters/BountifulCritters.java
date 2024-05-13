@@ -101,6 +101,9 @@ public class BountifulCritters
                     (ModEntities.BLUNT_HEADED_TREE_SNAKE.get(), BluntHeadedTreeSnakeRenderer:: new);
 
             EntityRenderers.register
+                    (ModEntities.GECKO.get(), GeckoRenderer:: new);
+
+            EntityRenderers.register
                     (ModEntities.EMU_EGG.get(), ThrownItemRenderer::new);
 
             EntityRenderers.register
