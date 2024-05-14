@@ -14,10 +14,12 @@ import java.util.Map;
 public class PotAccess {
     private static final Map<ResourceKey<DimensionType>, Map<BlockPos, BluntHeadedTreeSnakeEntity>> SNAKES = new HashMap<>();
 
+    // Returns true if the Pot at pos contains a Snake
     public static boolean hasSnake(Level world, BlockPos pos) {
         return getSnake(world, pos) != null;
     }
 
+    // Returns the Snake hiding in the Pot at pos, or null if none is in
     public static BluntHeadedTreeSnakeEntity getSnake(Level world, BlockPos pos) {
         ResourceKey<DimensionType> dim = world.dimensionTypeId();
         if (!SNAKES.containsKey(dim)) return null;
@@ -25,6 +27,7 @@ public class PotAccess {
         return SNAKES.get(dim).get(pos);
     }
 
+    // Saves the Snake to the Pot at pos
     public static void setSnake(Level world, BlockPos pos, BluntHeadedTreeSnakeEntity snake) {
         ResourceKey<DimensionType> dim = world.dimensionTypeId();
         SNAKES.putIfAbsent(dim, new HashMap<>());
