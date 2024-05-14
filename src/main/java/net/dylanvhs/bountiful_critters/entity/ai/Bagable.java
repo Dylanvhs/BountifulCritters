@@ -10,8 +10,10 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 import java.util.Optional;
@@ -87,13 +89,14 @@ public interface Bagable {
 
     static <T extends LivingEntity & Bagable> Optional<InteractionResult> bagMobPickup(Player pPlayer, InteractionHand pHand, T pEntity) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
-        if (pPlayer.getInventory().contains(ModItems.REPTILE_BAG.get().getDefaultInstance()) && pEntity.isAlive()) {
+        if (itemstack.getItem() == ModItems.REPTILE_BAG.get() && pEntity.isAlive()) {
             pEntity.playSound(pEntity.getPickupSound(), 1.0F, 1.0F);
             ItemStack itemstack1 = pEntity.getBagItemStack();
             pEntity.saveToBagTag(itemstack1);
             ItemStack itemstack2 = ItemUtils.createFilledResult(itemstack, pPlayer, itemstack1, false);
             pPlayer.setItemInHand(pHand, itemstack2);
             Level level = pEntity.level();
+            itemstack.shrink(1);
             if (!level.isClientSide) {
                 CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)pPlayer, itemstack1);
             }

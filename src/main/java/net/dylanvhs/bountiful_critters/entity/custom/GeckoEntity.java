@@ -101,8 +101,6 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
         return switch (variant) {
             case 1 -> "green";
             case 2 -> "tokay";
-            case 3 -> "electric_blue_day";
-            case 4 -> "yellow_headed";
             default -> "leopard";
         };
     }
@@ -134,12 +132,16 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
         }
         Bagable.saveDefaultDataToBagTag(this, bucket);
         CompoundTag compoundnbt = bucket.getOrCreateTag();
+        compoundnbt.putInt("Age", this.getAge());
         compoundnbt.putInt("BagVariantTag", this.getVariant());
     }
 
     @Override
     public void loadFromBagTag(@Nonnull CompoundTag compound) {
         Bagable.loadDefaultDataFromBagTag(this, compound);
+        if (compound.contains("Age")) {
+            this.setAge(compound.getInt("Age"));
+        }
         if (compound.contains("BagVariantTag", 3)) {
             this.setVariant(compound.getInt("BagVariantTag"));
         }

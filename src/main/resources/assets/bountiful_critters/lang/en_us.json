@@ -65,6 +65,9 @@
 
   "entity.bountiful_critters.gecko.variant_leopard": "Leopard",
   "entity.bountiful_critters.gecko.variant_green": "Green",
+  "entity.bountiful_critters.gecko.variant_tokay": "Tokay",
+  "entity.bountiful_critters.gecko.variant_electric_blue_day": "Electric Blue Day",
+  "entity.bountiful_critters.gecko.variant_yellow_headed": "Yellow Headed",
 
   "entity.bountiful_critters.stingray" : "Stingray",
   "entity.bountiful_critters.sunfish" : "Sunfish",
