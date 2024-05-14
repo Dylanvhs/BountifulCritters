@@ -171,7 +171,6 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
 
     }
 
-
     @Override
     public boolean fromBucket() {
         return this.entityData.get(FROM_BUCKET);
@@ -194,9 +193,6 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
     public MobType getMobType() {
         return MobType.WATER;
     }
-
-
-
 
     public static AttributeSupplier setAttributes() {
         return AbstractFish.createMobAttributes()
@@ -256,7 +252,6 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
         }
 
     }
-
 
     protected SoundEvent getAmbientSound() {
         return SoundEvents.TROPICAL_FISH_AMBIENT;
