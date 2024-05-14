@@ -29,7 +29,7 @@ public class BountifulCritters
 
     public static final String MOD_ID = "bountiful_critters";
 
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
     public static final List<Runnable> CALLBACKS = new ArrayList<>();
     public BountifulCritters()
     {

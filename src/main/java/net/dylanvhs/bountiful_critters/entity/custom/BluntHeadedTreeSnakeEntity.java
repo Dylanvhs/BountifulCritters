@@ -1,6 +1,8 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
+import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
+import net.dylanvhs.bountiful_critters.entity.PotAccess;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
@@ -230,7 +232,13 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
         return tickCount;
     }
 
-
-
-
+    @Override
+    public void tick() {
+        if (this.getBlockStateOn().is(Blocks.DECORATED_POT)) {
+            PotAccess.setSnake(this.level(), this.getBlockPosBelowThatAffectsMyMovement(), this);
+            this.remove(RemovalReason.CHANGED_DIMENSION);
+            BountifulCritters.LOGGER.info("moved snake to pot at " + this.getBlockPosBelowThatAffectsMyMovement().toShortString());
+        }
+        super.tick();
+    }
 }

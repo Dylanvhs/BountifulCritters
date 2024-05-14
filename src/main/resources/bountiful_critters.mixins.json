@@ -4,6 +4,7 @@
   "package": "net.dylanvhs.bountiful_critters.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "DecoratedPotBlockEntityMixin"
   ],
   "client": [
   ],

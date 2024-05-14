@@ -89,7 +89,7 @@ dependencies {
 }
 
 mixin {
-    config 'mixins.mymod.json'
+    config 'bountiful_critters.mixins.json'
 
     debug.verbose = true
     debug.export = true
