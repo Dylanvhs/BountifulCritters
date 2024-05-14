@@ -236,7 +236,7 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
     public void tick() {
         if (this.getBlockStateOn().is(Blocks.DECORATED_POT)) {
             PotAccess.setSnake(this.level(), this.getBlockPosBelowThatAffectsMyMovement(), this);
-            this.remove(RemovalReason.CHANGED_DIMENSION);
+            this.remove(RemovalReason.UNLOADED_TO_CHUNK);
             BountifulCritters.LOGGER.info("moved snake to pot at " + this.getBlockPosBelowThatAffectsMyMovement().toShortString());
         }
         super.tick();

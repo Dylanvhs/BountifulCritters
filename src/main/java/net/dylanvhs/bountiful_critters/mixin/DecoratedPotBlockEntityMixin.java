@@ -34,7 +34,7 @@ public abstract class DecoratedPotBlockEntityMixin extends BlockEntity {
 
     @Inject(method = "load", at = @At("TAIL"))
     public void loadSnake(CompoundTag tag, CallbackInfo ci) {
-        if (tag.contains("snake")) {
+        if (tag.contains("snake_save")) {
             BluntHeadedTreeSnakeEntity snake = new BluntHeadedTreeSnakeEntity(ModEntities.BLUNT_HEADED_TREE_SNAKE.get(),
                     this.level);
             snake.load(tag.getCompound("snake_save"));

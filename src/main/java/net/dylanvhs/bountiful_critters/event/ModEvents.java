@@ -20,18 +20,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 @Mod.EventBusSubscriber(modid = BountifulCritters.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class ModEvents {
     @SubscribeEvent
-    public static void potBreak(BlockEvent.BreakEvent event) {
-        Level world = event.getPlayer().level();
-        BlockPos pos = event.getPos();
-
-        if (world.getBlockState(pos).is(Blocks.DECORATED_POT) && PotAccess.hasSnake(world, pos)) {
-            world.addFreshEntity(PotAccess.getSnake(world, pos));
-        }
-    }
-
-
-
-    @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent e) {
     }
 
