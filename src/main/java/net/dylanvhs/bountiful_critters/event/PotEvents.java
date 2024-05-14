@@ -6,6 +6,7 @@ import net.dylanvhs.bountiful_critters.entity.custom.BluntHeadedTreeSnakeEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DecoratedPotBlock;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -21,5 +22,11 @@ public class PotEvents {
             world.addFreshEntity(PotAccess.getSnake(world, pos));
             PotAccess.setSnake(pos, (BluntHeadedTreeSnakeEntity) null);
         }
+    }
+
+    // This will be called from time to time on a pot containing a Snake. Not an actual event, so don't remove the // on the next line
+    //SubscribeEvent
+    public static void potSnakeTick(Level world, BlockPos pos) {
+
     }
 }

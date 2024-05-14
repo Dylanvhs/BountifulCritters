@@ -26,9 +26,7 @@ public abstract class DecoratedPotBlockEntityMixin extends BlockEntity {
 
     @Inject(method = "saveAdditional", at = @At("HEAD"))
     public void saveSnake(CompoundTag tag, CallbackInfo ci) {
-        BountifulCritters.LOGGER.info("ABCD " + PotAccess.SNAKES);
         if (PotAccess.SNAKES.containsKey(this.worldPosition)) {
-            BountifulCritters.LOGGER.info("saving snake");
             PotAccess.appendTag(this.worldPosition, tag);
             BountifulCritters.LOGGER.info(String.valueOf(tag));
         }
@@ -36,9 +34,7 @@ public abstract class DecoratedPotBlockEntityMixin extends BlockEntity {
 
     @Inject(method = "load", at = @At("HEAD"))
     public void loadSnake(CompoundTag tag, CallbackInfo ci) {
-        BountifulCritters.LOGGER.info("ABCD " + tag);
         if (tag.contains("snake_save") && tag.contains("snake_data")) {
-            BountifulCritters.LOGGER.info("loading snake");
             CompoundTag snaketag = new CompoundTag();
             snaketag.put("snake_save", tag.get("snake_save"));
             snaketag.put("snake_data", tag.get("snake_data"));
