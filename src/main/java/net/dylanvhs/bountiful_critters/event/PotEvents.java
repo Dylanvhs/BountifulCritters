@@ -2,6 +2,7 @@ package net.dylanvhs.bountiful_critters.event;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.entity.PotAccess;
+import net.dylanvhs.bountiful_critters.entity.custom.BluntHeadedTreeSnakeEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -16,8 +17,9 @@ public class PotEvents {
         Level world = event.getPlayer().level();
         BlockPos pos = event.getPos();
 
-        if (world.getBlockState(pos).is(Blocks.DECORATED_POT) && PotAccess.hasSnake(world, pos)) {
+        if (world.getBlockState(pos).is(Blocks.DECORATED_POT) && PotAccess.SNAKES.containsKey(pos) && !world.isClientSide()) {
             world.addFreshEntity(PotAccess.getSnake(world, pos));
+            PotAccess.setSnake(pos, (BluntHeadedTreeSnakeEntity) null);
         }
     }
 }

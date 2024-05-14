@@ -1,5 +1,6 @@
 package net.dylanvhs.bountiful_critters.mixin;
 
+import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.PotAccess;
 import net.dylanvhs.bountiful_critters.entity.custom.BluntHeadedTreeSnakeEntity;
@@ -14,6 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(DecoratedPotBlockEntity.class)
 public abstract class DecoratedPotBlockEntityMixin extends BlockEntity {
@@ -22,24 +24,25 @@ public abstract class DecoratedPotBlockEntityMixin extends BlockEntity {
         super(pType, pPos, pBlockState);
     }
 
-    @Inject(method = "saveAdditional", at = @At("TAIL"))
+    @Inject(method = "saveAdditional", at = @At("HEAD"))
     public void saveSnake(CompoundTag tag, CallbackInfo ci) {
-        if (PotAccess.hasSnake(this.level, this.worldPosition)) {
-            CompoundTag snaketag = new CompoundTag();
-            PotAccess.getSnake(this.level, this.worldPosition).addAdditionalSaveData(snaketag);
-            tag.put("snake_save", PotAccess.getSnake(this.level, this.worldPosition).saveWithoutId(new CompoundTag()));
-            tag.put("snake_data", snaketag);
+        BountifulCritters.LOGGER.info("ABCD " + PotAccess.SNAKES);
+        if (PotAccess.SNAKES.containsKey(this.worldPosition)) {
+            BountifulCritters.LOGGER.info("saving snake");
+            PotAccess.appendTag(this.worldPosition, tag);
+            BountifulCritters.LOGGER.info(String.valueOf(tag));
         }
     }
 
-    @Inject(method = "load", at = @At("TAIL"))
+    @Inject(method = "load", at = @At("HEAD"))
     public void loadSnake(CompoundTag tag, CallbackInfo ci) {
-        if (tag.contains("snake_save")) {
-            BluntHeadedTreeSnakeEntity snake = new BluntHeadedTreeSnakeEntity(ModEntities.BLUNT_HEADED_TREE_SNAKE.get(),
-                    this.level);
-            snake.load(tag.getCompound("snake_save"));
-            snake.readAdditionalSaveData(tag.getCompound("snake_data"));
-            PotAccess.setSnake(this.level, this.worldPosition, snake);
+        BountifulCritters.LOGGER.info("ABCD " + tag);
+        if (tag.contains("snake_save") && tag.contains("snake_data")) {
+            BountifulCritters.LOGGER.info("loading snake");
+            CompoundTag snaketag = new CompoundTag();
+            snaketag.put("snake_save", tag.get("snake_save"));
+            snaketag.put("snake_data", tag.get("snake_data"));
+            PotAccess.setSnake(this.worldPosition, snaketag);
         }
     }
 }

@@ -28,6 +28,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -235,8 +236,7 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
     @Override
     public void tick() {
         if (this.getBlockStateOn().is(Blocks.DECORATED_POT)) {
-            PotAccess.setSnake(this.level(), this.getBlockPosBelowThatAffectsMyMovement(), this);
-            this.remove(RemovalReason.UNLOADED_TO_CHUNK);
+            PotAccess.setSnake(this.getBlockPosBelowThatAffectsMyMovement(), this);
             BountifulCritters.LOGGER.info("moved snake to pot at " + this.getBlockPosBelowThatAffectsMyMovement().toShortString());
         }
         super.tick();
