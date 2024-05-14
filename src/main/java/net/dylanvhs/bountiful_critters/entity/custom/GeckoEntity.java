@@ -255,7 +255,14 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.gecko.walk", Animation.LoopType.LOOP));
             geoAnimatableAnimationState.getController().setAnimationSpeed(1.5F);
             return PlayState.CONTINUE;
-        } else geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.gecko.idle", Animation.LoopType.LOOP));
+        } else if (this.isClimbing() && geoAnimatableAnimationState.isMoving()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.gecko.climb", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        } else if (this.isClimbing() && !geoAnimatableAnimationState.isMoving()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.gecko.climb_idle", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
+        else geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.gecko.idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
 

@@ -146,6 +146,35 @@
 				}
 			}
 		},
+		"animation.gecko.climb_idle": {
+			"loop": true,
+			"animation_length": 1.4583,
+			"bones": {
+				"body": {
+					"position": {
+						"vector": [0, "-0.1+Math.cos(query.anim_time*250)*0.2", 0]
+					}
+				},
+				"tail": {
+					"rotation": {
+						"vector": [0, "Math.cos(40+query.anim_time*250)*-3", 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": ["1+Math.cos(40+query.anim_time*250)*-2", 0, 0]
+					}
+				},
+				"gecko": {
+					"rotation": {
+						"vector": [-90, 0, 0]
+					},
+					"position": {
+						"vector": [0, 3.15, -7.5]
+					}
+				}
+			}
+		},
 		"animation.gecko.lick": {
 			"animation_length": 1,
 			"bones": {
