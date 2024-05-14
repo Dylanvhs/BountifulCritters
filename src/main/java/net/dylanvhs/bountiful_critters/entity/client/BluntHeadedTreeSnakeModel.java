@@ -21,7 +21,7 @@ public class BluntHeadedTreeSnakeModel extends GeoModel<BluntHeadedTreeSnakeEnti
 
     @Override
     public ResourceLocation getTextureResource(BluntHeadedTreeSnakeEntity animatable) {
-        return new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/blunt_headed_tree_snake.png");
+        return new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/blunt_headed_tree_snake/blunt_headed_tree_snake.png");
     }
 
     @Override

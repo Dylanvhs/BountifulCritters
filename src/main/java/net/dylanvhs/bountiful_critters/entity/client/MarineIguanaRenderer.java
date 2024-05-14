@@ -10,11 +10,11 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class MarineIguanaRenderer extends GeoEntityRenderer<MarineIguanaEntity> {
 
-    private static final ResourceLocation TEXTURE_STONY = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana.png");
-    private static final ResourceLocation TEXTURE_NEON = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana_neon.png");
-    private static final ResourceLocation TEXTURE_WARM = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana_1.png");
-    private static final ResourceLocation TEXTURE_RED = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana_2.png");
-    private static final ResourceLocation TEXTURE_ASH = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana_3.png");
+    private static final ResourceLocation TEXTURE_STONY = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana/marine_iguana.png");
+    private static final ResourceLocation TEXTURE_NEON = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana/marine_iguana_neon.png");
+    private static final ResourceLocation TEXTURE_WARM = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana/marine_iguana_1.png");
+    private static final ResourceLocation TEXTURE_RED = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana/marine_iguana_2.png");
+    private static final ResourceLocation TEXTURE_ASH = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana/marine_iguana_3.png");
     public MarineIguanaRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new MarineIguanaModel());
     }

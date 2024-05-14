@@ -19,7 +19,7 @@ public class GeckoModel extends GeoModel<GeckoEntity> {
 
     @Override
     public ResourceLocation getTextureResource(GeckoEntity animatable) {
-        return new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/leopard_gecko.png");
+        return new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/gecko/leopard_gecko.png");
     }
 
     @Override

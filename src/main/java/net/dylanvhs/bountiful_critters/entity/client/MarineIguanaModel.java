@@ -18,7 +18,7 @@ public class MarineIguanaModel extends GeoModel<MarineIguanaEntity> {
 
     @Override
     public ResourceLocation getTextureResource(MarineIguanaEntity animatable) {
-        return new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana.png");
+        return new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana/marine_iguana.png");
     }
 
     @Override
