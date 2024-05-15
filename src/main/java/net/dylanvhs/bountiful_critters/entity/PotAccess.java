@@ -16,6 +16,10 @@ import java.util.Map;
 public class PotAccess {
     public static final Map<BlockPos, CompoundTag> SNAKES = new HashMap<>();
 
+    public static boolean hasSnake(BlockPos pos) {
+        return SNAKES.containsKey(pos);
+    }
+
     // Returns the Snake hiding in the Pot at pos, or null if none is in
     public static BluntHeadedTreeSnakeEntity getSnake(Level world, BlockPos pos) {
         if (!SNAKES.containsKey(pos)) return null;
@@ -58,7 +62,7 @@ public class PotAccess {
     }
 
     public static void setSnake(BlockPos pos, CompoundTag tag) {
-        if (SNAKES.containsKey(pos)) SNAKES.replace(pos, tag);
+        if (hasSnake(pos)) SNAKES.replace(pos, tag);
         else SNAKES.put(pos, tag);
     }
 }

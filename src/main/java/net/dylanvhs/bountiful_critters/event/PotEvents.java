@@ -18,15 +18,16 @@ public class PotEvents {
         Level world = event.getPlayer().level();
         BlockPos pos = event.getPos();
 
-        if (world.getBlockState(pos).is(Blocks.DECORATED_POT) && PotAccess.SNAKES.containsKey(pos) && !world.isClientSide()) {
+        if (world.getBlockState(pos).is(Blocks.DECORATED_POT) && PotAccess.hasSnake(pos) && !world.isClientSide()) {
             world.addFreshEntity(PotAccess.getSnake(world, pos));
             PotAccess.setSnake(pos, (BluntHeadedTreeSnakeEntity) null);
         }
     }
 
     // This will be called from time to time on a pot containing a Snake. Not an actual event, so don't remove the // on the next line
+    // Apparently I can only call this on the server so not sure sounds will work but if you feel daring you can do packets
     //SubscribeEvent
     public static void potSnakeTick(Level world, BlockPos pos) {
-
+        BountifulCritters.LOGGER.info("hello from " + pos.toShortString());
     }
 }
