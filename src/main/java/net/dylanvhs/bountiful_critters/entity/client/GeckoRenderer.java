@@ -12,6 +12,7 @@ public class GeckoRenderer extends GeoEntityRenderer<GeckoEntity> {
     private static final ResourceLocation TEXTURE_LEOPARD = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/gecko/leopard_gecko.png");
     private static final ResourceLocation TEXTURE_GREEN = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/gecko/green_gecko.png");
     private static final ResourceLocation TEXTURE_TOKAY = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/gecko/tokay_gecko.png");
+    private static final ResourceLocation TEXTURE_ELECTRIC_BLUE_DAY = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/gecko/electric_blue_day_gecko.png");
 
     public GeckoRenderer(EntityRendererProvider.Context renderManagerIn) {
         super(renderManagerIn, new GeckoModel());
@@ -25,6 +26,7 @@ public class GeckoRenderer extends GeoEntityRenderer<GeckoEntity> {
         return switch (entity.getVariant()) {
             case 1 -> TEXTURE_GREEN;
             case 2 -> TEXTURE_TOKAY;
+            case 3 -> TEXTURE_ELECTRIC_BLUE_DAY;
             default -> TEXTURE_LEOPARD;
         };
     }

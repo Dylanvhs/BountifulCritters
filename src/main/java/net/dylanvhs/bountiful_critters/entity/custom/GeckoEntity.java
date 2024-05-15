@@ -101,6 +101,7 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
         return switch (variant) {
             case 1 -> "green";
             case 2 -> "tokay";
+            case 3 -> "electric_blue_day";
             default -> "leopard";
         };
     }

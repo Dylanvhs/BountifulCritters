@@ -93,7 +93,7 @@
 						"vector": [-90, 0, 0]
 					},
 					"position": {
-						"vector": [0, "3.15+Math.cos(40+query.anim_time*360)*0.1", -7.5],
+						"vector": [0, "3.15+Math.cos(40+query.anim_time*360)*0.1", -6],
 						"easing": "easeInOutSine"
 					}
 				},
@@ -170,7 +170,7 @@
 						"vector": [-90, 0, 0]
 					},
 					"position": {
-						"vector": [0, 3.15, -7.5]
+						"vector": [0, 3.15, -6]
 					}
 				}
 			}
