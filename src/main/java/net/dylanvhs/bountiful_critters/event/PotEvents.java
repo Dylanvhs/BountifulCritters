@@ -3,7 +3,9 @@ package net.dylanvhs.bountiful_critters.event;
 import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.entity.PotAccess;
 import net.dylanvhs.bountiful_critters.entity.custom.BluntHeadedTreeSnakeEntity;
+import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DecoratedPotBlock;
@@ -13,6 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = BountifulCritters.MOD_ID)
 public class PotEvents {
+
     @SubscribeEvent
     public static void potBreak(BlockEvent.BreakEvent event) {
         Level world = event.getPlayer().level();
@@ -29,5 +32,8 @@ public class PotEvents {
     //SubscribeEvent
     public static void potSnakeTick(Level world, BlockPos pos) {
         BountifulCritters.LOGGER.info("hello from " + pos.toShortString());
+        if (world.getBlockState(pos).is(Blocks.DECORATED_POT) && PotAccess.hasSnake(pos) && !world.isClientSide()) {
+            ModSounds.SNAKE_HISS.get();
+        }
     }
 }
