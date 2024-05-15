@@ -235,28 +235,23 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
 
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
         boolean flag = false;
-        if (reason == MobSpawnType.BUCKET) {
-            return spawnDataIn;
-        }
-        else {
-
+        float variantChange = this.getRandom().nextFloat();
+        if (reason != MobSpawnType.BUCKET) {
             if (flag) {
                 this.setAge(-24000);
             }
 
-            float variantChange = this.getRandom().nextFloat();
-            if(variantChange <= 0.48F){
-                this.setVariant(3);
-            } else if(variantChange <= 0.49F){
-                this.setVariant(2);
-            } else if(variantChange <= 0.50F){
-                this.setVariant(1);
-            } else {
-                this.setVariant(0);
-            }
-
-            return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
         }
+        if(variantChange <= 0.25F){
+            this.setVariant(3);
+        } else if(variantChange <= 0.40F){
+            this.setVariant(2);
+        } else if(variantChange <= 0.55F){
+            this.setVariant(1);
+        } else {
+            this.setVariant(0);
+        }
+        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
     @Override

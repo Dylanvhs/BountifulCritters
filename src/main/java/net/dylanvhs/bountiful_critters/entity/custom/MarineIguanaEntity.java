@@ -206,30 +206,24 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
 
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @javax.annotation.Nullable SpawnGroupData spawnDataIn, @javax.annotation.Nullable CompoundTag dataTag) {
         boolean flag = false;
-        if (reason == MobSpawnType.BUCKET) {
-            return spawnDataIn;
-        }
-        else {
-
+        float variantChange = this.getRandom().nextFloat();
+        if (reason != MobSpawnType.BUCKET) {
             if (flag) {
                 this.setAge(-24000);
             }
-
-            float variantChange = this.getRandom().nextFloat();
-            if(variantChange <= 0.009F){
-                this.setVariant(1);
-            } else if(variantChange <= 0.49F){
-                this.setVariant(2);
-            } else if(variantChange <= 0.499F){
-                this.setVariant(3);
-            } else if(variantChange <= 0.50F){
-                this.setVariant(4);
-            } else{
-                this.setVariant(0);
-            }
-
-            return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
         }
+        if(variantChange <= 0.009F){
+            this.setVariant(1);
+        } else if(variantChange <= 0.30F){
+            this.setVariant(2);
+        } else if(variantChange <= 0.45F){
+            this.setVariant(3);
+        } else if(variantChange <= 0.60F){
+            this.setVariant(4);
+        } else{
+            this.setVariant(0);
+        }
+        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
     public boolean canBeLeashed(Player pPlayer) {
