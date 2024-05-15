@@ -69,16 +69,6 @@ import java.util.stream.Stream;
 
 public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
-    private static final int POT_SEARCH_DISTANCE = 20;
-    public static final String TAG_CANNOT_ENTER_POT_TICKS = "CannotEnterPotTicks";
-    public static final String TAG_POT_POS = "PotPos";
-    private int stayOutOfPotCountdown;
-
-    private static final int COOLDOWN_BEFORE_LOCATING_NEW_HIVE = 200;
-    int remainingCooldownBeforeLocatingNewPot;
-    BlockPos potPos;
-    BluntHeadedTreeSnakeEntity snake = BluntHeadedTreeSnakeEntity.this;
-    BluntHeadedTreeSnakeEntity.SnakeGoToPotGoal goToPotGoal;
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(BluntHeadedTreeSnakeEntity.class, EntityDataSerializers.BYTE);
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(ModItems.POTTED_PILLBUG.get());
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(BluntHeadedTreeSnakeEntity.class, EntityDataSerializers.INT);
@@ -140,10 +130,6 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
         this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.25F, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Frog.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PillbugEntity.class, true));
-        this.goalSelector.addGoal(5, new BluntHeadedTreeSnakeEntity.SnakeLocatePotGoal());
-        this.goToPotGoal = new BluntHeadedTreeSnakeEntity.SnakeGoToPotGoal();
-        this.goalSelector.addGoal(5, this.goToPotGoal);
-        this.goalSelector.addGoal(1, new BluntHeadedTreeSnakeEntity.SnakeEnterPotGoal());
     }
 
     public static AttributeSupplier setAttributes() {
@@ -228,267 +214,6 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
-    boolean isTooFarAway(BlockPos pPos) {
-        return !this.closerThan(pPos, 32);
-    }
-
-    boolean closerThan(BlockPos pPos, int pDistance) {
-        return pPos.closerThan(this.blockPosition(), (double)pDistance);
-    }
-
-    void pathfindRandomlyTowards(BlockPos pPos) {
-        Vec3 vec3 = Vec3.atBottomCenterOf(pPos);
-        int i = 0;
-        BlockPos blockpos = this.blockPosition();
-        int j = (int) vec3.y - blockpos.getY();
-        if (j > 2) {
-            i = 4;
-        } else if (j < -2) {
-            i = -4;
-        }
-
-        int k = 6;
-        int l = 8;
-        int i1 = blockpos.distManhattan(pPos);
-        if (i1 < 15) {
-            k = i1 / 2;
-            l = i1 / 2;
-        }
-
-        Vec3 vec31 = AirRandomPos.getPosTowards(this, k, l, i, vec3, (double) ((float) Math.PI / 10F));
-        if (vec31 != null) {
-            this.navigation.setMaxVisitedNodesMultiplier(0.5F);
-            this.navigation.moveTo(vec31.x, vec31.y, vec31.z, 1.0D);
-        }
-    }
-
-    public void aiStep() {
-        super.aiStep();
-        if (!this.level().isClientSide) {
-            if (this.stayOutOfPotCountdown > 0) {
-                --this.stayOutOfPotCountdown;
-            }
-
-            if (this.remainingCooldownBeforeLocatingNewPot > 0) {
-                --this.remainingCooldownBeforeLocatingNewPot;
-            }
-
-            if (this.tickCount % 20 == 0 && !this.isPotValid()) {
-                this.potPos = null;
-            }
-        }
-
-    }
-
-    boolean isPotValid() {
-        if (!this.hasPot()) {
-            return false;
-        } else if (this.isTooFarAway(this.potPos)) {
-            return false;
-        } else {
-            BlockEntity blockentity = this.level().getBlockEntity(this.potPos);
-            return blockentity instanceof DecoratedPotBlockEntity;
-        }
-    }
-
-    @VisibleForDebug
-    public boolean hasPot() {
-        return this.potPos != null;
-    }
-
-    @Nullable
-    @VisibleForDebug
-    public BlockPos getPotPos() {
-        return this.potPos;
-    }
-
-    @VisibleForDebug
-    public GoalSelector getGoalSelector() {
-        return this.goalSelector;
-    }
-
-    boolean wantsToEnterPot() {
-        return this.stayOutOfPotCountdown <= 0 && this.getTarget() == null;
-    }
-
-    abstract static class BaseSnakeGoal extends Goal {
-        public abstract boolean canBeeUse();
-
-        public abstract boolean canBeeContinueToUse();
-
-        public boolean canUse() {
-            return this.canBeeUse();
-        }
-
-        public boolean canContinueToUse() {
-            return this.canBeeContinueToUse();
-        }
-    }
-
-    class SnakeEnterPotGoal extends BluntHeadedTreeSnakeEntity.BaseSnakeGoal {
-        public boolean canBeeUse() {
-            if (snake.hasPot() && snake.wantsToEnterPot() && snake.potPos.closerToCenterThan(snake.position(), 2.0D)) {
-                return snake.getBlockStateOn().is(Blocks.DECORATED_POT);
-            }
-            return false;
-        }
-
-        public boolean canBeeContinueToUse() {
-            return false;
-        }
-
-        public void start() {
-            if (snake.getBlockStateOn().is(Blocks.DECORATED_POT)) {
-                PotAccess.setSnake(snake.getBlockPosBelowThatAffectsMyMovement(), snake);
-                BountifulCritters.LOGGER.info("moved snake to pot at " + snake.getBlockPosBelowThatAffectsMyMovement().toShortString());
-            }
-
-        }
-    }
-
-    @VisibleForDebug
-    public class SnakeGoToPotGoal extends BluntHeadedTreeSnakeEntity.BaseSnakeGoal {
-        public static final int MAX_TRAVELLING_TICKS = 600;
-        int travellingTicks = snake.level().random.nextInt(10);
-        private static final int MAX_BLACKLISTED_TARGETS = 3;
-        final List<BlockPos> blacklistedTargets = Lists.newArrayList();
-        @Nullable
-        private Path lastPath;
-        private int ticksStuck;
-
-        SnakeGoToPotGoal() {
-            this.setFlags(EnumSet.of(Goal.Flag.MOVE));
-        }
-
-        public boolean canBeeUse() {
-            return snake.potPos != null && !snake.hasRestriction() && snake.wantsToEnterPot() && !this.hasReachedTarget(snake.potPos) && snake.level().getBlockState(snake.potPos).is(Blocks.DECORATED_POT);
-        }
-
-        public boolean canBeeContinueToUse() {
-            return this.canBeeUse();
-        }
-
-        public void start() {
-            this.travellingTicks = 0;
-            this.ticksStuck = 0;
-            super.start();
-        }
-
-        public void stop() {
-            this.travellingTicks = 0;
-            this.ticksStuck = 0;
-            snake.navigation.stop();
-            snake.navigation.resetMaxVisitedNodesMultiplier();
-        }
-
-        public void tick() {
-            if (snake.potPos != null) {
-                ++this.travellingTicks;
-                if (this.travellingTicks > this.adjustedTickDelay(600)) {
-                    this.dropAndBlacklistHive();
-                } else if (!snake.navigation.isInProgress()) {
-                    if (!snake.closerThan(snake.potPos, 16)) {
-                        if (snake.isTooFarAway(snake.potPos)) {
-                            this.dropHive();
-                        } else {
-                            snake.pathfindRandomlyTowards(snake.potPos);
-                        }
-                    } else {
-                        boolean flag = this.pathfindDirectlyTowards(snake.potPos);
-                        if (!flag) {
-                            this.dropAndBlacklistHive();
-                        } else if (this.lastPath != null && snake.navigation.getPath().sameAs(this.lastPath)) {
-                            ++this.ticksStuck;
-                            if (this.ticksStuck > 60) {
-                                this.dropHive();
-                                this.ticksStuck = 0;
-                            }
-                        } else {
-                            this.lastPath = snake.navigation.getPath();
-                        }
-
-                    }
-                }
-            }
-        }
-
-        private boolean pathfindDirectlyTowards(BlockPos pPos) {
-            snake.navigation.setMaxVisitedNodesMultiplier(10.0F);
-            snake.navigation.moveTo((double)pPos.getX(), (double)pPos.getY(), (double)pPos.getZ(), 1.0D);
-            return snake.navigation.getPath() != null && snake.navigation.getPath().canReach();
-        }
-
-        boolean isTargetBlacklisted(BlockPos pPos) {
-            return this.blacklistedTargets.contains(pPos);
-        }
-
-        private void blacklistTarget(BlockPos pPos) {
-            this.blacklistedTargets.add(pPos);
-
-            while(this.blacklistedTargets.size() > 3) {
-                this.blacklistedTargets.remove(0);
-            }
-
-        }
-
-        void clearBlacklist() {
-            this.blacklistedTargets.clear();
-        }
-
-        private void dropAndBlacklistHive() {
-            if (snake.potPos != null) {
-                this.blacklistTarget(snake.potPos);
-            }
-
-            this.dropHive();
-        }
-
-        private void dropHive() {
-            snake.potPos = null;
-            snake.remainingCooldownBeforeLocatingNewPot = 200;
-        }
-
-        private boolean hasReachedTarget(BlockPos pPos) {
-            if (snake.closerThan(pPos, 2)) {
-                return true;
-            } else {
-                Path path = snake.navigation.getPath();
-                return path != null && path.getTarget().equals(pPos) && path.canReach() && path.isDone();
-            }
-        }
-    }
-
-    class SnakeLocatePotGoal extends BluntHeadedTreeSnakeEntity.BaseSnakeGoal {
-        public boolean canBeeUse() {
-            return snake.remainingCooldownBeforeLocatingNewPot == 0 && !snake.hasPot() && snake.wantsToEnterPot();
-        }
-
-        public boolean canBeeContinueToUse() {
-            return false;
-        }
-
-        public void start() {
-            List<BlockPos> list = this.findNearbyHivesWithSpace();
-            snake.remainingCooldownBeforeLocatingNewPot = 200;
-            snake.goToPotGoal.clearBlacklist();
-            snake.potPos = list.get(0);
-        }
-
-        private List<BlockPos> findNearbyHivesWithSpace() {
-            BlockPos blockpos = snake.blockPosition();
-            PoiManager poimanager = ((ServerLevel)snake.level()).getPoiManager();
-            Stream<PoiRecord> stream = poimanager.getInRange((p_218130_) -> {
-                return p_218130_.is(ModTags.SNAKE_POT);
-            }, blockpos, 20, PoiManager.Occupancy.ANY);
-            return stream.map(PoiRecord::getPos).sorted(Comparator.comparingDouble((p_148811_) -> {
-                return p_148811_.distSqr(blockpos);
-            })).collect(Collectors.toList());
-        }
-    }
-
-
-
-
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 4, this::predicate));
@@ -523,5 +248,16 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
     @Override
     public double getTick(Object object) {
         return tickCount;
+    }
+
+    @Override
+    public void tick() {
+        if (this.getBlockStateOn().is(Blocks.DECORATED_POT)) {
+            PotAccess.setSnake(this.getBlockPosBelowThatAffectsMyMovement(), this);
+            this.remove(RemovalReason.UNLOADED_TO_CHUNK);
+            PotAccess.setSnake(this.getBlockPosBelowThatAffectsMyMovement(), this);
+            BountifulCritters.LOGGER.info("moved snake to pot at " + this.getBlockPosBelowThatAffectsMyMovement().toShortString());
+        }
+        super.tick();
     }
 }
