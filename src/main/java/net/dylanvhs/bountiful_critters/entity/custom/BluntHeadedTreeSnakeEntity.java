@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.PotAccess;
+import net.dylanvhs.bountiful_critters.entity.ai.Bagable;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.dylanvhs.bountiful_critters.tags.ModTags;
@@ -60,6 +61,7 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.EnumSet;
@@ -67,9 +69,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
+public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bagable {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(BluntHeadedTreeSnakeEntity.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Boolean> FROM_BAG = SynchedEntityData.defineId(BluntHeadedTreeSnakeEntity.class, EntityDataSerializers.BOOLEAN);
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(ModItems.POTTED_PILLBUG.get());
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(BluntHeadedTreeSnakeEntity.class, EntityDataSerializers.INT);
 
@@ -106,16 +109,20 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
         super.defineSynchedData();
         this.entityData.define(VARIANT, 0);
         this.entityData.define(DATA_FLAGS_ID, (byte) 0);
+        this.entityData.define(FROM_BAG, false);
     }
+
 
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("Variant", this.getVariant());
+        compound.putBoolean("FromBag", this.fromBag());
     }
 
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.setVariant(compound.getInt("Variant"));
+        this.setFromBag(compound.getBoolean("FromBag"));
     }
 
     protected void registerGoals() {
@@ -138,6 +145,54 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
                 .add(Attributes.MOVEMENT_SPEED, 0.35D)
                 .add(Attributes.ATTACK_DAMAGE, 1D)
                 .build();
+    }
+
+    @Override
+    public boolean fromBag() {
+        return this.entityData.get(FROM_BAG);
+    }
+
+    @Override
+    public void setFromBag(boolean p_203706_1_) {
+        this.entityData.set(FROM_BAG, p_203706_1_);
+    }
+
+    @Override
+    @Nonnull
+    public ItemStack getBagItemStack() {
+        ItemStack stack = new ItemStack(ModItems.BAGGED_GECKO.get());
+        if (this.hasCustomName()) {
+            stack.setHoverName(this.getCustomName());
+        }
+        return stack;
+    }
+
+    @Override
+    @Nonnull
+    public SoundEvent getPickupSound() {
+        return SoundEvents.BUNDLE_INSERT;
+    }
+
+    @Override
+    public void saveToBagTag(@Nonnull ItemStack bucket) {
+        if (this.hasCustomName()) {
+            bucket.setHoverName(this.getCustomName());
+        }
+        Bagable.saveDefaultDataToBagTag(this, bucket);
+        CompoundTag compoundnbt = bucket.getOrCreateTag();
+        compoundnbt.putInt("Age", this.getAge());
+        compoundnbt.putInt("BagVariantTag", this.getVariant());
+    }
+
+    @Override
+    public void loadFromBagTag(@Nonnull CompoundTag compound) {
+        Bagable.loadDefaultDataFromBagTag(this, compound);
+        if (compound.contains("Age")) {
+            this.setAge(compound.getInt("Age"));
+        }
+        if (compound.contains("BagVariantTag", 3)) {
+            this.setVariant(compound.getInt("BagVariantTag"));
+        }
     }
 
     protected void checkFallDamage(double pY, boolean pOnGround, BlockState pState, BlockPos pPos) {
@@ -201,17 +256,29 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity {
     }
 
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
-        float variantChange = this.getRandom().nextFloat();
-        if(variantChange <= 0.1F){
-            this.setVariant(3);
-        } else if(variantChange <= 0.25F){
-            this.setVariant(2);
-        } else if(variantChange <= 0.50F){
-            this.setVariant(1);
-        } else {
-            this.setVariant(0);
+        boolean flag = false;
+        if (reason == MobSpawnType.BUCKET) {
+            return spawnDataIn;
         }
-        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+        else {
+
+            if (flag) {
+                this.setAge(-24000);
+            }
+
+            float variantChange = this.getRandom().nextFloat();
+            if(variantChange <= 0.1F){
+                this.setVariant(3);
+            } else if(variantChange <= 0.25F){
+                this.setVariant(2);
+            } else if(variantChange <= 0.50F){
+                this.setVariant(1);
+            } else {
+                this.setVariant(0);
+            }
+
+            return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+        }
     }
 
     @Override

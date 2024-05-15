@@ -26,6 +26,9 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.KRILL_BUCKET.get());
                         pOutput.accept(ModItems.MARINE_IGUANA_BUCKET.get());
                         pOutput.accept(ModItems.POTTED_PILLBUG.get());
+                        pOutput.accept(ModItems.REPTILE_BAG.get());
+                        pOutput.accept(ModItems.BAGGED_GECKO.get());
+                        pOutput.accept(ModItems.BAGGED_BLUNT_HEADED_TREE_SNAKE.get());
                         pOutput.accept(ModItems.RAW_KRILL.get());
                         pOutput.accept(ModItems.FRIED_KRILL.get());
                         pOutput.accept(ModItems.KRILL_COCKTAIL.get());
@@ -45,8 +48,6 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.ROASTED_PILLBUG.get());
                         pOutput.accept(ModItems.POISONOUS_PILLBUG.get());
                         pOutput.accept(ModItems.PILLBUG_THROWABLE.get());
-                        pOutput.accept(ModItems.REPTILE_BAG.get());
-                        pOutput.accept(ModItems.BAGGED_GECKO.get());
                         pOutput.accept(ModItems.RETURNING_MEMORY_MUSIC_DISC.get());
 
 

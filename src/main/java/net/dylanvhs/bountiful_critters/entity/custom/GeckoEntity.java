@@ -178,6 +178,7 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
         this.setVariant(compound.getInt("Variant"));
         this.setFromBag(compound.getBoolean("FromBag"));
     }
+
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
         this.goalSelector.addGoal(0, new FloatGoal(this));
@@ -244,9 +245,9 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
             }
 
             float variantChange = this.getRandom().nextFloat();
-            if(variantChange <= 0.1F){
+            if(variantChange <= 0.48F){
                 this.setVariant(3);
-            } else if(variantChange <= 0.25F){
+            } else if(variantChange <= 0.49F){
                 this.setVariant(2);
             } else if(variantChange <= 0.50F){
                 this.setVariant(1);

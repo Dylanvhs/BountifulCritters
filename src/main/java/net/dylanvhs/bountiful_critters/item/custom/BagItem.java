@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.ai.Bagable;
+import net.dylanvhs.bountiful_critters.entity.custom.BluntHeadedTreeSnakeEntity;
 import net.dylanvhs.bountiful_critters.entity.custom.GeckoEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -14,11 +15,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -66,7 +67,7 @@ public class BagItem extends BucketItem {
     }
 
     protected void playEmptySound(@Nullable Player pPlayer, LevelAccessor pLevel, BlockPos pPos) {
-        pLevel.playSound(pPlayer, pPos, getEmptySound(), SoundSource.NEUTRAL, 1.0F, 1.0F);
+        pLevel.playSound(pPlayer, pPos, SoundEvents.BUNDLE_DROP_CONTENTS, SoundSource.NEUTRAL, 1.0F, 1.0F);
     }
 
     @Override
@@ -111,12 +112,25 @@ public class BagItem extends BucketItem {
         }
     }
 
+    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
+        ItemStack itemstack = pPlayer.getItemInHand(pHand);
+        return InteractionResultHolder.pass(itemstack);
+    }
+
     public void appendHoverText(ItemStack stack, @Nullable Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
         if (getEntityType() == ModEntities.GECKO.get()) {
             CompoundTag compoundnbt = stack.getTag();
             if (compoundnbt != null && compoundnbt.contains("BagVariantTag", 3)) {
                 int i = compoundnbt.getInt("BagVariantTag");
                 String s = "entity.bountiful_critters.gecko.variant_" + GeckoEntity.getVariantName(i);
+                tooltip.add((Component.translatable(s)).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
+            }
+        }
+        if (getEntityType() == ModEntities.BLUNT_HEADED_TREE_SNAKE.get()) {
+            CompoundTag compoundnbt = stack.getTag();
+            if (compoundnbt != null && compoundnbt.contains("BagVariantTag", 3)) {
+                int i = compoundnbt.getInt("BagVariantTag");
+                String s = "entity.bountiful_critters.blunt_headed_tree_snake.variant_" + BluntHeadedTreeSnakeEntity.getVariantName(i);
                 tooltip.add((Component.translatable(s)).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
             }
         }
@@ -127,7 +141,4 @@ public class BagItem extends BucketItem {
         return entityType.get();
     }
 
-    protected SoundEvent getEmptySound() {
-        return SoundEvents.BUNDLE_DROP_CONTENTS;
-    }
 }

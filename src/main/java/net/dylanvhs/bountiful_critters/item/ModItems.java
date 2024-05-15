@@ -31,6 +31,8 @@ public class ModItems {
 
     public static final RegistryObject<Item> REPTILE_BAG = ITEMS.register("reptile_bag",
             () ->  new Item(new Item.Properties().stacksTo(16)));
+    public static final RegistryObject<Item> BAGGED_BLUNT_HEADED_TREE_SNAKE = ITEMS.register("bagged_blunt_headed_tree_snake",
+            () ->  new BagItem(ModEntities.BLUNT_HEADED_TREE_SNAKE::get, ModItems.REPTILE_BAG.get(), (new Item.Properties()).stacksTo(1)));
     public static final RegistryObject<Item> BAGGED_GECKO = ITEMS.register("bagged_gecko",
             () ->  new BagItem(ModEntities.GECKO::get, ModItems.REPTILE_BAG.get(), (new Item.Properties()).stacksTo(1)));
 

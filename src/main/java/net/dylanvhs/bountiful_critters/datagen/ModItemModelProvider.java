@@ -42,6 +42,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.POTTED_PILLBUG);
         simpleItem(ModItems.REPTILE_BAG);
         simpleItem(ModItems.BAGGED_GECKO);
+        simpleItem(ModItems.BAGGED_BLUNT_HEADED_TREE_SNAKE);
         simpleItem(ModItems.RETURNING_MEMORY_MUSIC_DISC);
 
 
