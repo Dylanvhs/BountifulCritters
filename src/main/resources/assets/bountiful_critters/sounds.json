@@ -147,6 +147,21 @@
     ]
   },
 
+  "gecko_ambient": {
+    "subtitle": "sounds.bountiful_critters:gecko_ambient",
+    "sounds": [
+      {
+        "name": "bountiful_critters:gecko_ambient1"
+      },
+      {
+        "name": "bountiful_critters:gecko_ambient2"
+      },
+      {
+        "name": "bountiful_critters:gecko_ambient3"
+      }
+    ]
+  },
+
   "longhorn_didgeridoo": {
     "subtitle": "sounds.bountiful_critters:longhorn_didgeridoo",
     "sounds": [

@@ -285,9 +285,10 @@ public class PillbugEntity extends Animal implements GeoEntity {
 
         List<Player> list = level().getNearbyEntities(Player.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
         List<BluntHeadedTreeSnakeEntity> list1 = level().getNearbyEntities(BluntHeadedTreeSnakeEntity.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
+        List<GeckoEntity> list2 = level().getNearbyEntities(GeckoEntity.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
 
 
-        if (!list.isEmpty() || !list1.isEmpty()) {
+        if (!list.isEmpty() || !list1.isEmpty() || !list2.isEmpty()) {
             if (list.stream().noneMatch(Entity::isCrouching)) {
                     setRollUp(true);
                     getNavigation().stop();

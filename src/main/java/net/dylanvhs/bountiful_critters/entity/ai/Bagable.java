@@ -96,7 +96,6 @@ public interface Bagable {
             ItemStack itemstack2 = ItemUtils.createFilledResult(itemstack, pPlayer, itemstack1, false);
             pPlayer.setItemInHand(pHand, itemstack2);
             Level level = pEntity.level();
-            itemstack.shrink(1);
             if (!level.isClientSide) {
                 CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)pPlayer, itemstack1);
             }

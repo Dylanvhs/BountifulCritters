@@ -3,6 +3,7 @@ package net.dylanvhs.bountiful_critters.entity.custom;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.ai.Bagable;
 import net.dylanvhs.bountiful_critters.item.ModItems;
+import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -24,8 +25,10 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bucketable;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -48,12 +51,14 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class GeckoEntity extends Animal implements GeoEntity, Bagable {
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(GeckoEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> FROM_BAG = SynchedEntityData.defineId(GeckoEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IS_WARNING = SynchedEntityData.defineId(GeckoEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(GeckoEntity.class, EntityDataSerializers.INT);
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(ModItems.RAW_PILLBUG.get());
     public GeckoEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
@@ -166,6 +171,7 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
         this.entityData.define(VARIANT, 0);
         this.entityData.define(DATA_FLAGS_ID, (byte) 0);
         this.entityData.define(FROM_BAG, false);
+        this.entityData.define(IS_WARNING, false);
     }
 
     public void addAdditionalSaveData(CompoundTag compound) {
@@ -189,7 +195,7 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
         this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Player.class, 5.0F, 1.0D, 1.25D));
-        this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.25F, true));
+        this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.25F, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PillbugEntity.class, true));
     }
 
@@ -199,6 +205,10 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
                 .add(Attributes.MOVEMENT_SPEED, 0.15D)
                 .add(Attributes.ATTACK_DAMAGE, 1D)
                 .build();
+    }
+
+    protected SoundEvent getAmbientSound() {
+        return ModSounds.GECKO_AMBIENT.get();
     }
 
     protected void checkFallDamage(double pY, boolean pOnGround, BlockState pState, BlockPos pPos) {
@@ -214,10 +224,51 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
     }
 
     @Override
+    protected boolean isImmobile() {
+        return super.isImmobile() || this.isWarning();
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (this.isAlive()) {
+            this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.isImmobile() ? 0.0 : 0.2);
+        }
+    }
+
+    public boolean isWarning() {
+        return entityData.get(IS_WARNING);
+    }
+
+    public void setWarning(boolean rollUp) {
+        entityData.set(IS_WARNING, rollUp);
+    }
+
+    @Override
     public void tick() {
         super.tick();
         if (!this.level().isClientSide) {
             this.setClimbing(this.horizontalCollision);
+        }
+
+        if (this.isWarning() && this.random.nextFloat() < 0.01F) {
+            for(int i = 0; i < this.random.nextInt(2) + 1; ++i) {
+                playSound(ModSounds.GECKO_AMBIENT.get(),0.5F,1 );
+            }
+        }
+
+        List<Monster> list = level().getNearbyEntities(Monster.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(8.0D, 3.0D, 8.0D));
+        if (!list.isEmpty()) {
+            if (list.stream().noneMatch(Entity::isCrouching)) {
+                setWarning(true);
+                getNavigation().stop();
+            }
+            else {
+                setWarning(false);
+            }
+        }
+        else {
+            setWarning(false);
         }
     }
 
@@ -241,7 +292,6 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
             if (flag) {
                 this.setAge(-24000);
             }
-
         }
         if(variantChange <= 0.25F){
             this.setVariant(3);
@@ -262,6 +312,11 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
     }
 
     private <T extends GeoAnimatable> PlayState predicate(software.bernie.geckolib.core.animation.AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+        if (this.isWarning()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.gecko.warn", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(2F);
+            return PlayState.CONTINUE;
+        }
         if (geoAnimatableAnimationState.isMoving()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.gecko.walk", Animation.LoopType.LOOP));
             geoAnimatableAnimationState.getController().setAnimationSpeed(1.5F);
@@ -281,7 +336,7 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
         if (this.swinging && geoAnimatableAnimationState.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
             geoAnimatableAnimationState.getController().forceAnimationReset();
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.gecko.lick", Animation.LoopType.PLAY_ONCE));
-            geoAnimatableAnimationState.getController().setAnimationSpeed(1.5F);
+            geoAnimatableAnimationState.getController().setAnimationSpeed(2.5F);
             this.swinging = false;
         }  return PlayState.CONTINUE;
     }

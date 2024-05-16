@@ -15,6 +15,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -67,7 +68,7 @@ public class BagItem extends BucketItem {
     }
 
     protected void playEmptySound(@Nullable Player pPlayer, LevelAccessor pLevel, BlockPos pPos) {
-        pLevel.playSound(pPlayer, pPos, SoundEvents.BUNDLE_DROP_CONTENTS, SoundSource.NEUTRAL, 1.0F, 1.0F);
+        pLevel.playSound(pPlayer, pPos, getEmptySound(), SoundSource.NEUTRAL, 1.0F, 1.0F);
     }
 
     @Override
@@ -105,7 +106,6 @@ public class BagItem extends BucketItem {
                     bucketable.loadFromBagTag(heldItem.getOrCreateTag());
                     bucketable.setFromBag(true);
                 }
-
                 playEmptySound(player, world, blockpos);
             }
             return InteractionResult.SUCCESS;
@@ -139,6 +139,10 @@ public class BagItem extends BucketItem {
 
     protected EntityType<?> getEntityType() {
         return entityType.get();
+    }
+
+    protected SoundEvent getEmptySound() {
+        return SoundEvents.BUNDLE_DROP_CONTENTS;
     }
 
 }

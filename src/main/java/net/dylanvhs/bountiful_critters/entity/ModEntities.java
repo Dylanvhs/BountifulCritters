@@ -79,7 +79,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<GeckoEntity>> GECKO =
             ENTITY_TYPES.register("gecko",
                     () -> EntityType.Builder.of(GeckoEntity::new, MobCategory.AMBIENT)
-                            .sized(0.5f, 0.75f)
+                            .sized(0.8f, 0.7f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "gecko").toString()));
 
 

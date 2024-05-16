@@ -28,6 +28,8 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> SNAKE_HISS = registerSoundEvents("snake_hiss");
 
+    public static final RegistryObject<SoundEvent> GECKO_AMBIENT = registerSoundEvents("gecko_ambient");
+
     public static final RegistryObject<SoundEvent> RETURNING_MEMORY = registerSoundEvents("returning_memory");
     public static final RegistryObject<SoundEvent> LONG_HORN_DIDGERIDOO = registerSoundEvents("longhorn_didgeridoo");
 
