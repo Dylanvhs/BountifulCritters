@@ -74,17 +74,20 @@ public class BagItem extends BucketItem {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Level world = context.getLevel();
+        Player player = context.getPlayer();
+        InteractionHand hand = context.getHand();
+        ItemStack heldItem = player.getItemInHand(hand);
+        BlockPos blockpos = context.getClickedPos();
+        Direction direction = context.getClickedFace();
+        BlockState blockstate = world.getBlockState(blockpos);
+
         if (world.isClientSide) {
+            if (entityType != null) {
+                playEmptySound(player, world, blockpos);
+            }
             return InteractionResult.SUCCESS;
         }
         else {
-            Player player = context.getPlayer();
-            InteractionHand hand = context.getHand();
-            ItemStack heldItem = player.getItemInHand(hand);
-            BlockPos blockpos = context.getClickedPos();
-            Direction direction = context.getClickedFace();
-            BlockState blockstate = world.getBlockState(blockpos);
-
             BlockPos blockpos1;
             if (blockstate.getCollisionShape(world, blockpos).isEmpty()) {
                 blockpos1 = blockpos;
@@ -106,7 +109,6 @@ public class BagItem extends BucketItem {
                     bucketable.loadFromBagTag(heldItem.getOrCreateTag());
                     bucketable.setFromBag(true);
                 }
-                playEmptySound(player, world, blockpos);
             }
             return InteractionResult.SUCCESS;
         }
