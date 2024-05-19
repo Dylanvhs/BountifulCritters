@@ -29,7 +29,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -304,7 +303,7 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bag
         protected void onReachedTarget() {
             if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(BluntHeadedTreeSnakeEntity.this.level(), BluntHeadedTreeSnakeEntity.this)) {
                 BlockState blockstate = BluntHeadedTreeSnakeEntity.this.level().getBlockState(this.blockPos);
-                if (blockstate.is(Blocks.DECORATED_POT) && !PotAccess.hasSnake(blockPos)) {
+                if (BluntHeadedTreeSnakeEntity.this.getBlockStateOn().is(Blocks.DECORATED_POT) && !PotAccess.hasSnake(blockPos)) {
                     this.goInPot(blockstate);
                 }
 
@@ -315,6 +314,14 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bag
             PotAccess.setSnake(blockPos, BluntHeadedTreeSnakeEntity.this);
             BountifulCritters.LOGGER.info("moved snake to pot at " + BluntHeadedTreeSnakeEntity.this.getBlockPosBelowThatAffectsMyMovement().toShortString());
             playSound(SoundEvents.DECORATED_POT_STEP, 1.0F, 1.0F);
+            if (BluntHeadedTreeSnakeEntity.this.level().isClientSide) {
+                Vec3 vec3 = BluntHeadedTreeSnakeEntity.this.getViewVector(0.0F);
+                float f = Mth.cos(BluntHeadedTreeSnakeEntity.this.getYRot() * ((float)Math.PI / 180F)) * 0.3F;
+                float f1 = Mth.sin(BluntHeadedTreeSnakeEntity.this.getYRot() * ((float)Math.PI / 180F)) * 0.3F;
+                float f2 = 1.2F - BluntHeadedTreeSnakeEntity.this.random.nextFloat() * 0.7F;
+                BluntHeadedTreeSnakeEntity.this.level().addParticle(ParticleTypes.SMOKE, BluntHeadedTreeSnakeEntity.this.getX() - vec3.x * (double)f2 + (double)f, BluntHeadedTreeSnakeEntity.this.getY() - vec3.y, BluntHeadedTreeSnakeEntity.this.getZ() - vec3.z * (double)f2 + (double)f1, 0.0D, 0.0D, 0.0D);
+                BluntHeadedTreeSnakeEntity.this.level().addParticle(ParticleTypes.SMOKE, BluntHeadedTreeSnakeEntity.this.getX() - vec3.x * (double)f2 - (double)f, BluntHeadedTreeSnakeEntity.this.getY() - vec3.y, BluntHeadedTreeSnakeEntity.this.getZ() - vec3.z * (double)f2 - (double)f1, 0.0D, 0.0D, 0.0D);
+            }
         }
 
         public boolean canUse() {
