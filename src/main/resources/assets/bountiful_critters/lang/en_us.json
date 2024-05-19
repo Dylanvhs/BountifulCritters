@@ -34,6 +34,10 @@
   "item.bountiful_critters.reptile_bag": "Reptile Bag",
 
 
+  "item.bountiful_critters.returning_memory_music_disc": "Music Disc",
+  "item.bountiful_critters.returning_memory_music_disc.desc": "Dylanvhs - Returning Memory",
+
+
   "item.bountiful_critters.emu_spawn_egg" : "Emu Spawn Egg",
   "item.bountiful_critters.stingray_spawn_egg" : "Stingray Spawn Egg",
   "item.bountiful_critters.sunfish_spawn_egg" : "Sunfish Spawn Egg",
@@ -129,34 +133,33 @@
   "advancements.husbandry.collect_seagrass_ball.description" : "Get a Seagrass Ball",
 
 
-  "sounds.bountiful_critters:emu_ambient": "Emu Grunts",
-  "sounds.bountiful_critters:emu_hurt": "Emu Hurts",
-  "sounds.bountiful_critters:emu_death": "Emu Dies",
+  "sounds.bountiful_critters:emu_ambient": "Emu grunts",
+  "sounds.bountiful_critters:emu_hurt": "Emu hurts",
+  "sounds.bountiful_critters:emu_death": "Emu dies",
 
 
-  "sounds.bountiful_critters:toucan_ambient": "Toucan Chirps",
-  "sounds.bountiful_critters:toucan_hurt": "Toucan Hurts",
-  "sounds.bountiful_critters:toucan_death": "Toucan Dies",
+  "sounds.bountiful_critters:toucan_ambient": "Toucan chirps",
+  "sounds.bountiful_critters:toucan_hurt": "Toucan hurts",
+  "sounds.bountiful_critters:toucan_death": "Toucan dies",
 
 
-  "sounds.bountiful_critters:pillbug_ambient": "Pill Bug Hisses",
-  "sounds.bountiful_critters:pillbug_hurt": "Pill Bug Hurts",
+  "sounds.bountiful_critters:pillbug_ambient": "Pill Bug hisses",
+  "sounds.bountiful_critters:pillbug_hurt": "Pill Bug hurts",
   "sounds.bountiful_critters:pillbug_step": "Footsteps",
-  "sounds.bountiful_critters:pillbug_death": "Pill Bug Dies",
-  "sounds.bountiful_critters:pillbug_bounce": "Pill Bug Bounces",
+  "sounds.bountiful_critters:pillbug_death": "Pill Bug dies",
+  "sounds.bountiful_critters:pillbug_bounce": "Pill Bug bounces",
 
 
-  "sounds.bountiful_critters:snake_hiss": "Snake Hisses",
+  "sounds.bountiful_critters:snake_hiss": "Snake hisses",
 
 
-  "sounds.bountiful_critters:gecko_ambient": "Gecko Chirps",
+  "sounds.bountiful_critters:gecko_ambient": "Gecko chirps",
 
 
-  "sounds.bountiful_critters:longhorn_didgeridoo": "Blows Didgeridoo",
+  "sounds.bountiful_critters:whale_ambient": "Whale whistles",
 
 
-  "item.bountiful_critters.returning_memory_music_disc": "Music Disc",
-  "item.bountiful_critters.returning_memory_music_disc.desc": "Dylanvhs - Returning Memory",
+  "sounds.bountiful_critters:longhorn_didgeridoo": "Blows didgeridoo",
 
 
   "death.attack.pillball_0.entity": "%s got dunked on by a pillbug"

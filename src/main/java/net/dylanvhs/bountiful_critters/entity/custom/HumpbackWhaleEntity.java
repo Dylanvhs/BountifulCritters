@@ -4,6 +4,7 @@ import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.ai.CustomBreathAirGoal;
 import net.dylanvhs.bountiful_critters.entity.ai.HumpbackWhaleJumpGoal;
 import net.dylanvhs.bountiful_critters.item.ModItems;
+import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -105,6 +106,10 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
 
     public static boolean checkFishSpawnRules(EntityType<? extends HumpbackWhaleEntity> type, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223363_3_, RandomSource randomIn) {
         return worldIn.getBlockState(p_223363_3_).is(Blocks.WATER) && worldIn.getBlockState(p_223363_3_.above()).is(Blocks.WATER);
+    }
+
+    protected SoundEvent getAmbientSound() {
+        return ModSounds.WHALE_AMBIENT.get();
     }
 
     @Override
