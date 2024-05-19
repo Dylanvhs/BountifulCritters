@@ -4,6 +4,8 @@ import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -107,6 +109,33 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
                 .add(Attributes.MOVEMENT_SPEED, 0.25D)
                 .build();
     }
+
+    public void baseTick() {
+        int i = this.getAirSupply();
+        super.baseTick();
+        if (!this.isNoAi()) {
+            this.handleAirSupply(i);
+        }
+
+    }
+
+    protected void handleAirSupply(int pAirSupply) {
+        if (this.isAlive() && !this.isInWaterRainOrBubble()) {
+            this.setAirSupply(pAirSupply - 1);
+            if (this.getAirSupply() == -20) {
+                this.setAirSupply(0);
+                this.hurt(this.damageSources().dryOut(), 2.0F);
+            }
+        } else {
+            this.setAirSupply(this.getMaxAirSupply());
+        }
+
+    }
+
+    public int getMaxAirSupply() {
+        return 6000;
+    }
+
 
     public static <T extends Mob> boolean canSpawn(EntityType type, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223317_3_, RandomSource random) {
         BlockState blockstate = worldIn.getBlockState(p_223317_3_.below());
@@ -335,6 +364,10 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
             double d0 = 0;
             double d1 = Math.max(0.0D, 1.0D - d0);
             this.setDeltaMovement(this.getDeltaMovement().add(0.0D, (double)0.4F * d1, 0.0D));
+            for(int i = 0; i < 8; ++i) {
+                Vec3 vec3 = (new Vec3(((double)this.random.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D)).xRot(-this.getXRot() * ((float)Math.PI / 180F)).yRot(-this.getYRot() * ((float)Math.PI / 180F));
+                this.level().addParticle(ParticleTypes.SPIT, this.getX() + this.getLookAngle().x / 2.0D, this.getY(), this.getZ() + this.getLookAngle().z / 2.0D, vec3.x, vec3.y + 0.05D, vec3.z);
+            }
         } else if (this.timeUntilNextSneeze > 0) {
             setSneezing(false);
         }

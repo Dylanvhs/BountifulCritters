@@ -62,10 +62,6 @@ public class SunfishEntity extends AbstractFish implements GeoEntity {
         return new ItemStack(ModItems.SUNFISH_SPAWN_EGG.get());
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return WaterAnimal.createMobAttributes().add(Attributes.MAX_HEALTH, 20.0D);
-    }
-
     public static String getVariantName(int variant) {
         return switch (variant) {
             case 1 -> "chilly";
