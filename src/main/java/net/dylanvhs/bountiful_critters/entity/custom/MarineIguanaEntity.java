@@ -1,6 +1,8 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
+import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
+import net.dylanvhs.bountiful_critters.entity.PotAccess;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -27,15 +29,21 @@ import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bucketable;
+import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SeagrassBlock;
+import net.minecraft.world.level.block.SweetBerryBushBlock;
+import net.minecraft.world.level.block.TallSeagrassBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -96,11 +104,22 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.2D));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(2, new TemptGoal(this, 1.25D, TEMPTATION_ITEM, false));
-        this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
-        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(3, new FollowParentGoal(this, 1.25D));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
-        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8D, 15));
+        this.goalSelector.addGoal(4, new MarineIguanaEntity.IguanaEatSeagrass((double)1.2F, 22, 22));
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F) {
+            @Override
+            public boolean canUse() {
+                return !isInWater() && super.canUse();
+            }
+        });
+        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this) {
+            @Override
+            public boolean canUse() {
+                return !isInWater() && super.canUse();
+            }
+        });
     }
 
     public static AttributeSupplier setAttributes() {
@@ -205,16 +224,7 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     @Nonnull
     public InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
         Bucketable.bucketMobPickup(player, hand, this);
-        ItemStack heldItem = player.getItemInHand(hand);
-        if (heldItem.getItem() == Items.SEAGRASS && this.isAlive() && !isBaby()) {
-            playSound(SoundEvents.FROG_EAT, 1.0F, 1.0F);
-            heldItem.shrink(1);
-            spawnAtLocation(ModItems.SEAGRASS_BALL.get());
-            return InteractionResult.SUCCESS;
-
-        }  else {
-            return super.mobInteract(player, hand);
-        }
+        return super.mobInteract(player, hand);
     }
 
 
@@ -370,6 +380,72 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
             }
         } else if (this.timeUntilNextSneeze > 0) {
             setSneezing(false);
+        }
+    }
+
+    public class IguanaEatSeagrass extends MoveToBlockGoal {
+        private static final int WAIT_TICKS = 40;
+        protected int ticksWaited;
+
+        public IguanaEatSeagrass(double pSpeedModifier, int pSearchRange, int pVerticalSearchRange) {
+            super(MarineIguanaEntity.this, pSpeedModifier, pSearchRange, pVerticalSearchRange);
+        }
+
+        public double acceptedDistance() {
+            return 2.0D;
+        }
+
+        public boolean shouldRecalculatePath() {
+            return this.tryTicks % 100 == 0;
+        }
+
+        protected boolean isValidTarget(LevelReader pLevel, BlockPos pPos) {
+            BlockState blockstate = pLevel.getBlockState(pPos);
+            return blockstate.is(Blocks.TALL_SEAGRASS) ||  blockstate.is(Blocks.SEAGRASS);
+        }
+
+        public void tick() {
+            if (this.isReachedTarget()) {
+                if (this.ticksWaited >= 40) {
+                    this.onReachedTarget();
+                } else {
+                    ++this.ticksWaited;
+                }
+            }
+            super.tick();
+        }
+
+        protected void onReachedTarget() {
+            if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(MarineIguanaEntity.this.level(), MarineIguanaEntity.this)) {
+                BlockState blockstate = MarineIguanaEntity.this.level().getBlockState(this.blockPos);
+                if (blockstate.is(Blocks.SEAGRASS)) {
+                    this.eatSeagrass(blockstate);
+                }
+                if (blockstate.is(Blocks.TALL_SEAGRASS)) {
+                    this.eatTallSeagrass(blockstate);
+                }
+
+            }
+        }
+        private void eatSeagrass(BlockState pState) {
+            MarineIguanaEntity.this.level().destroyBlock(blockPos,false);
+            MarineIguanaEntity.this.playSound(SoundEvents.WET_GRASS_BREAK, 1.0F, 1.0F);
+            spawnAtLocation(ModItems.SEAGRASS_BALL.get());
+        }
+        private void eatTallSeagrass(BlockState pState) {
+            BlockState blockstate = Blocks.SEAGRASS.defaultBlockState();
+            MarineIguanaEntity.this.level().setBlock(blockPos, blockstate, 2);
+            MarineIguanaEntity.this.playSound(SoundEvents.WET_GRASS_BREAK, 1.0F, 1.0F);
+            spawnAtLocation(ModItems.SEAGRASS_BALL.get());
+        }
+
+        public boolean canUse() {
+            return !isBaby() && isInWater() && getAirSupply() > 0 && super.canUse();
+        }
+
+        public void start() {
+            this.ticksWaited = 0;
+            super.start();
         }
     }
 

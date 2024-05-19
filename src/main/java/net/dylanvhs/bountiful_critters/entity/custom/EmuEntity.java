@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -22,6 +23,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
@@ -104,6 +106,7 @@ public class EmuEntity extends Animal implements GeoAnimatable {
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.1D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(8, new EmuEntity.EmuEatLeaves((double)1.2F, 16, 6));
     }
 
     public void tick() {
@@ -127,6 +130,71 @@ public class EmuEntity extends Animal implements GeoAnimatable {
 
     public boolean canBeLeashed(Player pPlayer) {
         return true;
+    }
+
+    public class EmuEatLeaves extends MoveToBlockGoal {
+        private static final int WAIT_TICKS = 40;
+        protected int ticksWaited;
+
+        public EmuEatLeaves(double pSpeedModifier, int pSearchRange, int pVerticalSearchRange) {
+            super(EmuEntity.this, pSpeedModifier, pSearchRange, pVerticalSearchRange);
+        }
+
+        public double acceptedDistance() {
+            return 2.0D;
+        }
+
+        public boolean shouldRecalculatePath() {
+            return this.tryTicks % 100 == 0;
+        }
+
+        protected boolean isValidTarget(LevelReader pLevel, BlockPos pPos) {
+            BlockState blockstate = pLevel.getBlockState(pPos);
+            return blockstate.is(Blocks.OAK_LEAVES);
+        }
+
+        public void tick() {
+            if (this.isReachedTarget()) {
+                if (this.ticksWaited >= 40) {
+                    this.onReachedTarget();
+                } else {
+                    ++this.ticksWaited;
+                }
+            }
+            super.tick();
+        }
+
+        protected void onReachedTarget() {
+            if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(EmuEntity.this.level(), EmuEntity.this)) {
+                BlockState blockstate = EmuEntity.this.level().getBlockState(this.blockPos);
+                if (blockstate.is(Blocks.OAK_LEAVES)) {
+                    this.eatLeaves(blockstate);
+                }
+            }
+        }
+        private void eatLeaves(BlockState pState) {
+            EmuEntity.this.level().destroyBlock(blockPos,false);
+            EmuEntity.this.playSound(SoundEvents.GRASS_BREAK, 1.0F, 1.0F);
+             if (EmuEntity.this.random.nextFloat() < 0.6F) {
+               for(int i = 0; i < EmuEntity.this.random.nextInt(2) + 1; ++i) {
+                  spawnAtLocation(Items.APPLE);
+               }
+               for(int i = 1; i < EmuEntity.this.random.nextInt(2) + 2; ++i) {
+                   spawnAtLocation(Items.APPLE);
+               }
+               for(int i = 2; i < EmuEntity.this.random.nextInt(2) + 3; ++i) {
+                   spawnAtLocation(Items.APPLE);
+               }
+            }
+        }
+        public boolean canUse() {
+            return !isBaby() && super.canUse();
+        }
+
+        public void start() {
+            this.ticksWaited = 0;
+            super.start();
+        }
     }
 
     @Override

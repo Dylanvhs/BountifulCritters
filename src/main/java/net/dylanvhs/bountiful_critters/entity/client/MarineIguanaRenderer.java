@@ -26,8 +26,6 @@ public class MarineIguanaRenderer extends GeoEntityRenderer<MarineIguanaEntity> 
     private static final ResourceLocation TEXTURE_GOJIRA = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/marine_iguana/marine_iguana_gojira.png");
     public MarineIguanaRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new MarineIguanaModel());
-        addRenderLayer(new MarineIguanaRenderer.IguanaGlowingLayer(this));
-        addRenderLayer(new MarineIguanaRenderer.GojiraGlowingLayer(this));
     }
 
     @Override
@@ -47,46 +45,5 @@ public class MarineIguanaRenderer extends GeoEntityRenderer<MarineIguanaEntity> 
     public void render(MarineIguanaEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
                        MultiBufferSource bufferSource, int packedLight) {
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-    }
-
-    public static class IguanaGlowingLayer extends GeoRenderLayer<MarineIguanaEntity> {
-        public IguanaGlowingLayer(GeoRenderer<MarineIguanaEntity> renderer) {
-            super(renderer);
-        }
-        protected RenderType getRenderType(MarineIguanaEntity animatable) {
-           if (animatable.getVariant() == 1) {
-                return AutoGlowingTexture.getRenderType(TEXTURE_NEON);
-            } else {
-                return RenderType.entityCutout(getTextureResource(animatable));
-            }
-        }
-        @Override
-        public void render(PoseStack poseStack, MarineIguanaEntity animatable, BakedGeoModel bakedModel, @Nullable RenderType renderType, MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
-            renderType = getRenderType(animatable);
-
-            getRenderer().reRender(bakedModel, poseStack, bufferSource, animatable, renderType,
-                    bufferSource.getBuffer(renderType), partialTick, 15728640, OverlayTexture.NO_OVERLAY,
-                    1, 1, 1, 1);
-        }
-    }
-    public static class GojiraGlowingLayer extends GeoRenderLayer<MarineIguanaEntity> {
-        public GojiraGlowingLayer(GeoRenderer<MarineIguanaEntity> renderer) {
-            super(renderer);
-        }
-        protected RenderType getRenderType(MarineIguanaEntity animatable) {
-            if(animatable.isName()) {
-                return AutoGlowingTexture.getRenderType(TEXTURE_GOJIRA);
-            } else {
-                return RenderType.entityCutout(getTextureResource(animatable));
-            }
-        }
-        @Override
-        public void render(PoseStack poseStack, MarineIguanaEntity animatable, BakedGeoModel bakedModel, @Nullable RenderType renderType, MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
-            renderType = getRenderType(animatable);
-
-            getRenderer().reRender(bakedModel, poseStack, bufferSource, animatable, renderType,
-                    bufferSource.getBuffer(renderType), partialTick, 15728640, OverlayTexture.NO_OVERLAY,
-                    1, 1, 1, 1);
-        }
     }
 }

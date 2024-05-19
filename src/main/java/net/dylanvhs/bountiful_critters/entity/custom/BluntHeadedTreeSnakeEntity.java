@@ -7,6 +7,7 @@ import net.dylanvhs.bountiful_critters.entity.ai.Bagable;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -15,6 +16,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -41,6 +43,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -268,7 +271,8 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bag
 
     @Override
     public void tick() {
-        if (this.getBlockStateOn().is(Blocks.DECORATED_POT)) {
+        BlockPos blockPos = BlockPos.ZERO;
+        if (this.getBlockStateOn().is(Blocks.DECORATED_POT) && !PotAccess.hasSnake(blockPos)) {
             PotAccess.setSnake(this.getBlockPosBelowThatAffectsMyMovement(), this);
             this.remove(RemovalReason.UNLOADED_TO_CHUNK);
             BountifulCritters.LOGGER.info("moved snake to pot at " + this.getBlockPosBelowThatAffectsMyMovement().toShortString());
@@ -322,7 +326,17 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bag
             PotAccess.setSnake(blockPos, BluntHeadedTreeSnakeEntity.this);
             BluntHeadedTreeSnakeEntity.this.remove(RemovalReason.UNLOADED_TO_CHUNK);
             BountifulCritters.LOGGER.info("moved snake to pot at " + BluntHeadedTreeSnakeEntity.this.getBlockPosBelowThatAffectsMyMovement().toShortString());
-            BluntHeadedTreeSnakeEntity.this.playSound(SoundEvents.DECORATED_POT_STEP, 1.0F, 1.0F);
+            playSound(SoundEvents.DECORATED_POT_STEP, 1.0F, 1.0F);
+            if (BluntHeadedTreeSnakeEntity.this.level().isClientSide) {
+                Vec3 vec3 = BluntHeadedTreeSnakeEntity.this.getViewVector(0.0F);
+                float f = Mth.cos(BluntHeadedTreeSnakeEntity.this.getYRot() * ((float)Math.PI / 180F)) * 0.3F;
+                float f1 = Mth.sin(BluntHeadedTreeSnakeEntity.this.getYRot() * ((float)Math.PI / 180F)) * 0.3F;
+                float f2 = 1.2F - BluntHeadedTreeSnakeEntity.this.random.nextFloat() * 0.7F;
+
+                for(int i = 0; i < 2; ++i) {
+                    BluntHeadedTreeSnakeEntity.this.level().addParticle(ParticleTypes.SMOKE, BluntHeadedTreeSnakeEntity.this.getX() - vec3.x * (double)f2 + (double)f, BluntHeadedTreeSnakeEntity.this.getY() - vec3.y, BluntHeadedTreeSnakeEntity.this.getZ() - vec3.z * (double)f2 + (double)f1, 0.0D, 0.0D, 0.0D);
+                }
+            }
         }
 
         public boolean canUse() {
