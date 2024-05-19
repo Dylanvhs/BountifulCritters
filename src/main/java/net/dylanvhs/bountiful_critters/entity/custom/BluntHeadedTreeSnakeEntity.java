@@ -311,7 +311,7 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bag
         protected void onReachedTarget() {
             if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(BluntHeadedTreeSnakeEntity.this.level(), BluntHeadedTreeSnakeEntity.this)) {
                 BlockState blockstate = BluntHeadedTreeSnakeEntity.this.level().getBlockState(this.blockPos);
-                if (blockstate.is(Blocks.DECORATED_POT)) {
+                if (blockstate.is(Blocks.DECORATED_POT) && !PotAccess.hasSnake(blockPos)) {
                     this.goInPot(blockstate);
                 }
 
