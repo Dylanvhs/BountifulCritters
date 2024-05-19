@@ -95,7 +95,7 @@ public class ModItems {
     public static final RegistryObject<Item> MARINE_IGUANA_SPAWN_EGG = ITEMS.register("marine_iguana_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.MARINE_IGUANA, 0x403b3d, 0x94908b, new Item.Properties()));
 
-    public static final RegistryObject<Item> LONG_HORN_SPAWN_EGG = ITEMS.register("longhorn_spawn_egg",
+    public static final RegistryObject<Item> LONGHORN_SPAWN_EGG = ITEMS.register("longhorn_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.LONGHORN, 0xad4e1a, 0xedd9b5, new Item.Properties()));
 
     public static final RegistryObject<Item> TOUCAN_SPAWN_EGG = ITEMS.register("toucan_spawn_egg",

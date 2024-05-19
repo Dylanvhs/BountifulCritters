@@ -35,6 +35,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -76,6 +77,11 @@ public class StingrayEntity extends AbstractFish implements GeoEntity, Bucketabl
             case 2 -> "blue_spotted";
             default -> "gray";
         };
+    }
+
+    @Override
+    public ItemStack getPickedResult(HitResult target) {
+        return new ItemStack(ModItems.STINGRAY_SPAWN_EGG.get());
     }
 
     @Override

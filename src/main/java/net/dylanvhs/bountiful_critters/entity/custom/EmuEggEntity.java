@@ -27,7 +27,6 @@ public class EmuEggEntity extends ThrowableItemProjectile {
         super(ModEntities.EMU_EGG.get(), pX, pY, pZ, pLevel);
     }
 
-
     public void handleEntityEvent(byte pId) {
         if (pId == 3) {
             double d0 = 0.08D;
@@ -39,12 +38,10 @@ public class EmuEggEntity extends ThrowableItemProjectile {
 
     }
 
-
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
         pResult.getEntity().hurt(this.damageSources().thrown(this, this.getOwner()), 1.0F);
     }
-
 
     protected void onHit(HitResult pResult) {
         super.onHit(pResult);

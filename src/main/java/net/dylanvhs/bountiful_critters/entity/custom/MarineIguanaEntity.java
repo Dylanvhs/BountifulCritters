@@ -35,6 +35,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -63,6 +64,11 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         this.setPathfindingMalus(BlockPathTypes.WATER_BORDER, 0.0F);
         this.moveControl = new MarineIguanaEntity.IguanaMoveControl(this);
         this.setMaxUpStep(1.0F);
+    }
+
+    @Override
+    public ItemStack getPickedResult(HitResult target) {
+        return new ItemStack(ModItems.MARINE_IGUANA_SPAWN_EGG.get());
     }
 
     static class IguanaMoveControl extends SmoothSwimmingMoveControl {

@@ -37,6 +37,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -84,6 +85,11 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
                 .add(Attributes.ATTACK_KNOCKBACK, 5.0D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.1D)
                 .build();
+    }
+
+    @Override
+    public ItemStack getPickedResult(HitResult target) {
+        return new ItemStack(ModItems.LONGHORN_SPAWN_EGG.get());
     }
 
     @Nullable

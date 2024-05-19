@@ -1,13 +1,11 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
-import com.google.common.collect.Lists;
 import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.PotAccess;
 import net.dylanvhs.bountiful_critters.entity.ai.Bagable;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
-import net.dylanvhs.bountiful_critters.tags.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -17,28 +15,18 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.PoiTypeTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.VisibleForDebug;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
-import net.minecraft.world.entity.ai.util.AirRandomPos;
-import net.minecraft.world.entity.ai.village.poi.PoiManager;
-import net.minecraft.world.entity.ai.village.poi.PoiRecord;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.player.Player;
@@ -49,17 +37,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CaveVines;
-import net.minecraft.world.level.block.SweetBerryBushBlock;
-import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.pathfinder.Path;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.HitResult;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -70,11 +51,6 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Comparator;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bagable {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
@@ -82,7 +58,6 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bag
     private static final EntityDataAccessor<Boolean> FROM_BAG = SynchedEntityData.defineId(BluntHeadedTreeSnakeEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(BluntHeadedTreeSnakeEntity.class, EntityDataSerializers.INT);
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(ModItems.POTTED_PILLBUG.get());
-    BluntHeadedTreeSnakeEntity snake = BluntHeadedTreeSnakeEntity.this;
 
     public BluntHeadedTreeSnakeEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -92,6 +67,11 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bag
         this.setPathfindingMalus(BlockPathTypes.DANGER_OTHER, 0.0F);
         this.setPathfindingMalus(BlockPathTypes.DAMAGE_OTHER, 0.0F);
         this.setMaxUpStep(1F);
+    }
+
+    @Override
+    public ItemStack getPickedResult(HitResult target) {
+        return new ItemStack(ModItems.BLUNT_HEADED_TREE_SNAKE_SPAWN_EGG.get());
     }
 
     @Nullable
@@ -122,7 +102,6 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bag
         this.entityData.define(FROM_BAG, false);
     }
 
-
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("Variant", this.getVariant());
@@ -140,14 +119,14 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bag
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.25D));
         this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 1.25D));
-        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 5.0F));
-        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 5.0F));
+        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
         this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Player.class, 5.0F, 1.0D, 1.25D));
-        this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.25F, true));
+        this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.25F, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Frog.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PillbugEntity.class, true));
-        this.goalSelector.addGoal(10, new BluntHeadedTreeSnakeEntity.SnakeGoToPotGoal((double)1.2F, 12, 1));
+        this.goalSelector.addGoal(8, new BluntHeadedTreeSnakeEntity.SnakeGoToPotGoal((double)1.2F, 12, 1));
     }
 
     public static AttributeSupplier setAttributes() {
@@ -287,13 +266,22 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bag
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
-    public class SnakeGoToPotGoal extends MoveToBlockGoal {
+    @Override
+    public void tick() {
+        if (this.getBlockStateOn().is(Blocks.DECORATED_POT)) {
+            PotAccess.setSnake(this.getBlockPosBelowThatAffectsMyMovement(), this);
+            this.remove(RemovalReason.UNLOADED_TO_CHUNK);
+            BountifulCritters.LOGGER.info("moved snake to pot at " + this.getBlockPosBelowThatAffectsMyMovement().toShortString());
+        }
+        super.tick();
+    }
 
+    public class SnakeGoToPotGoal extends MoveToBlockGoal {
         private static final int WAIT_TICKS = 40;
         protected int ticksWaited;
 
         public SnakeGoToPotGoal(double pSpeedModifier, int pSearchRange, int pVerticalSearchRange) {
-            super(snake, pSpeedModifier, pSearchRange, pVerticalSearchRange);
+            super(BluntHeadedTreeSnakeEntity.this, pSpeedModifier, pSearchRange, pVerticalSearchRange);
         }
 
         public double acceptedDistance() {
@@ -321,8 +309,8 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bag
         }
 
         protected void onReachedTarget() {
-            if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(snake.level(), snake)) {
-                BlockState blockstate = snake.level().getBlockState(this.blockPos);
+            if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(BluntHeadedTreeSnakeEntity.this.level(), BluntHeadedTreeSnakeEntity.this)) {
+                BlockState blockstate = BluntHeadedTreeSnakeEntity.this.level().getBlockState(this.blockPos);
                 if (blockstate.is(Blocks.DECORATED_POT)) {
                     this.goInPot(blockstate);
                 }
@@ -331,14 +319,14 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bag
         }
 
         private void goInPot(BlockState pState) {
-            PotAccess.setSnake(snake.getBlockPosBelowThatAffectsMyMovement(), snake);
-            snake.remove(RemovalReason.UNLOADED_TO_CHUNK);
-            PotAccess.setSnake(snake.getBlockPosBelowThatAffectsMyMovement(), snake);
-            BountifulCritters.LOGGER.info("moved snake to pot at " + snake.getBlockPosBelowThatAffectsMyMovement().toShortString());
+            PotAccess.setSnake(blockPos, BluntHeadedTreeSnakeEntity.this);
+            BluntHeadedTreeSnakeEntity.this.remove(RemovalReason.UNLOADED_TO_CHUNK);
+            BountifulCritters.LOGGER.info("moved snake to pot at " + BluntHeadedTreeSnakeEntity.this.getBlockPosBelowThatAffectsMyMovement().toShortString());
+            BluntHeadedTreeSnakeEntity.this.playSound(SoundEvents.DECORATED_POT_STEP, 1.0F, 1.0F);
         }
 
         public boolean canUse() {
-            return !isAggressive() && super.canUse();
+            return !isBaby() && super.canUse();
         }
 
         public void start() {
@@ -383,14 +371,4 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bag
         return tickCount;
     }
 
-    @Override
-    public void tick() {
-        if (this.getBlockStateOn().is(Blocks.DECORATED_POT)) {
-            PotAccess.setSnake(this.getBlockPosBelowThatAffectsMyMovement(), this);
-            this.remove(RemovalReason.UNLOADED_TO_CHUNK);
-            PotAccess.setSnake(this.getBlockPosBelowThatAffectsMyMovement(), this);
-            BountifulCritters.LOGGER.info("moved snake to pot at " + this.getBlockPosBelowThatAffectsMyMovement().toShortString());
-        }
-        super.tick();
-    }
 }

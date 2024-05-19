@@ -37,6 +37,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -64,7 +65,7 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
 
     public HumpbackWhaleEntity(EntityType<? extends HumpbackWhaleEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
+        this.moveControl = new HumpbackWhaleEntity.MoveHelperController(this);
         this.lookControl = new SmoothSwimmingLookControl(this, 15);
     }
 
@@ -77,6 +78,11 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
                 .add(Attributes.ATTACK_DAMAGE, 4f)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 5f)
                 .build();
+    }
+
+    @Override
+    public ItemStack getPickedResult(HitResult target) {
+        return new ItemStack(ModItems.HUMPBACK_WHALE_SPAWN_EGG.get());
     }
 
     @Override

@@ -33,6 +33,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -56,6 +57,10 @@ public class SunfishEntity extends AbstractFish implements GeoEntity {
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
 
+    @Override
+    public ItemStack getPickedResult(HitResult target) {
+        return new ItemStack(ModItems.SUNFISH_SPAWN_EGG.get());
+    }
 
     public static AttributeSupplier.Builder createAttributes() {
         return WaterAnimal.createMobAttributes().add(Attributes.MAX_HEALTH, 20.0D);

@@ -56,7 +56,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.KRILL_SPAWN_EGG.get());
                         pOutput.accept(ModItems.EMU_SPAWN_EGG.get());
                         pOutput.accept(ModItems.MARINE_IGUANA_SPAWN_EGG.get());
-                        pOutput.accept(ModItems.LONG_HORN_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.LONGHORN_SPAWN_EGG.get());
                         pOutput.accept(ModItems.TOUCAN_SPAWN_EGG.get());
                         pOutput.accept(ModItems.HUMPBACK_WHALE_SPAWN_EGG.get());
                         pOutput.accept(ModItems.PILLBUG_SPAWN_EGG.get());
