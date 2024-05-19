@@ -269,17 +269,6 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bag
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
-    @Override
-    public void tick() {
-        BlockPos blockPos = BlockPos.ZERO;
-        if (this.getBlockStateOn().is(Blocks.DECORATED_POT) && !PotAccess.hasSnake(blockPos)) {
-            PotAccess.setSnake(this.getBlockPosBelowThatAffectsMyMovement(), this);
-            this.remove(RemovalReason.UNLOADED_TO_CHUNK);
-            BountifulCritters.LOGGER.info("moved snake to pot at " + this.getBlockPosBelowThatAffectsMyMovement().toShortString());
-        }
-        super.tick();
-    }
-
     public class SnakeGoToPotGoal extends MoveToBlockGoal {
         private static final int WAIT_TICKS = 40;
         protected int ticksWaited;
@@ -298,7 +287,7 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bag
 
         protected boolean isValidTarget(LevelReader pLevel, BlockPos pPos) {
             BlockState blockstate = pLevel.getBlockState(pPos);
-            return blockstate.is(Blocks.DECORATED_POT);
+            return blockstate.is(Blocks.DECORATED_POT) && !PotAccess.hasSnake(blockPos);
         }
 
         public void tick() {
@@ -324,19 +313,8 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bag
 
         private void goInPot(BlockState pState) {
             PotAccess.setSnake(blockPos, BluntHeadedTreeSnakeEntity.this);
-            BluntHeadedTreeSnakeEntity.this.remove(RemovalReason.UNLOADED_TO_CHUNK);
             BountifulCritters.LOGGER.info("moved snake to pot at " + BluntHeadedTreeSnakeEntity.this.getBlockPosBelowThatAffectsMyMovement().toShortString());
             playSound(SoundEvents.DECORATED_POT_STEP, 1.0F, 1.0F);
-            if (BluntHeadedTreeSnakeEntity.this.level().isClientSide) {
-                Vec3 vec3 = BluntHeadedTreeSnakeEntity.this.getViewVector(0.0F);
-                float f = Mth.cos(BluntHeadedTreeSnakeEntity.this.getYRot() * ((float)Math.PI / 180F)) * 0.3F;
-                float f1 = Mth.sin(BluntHeadedTreeSnakeEntity.this.getYRot() * ((float)Math.PI / 180F)) * 0.3F;
-                float f2 = 1.2F - BluntHeadedTreeSnakeEntity.this.random.nextFloat() * 0.7F;
-
-                for(int i = 0; i < 2; ++i) {
-                    BluntHeadedTreeSnakeEntity.this.level().addParticle(ParticleTypes.SMOKE, BluntHeadedTreeSnakeEntity.this.getX() - vec3.x * (double)f2 + (double)f, BluntHeadedTreeSnakeEntity.this.getY() - vec3.y, BluntHeadedTreeSnakeEntity.this.getZ() - vec3.z * (double)f2 + (double)f1, 0.0D, 0.0D, 0.0D);
-                }
-            }
         }
 
         public boolean canUse() {
