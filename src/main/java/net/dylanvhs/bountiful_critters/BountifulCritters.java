@@ -56,7 +56,7 @@ public class BountifulCritters
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-
+        event.enqueueWork(ModItems::initDispenser);
     }
 
     @SubscribeEvent
@@ -102,6 +102,9 @@ public class BountifulCritters
 
             EntityRenderers.register
                     (ModEntities.GECKO.get(), GeckoRenderer:: new);
+
+            EntityRenderers.register
+                    (ModEntities.STICKY_ARROW.get(), StickyArrowRenderer::new);
 
             EntityRenderers.register
                     (ModEntities.EMU_EGG.get(), ThrownItemRenderer::new);

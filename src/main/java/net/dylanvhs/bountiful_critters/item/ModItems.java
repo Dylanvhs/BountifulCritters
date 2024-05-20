@@ -3,11 +3,19 @@ package net.dylanvhs.bountiful_critters.item;
 import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
+import net.dylanvhs.bountiful_critters.entity.custom.EmuEggEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.PillbugProjectileEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.StickyArrowEntity;
 import net.dylanvhs.bountiful_critters.item.custom.*;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
+import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -48,6 +56,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> SEAGRASS_BALL =
             ITEMS.register("seagrass_ball", () -> new BlockItem(ModBlocks.SEAGRASS_BALL_PLACED.get(),(new Item.Properties())));
+
+    public static final RegistryObject<Item> STICKY_ARROW =
+            ITEMS.register("sticky_arrow", () -> new ModItemArrow(new Item.Properties()));
 
     public static final RegistryObject<Item> RAW_KRILL =
             ITEMS.register("raw_krill", () -> new Item(new Item.Properties().food(ModFoods.RAW_KRILL)));
@@ -113,7 +124,29 @@ public class ModItems {
     public static final RegistryObject<Item> GECKO_SPAWN_EGG = ITEMS.register("gecko_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.GECKO, 0xdfb643, 0x5f5356, new Item.Properties()));
 
+    public static void initDispenser() {
+        DispenserBlock.registerBehavior(STICKY_ARROW.get(), new AbstractProjectileDispenseBehavior() {
+            protected Projectile getProjectile(Level worldIn, Position position, ItemStack stackIn) {
+                StickyArrowEntity entityarrow = new StickyArrowEntity(ModEntities.STICKY_ARROW.get(), position.x(), position.y(), position.z(), worldIn);
+                entityarrow.pickup = StickyArrowEntity.Pickup.ALLOWED;
+                return entityarrow;
+            }
+        });
 
+        DispenserBlock.registerBehavior(EMU_EGG.get(), new AbstractProjectileDispenseBehavior() {
+            protected Projectile getProjectile(Level worldIn, Position position, ItemStack stackIn) {
+                EmuEggEntity entityarrow = new EmuEggEntity(worldIn, position.x(), position.y(), position.z());
+                return entityarrow;
+            }
+        });
+
+        DispenserBlock.registerBehavior(PILLBUG_THROWABLE.get(), new AbstractProjectileDispenseBehavior() {
+            protected Projectile getProjectile(Level worldIn, Position position, ItemStack stackIn) {
+                PillbugProjectileEntity entityarrow = new PillbugProjectileEntity(worldIn, position.x(), position.y(), position.z());
+                return entityarrow;
+            }
+        });
+    }
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
