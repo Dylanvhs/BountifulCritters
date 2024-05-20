@@ -1,9 +1,9 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
-import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.ModItems;
-import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -11,9 +11,9 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PlayMessages;
+import org.jetbrains.annotations.NotNull;
 
 public class StickyArrowEntity extends Arrow {
     public StickyArrowEntity(EntityType type, Level worldIn) {
@@ -32,22 +32,19 @@ public class StickyArrowEntity extends Arrow {
             this.pickup = AbstractArrow.Pickup.ALLOWED;
         }
     }
-    protected void onHitEntity(EntityHitResult pResult) {
-        super.onHitEntity(pResult);
-        BlockPos blockPos = BlockPos.ZERO;
-        BlockState blockstate = ModBlocks.SEAGRASS_BALL_PLACED.get().defaultBlockState();
-        this.level().setBlock(blockPos, blockstate, 2);
-        this.level().broadcastEntityEvent(this, (byte)3);
-        this.discard();
+
+    public StickyArrowEntity(PlayMessages.SpawnEntity spawnEntity, Level world) {
+        this(ModEntities.STICKY_ARROW.get(), world);
     }
 
-    protected void onHit(HitResult pResult) {
-        super.onHit(pResult);
-        BlockPos blockPos = BlockPos.ZERO;
-        BlockState blockstate = ModBlocks.SEAGRASS_BALL_PLACED.get().defaultBlockState();
-        this.level().setBlock(blockPos, blockstate, 2);
-        this.level().broadcastEntityEvent(this, (byte)3);
-        this.discard();
+
+    public boolean isInWater() {
+        return false;
+    }
+
+    @Override
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return (Packet<ClientGamePacketListener>) NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override

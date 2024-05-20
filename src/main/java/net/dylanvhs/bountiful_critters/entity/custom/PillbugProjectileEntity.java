@@ -35,6 +35,7 @@ public class PillbugProjectileEntity extends ThrowableItemProjectile {
         super(ModEntities.THROWABLE_PILLBUG.get(), pX, pY, pZ, pLevel);
     }
     private static final EntityDataAccessor<Integer> BOUNCES = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.INT);
+
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();

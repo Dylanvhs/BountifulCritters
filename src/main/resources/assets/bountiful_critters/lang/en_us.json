@@ -100,6 +100,7 @@
   "entity.bountiful_critters.gecko" : "Gecko",
   "entity.bountiful_critters.pillbug_projectile" : "Pill Bug",
   "entity.bountiful_critters.emu_egg_projectile" : "Emu Egg",
+  "entity.bountiful_critters.sticky_arrow_projectile" : "Sticky Arrow",
 
 
   "advancements.husbandry.collect_stingray.title" : "Is That A Swimming Pancake?",

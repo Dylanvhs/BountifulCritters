@@ -9,13 +9,14 @@ import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class ModItemArrow extends ArrowItem {
     public ModItemArrow(Item.Properties group) {
         super(group);
     }
 
-    public AbstractArrow createArrow(Level worldIn, ItemStack stack, LivingEntity shooter) {
+    public @NotNull AbstractArrow createArrow(@NotNull Level worldIn, @NotNull ItemStack stack, @NotNull LivingEntity shooter) {
         if(this == ModItems.STICKY_ARROW.get()){
             Arrow arrowentity = new StickyArrowEntity(worldIn, shooter);
             arrowentity.setEffectsFromItem(stack);

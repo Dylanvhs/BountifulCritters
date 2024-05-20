@@ -4,14 +4,15 @@ import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.custom.EmuEggEntity;
-import net.dylanvhs.bountiful_critters.entity.custom.PillbugProjectileEntity;
 import net.dylanvhs.bountiful_critters.entity.custom.StickyArrowEntity;
 import net.dylanvhs.bountiful_critters.item.custom.*;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockSource;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
@@ -22,6 +23,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
@@ -126,7 +128,7 @@ public class ModItems {
 
     public static void initDispenser() {
         DispenserBlock.registerBehavior(STICKY_ARROW.get(), new AbstractProjectileDispenseBehavior() {
-            protected Projectile getProjectile(Level worldIn, Position position, ItemStack stackIn) {
+            protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
                 StickyArrowEntity entityarrow = new StickyArrowEntity(ModEntities.STICKY_ARROW.get(), position.x(), position.y(), position.z(), worldIn);
                 entityarrow.pickup = StickyArrowEntity.Pickup.ALLOWED;
                 return entityarrow;
@@ -134,19 +136,69 @@ public class ModItems {
         });
 
         DispenserBlock.registerBehavior(EMU_EGG.get(), new AbstractProjectileDispenseBehavior() {
-            protected Projectile getProjectile(Level worldIn, Position position, ItemStack stackIn) {
-                EmuEggEntity entityarrow = new EmuEggEntity(worldIn, position.x(), position.y(), position.z());
-                return entityarrow;
+            protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
+                return new EmuEggEntity(worldIn, position.x(), position.y(), position.z());
             }
         });
 
-        DispenserBlock.registerBehavior(PILLBUG_THROWABLE.get(), new AbstractProjectileDispenseBehavior() {
-            protected Projectile getProjectile(Level worldIn, Position position, ItemStack stackIn) {
-                PillbugProjectileEntity entityarrow = new PillbugProjectileEntity(worldIn, position.x(), position.y(), position.z());
-                return entityarrow;
+        DispenseItemBehavior bucketDispenseBehavior = new DefaultDispenseItemBehavior() {
+            private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();
+
+            public @NotNull ItemStack execute(BlockSource blockSource, ItemStack stack) {
+                DispensibleContainerItem dispensiblecontaineritem = (DispensibleContainerItem)stack.getItem();
+                BlockPos blockpos = blockSource.getPos().relative(blockSource.getBlockState().getValue(DispenserBlock.FACING));
+                Level level = blockSource.getLevel();
+                if (dispensiblecontaineritem.emptyContents(null, level, blockpos, null)) {
+                    dispensiblecontaineritem.checkExtraContent(null, level, stack, blockpos);
+                    return new ItemStack(Items.BUCKET);
+                } else {
+                    return this.defaultDispenseItemBehavior.dispense(blockSource, stack);
+                }
             }
-        });
+        };
+
+        DispenseItemBehavior potDispenseBehavior = new DefaultDispenseItemBehavior() {
+            private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();
+
+            public @NotNull ItemStack execute(BlockSource blockSource, ItemStack stack) {
+                DispensibleContainerItem dispensiblecontaineritem = (DispensibleContainerItem)stack.getItem();
+                BlockPos blockpos = blockSource.getPos().relative(blockSource.getBlockState().getValue(DispenserBlock.FACING));
+                Level level = blockSource.getLevel();
+                if (dispensiblecontaineritem.emptyContents(null, level, blockpos, null)) {
+                    dispensiblecontaineritem.checkExtraContent(null, level, stack, blockpos);
+                    return new ItemStack(Items.FLOWER_POT);
+                } else {
+                    return this.defaultDispenseItemBehavior.dispense(blockSource, stack);
+                }
+            }
+        };
+
+        DispenseItemBehavior bagDispenseBehavior = new DefaultDispenseItemBehavior() {
+            private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();
+
+            public @NotNull ItemStack execute(BlockSource blockSource, ItemStack stack) {
+                DispensibleContainerItem dispensiblecontaineritem = (DispensibleContainerItem)stack.getItem();
+                BlockPos blockpos = blockSource.getPos().relative(blockSource.getBlockState().getValue(DispenserBlock.FACING));
+                Level level = blockSource.getLevel();
+                if (dispensiblecontaineritem.emptyContents(null, level, blockpos, null)) {
+                    dispensiblecontaineritem.checkExtraContent(null, level, stack, blockpos);
+                    return new ItemStack(ModItems.REPTILE_BAG.get());
+                } else {
+                    return this.defaultDispenseItemBehavior.dispense(blockSource, stack);
+                }
+            }
+        };
+        DispenserBlock.registerBehavior(STINGRAY_BUCKET.get(), bucketDispenseBehavior);
+        DispenserBlock.registerBehavior(SUNFISH_BUCKET.get(), bucketDispenseBehavior);
+        DispenserBlock.registerBehavior(KRILL_BUCKET.get(), bucketDispenseBehavior);
+        DispenserBlock.registerBehavior(MARINE_IGUANA_BUCKET.get(), bucketDispenseBehavior);
+
+        DispenserBlock.registerBehavior(POTTED_PILLBUG.get(), potDispenseBehavior);
+
+        DispenserBlock.registerBehavior(BAGGED_BLUNT_HEADED_TREE_SNAKE.get(), bagDispenseBehavior);
+        DispenserBlock.registerBehavior(BAGGED_GECKO.get(), bagDispenseBehavior);
     }
+
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

@@ -232,7 +232,7 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bag
     }
 
     protected float getSoundVolume() {
-        return 0.2F;
+        return 0.1F;
     }
 
     public boolean canBeLeashed(Player pPlayer) {

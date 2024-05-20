@@ -217,6 +217,10 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
         return ModSounds.GECKO_AMBIENT.get();
     }
 
+    protected float getSoundVolume() {
+        return 0.45F;
+    }
+
     protected void checkFallDamage(double pY, boolean pOnGround, BlockState pState, BlockPos pPos) {
     }
 

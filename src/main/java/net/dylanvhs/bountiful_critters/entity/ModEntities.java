@@ -83,17 +83,20 @@ public class ModEntities {
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "gecko").toString()));
 
 
+
     public static final RegistryObject<EntityType<EmuEggEntity>> EMU_EGG =
                     ENTITY_TYPES.register("emu_egg_projectile", () -> EntityType.Builder.<EmuEggEntity>of(EmuEggEntity::new, MobCategory.MISC)
                             .sized(0.5f, 0.5f).build("emu_egg_projectile"));
 
     public static final RegistryObject<EntityType<StickyArrowEntity>> STICKY_ARROW =
-            ENTITY_TYPES.register("sticky_arrow", () -> EntityType.Builder.<StickyArrowEntity>of(StickyArrowEntity::new, MobCategory.MISC)
-                    .sized(0.5f, 0.5f).build("sticky_arrow"));
+            ENTITY_TYPES.register("sticky_arrow_projectile", () -> EntityType.Builder.<StickyArrowEntity>of(StickyArrowEntity::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f).setCustomClientFactory(StickyArrowEntity::new).build("sticky_arrow_projectile"));
 
     public static final RegistryObject<EntityType<PillbugProjectileEntity>> THROWABLE_PILLBUG =
             ENTITY_TYPES.register("pillbug_projectile", () -> EntityType.Builder.<PillbugProjectileEntity>of(PillbugProjectileEntity::new, MobCategory.MISC)
                     .sized(0.5f, 0.5f).build("pillbug_projectile"));
+
+
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
