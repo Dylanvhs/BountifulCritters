@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Mod(BountifulCritters.MOD_ID)
 public class BountifulCritters
@@ -52,7 +53,6 @@ public class BountifulCritters
 
 
         modEventBus.addListener(this::commonSetup);
-
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
