@@ -383,12 +383,14 @@ public class PillbugEntity extends Animal implements GeoEntity {
             return PlayState.CONTINUE;
         } else if (this.isClimbing() && !geoAnimatableAnimationState.isMoving()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.pillbug.climb_idle", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(1.4F);
             return PlayState.CONTINUE;
         } else if (geoAnimatableAnimationState.isMoving()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.pillbug.walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.pillbug.idle", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(1.4F);
             return PlayState.CONTINUE;
     }
 

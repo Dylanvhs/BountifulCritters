@@ -3,10 +3,12 @@ package net.dylanvhs.bountiful_critters.entity.custom;
 import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.ModItems;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -16,8 +18,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
@@ -49,13 +53,13 @@ public class StickyArrowEntity extends Arrow {
     protected void onHitEntity(@NotNull EntityHitResult pResult) {
         super.onHitEntity(pResult);
         Entity entity = pResult.getEntity();
-        pResult.getEntity().makeStuckInBlock(getBlockStateOn(), new Vec3(0.1D, 0.1D, 0.1D));
-        pResult.getEntity().setDeltaMovement( new Vec3(0.1D, 0.1D, 0.1D));
+        Player shooter = (Player) this.getOwner();
+        Level world = level();
         BlockState blockstate = ModBlocks.SEAGRASS_BALL_PLACED.get().defaultBlockState();
         if ((entity instanceof LivingEntity && !this.level().isClientSide())) {
             ((LivingEntity) entity).addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 180, 5));
             ((LivingEntity) entity).addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 180, 5));
-            ((LivingEntity) entity).level().setBlock(getOnPos().below(), blockstate, 2);
+            ((LivingEntity) entity).level().setBlock(getBlockPosBelowThatAffectsMyMovement(), blockstate, 2);
         }
         if (this.level().isClientSide) {
         Vec3 vec3 = this.getViewVector(0.0F);
