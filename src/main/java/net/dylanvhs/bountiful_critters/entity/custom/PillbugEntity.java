@@ -2,6 +2,7 @@ package net.dylanvhs.bountiful_critters.entity.custom;
 
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.ModItems;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.level.Level;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -279,6 +280,11 @@ public class PillbugEntity extends Animal implements GeoEntity {
         setRollUp(false);
         super.die(pCause);
     }
+
+    public boolean isInvulnerableTo(DamageSource source) {
+        return source.is(DamageTypes.IN_WALL) || super.isInvulnerableTo(source);
+    }
+
 
     @Override
     public void tick() {

@@ -166,7 +166,7 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     }
 
 
-        @Override
+    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(VARIANT, 0);
