@@ -17,6 +17,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -30,6 +31,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
@@ -62,6 +64,8 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
     private static final EntityDataAccessor<Boolean> IS_WARNING = SynchedEntityData.defineId(GeckoEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(GeckoEntity.class, EntityDataSerializers.INT);
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(ModItems.RAW_PILLBUG.get());
+    private boolean canBePushed = true;
+
     public GeckoEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
@@ -83,6 +87,24 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
             gecko.setPersistenceRequired();
         }
         return gecko;
+    }
+
+    @Override
+    public boolean isPushable() {
+        if (this.isWarning()) {
+            return this.canBePushed = false;
+        } else return this.canBePushed = true;
+    }
+
+    public boolean hurt(DamageSource pSource, float pAmount) {
+        if (this.isInvulnerableTo(pSource)) {
+            return false;
+        } else {
+            if (!this.level().isClientSide) {
+                this.setWarning(false);
+            }
+            return super.hurt(pSource, pAmount);
+        }
     }
 
     protected PathNavigation createNavigation(Level pLevel) {
@@ -218,7 +240,7 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
     }
 
     protected float getSoundVolume() {
-        return 0.45F;
+        return 0.40F;
     }
 
     protected void checkFallDamage(double pY, boolean pOnGround, BlockState pState, BlockPos pPos) {
@@ -261,9 +283,9 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
             this.setClimbing(this.horizontalCollision);
         }
 
-        if (this.isWarning() && this.random.nextFloat() < 0.01F) {
+        if (this.isWarning() && this.random.nextFloat() < 0.04F) {
             for(int i = 0; i < this.random.nextInt(2) + 1; ++i) {
-                playSound(ModSounds.GECKO_AMBIENT.get(),0.5F,1 );
+                playSound(SoundEvents.GOAT_SCREAMING_AMBIENT,0.5F,1 );
             }
         }
 
