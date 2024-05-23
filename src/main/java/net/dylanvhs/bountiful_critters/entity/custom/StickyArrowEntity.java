@@ -1,5 +1,6 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
+import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.ModItems;
@@ -20,6 +21,7 @@ import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.MultifaceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -55,11 +57,19 @@ public class StickyArrowEntity extends Arrow {
         Entity entity = pResult.getEntity();
         Player shooter = (Player) this.getOwner();
         Level world = level();
+
+        // That's supposed to work but no idea why it doesn't
         BlockState blockstate = ModBlocks.SEAGRASS_BALL_PLACED.get().defaultBlockState();
+        for (Direction dir : Direction.values()) {
+            boolean canAttach = MultifaceBlock.canAttachTo(world, dir, entity.blockPosition(), blockstate);
+            blockstate = blockstate.setValue(MultifaceBlock.getFaceProperty(dir), canAttach);
+            BountifulCritters.LOGGER.info(dir + " " + canAttach);
+        }
+
         if ((entity instanceof LivingEntity && !this.level().isClientSide())) {
             ((LivingEntity) entity).addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 180, 5));
             ((LivingEntity) entity).addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 180, 5));
-            ((LivingEntity) entity).level().setBlock(getBlockPosBelowThatAffectsMyMovement(), blockstate, 2);
+            ((LivingEntity) entity).level().setBlock(entity.blockPosition(), blockstate, 2);
         }
         if (this.level().isClientSide) {
         Vec3 vec3 = this.getViewVector(0.0F);
