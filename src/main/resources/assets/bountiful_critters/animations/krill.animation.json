@@ -3,129 +3,49 @@
 	"animations": {
 		"animation.krill.idle": {
 			"loop": true,
-			"animation_length": 0.5,
+			"animation_length": 0.8333,
 			"bones": {
 				"Krill": {
 					"rotation": {
-						"0.0": {
-							"vector": [7.5, 0, 0]
-						},
-						"0.25": {
-							"vector": [-2.5, 0, 0],
-							"easing": "easeInOutSine"
-						},
-						"0.5": {
-							"vector": [7.5, 0, 0],
-							"easing": "easeInOutSine"
-						}
+						"vector": ["2+Math.cos(query.anim_time*420)*4", 0, 0]
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 1.5, -2]
-						},
-						"0.25": {
-							"vector": [0, 0, -1],
-							"easing": "easeInOutSine"
-						},
-						"0.5": {
-							"vector": [0, 1.5, -2],
-							"easing": "easeInOutSine"
-						}
+						"vector": [0, "Math.cos(query.anim_time*420)*-0.75", "Math.cos(query.anim_time*420)*-0.25"]
 					}
 				},
 				"antennae": {
 					"rotation": {
-						"0.0": {
-							"vector": [15, 0, 0]
-						},
-						"0.25": {
-							"vector": [-5, 0, 0],
-							"easing": "easeInOutSine"
-						},
-						"0.5": {
-							"vector": [15, 0, 0],
-							"easing": "easeInOutSine"
-						}
+						"vector": ["Math.cos(40+query.anim_time*420)*-8", 0, 0]
 					}
 				},
 				"antennae2": {
 					"rotation": {
-						"0.0": {
-							"vector": [10, 0, 0]
-						},
-						"0.25": {
-							"vector": [-12.5, 0, 0],
-							"easing": "easeInOutSine"
-						},
-						"0.5": {
-							"vector": [10, 0, 0],
-							"easing": "easeInOutSine"
-						}
+						"vector": ["Math.cos(80+query.anim_time*420)*8", 0, 0]
 					}
 				},
 				"tail": {
 					"rotation": {
-						"0.0": {
-							"vector": [-7.5, 0, 0]
-						},
-						"0.25": {
-							"vector": [2.5, 0, 0],
-							"easing": "easeInSine"
-						},
-						"0.5": {
-							"vector": [-7.5, 0, 0],
-							"easing": "easeInSine"
-						}
+						"vector": ["Math.cos(40+query.anim_time*420)*6", 0, 0]
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.25": {
-							"vector": [0, -0.25, 0],
-							"easing": "easeInOutSine"
-						},
-						"0.5": {
-							"vector": [0, 0, 0],
-							"easing": "easeInOutSine"
-						}
+						"vector": [0, "Math.cos(40+query.anim_time*420)*0.25", 0]
 					}
 				},
 				"rleg": {
 					"rotation": {
-						"0.0": {
-							"vector": [-17.5, 0, 0]
-						},
-						"0.25": {
-							"vector": [2.5, 0, 0],
-							"easing": "easeInOutSine"
-						},
-						"0.5": {
-							"vector": [-17.5, 0, 0],
-							"easing": "easeInOutSine"
-						}
+						"vector": ["-6+Math.cos(40+query.anim_time*420)*-8", 0, 0]
 					}
 				},
 				"lleg": {
 					"rotation": {
-						"0.0": {
-							"vector": [-17.5, 0, 0]
-						},
-						"0.25": {
-							"vector": [2.5, 0, 0],
-							"easing": "easeInOutSine"
-						},
-						"0.5": {
-							"vector": [-17.5, 0, 0],
-							"easing": "easeInOutSine"
-						}
+						"vector": ["-6+Math.cos(40+query.anim_time*420)*-8", 0, 0]
 					}
 				}
 			}
 		},
 		"animation.krill.flop": {
 			"loop": true,
-			"animation_length": 0.70833,
+			"animation_length": 0.7083,
 			"bones": {
 				"piranha": {
 					"position": {
