@@ -231,6 +231,10 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Bag
         return ModSounds.SNAKE_HISS.get();
     }
 
+    protected void playStepSound(BlockPos p_28301_, BlockState p_28302_) {
+        this.playSound(SoundEvents.COW_STEP, 0.0F, 1.0F);
+    }
+
     protected float getSoundVolume() {
         return 0.1F;
     }
