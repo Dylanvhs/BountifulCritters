@@ -1,7 +1,7 @@
 {
 	"ambientocclusion": false,
 	"render_type": "cutout",
-	"parent": "bountiful_critters:block/template_layer_block",
+	"parent": "bountiful_critters:block/layer_block",
 	"textures": {
 		"all": "bountiful_critters:block/seagrass_ball_placed"
 	}
