@@ -23,7 +23,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
-import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -276,7 +275,7 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack heldItem = player.getItemInHand(hand);
 
-        if (heldItem.getItem() == Items.SAND || heldItem.getItem() == Items.RED_SAND || heldItem.getItem() == Items.GRAVEL && this.isAlive() && !isBaby() && this.filterCooldown == 0) {
+        if (heldItem.getItem() == Items.SAND  && this.isAlive() && !isBaby() && this.filterCooldown == 0 || heldItem.getItem() == Items.RED_SAND  && this.isAlive() && !isBaby() && this.filterCooldown == 0 || heldItem.getItem() == Items.GRAVEL  && this.isAlive() && !isBaby() && this.filterCooldown == 0) {
             playSound(SoundEvents.DOLPHIN_EAT, 1.0F, 1.0F);
             heldItem.shrink(1);
             this.filterCooldown = 1000;

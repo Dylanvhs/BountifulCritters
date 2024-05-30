@@ -15,6 +15,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.player.Player;
@@ -99,6 +100,7 @@ public class EmuEntity extends Animal implements GeoAnimatable {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.panicGoal = new PanicGoal(this, 1.3D);
         this.goalSelector.addGoal(0, this.panicGoal);
+        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, TEMPTATION_ITEM, false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
