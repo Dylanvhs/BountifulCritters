@@ -11,9 +11,18 @@ import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.model.data.EntityModelData;
 
 public class EmuModel extends GeoModel<EmuEntity> {
+
+    private static final ResourceLocation ADULT_MODEL = new ResourceLocation(BountifulCritters.MOD_ID, "geo/emu.geo.json");
+    private static final ResourceLocation BABY_MODEL = new ResourceLocation(BountifulCritters.MOD_ID, "geo/baby_emu.geo.json");
+
+    private static final ResourceLocation ADULT_ANIMATION = new ResourceLocation(BountifulCritters.MOD_ID, "animations/emu.animation.json");
+    private static final ResourceLocation BABY_ANIMATION = new ResourceLocation(BountifulCritters.MOD_ID, "animations/baby_emu.animation.json");
+
     @Override
     public ResourceLocation getModelResource(EmuEntity animatable) {
-        return new ResourceLocation(BountifulCritters.MOD_ID, "geo/emu.geo.json");
+        if (animatable.isBaby()) {
+            return BABY_MODEL;
+        } else return ADULT_MODEL;
     }
 
     @Override
@@ -23,7 +32,9 @@ public class EmuModel extends GeoModel<EmuEntity> {
 
     @Override
     public ResourceLocation getAnimationResource(EmuEntity animatable) {
-        return new ResourceLocation(BountifulCritters.MOD_ID, "animations/emu.animation.json");
+        if (animatable.isBaby()) {
+            return BABY_ANIMATION;
+        } else return ADULT_ANIMATION;
     }
 
     @Override
@@ -32,25 +43,6 @@ public class EmuModel extends GeoModel<EmuEntity> {
         if (animationState == null) return;
         EntityModelData extraDataOfType = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
         CoreGeoBone head = this.getAnimationProcessor().getBone("head");
-        CoreGeoBone root = this.getAnimationProcessor().getBone("Emu");
-        if (animatable.isBaby()) {
-            root.setScaleX(0.5F);
-            root.setScaleY(0.5F);
-            root.setScaleZ(0.5F);
-
-            head.setScaleX(1.75F);
-            head.setScaleY(1.75F);
-            head.setScaleZ(1.75F);
-
-        } else {
-            root.setScaleX(1.0F);
-            root.setScaleY(1.0F);
-            root.setScaleZ(1.0F);
-
-            head.setScaleX(1.0F);
-            head.setScaleY(1.0F);
-            head.setScaleZ(1.0F);
-        }
         if (!animatable.isSprinting()) {
 
             head.setRotY(extraDataOfType.netHeadYaw() * ((float)Math.PI / 180F));

@@ -41,9 +41,6 @@ public class HumpbackWhaleModel extends GeoModel<HumpbackWhaleEntity> {
             root.setScaleZ(1.5F);
         }
     }
-
-
-
 }
 
 
