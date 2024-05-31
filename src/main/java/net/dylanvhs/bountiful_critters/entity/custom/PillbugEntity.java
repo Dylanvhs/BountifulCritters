@@ -134,9 +134,8 @@ public class PillbugEntity extends Animal implements GeoEntity {
         if (this.isInvulnerableTo(pSource)) {
             return false;
         } else {
-            if (!this.level().isClientSide) {
-                this.setRollUp(false);
-            }
+            this.setRollUp(false);
+
             return super.hurt(pSource, pAmount);
         }
     }

@@ -3,6 +3,8 @@ package net.dylanvhs.bountiful_critters.block.custom;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -94,6 +96,7 @@ public class RoastedPillbugBlock extends Block {
             pPlayer.getFoodData().eat(2, 0.1F);
             int i = pState.getValue(BITES);
             pLevel.gameEvent(pPlayer, GameEvent.EAT, pPos);
+            pLevel.playSound(pPlayer, pPos, SoundEvents.GENERIC_EAT, SoundSource.NEUTRAL);
             if (i < 3) {
                 pLevel.setBlock(pPos, pState.setValue(BITES, Integer.valueOf(i + 1)), 3);
             } else {
