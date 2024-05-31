@@ -375,7 +375,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
 
-        if (this.isRolledUp()) {
+        if (this.isRolledUp() && this.onGround()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.pillbug.rolled_up", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else if (this.isClimbing() && geoAnimatableAnimationState.isMoving()) {
