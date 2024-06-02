@@ -1,0 +1,13 @@
+{
+  "type" :"forge:add_spawns",
+  "biomes" : [
+    "minecraft:savanna",
+    "minecraft:savanna_plateau"
+  ],
+  "spawners" : {
+    "type" : "bountiful_critters:lion",
+    "weight" : 1,
+    "minCount" : 1,
+    "maxCount" : 3
+  }
+}

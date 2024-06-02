@@ -70,7 +70,7 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
     private static final float START_HEALTH = 25.0F;
     private static final float TAME_HEALTH = 35.0F;
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
-    private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData.defineId(Wolf.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData.defineId(LonghornEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> CHARGE_COOLDOWN_TICKS = SynchedEntityData.defineId(LonghornEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> HAS_TARGET = SynchedEntityData.defineId(LonghornEntity.class, EntityDataSerializers.BOOLEAN);
     public LonghornEntity(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
@@ -102,7 +102,6 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
                 longhorn.setTame(true);
             }
         }
-
         return longhorn;
     }
 

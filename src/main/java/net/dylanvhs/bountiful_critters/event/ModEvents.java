@@ -38,6 +38,7 @@ public final class ModEvents {
         e.register(ModEntities.PILLBUG.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PillbugEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
         e.register(ModEntities.BLUNT_HEADED_TREE_SNAKE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BluntHeadedTreeSnakeEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
         e.register(ModEntities.GECKO.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, GeckoEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
+        e.register(ModEntities.LION.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, LionEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
     }
 
     @SubscribeEvent
@@ -53,6 +54,7 @@ public final class ModEvents {
         event.put(ModEntities.PILLBUG.get(), PillbugEntity.setAttributes());
         event.put(ModEntities.BLUNT_HEADED_TREE_SNAKE.get(), BluntHeadedTreeSnakeEntity.setAttributes());
         event.put(ModEntities.GECKO.get(), GeckoEntity.setAttributes());
+        event.put(ModEntities.LION.get(), LionEntity.setAttributes());
 
     }
 

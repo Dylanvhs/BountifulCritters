@@ -1,4 +1,4 @@
-// 1.20.1	2024-05-20T12:36:59.5833586	Item Models: bountiful_critters
+// 1.20.1	2024-06-02T17:17:00.1891717	Item Models: bountiful_critters
 f660cd040dc4b8b28afb8cf842c04747ec176c26 assets/bountiful_critters/models/item/bagged_blunt_headed_tree_snake.json
 3372fd7eb8d4e459b4596aa68bb1ddc5d070e193 assets/bountiful_critters/models/item/bagged_gecko.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/blunt_headed_tree_snake_spawn_egg.json
@@ -12,6 +12,7 @@ c932650040726c1b26c1a26dd846d1c1d05c14d0 assets/bountiful_critters/models/item/b
 44f9d9811e2e0f56cc107a4ba49d0014e24016d2 assets/bountiful_critters/models/item/krill_bucket.json
 8b47a25aa81284afc3497f9bb6a5172ec4afbf3d assets/bountiful_critters/models/item/krill_cocktail.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/krill_spawn_egg.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/lion_spawn_egg.json
 a24c9d6747f3af8e67fc3c07aa31c82d2d91dea6 assets/bountiful_critters/models/item/longhorn_horn.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/longhorn_spawn_egg.json
 74f89972a1a18d4eca100eaf93e0cbc3f17b435a assets/bountiful_critters/models/item/marine_iguana_bucket.json

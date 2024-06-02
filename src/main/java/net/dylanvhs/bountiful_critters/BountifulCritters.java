@@ -104,6 +104,9 @@ public class BountifulCritters
                     (ModEntities.GECKO.get(), GeckoRenderer:: new);
 
             EntityRenderers.register
+                    (ModEntities.LION.get(), LionRenderer:: new);
+
+            EntityRenderers.register
                     (ModEntities.STICKY_ARROW.get(), StickyArrowRenderer::new);
 
             EntityRenderers.register

@@ -50,6 +50,7 @@
   "item.bountiful_critters.pillbug_spawn_egg" : "Pill Bug Spawn Egg",
   "item.bountiful_critters.blunt_headed_tree_snake_spawn_egg" : "Fiddle String Snake Spawn Egg",
   "item.bountiful_critters.gecko_spawn_egg" : "Gecko Spawn Egg",
+  "item.bountiful_critters.lion_spawn_egg" : "Lion Spawn Egg",
 
 
   "block.bountiful_critters.roasted_pillbug_block": "Roasted Pill Bug",
@@ -98,6 +99,7 @@
   "entity.bountiful_critters.pillbug" : "Pill Bug",
   "entity.bountiful_critters.blunt_headed_tree_snake" : "Fiddle String Snake",
   "entity.bountiful_critters.gecko" : "Gecko",
+  "entity.bountiful_critters.lion" : "Lion",
   "entity.bountiful_critters.pillbug_projectile" : "Pill Bug",
   "entity.bountiful_critters.emu_egg_projectile" : "Emu Egg",
   "entity.bountiful_critters.sticky_arrow_projectile" : "Sticky Arrow",

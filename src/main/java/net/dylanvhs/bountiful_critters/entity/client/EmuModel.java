@@ -44,7 +44,6 @@ public class EmuModel extends GeoModel<EmuEntity> {
         EntityModelData extraDataOfType = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
         CoreGeoBone head = this.getAnimationProcessor().getBone("head");
         if (!animatable.isSprinting()) {
-
             head.setRotY(extraDataOfType.netHeadYaw() * ((float)Math.PI / 180F));
             head.setRotX(extraDataOfType.headPitch() * ((float)Math.PI / 180F));
         }

@@ -82,6 +82,12 @@ public class ModEntities {
                             .sized(0.8f, 0.7f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "gecko").toString()));
 
+    public static final RegistryObject<EntityType<LionEntity>> LION =
+            ENTITY_TYPES.register("lion",
+                    () -> EntityType.Builder.of(LionEntity::new, MobCategory.AMBIENT)
+                            .sized(1f, 2f)
+                            .build(new ResourceLocation(BountifulCritters.MOD_ID, "lion").toString()));
+
 
 
     public static final RegistryObject<EntityType<EmuEggEntity>> EMU_EGG =

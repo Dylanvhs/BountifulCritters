@@ -126,6 +126,9 @@ public class ModItems {
     public static final RegistryObject<Item> GECKO_SPAWN_EGG = ITEMS.register("gecko_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.GECKO, 0xdfb643, 0x5f5356, new Item.Properties()));
 
+    public static final RegistryObject<Item> LION_SPAWN_EGG = ITEMS.register("lion_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.LION, 0xfabb34, 0x996428, new Item.Properties()));
+
     public static void initDispenser() {
         DispenserBlock.registerBehavior(STICKY_ARROW.get(), new AbstractProjectileDispenseBehavior() {
             protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
