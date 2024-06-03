@@ -33,7 +33,6 @@ public class LionModel extends GeoModel<LionEntity> {
         CoreGeoBone root = this.getAnimationProcessor().getBone("Lion");
         CoreGeoBone head = this.getAnimationProcessor().getBone("head");
         CoreGeoBone mane = this.getAnimationProcessor().getBone("mane");
-        CoreGeoBone manearmor = this.getAnimationProcessor().getBone("manearmorlayer");
         if (animatable.isBaby()) {
             root.setScaleX(0.5F);
             root.setScaleY(0.5F);
@@ -58,23 +57,6 @@ public class LionModel extends GeoModel<LionEntity> {
             head.setScaleX(1.0F);
             head.setScaleY(1.0F);
             head.setScaleZ(1.0F);
-        }
-        if (animatable.isArmored() && !animatable.isBaby()) {
-            mane.setScaleX(0.0F);
-            mane.setScaleY(0.0F);
-            mane.setScaleZ(0.0F);
-
-            manearmor.setScaleX(1.0F);
-            manearmor.setScaleY(1.0F);
-            manearmor.setScaleZ(1.0F);
-        } else {
-            mane.setScaleX(1.0F);
-            mane.setScaleY(1.0F);
-            mane.setScaleZ(1.0F);
-
-            manearmor.setScaleX(0.0F);
-            manearmor.setScaleY(0.0F);
-            manearmor.setScaleZ(0.0F);
         }
 
         if (!animatable.isSprinting()) {

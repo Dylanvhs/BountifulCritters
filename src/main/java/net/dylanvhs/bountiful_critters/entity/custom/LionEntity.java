@@ -1,5 +1,6 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
+import com.google.common.collect.Sets;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.core.BlockPos;
@@ -26,6 +27,7 @@ import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -47,6 +49,7 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nullable;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -55,6 +58,13 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     private static final EntityDataAccessor<Boolean> IS_ARMORED = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final Set<Item> TAME_FOOD = Sets.newHashSet(
+            Items.BEEF,Items.COOKED_BEEF,
+            Items.PORKCHOP,Items.COOKED_PORKCHOP,
+            Items.MUTTON,Items.COOKED_MUTTON,
+            Items.CHICKEN,Items.COOKED_CHICKEN,
+            Items.RABBIT,Items.COOKED_RABBIT);
+
     public static final Ingredient TAME_ITEM = Ingredient.of(
             Items.BEEF,Items.COOKED_BEEF,
             Items.PORKCHOP,Items.COOKED_PORKCHOP,
@@ -254,7 +264,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
         if (this.level().isClientSide) {
-            boolean flag = this.isOwnedBy(pPlayer) || this.isTame() || itemstack.is(Items.BEEF) && !this.isTame();
+            boolean flag = this.isOwnedBy(pPlayer) || this.isTame() || TAME_FOOD.contains(itemstack.getItem()) && !this.isTame();
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
         } else if (this.isTame()) {
             if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
@@ -273,32 +283,33 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
                 return interactionresult;
             }
 
-        } else if (itemstack.is(Items.BEEF)) {
+        } else if (!this.isTame() && TAME_FOOD.contains(itemstack.getItem())) {
             if (!pPlayer.getAbilities().instabuild) {
                 itemstack.shrink(1);
             }
-            if (this.random.nextInt(3) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, pPlayer)) {
-                this.tame(pPlayer);
-                this.navigation.stop();
-                this.setTarget(null);
-                this.setOrderedToSit(true);
-                this.level().broadcastEntityEvent(this, (byte)7);
-            } else {
-                this.level().broadcastEntityEvent(this, (byte)6);
+            if (!this.isSilent()) {
+                this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.GENERIC_EAT, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
             }
 
-            return InteractionResult.SUCCESS;
-        } else if (isTame()) {
+            if (!this.level().isClientSide) {
+                if (this.random.nextInt(5) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, pPlayer)) {
+                    this.setTame(true);
+                    this.setTarget(null);
+                    this.level().broadcastEntityEvent(this, (byte) 7);
+                } else {
+                    this.level().broadcastEntityEvent(this, (byte) 6);
+                }
+            }
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
+        } else if (this.isTame()) {
             if (itemstack.getItem() == Items.DIAMOND_HORSE_ARMOR && !this.isArmored() && !this.isBaby()) {
                 this.usePlayerItem(pPlayer, pHand, itemstack);
                 playSound(SoundEvents.HORSE_ARMOR, 1.0F, 1.0F);
                 setArmored(true);
                 return InteractionResult.SUCCESS;
-            } else {
-                return super.mobInteract(pPlayer, pHand);
             }
         }
-        return InteractionResult.FAIL;
+        return InteractionResult.PASS;
     }
 
     public boolean isArmored() {
