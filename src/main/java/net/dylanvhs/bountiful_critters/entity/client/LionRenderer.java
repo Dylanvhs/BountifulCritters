@@ -12,10 +12,13 @@ public class LionRenderer extends GeoEntityRenderer<LionEntity> {
     public LionRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new LionModel());
     }
-
+    private static final ResourceLocation DEFAULT = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/lion/lion0.png");
+    private static final ResourceLocation ARMORED = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/lion/lion_armor.png");
     @Override
     public ResourceLocation getTextureLocation(LionEntity animatable) {
-        return new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/lion/lion0.png");
+        if (animatable.isArmored()) {
+            return ARMORED;
+        } else return DEFAULT;
     }
 
     @Override

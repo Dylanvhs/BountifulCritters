@@ -3,7 +3,12 @@ package net.dylanvhs.bountiful_critters.entity.custom;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -48,6 +53,8 @@ import java.util.UUID;
 public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+
+    private static final EntityDataAccessor<Boolean> IS_ARMORED = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
     public static final Ingredient TAME_ITEM = Ingredient.of(
             Items.BEEF,Items.COOKED_BEEF,
             Items.PORKCHOP,Items.COOKED_PORKCHOP,
@@ -67,7 +74,14 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
                 .add(Attributes.ATTACK_DAMAGE, 6.0D)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.25D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.0D)
+                .add(Attributes.ARMOR_TOUGHNESS, 0.0D)
                 .build();
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(IS_ARMORED, false);
     }
 
     protected void registerGoals() {
@@ -113,6 +127,18 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
             }
         }
         return lion;
+    }
+
+    protected void dropEquipment() {
+        super.dropEquipment();
+        if (this.isArmored()) {
+            if (!this.level().isClientSide) {
+                this.spawnAtLocation(Items.DIAMOND_HORSE_ARMOR);
+            }
+
+            this.setArmored(false);
+        }
+
     }
 
     public boolean isFood(ItemStack pStack) {
@@ -171,10 +197,16 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
     }
 
     public void aiStep() {
+        super.aiStep();
         if (this.isAlive()) {
             setSprinting(isAggressive());
+
+            if (this.isArmored()) {
+                this.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(10.0D);
+            } else {
+                this.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(0.0D);
+            }
         }
-        super.aiStep();
     }
 
     @Override
@@ -256,11 +288,26 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
             }
 
             return InteractionResult.SUCCESS;
-        } else {
-            return super.mobInteract(pPlayer, pHand);
+        } else if (isTame()) {
+            if (itemstack.getItem() == Items.DIAMOND_HORSE_ARMOR && !this.isArmored() && !this.isBaby()) {
+                this.usePlayerItem(pPlayer, pHand, itemstack);
+                playSound(SoundEvents.HORSE_ARMOR, 1.0F, 1.0F);
+                setArmored(true);
+                return InteractionResult.SUCCESS;
+            } else {
+                return super.mobInteract(pPlayer, pHand);
+            }
         }
+        return InteractionResult.FAIL;
     }
 
+    public boolean isArmored() {
+        return entityData.get(IS_ARMORED);
+    }
+
+    public void setArmored(boolean armored) {
+        entityData.set(IS_ARMORED, armored);
+    }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
