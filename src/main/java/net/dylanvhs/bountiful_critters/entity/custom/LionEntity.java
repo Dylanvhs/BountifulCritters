@@ -85,6 +85,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
                 .add(Attributes.ATTACK_KNOCKBACK, 0.25D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.0D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.0D)
+                .add(Attributes.ARMOR, 0.0D)
                 .build();
     }
 
@@ -112,7 +113,6 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Rabbit.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, EmuEntity.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, ToucanEntity.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, true));
         this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D) {
             @Override
             public boolean canUse() {
@@ -210,12 +210,8 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
         super.aiStep();
         if (this.isAlive()) {
             setSprinting(isAggressive());
-
-            if (this.isArmored()) {
-                this.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(10.0D);
-            } else {
-                this.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(0.0D);
-            }
+            this.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(this.isArmored() ? 0.0D : 10.0D);
+            this.getAttribute(Attributes.ARMOR).setBaseValue(this.isArmored() ? 0.0D : 10.0D);
         }
     }
 
@@ -276,12 +272,21 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
                 this.gameEvent(GameEvent.EAT, this);
                 return InteractionResult.SUCCESS;
             }
+
+            if (itemstack.getItem() == Items.DIAMOND_HORSE_ARMOR && !this.isArmored() && !this.isBaby()) {
+                this.usePlayerItem(pPlayer, pHand, itemstack);
+                playSound(SoundEvents.HORSE_ARMOR, 1.0F, 1.0F);
+                setArmored(true);
+                return InteractionResult.SUCCESS;
+            }  else setArmored(false);
+
             InteractionResult interactionresult = super.mobInteract(pPlayer, pHand);
             if ((!interactionresult.consumesAction() || this.isBaby()) && this.isOwnedBy(pPlayer)) {
                 return InteractionResult.SUCCESS;
             } else {
                 return interactionresult;
             }
+
 
         } else if (!this.isTame() && TAME_FOOD.contains(itemstack.getItem())) {
             if (!pPlayer.getAbilities().instabuild) {
@@ -301,13 +306,6 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
                 }
             }
             return InteractionResult.sidedSuccess(this.level().isClientSide);
-        } else if (this.isTame()) {
-            if (itemstack.getItem() == Items.DIAMOND_HORSE_ARMOR && !this.isArmored() && !this.isBaby()) {
-                this.usePlayerItem(pPlayer, pHand, itemstack);
-                playSound(SoundEvents.HORSE_ARMOR, 1.0F, 1.0F);
-                setArmored(true);
-                return InteractionResult.SUCCESS;
-            }
         }
         return InteractionResult.PASS;
     }
