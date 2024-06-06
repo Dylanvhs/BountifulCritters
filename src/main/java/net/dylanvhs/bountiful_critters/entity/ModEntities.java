@@ -88,6 +88,17 @@ public class ModEntities {
                             .sized(1f, 2f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "lion").toString()));
 
+    public static final RegistryObject<EntityType<BarreleyeEntity>> BARRELEYE =
+            ENTITY_TYPES.register("barreleye",
+                    () -> EntityType.Builder.of(BarreleyeEntity::new, MobCategory.WATER_AMBIENT)
+                            .sized(0.5f, 0.5f)
+                            .build(new ResourceLocation(BountifulCritters.MOD_ID, "barreleye").toString()));
+
+    public static final RegistryObject<EntityType<AngelfishEntity>> ANGELFISH =
+            ENTITY_TYPES.register("angelfish",
+                    () -> EntityType.Builder.of(AngelfishEntity::new, MobCategory.WATER_AMBIENT)
+                            .sized(0.5f, 0.5f)
+                            .build(new ResourceLocation(BountifulCritters.MOD_ID, "angelfish").toString()));
 
 
     public static final RegistryObject<EntityType<EmuEggEntity>> EMU_EGG =

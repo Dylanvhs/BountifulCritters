@@ -107,6 +107,12 @@ public class BountifulCritters
                     (ModEntities.LION.get(), LionRenderer:: new);
 
             EntityRenderers.register
+                    (ModEntities.BARRELEYE.get(), BarreleyeRenderer:: new);
+
+            EntityRenderers.register
+                    (ModEntities.ANGELFISH.get(), AngelfishRenderer:: new);
+
+            EntityRenderers.register
                     (ModEntities.STICKY_ARROW.get(), StickyArrowRenderer::new);
 
             EntityRenderers.register

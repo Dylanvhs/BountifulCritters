@@ -129,6 +129,12 @@ public class ModItems {
     public static final RegistryObject<Item> LION_SPAWN_EGG = ITEMS.register("lion_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.LION, 0xfabb34, 0x996428, new Item.Properties()));
 
+    public static final RegistryObject<Item> BARRELEYE_SPAWN_EGG = ITEMS.register("barreleye_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.BARRELEYE, 0x1d2d26, 0x3d4f50, new Item.Properties()));
+
+    public static final RegistryObject<Item> ANGELFISH_SPAWN_EGG = ITEMS.register("angelfish_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.ANGELFISH, 0x9b8b54, 0x322a1b, new Item.Properties()));
+
     public static void initDispenser() {
         DispenserBlock.registerBehavior(STICKY_ARROW.get(), new AbstractProjectileDispenseBehavior() {
             protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {

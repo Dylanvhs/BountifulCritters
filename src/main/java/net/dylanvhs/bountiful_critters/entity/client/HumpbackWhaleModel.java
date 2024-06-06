@@ -40,7 +40,7 @@ public class HumpbackWhaleModel extends GeoModel<HumpbackWhaleEntity> {
             root.setScaleY(1.5F);
             root.setScaleZ(1.5F);
         }
-        if (animatable.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D) {
+        if (animatable.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D && animatable.isInWater()) {
             root.setRotY(extraDataOfType.netHeadYaw() * ((float)Math.PI / 180F));
             root.setRotX(extraDataOfType.headPitch() * ((float)Math.PI / 180F));
         }

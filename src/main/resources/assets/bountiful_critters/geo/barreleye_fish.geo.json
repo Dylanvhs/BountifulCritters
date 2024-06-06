@@ -1,0 +1,80 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.barreleye_fish",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 4, 0]
+				},
+				{
+					"name": "l_fin",
+					"parent": "root",
+					"pivot": [3, 2, 0],
+					"cubes": [
+						{"origin": [3, 1, 0], "size": [4, 3, 0], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "r_fin",
+					"parent": "root",
+					"pivot": [-3, 2, 0],
+					"cubes": [
+						{"origin": [-7, 1, 0], "size": [4, 3, 0], "uv": [0, 0], "mirror": true}
+					]
+				},
+				{
+					"name": "l_bottom_fin",
+					"parent": "root",
+					"pivot": [3, 0, -1],
+					"cubes": [
+						{"origin": [3, 0, -3], "size": [4, 0, 6], "pivot": [3, 0, -2], "rotation": [0, 0, 10], "uv": [15, 0]}
+					]
+				},
+				{
+					"name": "r_bottom_fin",
+					"parent": "root",
+					"pivot": [-3, 0, -1],
+					"cubes": [
+						{"origin": [-7, 0, -3], "size": [4, 0, 6], "pivot": [-3, 0, -2], "rotation": [0, 0, -10], "uv": [15, 0], "mirror": true}
+					]
+				},
+				{
+					"name": "body",
+					"parent": "root",
+					"pivot": [0, 3, 0],
+					"cubes": [
+						{"origin": [-3, 3, 0], "size": [6, 5, 4], "uv": [18, 17]},
+						{"origin": [-3, 0, -5], "size": [6, 3, 9], "uv": [0, 0]},
+						{"origin": [0, -3, 0], "size": [0, 14, 3], "uv": [0, 18]}
+					]
+				},
+				{
+					"name": "head",
+					"parent": "root",
+					"pivot": [0, 3, 0],
+					"cubes": [
+						{"origin": [-3.5, 3, -4], "size": [7, 5, 4], "uv": [0, 12]},
+						{"origin": [-2.5, 3, -3], "size": [5, 3, 2], "uv": [22, 12]}
+					]
+				},
+				{
+					"name": "tail",
+					"parent": "root",
+					"pivot": [0, 6, 4],
+					"cubes": [
+						{"origin": [0, 3, 4], "size": [0, 6, 4], "uv": [39, 15]}
+					]
+				}
+			]
+		}
+	]
+}

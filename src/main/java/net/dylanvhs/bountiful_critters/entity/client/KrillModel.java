@@ -31,7 +31,7 @@ public class KrillModel extends GeoModel<KrillEntity> {
         if (animationState == null) return;
         EntityModelData extraDataOfType = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
         CoreGeoBone root = this.getAnimationProcessor().getBone("Krill");
-        if (animatable.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D) {
+        if (animatable.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D && animatable.isInWater()) {
             root.setRotY(extraDataOfType.netHeadYaw() * ((float)Math.PI / 180F));
             root.setRotX(extraDataOfType.headPitch() * ((float)Math.PI / 180F));
         }

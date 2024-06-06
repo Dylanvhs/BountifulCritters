@@ -1,7 +1,6 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
 import net.dylanvhs.bountiful_critters.item.ModItems;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -18,10 +17,15 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.FollowFlockLeaderGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
+import net.minecraft.world.entity.ai.goal.TryFindWaterGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
-import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+import net.minecraft.world.entity.animal.Bucketable;
+import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -38,12 +42,12 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
 
-public class KrillEntity extends AbstractSchoolingFish implements GeoEntity, Bucketable {
+public class AngelfishEntity extends AbstractSchoolingFish implements GeoEntity, Bucketable {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
-    private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(KrillEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(AngelfishEntity.class, EntityDataSerializers.BOOLEAN);
 
-    public KrillEntity(EntityType<? extends AbstractSchoolingFish> entityType, Level level) {
+    public AngelfishEntity(EntityType<? extends AbstractSchoolingFish> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
@@ -111,7 +115,7 @@ public class KrillEntity extends AbstractSchoolingFish implements GeoEntity, Buc
         this.entityData.set(FROM_BUCKET, p_203706_1_);
     }
 
-    public static <T extends Mob> boolean canSpawn(EntityType<KrillEntity> p_223364_0_, LevelAccessor p_223364_1_, MobSpawnType reason, BlockPos p_223364_3_, RandomSource p_223364_4_) {
+    public static <T extends Mob> boolean canSpawn(EntityType<AngelfishEntity> p_223364_0_, LevelAccessor p_223364_1_, MobSpawnType reason, BlockPos p_223364_3_, RandomSource p_223364_4_) {
         return WaterAnimal.checkSurfaceWaterAnimalSpawnRules(p_223364_0_, p_223364_1_, reason, p_223364_3_, p_223364_4_);
     }
 
@@ -129,7 +133,7 @@ public class KrillEntity extends AbstractSchoolingFish implements GeoEntity, Buc
 
     public static AttributeSupplier setAttributes() {
         return AbstractSchoolingFish.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 4D)
+                .add(Attributes.MAX_HEALTH, 5D)
                 .add(Attributes.MOVEMENT_SPEED, 0.8D)
                 .build();
     }
@@ -157,12 +161,6 @@ public class KrillEntity extends AbstractSchoolingFish implements GeoEntity, Buc
         } else {
             super.travel(pTravelVector);
         }
-
-    }
-
-    public boolean isName() {
-        String n = ChatFormatting.stripFormatting(this.getName().getString());
-        return n != null && (n.toLowerCase().contains("graus"));
     }
 
     protected SoundEvent getAmbientSound() {
@@ -191,23 +189,20 @@ public class KrillEntity extends AbstractSchoolingFish implements GeoEntity, Buc
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
         if (!(geoAnimatableAnimationState.getLimbSwingAmount() > -0.06F && geoAnimatableAnimationState.getLimbSwingAmount() < 0.06F) && this.isInWater()) {
-            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.krill.idle", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.angelfish.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         else if (!this.isInWater()) {
-            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.krill.flop", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.angelfish.flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         else
-            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.krill.idle", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.angelfish.swim", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
-
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
 }
-
-
