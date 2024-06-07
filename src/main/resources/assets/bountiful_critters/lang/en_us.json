@@ -5,6 +5,8 @@
   "item.bountiful_critters.stingray_bucket": "Bucket of Stingray",
   "item.bountiful_critters.sunfish_bucket": "Bucket of Sunfish",
   "item.bountiful_critters.krill_bucket": "Bucket of Krill",
+  "item.bountiful_critters.angelfish_bucket": "Bucket of Angelfish",
+  "item.bountiful_critters.barreleye_bucket": "Bucket of Barreleye",
   "item.bountiful_critters.marine_iguana_bucket": "Bucket of Marine Iguana",
 
 
@@ -17,6 +19,8 @@
   "item.bountiful_critters.sunfish_sushi": "Sunfish Sushi",
   "item.bountiful_critters.raw_krill": "Raw Krill",
   "item.bountiful_critters.fried_krill": "Fried Krill",
+  "item.bountiful_critters.raw_angelfish": "Raw Barreleye",
+  "item.bountiful_critters.raw_barreleye": "Raw Barreleye",
   "item.bountiful_critters.krill_cocktail": "Krill Cocktail",
   "item.bountiful_critters.emu_egg": "Emu Egg",
   "item.bountiful_critters.boiled_emu_egg": "Boiled Emu Egg",

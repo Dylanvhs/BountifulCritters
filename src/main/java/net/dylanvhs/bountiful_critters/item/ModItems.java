@@ -34,6 +34,10 @@ public class ModItems {
             () -> new ItemModFishBucket(ModEntities.SUNFISH, Fluids.WATER, new Item.Properties()));
     public static final RegistryObject<Item> KRILL_BUCKET = ITEMS.register("krill_bucket",
             () -> new ItemModFishBucket(ModEntities.KRILL, Fluids.WATER, new Item.Properties()));
+    public static final RegistryObject<Item> ANGELFISH_BUCKET = ITEMS.register("angelfish_bucket",
+            () -> new ItemModFishBucket(ModEntities.ANGELFISH, Fluids.WATER, new Item.Properties()));
+    public static final RegistryObject<Item> BARRELEYE_BUCKET = ITEMS.register("barreleye_bucket",
+            () -> new ItemModFishBucket(ModEntities.BARRELEYE, Fluids.WATER, new Item.Properties()));
     public static final RegistryObject<Item> MARINE_IGUANA_BUCKET = ITEMS.register("marine_iguana_bucket",
             () -> new ItemModFishBucket(ModEntities.MARINE_IGUANA, Fluids.WATER, new Item.Properties()));
     public static final RegistryObject<Item> POTTED_PILLBUG = ITEMS.register("potted_pillbug",
@@ -75,6 +79,12 @@ public class ModItems {
             ITEMS.register("cooked_sunfish_meat", () -> new Item(new Item.Properties().food(ModFoods.COOKED_SUNFISH_MEAT)));
     public static final RegistryObject<Item> SUNFISH_SUSHI =
             ITEMS.register("sunfish_sushi", () -> new Item(new Item.Properties().food(ModFoods.SUNFISH_SUSHI)));
+
+    public static final RegistryObject<Item> RAW_ANGELFISH =
+            ITEMS.register("raw_angelfish", () -> new Item(new Item.Properties().food(ModFoods.RAW_ANGELFISH)));
+
+    public static final RegistryObject<Item> RAW_BARRELEYE =
+            ITEMS.register("raw_barreleye", () -> new Item(new Item.Properties().food(ModFoods.RAW_BARRELEYE)));
 
     public static final RegistryObject<Item> EMU_EGG =
             ITEMS.register("emu_egg", () -> new EmuEggItem(new Item.Properties().stacksTo(16)));
@@ -200,6 +210,8 @@ public class ModItems {
         DispenserBlock.registerBehavior(STINGRAY_BUCKET.get(), bucketDispenseBehavior);
         DispenserBlock.registerBehavior(SUNFISH_BUCKET.get(), bucketDispenseBehavior);
         DispenserBlock.registerBehavior(KRILL_BUCKET.get(), bucketDispenseBehavior);
+        DispenserBlock.registerBehavior(ANGELFISH_BUCKET.get(), bucketDispenseBehavior);
+        DispenserBlock.registerBehavior(BARRELEYE_BUCKET.get(), bucketDispenseBehavior);
         DispenserBlock.registerBehavior(MARINE_IGUANA_BUCKET.get(), bucketDispenseBehavior);
 
         DispenserBlock.registerBehavior(POTTED_PILLBUG.get(), potDispenseBehavior);

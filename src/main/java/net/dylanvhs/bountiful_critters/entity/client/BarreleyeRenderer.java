@@ -16,7 +16,7 @@ import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
 public class BarreleyeRenderer extends GeoEntityRenderer<BarreleyeEntity> {
-    private static final ResourceLocation LAYER = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/barreleye_fish_layer.png");
+    private static final ResourceLocation LAYER = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/barreleye/barreleye_fish_layer.png");
 
     public BarreleyeRenderer(EntityRendererProvider.Context renderManagerIn) {
         super(renderManagerIn, new BarreleyeModel());
@@ -27,7 +27,7 @@ public class BarreleyeRenderer extends GeoEntityRenderer<BarreleyeEntity> {
     }
 
     public ResourceLocation getTextureLocation(BarreleyeEntity entity) {
-       return new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/barreleye_fish.png");
+       return new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/barreleye/barreleye_fish.png");
     }
 
     public static class BarreleyeTranslucentLayer extends GeoRenderLayer<BarreleyeEntity> {

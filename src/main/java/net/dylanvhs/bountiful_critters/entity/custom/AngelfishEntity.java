@@ -67,7 +67,7 @@ public class AngelfishEntity extends AbstractSchoolingFish implements GeoEntity,
     @Override
     @Nonnull
     public ItemStack getBucketItemStack() {
-        ItemStack stack = new ItemStack(ModItems.KRILL_BUCKET.get());
+        ItemStack stack = new ItemStack(ModItems.ANGELFISH_BUCKET.get());
         if (this.hasCustomName()) {
             stack.setHoverName(this.getCustomName());
         }

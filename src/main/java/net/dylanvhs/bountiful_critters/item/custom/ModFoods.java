@@ -34,6 +34,12 @@ public class ModFoods {
     public static final FoodProperties SALTED_KELP = new FoodProperties.Builder().nutrition(5)
             .saturationMod(0.5f).effect(() -> new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 600), 0.75f).build();
 
+    public static final FoodProperties RAW_ANGELFISH = new FoodProperties.Builder().nutrition(2)
+            .saturationMod(0.2f).build();
+
+    public static final FoodProperties RAW_BARRELEYE = new FoodProperties.Builder().nutrition(3)
+            .saturationMod(0.3f).effect(() -> new MobEffectInstance(MobEffects.NIGHT_VISION, 400), 0.25f).build();
+
     private static FoodProperties.Builder drink(int pNutrition) {
         return (new FoodProperties.Builder()).nutrition(pNutrition).saturationMod(0.5F);
     }

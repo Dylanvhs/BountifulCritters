@@ -23,6 +23,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.STINGRAY_BUCKET);
         simpleItem(ModItems.SUNFISH_BUCKET);
         simpleItem(ModItems.KRILL_BUCKET);
+        simpleItem(ModItems.ANGELFISH_BUCKET);
+        simpleItem(ModItems.BARRELEYE_BUCKET);
         simpleItem(ModItems.MARINE_IGUANA_BUCKET);
         simpleItem(ModItems.LONGHORN_HORN);
         simpleItem(ModItems.SALT);
@@ -35,6 +37,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.RAW_KRILL);
         simpleItem(ModItems.FRIED_KRILL);
         simpleItem(ModItems.KRILL_COCKTAIL);
+        simpleItem(ModItems.RAW_ANGELFISH);
+        simpleItem(ModItems.RAW_BARRELEYE);
         simpleItem(ModItems.EMU_EGG);
         simpleItem(ModItems.BOILED_EMU_EGG);
         simpleItem(ModItems.RAW_PILLBUG);

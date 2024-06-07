@@ -86,7 +86,7 @@ public class BarreleyeEntity extends AbstractFish implements GeoEntity, Bucketab
     @Override
     @Nonnull
     public ItemStack getBucketItemStack() {
-        ItemStack stack = new ItemStack(ModItems.KRILL_BUCKET.get());
+        ItemStack stack = new ItemStack(ModItems.BARRELEYE_BUCKET.get());
         if (this.hasCustomName()) {
             stack.setHoverName(this.getCustomName());
         }

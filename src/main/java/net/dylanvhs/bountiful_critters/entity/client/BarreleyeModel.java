@@ -17,7 +17,7 @@ public class BarreleyeModel extends GeoModel<BarreleyeEntity> {
 
     @Override
     public ResourceLocation getTextureResource(BarreleyeEntity animatable) {
-        return new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/barreleye_fish.png");
+        return new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/barreleye/barreleye_fish.png");
     }
 
     @Override
