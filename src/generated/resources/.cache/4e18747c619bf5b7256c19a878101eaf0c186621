@@ -1,7 +1,9 @@
-// 1.20.1	2024-06-06T11:33:52.4723691	Item Models: bountiful_critters
+// 1.20.1	2024-06-07T20:32:35.2866886	Item Models: bountiful_critters
+4b6c5e548ce57d7a0b9c19e1209f2e9a5a1b65c4 assets/bountiful_critters/models/item/angelfish_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/angelfish_spawn_egg.json
 f660cd040dc4b8b28afb8cf842c04747ec176c26 assets/bountiful_critters/models/item/bagged_blunt_headed_tree_snake.json
 3372fd7eb8d4e459b4596aa68bb1ddc5d070e193 assets/bountiful_critters/models/item/bagged_gecko.json
+43497d16ef95bd6dfbc3c5526ec02bb6d3a5c684 assets/bountiful_critters/models/item/barreleye_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/barreleye_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/blunt_headed_tree_snake_spawn_egg.json
 c932650040726c1b26c1a26dd846d1c1d05c14d0 assets/bountiful_critters/models/item/boiled_emu_egg.json
@@ -22,6 +24,8 @@ a24c9d6747f3af8e67fc3c07aa31c82d2d91dea6 assets/bountiful_critters/models/item/l
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/pillbug_spawn_egg.json
 e9570321174ff013cfd1784d4b181c3d1147cbb3 assets/bountiful_critters/models/item/poisonous_pillbug.json
 4bd0b165990c9e137b282cf5e978a0070d80cebb assets/bountiful_critters/models/item/potted_pillbug.json
+60dc8c0a563d74abbde3791062a0295513f4d8ac assets/bountiful_critters/models/item/raw_angelfish.json
+855d0c7ed15cae355be673d231c3679f03b059c5 assets/bountiful_critters/models/item/raw_barreleye.json
 1c4103d84b5b42b3cf3d760d5bcec2106a45e03b assets/bountiful_critters/models/item/raw_krill.json
 3a555b90c618b0bb631f8326714ab696d73c1906 assets/bountiful_critters/models/item/raw_pillbug.json
 db248d842ff5b16c6a81e518754d73f8b65ab49c assets/bountiful_critters/models/item/raw_sunfish_meat.json

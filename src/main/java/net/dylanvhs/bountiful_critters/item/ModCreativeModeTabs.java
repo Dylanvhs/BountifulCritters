@@ -24,6 +24,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.STINGRAY_BUCKET.get());
                         pOutput.accept(ModItems.SUNFISH_BUCKET.get());
                         pOutput.accept(ModItems.KRILL_BUCKET.get());
+                        pOutput.accept(ModItems.ANGELFISH_BUCKET.get());
+                        pOutput.accept(ModItems.BARRELEYE_BUCKET.get());
                         pOutput.accept(ModItems.MARINE_IGUANA_BUCKET.get());
                         pOutput.accept(ModItems.POTTED_PILLBUG.get());
                         pOutput.accept(ModItems.REPTILE_BAG.get());
@@ -66,8 +68,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.BLUNT_HEADED_TREE_SNAKE_SPAWN_EGG.get());
                         pOutput.accept(ModItems.GECKO_SPAWN_EGG.get());
                         pOutput.accept(ModItems.LION_SPAWN_EGG.get());
-                        pOutput.accept(ModItems.BARRELEYE_SPAWN_EGG.get());
                         pOutput.accept(ModItems.ANGELFISH_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.BARRELEYE_SPAWN_EGG.get());
 
 
 
