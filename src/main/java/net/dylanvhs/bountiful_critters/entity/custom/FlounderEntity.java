@@ -1,5 +1,6 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
+import net.dylanvhs.bountiful_critters.entity.ai.BottomSwim;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -65,16 +66,10 @@ public class FlounderEntity extends AbstractFish implements GeoEntity, Bucketabl
         this.goalSelector.addGoal(1, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
-        this.goalSelector.addGoal(12, new RandomSwimmingGoal(this, 1.0D, 10));
+        this.goalSelector.addGoal(12, new BottomSwim(this, 0.3D, 10));
         this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Animal.class, 8.0F, 1.3D, 1.3D));
         this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Monster.class, 8.0F, 1.3D, 1.3D));
         this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, WaterAnimal.class, 8.0F, 1.3D, 1.3D));
-        this.goalSelector.addGoal(12, new RandomStrollGoal(this, 0.8D, 15) {
-            @Override
-            public boolean canUse() {
-                return !this.mob.isInWater() && super.canUse();
-            }
-        });
     }
 
     @Override

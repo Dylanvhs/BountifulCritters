@@ -49,7 +49,7 @@
 						"vector": ["Math.cos(80+query.anim_time*500)*2", "Math.cos(-40+query.anim_time*500)*2", "-90+Math.cos(query.anim_time*500)*-10"]
 					},
 					"position": {
-						"vector": [0, "-11+Math.cos(query.anim_time*500)*0.35", 0]
+						"vector": [12, "Math.cos(query.anim_time*500)*0.35", 0]
 					}
 				},
 				"tail": {

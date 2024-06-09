@@ -1,0 +1,12 @@
+{
+  "type" :"forge:add_spawns",
+  "biomes" : [
+    "minecraft:jungle"
+  ],
+  "spawners" : {
+    "type" : "bountiful_critters:neon_tetra",
+    "weight" : 2,
+    "minCount" : 3,
+    "maxCount" : 5
+  }
+}

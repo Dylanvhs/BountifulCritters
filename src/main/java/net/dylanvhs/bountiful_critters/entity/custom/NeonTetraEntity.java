@@ -171,18 +171,19 @@ public class NeonTetraEntity extends AbstractSchoolingFish implements GeoEntity,
 
     public void tick() {
         super.tick();
-        if (!this.isNoAi() && this.level().isNight()) {
-            if (this.level().isClientSide && this.isInWater() && this.getDeltaMovement().lengthSqr() > 0.03D) {
+        if (this.isNoAi()) {
+
+        } else {
+            if (this.level().isClientSide && this.isInWater() && this.level().isNight()) {
                 Vec3 vec3 = this.getViewVector(0.0F);
-                float f = Mth.cos(this.getYRot() * ((float)Math.PI / 180F)) * 0.3F;
-                float f1 = Mth.sin(this.getYRot() * ((float)Math.PI / 180F)) * 0.3F;
+                float f = Mth.cos(this.getYRot() * ((float) Math.PI / 180F)) * 0.3F;
+                float f1 = Mth.sin(this.getYRot() * ((float) Math.PI / 180F)) * 0.3F;
                 float f2 = 1.2F - this.random.nextFloat() * 0.7F;
 
-                for(int i = 0; i < 2; ++i) {
-                    this.level().addParticle(ModParticles.NEON_SHINE.get(), this.getX() - vec3.x * (double)f2 + (double)f, this.getY() - vec3.y, this.getZ() - vec3.z * (double)f2 + (double)f1, 0.0D, 0.0D, 0.0D);
+                for (int i = 0; i < 2; ++i) {
+                    this.level().addParticle(ModParticles.NEON_SHINE.get(), this.getX() - vec3.x * (double) f2 + (double) f, this.getY() - vec3.y, this.getZ() - vec3.z * (double) f2 + (double) f1, 0.0D, 0.0D, 0.0D);
                 }
             }
-
         }
     }
 

@@ -26,6 +26,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.KRILL_BUCKET.get());
                         pOutput.accept(ModItems.ANGELFISH_BUCKET.get());
                         pOutput.accept(ModItems.BARRELEYE_BUCKET.get());
+                        pOutput.accept(ModItems.NEON_TETRA_BUCKET.get());
+                        pOutput.accept(ModItems.FLOUNDER_BUCKET.get());
                         pOutput.accept(ModItems.MARINE_IGUANA_BUCKET.get());
                         pOutput.accept(ModItems.POTTED_PILLBUG.get());
                         pOutput.accept(ModItems.REPTILE_BAG.get());
@@ -39,6 +41,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.SUNFISH_SUSHI.get());
                         pOutput.accept(ModItems.RAW_ANGELFISH.get());
                         pOutput.accept(ModItems.RAW_BARRELEYE.get());
+                        pOutput.accept(ModItems.RAW_NEON_TETRA.get());
+                        pOutput.accept(ModItems.RAW_FLOUNDER.get());
                         pOutput.accept(ModItems.EMU_EGG.get());
                         pOutput.accept(ModItems.BOILED_EMU_EGG.get());
                         pOutput.accept(ModItems.LONGHORN_HORN.get());
@@ -70,6 +74,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.LION_SPAWN_EGG.get());
                         pOutput.accept(ModItems.ANGELFISH_SPAWN_EGG.get());
                         pOutput.accept(ModItems.BARRELEYE_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.NEON_TETRA_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.FLOUNDER_SPAWN_EGG.get());
 
 
 
