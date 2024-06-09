@@ -100,6 +100,18 @@ public class ModEntities {
                             .sized(0.5f, 0.5f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "angelfish").toString()));
 
+    public static final RegistryObject<EntityType<NeonTetraEntity>> NEON_TETRA =
+            ENTITY_TYPES.register("neon_tetra",
+                    () -> EntityType.Builder.of(NeonTetraEntity::new, MobCategory.WATER_AMBIENT)
+                            .sized(0.35f, 0.35f)
+                            .build(new ResourceLocation(BountifulCritters.MOD_ID, "neon_tetra").toString()));
+
+    public static final RegistryObject<EntityType<FlounderEntity>> FLOUNDER =
+            ENTITY_TYPES.register("flounder",
+                    () -> EntityType.Builder.of(FlounderEntity::new, MobCategory.WATER_AMBIENT)
+                            .sized(0.35f, 0.35f)
+                            .build(new ResourceLocation(BountifulCritters.MOD_ID, "flounder").toString()));
+
 
     public static final RegistryObject<EntityType<EmuEggEntity>> EMU_EGG =
                     ENTITY_TYPES.register("emu_egg_projectile", () -> EntityType.Builder.<EmuEggEntity>of(EmuEggEntity::new, MobCategory.MISC)

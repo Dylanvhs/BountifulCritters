@@ -17,15 +17,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
-import net.minecraft.world.entity.ai.goal.FollowFlockLeaderGoal;
-import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
-import net.minecraft.world.entity.ai.goal.TryFindWaterGoal;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
-import net.minecraft.world.entity.animal.AbstractSchoolingFish;
-import net.minecraft.world.entity.animal.Bucketable;
-import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -42,12 +38,12 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
 
-public class AngelfishEntity extends AbstractSchoolingFish implements GeoEntity, Bucketable {
+public class FlounderEntity extends AbstractFish implements GeoEntity, Bucketable {
+
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(FlounderEntity.class, EntityDataSerializers.BOOLEAN);
 
-    private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(AngelfishEntity.class, EntityDataSerializers.BOOLEAN);
-
-    public AngelfishEntity(EntityType<? extends AbstractSchoolingFish> entityType, Level level) {
+    public FlounderEntity(EntityType<? extends AbstractFish> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
@@ -55,7 +51,30 @@ public class AngelfishEntity extends AbstractSchoolingFish implements GeoEntity,
 
     @Override
     public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(ModItems.ANGELFISH_SPAWN_EGG.get());
+        return new ItemStack(ModItems.FLOUNDER_SPAWN_EGG.get());
+    }
+
+    public static AttributeSupplier setAttributes() {
+        return AbstractFish.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 7D)
+                .add(Attributes.MOVEMENT_SPEED, 0.5D)
+                .build();
+    }
+
+    protected void registerGoals() {
+        this.goalSelector.addGoal(1, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
+        this.goalSelector.addGoal(12, new RandomSwimmingGoal(this, 1.0D, 10));
+        this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Animal.class, 8.0F, 1.3D, 1.3D));
+        this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Monster.class, 8.0F, 1.3D, 1.3D));
+        this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, WaterAnimal.class, 8.0F, 1.3D, 1.3D));
+        this.goalSelector.addGoal(12, new RandomStrollGoal(this, 0.8D, 15) {
+            @Override
+            public boolean canUse() {
+                return !this.mob.isInWater() && super.canUse();
+            }
+        });
     }
 
     @Override
@@ -67,7 +86,7 @@ public class AngelfishEntity extends AbstractSchoolingFish implements GeoEntity,
     @Override
     @Nonnull
     public ItemStack getBucketItemStack() {
-        ItemStack stack = new ItemStack(ModItems.ANGELFISH_BUCKET.get());
+        ItemStack stack = new ItemStack(ModItems.FLOUNDER_BUCKET.get());
         if (this.hasCustomName()) {
             stack.setHoverName(this.getCustomName());
         }
@@ -115,7 +134,7 @@ public class AngelfishEntity extends AbstractSchoolingFish implements GeoEntity,
         this.entityData.set(FROM_BUCKET, p_203706_1_);
     }
 
-    public static <T extends Mob> boolean canSpawn(EntityType<AngelfishEntity> p_223364_0_, LevelAccessor p_223364_1_, MobSpawnType reason, BlockPos p_223364_3_, RandomSource p_223364_4_) {
+    public static <T extends Mob> boolean canSpawn(EntityType<FlounderEntity> p_223364_0_, LevelAccessor p_223364_1_, MobSpawnType reason, BlockPos p_223364_3_, RandomSource p_223364_4_) {
         return WaterAnimal.checkSurfaceWaterAnimalSpawnRules(p_223364_0_, p_223364_1_, reason, p_223364_3_, p_223364_4_);
     }
 
@@ -125,29 +144,8 @@ public class AngelfishEntity extends AbstractSchoolingFish implements GeoEntity,
         return SoundEvents.BUCKET_FILL_FISH;
     }
 
-
     public MobType getMobType() {
         return MobType.WATER;
-    }
-
-
-    public static AttributeSupplier setAttributes() {
-        return AbstractSchoolingFish.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 5D)
-                .add(Attributes.MOVEMENT_SPEED, 0.8D)
-                .build();
-    }
-
-    protected void registerGoals() {
-        this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
-        this.goalSelector.addGoal(0, new FollowFlockLeaderGoal(this));
-        this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
-        this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8D, 15) {
-            @Override
-            public boolean canUse() {
-                return !this.mob.isInWater() && super.canUse();
-            }
-        });
     }
 
     public void travel(Vec3 pTravelVector) {
@@ -161,21 +159,23 @@ public class AngelfishEntity extends AbstractSchoolingFish implements GeoEntity,
         } else {
             super.travel(pTravelVector);
         }
+
     }
 
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.TROPICAL_FISH_AMBIENT;
+        return SoundEvents.COD_AMBIENT;
     }
 
     protected SoundEvent getDeathSound() {
-        return SoundEvents.TROPICAL_FISH_DEATH;
+        return SoundEvents.COD_DEATH;
     }
 
     protected SoundEvent getHurtSound(DamageSource p_28281_) {
-        return SoundEvents.TROPICAL_FISH_HURT;
+        return SoundEvents.COD_HURT;
     }
+
     protected SoundEvent getFlopSound() {
-        return SoundEvents.TROPICAL_FISH_FLOP;
+        return SoundEvents.COD_FLOP;
     }
 
     protected PathNavigation createNavigation(Level p_27480_) {
@@ -189,20 +189,22 @@ public class AngelfishEntity extends AbstractSchoolingFish implements GeoEntity,
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
         if (!(geoAnimatableAnimationState.getLimbSwingAmount() > -0.06F && geoAnimatableAnimationState.getLimbSwingAmount() < 0.06F) && this.isInWater()) {
-            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.angelfish.swim", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.flounder.idle", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         else if (!this.isInWater()) {
-            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.angelfish.flop", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.flounder.flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         else
-            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.angelfish.swim", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.flounder.idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
+
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
+
 }

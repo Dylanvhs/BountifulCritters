@@ -1,13 +1,16 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
 import net.dylanvhs.bountiful_critters.item.ModItems;
+import net.dylanvhs.bountiful_critters.particles.ModParticles;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -23,6 +26,7 @@ import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.entity.ai.goal.TryFindWaterGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.animal.WaterAnimal;
@@ -41,13 +45,15 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
-public class AngelfishEntity extends AbstractSchoolingFish implements GeoEntity, Bucketable {
+public class NeonTetraEntity extends AbstractSchoolingFish implements GeoEntity, Bucketable {
+
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
-    private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(AngelfishEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(NeonTetraEntity.class, EntityDataSerializers.BOOLEAN);
 
-    public AngelfishEntity(EntityType<? extends AbstractSchoolingFish> entityType, Level level) {
+    public NeonTetraEntity(EntityType<? extends AbstractSchoolingFish> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
@@ -55,7 +61,7 @@ public class AngelfishEntity extends AbstractSchoolingFish implements GeoEntity,
 
     @Override
     public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(ModItems.ANGELFISH_SPAWN_EGG.get());
+        return new ItemStack(ModItems.NEON_TETRA_SPAWN_EGG.get());
     }
 
     @Override
@@ -67,7 +73,7 @@ public class AngelfishEntity extends AbstractSchoolingFish implements GeoEntity,
     @Override
     @Nonnull
     public ItemStack getBucketItemStack() {
-        ItemStack stack = new ItemStack(ModItems.ANGELFISH_BUCKET.get());
+        ItemStack stack = new ItemStack(ModItems.NEON_TETRA_BUCKET.get());
         if (this.hasCustomName()) {
             stack.setHoverName(this.getCustomName());
         }
@@ -115,7 +121,7 @@ public class AngelfishEntity extends AbstractSchoolingFish implements GeoEntity,
         this.entityData.set(FROM_BUCKET, p_203706_1_);
     }
 
-    public static <T extends Mob> boolean canSpawn(EntityType<AngelfishEntity> p_223364_0_, LevelAccessor p_223364_1_, MobSpawnType reason, BlockPos p_223364_3_, RandomSource p_223364_4_) {
+    public static <T extends Mob> boolean canSpawn(EntityType<NeonTetraEntity> p_223364_0_, LevelAccessor p_223364_1_, MobSpawnType reason, BlockPos p_223364_3_, RandomSource p_223364_4_) {
         return WaterAnimal.checkSurfaceWaterAnimalSpawnRules(p_223364_0_, p_223364_1_, reason, p_223364_3_, p_223364_4_);
     }
 
@@ -141,7 +147,7 @@ public class AngelfishEntity extends AbstractSchoolingFish implements GeoEntity,
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(0, new FollowFlockLeaderGoal(this));
-        this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
+        this.goalSelector.addGoal(3, new RandomSwimmingGoal(this, 1.0D, 10));
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8D, 15) {
             @Override
             public boolean canUse() {
@@ -160,6 +166,23 @@ public class AngelfishEntity extends AbstractSchoolingFish implements GeoEntity,
             }
         } else {
             super.travel(pTravelVector);
+        }
+    }
+
+    public void tick() {
+        super.tick();
+        if (!this.isNoAi() && this.level().isNight()) {
+            if (this.level().isClientSide && this.isInWater() && this.getDeltaMovement().lengthSqr() > 0.03D) {
+                Vec3 vec3 = this.getViewVector(0.0F);
+                float f = Mth.cos(this.getYRot() * ((float)Math.PI / 180F)) * 0.3F;
+                float f1 = Mth.sin(this.getYRot() * ((float)Math.PI / 180F)) * 0.3F;
+                float f2 = 1.2F - this.random.nextFloat() * 0.7F;
+
+                for(int i = 0; i < 2; ++i) {
+                    this.level().addParticle(ModParticles.NEON_SHINE.get(), this.getX() - vec3.x * (double)f2 + (double)f, this.getY() - vec3.y, this.getZ() - vec3.z * (double)f2 + (double)f1, 0.0D, 0.0D, 0.0D);
+                }
+            }
+
         }
     }
 
@@ -189,15 +212,15 @@ public class AngelfishEntity extends AbstractSchoolingFish implements GeoEntity,
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
         if (!(geoAnimatableAnimationState.getLimbSwingAmount() > -0.06F && geoAnimatableAnimationState.getLimbSwingAmount() < 0.06F) && this.isInWater()) {
-            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.angelfish.swim", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.neon_tetra.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         else if (!this.isInWater()) {
-            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.angelfish.flop", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.neon_tetra.flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         else
-            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.angelfish.swim", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.neon_tetra.swim", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
 
@@ -206,3 +229,4 @@ public class AngelfishEntity extends AbstractSchoolingFish implements GeoEntity,
         return cache;
     }
 }
+

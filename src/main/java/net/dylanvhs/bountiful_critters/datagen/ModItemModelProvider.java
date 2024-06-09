@@ -25,6 +25,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.KRILL_BUCKET);
         simpleItem(ModItems.ANGELFISH_BUCKET);
         simpleItem(ModItems.BARRELEYE_BUCKET);
+        simpleItem(ModItems.NEON_TETRA_BUCKET);
+        simpleItem(ModItems.FLOUNDER_BUCKET);
         simpleItem(ModItems.MARINE_IGUANA_BUCKET);
         simpleItem(ModItems.LONGHORN_HORN);
         simpleItem(ModItems.SALT);
@@ -39,6 +41,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.KRILL_COCKTAIL);
         simpleItem(ModItems.RAW_ANGELFISH);
         simpleItem(ModItems.RAW_BARRELEYE);
+        simpleItem(ModItems.RAW_NEON_TETRA);
+        simpleItem(ModItems.RAW_FLOUNDER);
         simpleItem(ModItems.EMU_EGG);
         simpleItem(ModItems.BOILED_EMU_EGG);
         simpleItem(ModItems.RAW_PILLBUG);
@@ -65,6 +69,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         withExistingParent(ModItems.LION_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.BARRELEYE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.ANGELFISH_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.NEON_TETRA_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.FLOUNDER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
     }
 

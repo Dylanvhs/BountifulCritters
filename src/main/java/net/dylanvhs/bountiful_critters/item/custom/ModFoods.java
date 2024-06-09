@@ -40,6 +40,12 @@ public class ModFoods {
     public static final FoodProperties RAW_BARRELEYE = new FoodProperties.Builder().nutrition(3)
             .saturationMod(0.3f).effect(() -> new MobEffectInstance(MobEffects.NIGHT_VISION, 400), 0.25f).build();
 
+    public static final FoodProperties RAW_NEON_TETRA = new FoodProperties.Builder().nutrition(2)
+            .saturationMod(0.15f).build();
+
+    public static final FoodProperties RAW_FLOUNDER = new FoodProperties.Builder().nutrition(3)
+            .saturationMod(0.35f).build();
+
     private static FoodProperties.Builder drink(int pNutrition) {
         return (new FoodProperties.Builder()).nutrition(pNutrition).saturationMod(0.5F);
     }

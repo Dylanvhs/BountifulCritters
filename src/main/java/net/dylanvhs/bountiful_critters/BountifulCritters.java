@@ -6,6 +6,7 @@ import net.dylanvhs.bountiful_critters.effect.ModMobEffects;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.client.*;
 import net.dylanvhs.bountiful_critters.item.ModCreativeModeTabs;
+import net.dylanvhs.bountiful_critters.particles.ModParticles;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.dylanvhs.bountiful_critters.item.ModItems;
@@ -43,6 +44,8 @@ public class BountifulCritters
         ModEntities.register(modEventBus);
 
         ModSounds.register(modEventBus);
+
+        ModParticles.PARTICLE_TYPES.register(modEventBus);
 
         ModBlocks.BLOCKS.register(modEventBus);
 
@@ -111,6 +114,12 @@ public class BountifulCritters
 
             EntityRenderers.register
                     (ModEntities.ANGELFISH.get(), AngelfishRenderer:: new);
+
+            EntityRenderers.register
+                    (ModEntities.NEON_TETRA.get(), NeonTetraRenderer:: new);
+
+            EntityRenderers.register
+                    (ModEntities.FLOUNDER.get(), FlounderRenderer:: new);
 
             EntityRenderers.register
                     (ModEntities.STICKY_ARROW.get(), StickyArrowRenderer::new);

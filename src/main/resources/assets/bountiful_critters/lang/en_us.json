@@ -7,6 +7,8 @@
   "item.bountiful_critters.krill_bucket": "Bucket of Krill",
   "item.bountiful_critters.angelfish_bucket": "Bucket of Angelfish",
   "item.bountiful_critters.barreleye_bucket": "Bucket of Barreleye",
+  "item.bountiful_critters.neon_tetra_bucket": "Bucket of Neon Tetra",
+  "item.bountiful_critters.flounder_bucket": "Bucket of Flounder",
   "item.bountiful_critters.marine_iguana_bucket": "Bucket of Marine Iguana",
 
 
@@ -21,6 +23,8 @@
   "item.bountiful_critters.fried_krill": "Fried Krill",
   "item.bountiful_critters.raw_angelfish": "Raw Angelfish",
   "item.bountiful_critters.raw_barreleye": "Raw Barreleye",
+  "item.bountiful_critters.raw_neon_tetra": "Raw Neon Tetra",
+  "item.bountiful_critters.raw_flounder": "Raw Flounder",
   "item.bountiful_critters.krill_cocktail": "Krill Cocktail",
   "item.bountiful_critters.emu_egg": "Emu Egg",
   "item.bountiful_critters.boiled_emu_egg": "Boiled Emu Egg",
@@ -57,6 +61,8 @@
   "item.bountiful_critters.lion_spawn_egg" : "Lion Spawn Egg",
   "item.bountiful_critters.barreleye_spawn_egg" : "Barreleye Spawn Egg",
   "item.bountiful_critters.angelfish_spawn_egg" : "Angelfish Spawn Egg",
+  "item.bountiful_critters.neon_tetra_spawn_egg" : "Neon Tetra Spawn Egg",
+  "item.bountiful_critters.flounder_spawn_egg" : "Flounder Spawn Egg",
 
 
   "block.bountiful_critters.roasted_pillbug_block": "Roasted Pill Bug",
@@ -108,6 +114,8 @@
   "entity.bountiful_critters.lion" : "Lion",
   "entity.bountiful_critters.barreleye" : "Barreleye",
   "entity.bountiful_critters.angelfish" : "Angelfish",
+  "entity.bountiful_critters.neon_tetra" : "Neon Tetra",
+  "entity.bountiful_critters.flounder" : "Flounder",
   "entity.bountiful_critters.pillbug_projectile" : "Pill Bug",
   "entity.bountiful_critters.emu_egg_projectile" : "Emu Egg",
   "entity.bountiful_critters.sticky_arrow_projectile" : "Sticky Arrow",

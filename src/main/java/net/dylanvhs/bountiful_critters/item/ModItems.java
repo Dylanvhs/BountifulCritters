@@ -38,6 +38,10 @@ public class ModItems {
             () -> new ItemModFishBucket(ModEntities.ANGELFISH, Fluids.WATER, new Item.Properties()));
     public static final RegistryObject<Item> BARRELEYE_BUCKET = ITEMS.register("barreleye_bucket",
             () -> new ItemModFishBucket(ModEntities.BARRELEYE, Fluids.WATER, new Item.Properties()));
+    public static final RegistryObject<Item> NEON_TETRA_BUCKET = ITEMS.register("neon_tetra_bucket",
+            () -> new ItemModFishBucket(ModEntities.NEON_TETRA, Fluids.WATER, new Item.Properties()));
+    public static final RegistryObject<Item> FLOUNDER_BUCKET = ITEMS.register("flounder_bucket",
+            () -> new ItemModFishBucket(ModEntities.FLOUNDER, Fluids.WATER, new Item.Properties()));
     public static final RegistryObject<Item> MARINE_IGUANA_BUCKET = ITEMS.register("marine_iguana_bucket",
             () -> new ItemModFishBucket(ModEntities.MARINE_IGUANA, Fluids.WATER, new Item.Properties()));
     public static final RegistryObject<Item> POTTED_PILLBUG = ITEMS.register("potted_pillbug",
@@ -85,6 +89,12 @@ public class ModItems {
 
     public static final RegistryObject<Item> RAW_BARRELEYE =
             ITEMS.register("raw_barreleye", () -> new Item(new Item.Properties().food(ModFoods.RAW_BARRELEYE)));
+
+    public static final RegistryObject<Item> RAW_NEON_TETRA =
+            ITEMS.register("raw_neon_tetra", () -> new Item(new Item.Properties().food(ModFoods.RAW_NEON_TETRA)));
+
+    public static final RegistryObject<Item> RAW_FLOUNDER =
+            ITEMS.register("raw_flounder", () -> new Item(new Item.Properties().food(ModFoods.RAW_FLOUNDER)));
 
     public static final RegistryObject<Item> EMU_EGG =
             ITEMS.register("emu_egg", () -> new EmuEggItem(new Item.Properties().stacksTo(16)));
@@ -144,6 +154,12 @@ public class ModItems {
 
     public static final RegistryObject<Item> ANGELFISH_SPAWN_EGG = ITEMS.register("angelfish_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.ANGELFISH, 0x9b8b54, 0x322a1b, new Item.Properties()));
+
+    public static final RegistryObject<Item> NEON_TETRA_SPAWN_EGG = ITEMS.register("neon_tetra_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.NEON_TETRA, 0x85091c, 0x0ec4bf, new Item.Properties()));
+
+    public static final RegistryObject<Item> FLOUNDER_SPAWN_EGG = ITEMS.register("flounder_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.FLOUNDER, 0x5b442f, 0x916e44, new Item.Properties()));
 
     public static void initDispenser() {
         DispenserBlock.registerBehavior(STICKY_ARROW.get(), new AbstractProjectileDispenseBehavior() {
@@ -212,6 +228,8 @@ public class ModItems {
         DispenserBlock.registerBehavior(KRILL_BUCKET.get(), bucketDispenseBehavior);
         DispenserBlock.registerBehavior(ANGELFISH_BUCKET.get(), bucketDispenseBehavior);
         DispenserBlock.registerBehavior(BARRELEYE_BUCKET.get(), bucketDispenseBehavior);
+        DispenserBlock.registerBehavior(NEON_TETRA_BUCKET.get(), bucketDispenseBehavior);
+        DispenserBlock.registerBehavior(FLOUNDER_BUCKET.get(), bucketDispenseBehavior);
         DispenserBlock.registerBehavior(MARINE_IGUANA_BUCKET.get(), bucketDispenseBehavior);
 
         DispenserBlock.registerBehavior(POTTED_PILLBUG.get(), potDispenseBehavior);

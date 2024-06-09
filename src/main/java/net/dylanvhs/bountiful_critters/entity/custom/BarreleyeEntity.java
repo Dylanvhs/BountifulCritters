@@ -54,7 +54,7 @@ public class BarreleyeEntity extends AbstractFish implements GeoEntity, Bucketab
 
     @Override
     public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(ModItems.STINGRAY_SPAWN_EGG.get());
+        return new ItemStack(ModItems.BARRELEYE_SPAWN_EGG.get());
     }
 
     public static AttributeSupplier setAttributes() {

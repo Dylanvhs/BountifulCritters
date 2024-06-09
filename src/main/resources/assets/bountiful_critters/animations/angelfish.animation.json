@@ -57,9 +57,6 @@
 				"root": {
 					"rotation": {
 						"vector": ["Math.cos(80+query.anim_time*500)*3", "Math.cos(-40+query.anim_time*500)*5", "-90+Math.cos(query.anim_time*500)*-2"]
-					},
-					"position": {
-						"vector": [0, "Math.cos(query.anim_time*500)*2", 0]
 					}
 				},
 				"top_fin": {

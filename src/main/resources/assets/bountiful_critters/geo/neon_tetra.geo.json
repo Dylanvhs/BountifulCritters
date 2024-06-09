@@ -1,0 +1,54 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.neon_tetra",
+				"texture_width": 16,
+				"texture_height": 16,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 1.5,
+				"visible_bounds_offset": [0, 0.25, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 1, -2]
+				},
+				{
+					"name": "l_fin",
+					"parent": "root",
+					"pivot": [0.5, 0, -1.5],
+					"cubes": [
+						{"origin": [0.5, 0, -2], "size": [1, 0, 1], "pivot": [0.5, 0, -1.5], "rotation": [0, 0, 15], "uv": [0, 1], "mirror": true}
+					]
+				},
+				{
+					"name": "r_fin",
+					"parent": "root",
+					"pivot": [-0.5, 0, -1.5],
+					"cubes": [
+						{"origin": [-1.5, 0, -2], "size": [1, 0, 1], "pivot": [-0.5, 0, -1.5], "rotation": [0, 0, -15], "uv": [0, 1]}
+					]
+				},
+				{
+					"name": "tail",
+					"parent": "root",
+					"pivot": [0, 1.5, 2],
+					"cubes": [
+						{"origin": [0, 0, 2], "size": [0, 3, 2], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "body",
+					"parent": "root",
+					"pivot": [0, 1, -0.75],
+					"cubes": [
+						{"origin": [0, -1, 0], "size": [0, 4, 2], "uv": [0, 5]},
+						{"origin": [-0.5, 0, -3], "size": [1, 2, 5], "uv": [0, 0]}
+					]
+				}
+			]
+		}
+	]
+}
