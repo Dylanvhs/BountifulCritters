@@ -6,6 +6,7 @@ import net.dylanvhs.bountiful_critters.effect.ModMobEffects;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.client.*;
 import net.dylanvhs.bountiful_critters.item.ModCreativeModeTabs;
+import net.dylanvhs.bountiful_critters.loot.ModLootModifiers;
 import net.dylanvhs.bountiful_critters.particles.ModParticles;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -44,6 +45,8 @@ public class BountifulCritters
         ModEntities.register(modEventBus);
 
         ModSounds.register(modEventBus);
+
+        ModLootModifiers.register(modEventBus);
 
         ModParticles.PARTICLE_TYPES.register(modEventBus);
 

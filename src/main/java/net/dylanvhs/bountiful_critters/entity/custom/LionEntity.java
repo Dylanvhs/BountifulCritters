@@ -143,7 +143,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
         super.dropEquipment();
         if (this.isArmored()) {
             if (!this.level().isClientSide) {
-                this.spawnAtLocation(Items.DIAMOND_HORSE_ARMOR);
+                this.spawnAtLocation(ModItems.LION_ARMOR.get());
             }
 
             this.setArmored(false);
@@ -273,7 +273,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
                 return InteractionResult.SUCCESS;
             }
 
-            if (itemstack.getItem() == Items.DIAMOND_HORSE_ARMOR && !this.isArmored() && !this.isBaby()) {
+            if (itemstack.getItem() == ModItems.LION_ARMOR.get() && !this.isArmored() && !this.isBaby()) {
                 this.usePlayerItem(pPlayer, pHand, itemstack);
                 playSound(SoundEvents.HORSE_ARMOR, 1.0F, 1.0F);
                 setArmored(true);
