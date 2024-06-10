@@ -34,7 +34,7 @@ public class SuspiciousSandItemModifier extends LootModifier {
             }
         }
 
-        if(context.getRandom().nextFloat() < 0.5f) {
+        if(context.getRandom().nextFloat() < 0.2f) {
             generatedLoot.clear();
             generatedLoot.add(new ItemStack(this.item));
         }

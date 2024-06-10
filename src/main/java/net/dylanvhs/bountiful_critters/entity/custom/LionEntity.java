@@ -13,6 +13,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -27,9 +28,8 @@ import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -100,6 +100,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
+        this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.1D));
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
@@ -145,7 +146,6 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
             if (!this.level().isClientSide) {
                 this.spawnAtLocation(ModItems.LION_ARMOR.get());
             }
-
             this.setArmored(false);
         }
 
@@ -215,6 +215,23 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
         }
     }
 
+    public boolean hurt(DamageSource pSource, float pAmount) {
+        if (this.isInvulnerableTo(pSource)) {
+            return false;
+        } else {
+            Entity entity = pSource.getEntity();
+            if (!this.level().isClientSide) {
+                this.setOrderedToSit(false);
+            }
+
+            if (entity != null && !(entity instanceof Player) && !(entity instanceof AbstractArrow)) {
+                pAmount = (pAmount + 1.0F) / 2.0F;
+            }
+
+            return super.hurt(pSource, pAmount);
+        }
+    }
+
     @Override
     public boolean canAttack(LivingEntity entity) {
         boolean prev = super.canAttack(entity);
@@ -240,6 +257,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
 
         return entityIn.is(this);
     }
+
     public boolean wantsToAttack(LivingEntity pTarget, LivingEntity pOwner) {
         if (!(pTarget instanceof Creeper) && !(pTarget instanceof Ghast)) {
             if (pTarget instanceof LionEntity) {
@@ -259,55 +277,55 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
 
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
+        Item item = itemstack.getItem();
         if (this.level().isClientSide) {
-            boolean flag = this.isOwnedBy(pPlayer) || this.isTame() || TAME_FOOD.contains(itemstack.getItem()) && !this.isTame();
+            boolean flag = this.isOwnedBy(pPlayer) || this.isTame() || TAME_FOOD.contains(itemstack.getItem()) && !this.isTame() && !this.isAngry();
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
         } else if (this.isTame()) {
             if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
-                this.heal((float) itemstack.getFoodProperties(this).getNutrition());
+                this.heal((float)itemstack.getFoodProperties(this).getNutrition());
                 if (!pPlayer.getAbilities().instabuild) {
                     itemstack.shrink(1);
                 }
 
                 this.gameEvent(GameEvent.EAT, this);
                 return InteractionResult.SUCCESS;
-            }
-
-            if (itemstack.getItem() == ModItems.LION_ARMOR.get() && !this.isArmored() && !this.isBaby()) {
+            } else if (itemstack.getItem() == ModItems.LION_ARMOR.get() && !this.isArmored() && !this.isBaby()) {
                 this.usePlayerItem(pPlayer, pHand, itemstack);
                 playSound(SoundEvents.HORSE_ARMOR, 1.0F, 1.0F);
                 setArmored(true);
                 return InteractionResult.SUCCESS;
-            }  else setArmored(false);
-
-            InteractionResult interactionresult = super.mobInteract(pPlayer, pHand);
-            if ((!interactionresult.consumesAction() || this.isBaby()) && this.isOwnedBy(pPlayer)) {
-                return InteractionResult.SUCCESS;
             } else {
-                return interactionresult;
+                InteractionResult interactionresult = super.mobInteract(pPlayer, pHand);
+                if ((!interactionresult.consumesAction() || this.isBaby()) && this.isOwnedBy(pPlayer)) {
+                    this.setOrderedToSit(!this.isOrderedToSit());
+                    this.jumping = false;
+                    this.navigation.stop();
+                    this.setTarget((LivingEntity)null);
+                    return InteractionResult.SUCCESS;
+                } else {
+                    return interactionresult;
+                }
             }
-
-
-        } else if (!this.isTame() && TAME_FOOD.contains(itemstack.getItem())) {
+        } else if (TAME_FOOD.contains(itemstack.getItem()) && !this.isAngry()) {
             if (!pPlayer.getAbilities().instabuild) {
                 itemstack.shrink(1);
             }
-            if (!this.isSilent()) {
-                this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.GENERIC_EAT, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+
+            if (this.random.nextInt(3) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, pPlayer)) {
+                this.tame(pPlayer);
+                this.navigation.stop();
+                this.setTarget((LivingEntity)null);
+                this.setOrderedToSit(true);
+                this.level().broadcastEntityEvent(this, (byte)7);
+            } else {
+                this.level().broadcastEntityEvent(this, (byte)6);
             }
 
-            if (!this.level().isClientSide) {
-                if (this.random.nextInt(5) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, pPlayer)) {
-                    this.setTame(true);
-                    this.setTarget(null);
-                    this.level().broadcastEntityEvent(this, (byte) 7);
-                } else {
-                    this.level().broadcastEntityEvent(this, (byte) 6);
-                }
-            }
-            return InteractionResult.sidedSuccess(this.level().isClientSide);
+            return InteractionResult.SUCCESS;
+        } else {
+            return super.mobInteract(pPlayer, pHand);
         }
-        return InteractionResult.PASS;
     }
 
     public boolean isArmored() {
@@ -324,7 +342,12 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
         controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "attackController", 4, this::attackPredicate));
     }
 
-    private <T extends GeoAnimatable> PlayState predicate(software.bernie.geckolib.core.animation.AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+    private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+        if (this.isOrderedToSit()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.lion.sit", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(1.0F);
+            return PlayState.CONTINUE;
+        }
         if (geoAnimatableAnimationState.isMoving() && !this.isSprinting()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.lion.walk", Animation.LoopType.LOOP));
             geoAnimatableAnimationState.getController().setAnimationSpeed(1.0F);

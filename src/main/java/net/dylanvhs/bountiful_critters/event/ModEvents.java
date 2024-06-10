@@ -42,7 +42,7 @@ public final class ModEvents {
         e.register(ModEntities.BARRELEYE.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.OCEAN_FLOOR, BarreleyeEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
         e.register(ModEntities.ANGELFISH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.WORLD_SURFACE, AngelfishEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
         e.register(ModEntities.NEON_TETRA.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.WORLD_SURFACE, NeonTetraEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
-        e.register(ModEntities.FLOUNDER.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.WORLD_SURFACE, FlounderEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
+        e.register(ModEntities.FLOUNDER.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.OCEAN_FLOOR, FlounderEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
     }
 
     @SubscribeEvent

@@ -1,12 +1,9 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
-import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
-import net.dylanvhs.bountiful_critters.entity.PotAccess;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -29,7 +26,6 @@ import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bucketable;
-import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -39,11 +35,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SeagrassBlock;
-import net.minecraft.world.level.block.SweetBerryBushBlock;
-import net.minecraft.world.level.block.TallSeagrassBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -58,7 +50,7 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
 
-public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable {
+public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable {
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(MarineIguanaEntity.class, EntityDataSerializers.INT);
@@ -101,13 +93,23 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
     }
 
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new PanicGoal(this, 1.2D));
-        this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(2, new TemptGoal(this, 1.25D, TEMPTATION_ITEM, false));
-        this.goalSelector.addGoal(3, new FollowParentGoal(this, 1.25D));
-        this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
-        this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8D, 15));
-        this.goalSelector.addGoal(4, new MarineIguanaEntity.IguanaEatSeagrass((double)1.2F, 22, 22));
+        this.goalSelector.addGoal(0, new PanicGoal(this, 1.2D));
+        this.goalSelector.addGoal(1, new BreedGoal(this, 1.0D));
+        this.goalSelector.addGoal(1, new TemptGoal(this, 1.25D, TEMPTATION_ITEM, false));
+        this.goalSelector.addGoal(2, new FollowParentGoal(this, 1.25D));
+        this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10) {
+            @Override
+            public boolean canUse() {
+                return isInWater() && super.canUse();
+            }
+        });
+        this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8D, 15) {
+            @Override
+            public boolean canUse() {
+                return !isInWater() && super.canUse();
+            }
+        });
+        this.goalSelector.addGoal(3, new MarineIguanaEntity.IguanaEatSeagrass((double)1.2F, 22, 22));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F) {
             @Override
             public boolean canUse() {
@@ -128,33 +130,6 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .build();
     }
-
-    public void baseTick() {
-        int i = this.getAirSupply();
-        super.baseTick();
-        if (!this.isNoAi()) {
-            this.handleAirSupply(i);
-        }
-
-    }
-
-    protected void handleAirSupply(int pAirSupply) {
-        if (this.isAlive() && !this.isInWaterRainOrBubble()) {
-            this.setAirSupply(pAirSupply - 1);
-            if (this.getAirSupply() == -20) {
-                this.setAirSupply(0);
-                this.hurt(this.damageSources().dryOut(), 2.0F);
-            }
-        } else {
-            this.setAirSupply(this.getMaxAirSupply());
-        }
-
-    }
-
-    public int getMaxAirSupply() {
-        return 6000;
-    }
-
 
     public static <T extends Mob> boolean canSpawn(EntityType type, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223317_3_, RandomSource random) {
         BlockState blockstate = worldIn.getBlockState(p_223317_3_.below());
@@ -352,6 +327,22 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
         super.aiStep();
         if (this.isAlive()) {
             this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.isImmobile() ? 0.0 : 0.2);
+
+            if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && this.onGround() && --this.timeUntilNextSneeze <= 0) {
+                this.playSound(SoundEvents.AXOLOTL_HURT, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+                this.spawnAtLocation(ModItems.SALT.get());
+                this.timeUntilNextSneeze = this.random.nextInt(3500) + 3500;
+                setSneezing(true);
+                double d0 = 0;
+                double d1 = Math.max(0.0D, 1.0D - d0);
+                this.setDeltaMovement(this.getDeltaMovement().add(0.0D, (double)0.4F * d1, 0.0D));
+                for(int i = 0; i < 8; ++i) {
+                    Vec3 vec3 = (new Vec3(((double)this.random.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D)).xRot(-this.getXRot() * ((float)Math.PI / 180F)).yRot(-this.getYRot() * ((float)Math.PI / 180F));
+                    this.level().addParticle(ParticleTypes.SPIT, this.getX() + this.getLookAngle().x / 2.0D, this.getY(), this.getZ() + this.getLookAngle().z / 2.0D, vec3.x, vec3.y + 0.05D, vec3.z);
+                }
+            } else if (this.timeUntilNextSneeze > 0) {
+                setSneezing(false);
+            }
         }
     }
 
@@ -361,26 +352,6 @@ public class MarineIguanaEntity  extends Animal implements GeoEntity, Bucketable
 
     public void setSneezing(boolean sneezing) {
         entityData.set(IS_SNEEZING, sneezing);
-    }
-
-
-    public void tick() {
-        super.tick();
-        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && this.onGround() && --this.timeUntilNextSneeze <= 0) {
-            this.playSound(SoundEvents.AXOLOTL_HURT, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.spawnAtLocation(ModItems.SALT.get());
-            this.timeUntilNextSneeze = this.random.nextInt(3500) + 3500;
-            setSneezing(true);
-            double d0 = 0;
-            double d1 = Math.max(0.0D, 1.0D - d0);
-            this.setDeltaMovement(this.getDeltaMovement().add(0.0D, (double)0.4F * d1, 0.0D));
-            for(int i = 0; i < 8; ++i) {
-                Vec3 vec3 = (new Vec3(((double)this.random.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D)).xRot(-this.getXRot() * ((float)Math.PI / 180F)).yRot(-this.getYRot() * ((float)Math.PI / 180F));
-                this.level().addParticle(ParticleTypes.SPIT, this.getX() + this.getLookAngle().x / 2.0D, this.getY(), this.getZ() + this.getLookAngle().z / 2.0D, vec3.x, vec3.y + 0.05D, vec3.z);
-            }
-        } else if (this.timeUntilNextSneeze > 0) {
-            setSneezing(false);
-        }
     }
 
     public class IguanaEatSeagrass extends MoveToBlockGoal {

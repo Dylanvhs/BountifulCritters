@@ -53,6 +53,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.BAGGED_GECKO);
         simpleItem(ModItems.BAGGED_BLUNT_HEADED_TREE_SNAKE);
         simpleItem(ModItems.RETURNING_MEMORY_MUSIC_DISC);
+        simpleItem(ModItems.LION_ARMOR);
 
 
         withExistingParent(ModItems.EMU_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));

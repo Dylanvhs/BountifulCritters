@@ -1,4 +1,4 @@
-// 1.20.1	2024-06-09T14:30:46.0885869	Item Models: bountiful_critters
+// 1.20.1	2024-06-10T14:49:32.4361197	Item Models: bountiful_critters
 4b6c5e548ce57d7a0b9c19e1209f2e9a5a1b65c4 assets/bountiful_critters/models/item/angelfish_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/angelfish_spawn_egg.json
 f660cd040dc4b8b28afb8cf842c04747ec176c26 assets/bountiful_critters/models/item/bagged_blunt_headed_tree_snake.json
@@ -18,6 +18,7 @@ b783a11abed0e35e74cd2a6b6ea056c76c4f3c13 assets/bountiful_critters/models/item/f
 44f9d9811e2e0f56cc107a4ba49d0014e24016d2 assets/bountiful_critters/models/item/krill_bucket.json
 8b47a25aa81284afc3497f9bb6a5172ec4afbf3d assets/bountiful_critters/models/item/krill_cocktail.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/krill_spawn_egg.json
+9b60cf31a93d89b623fb8932cffc59acd8868e20 assets/bountiful_critters/models/item/lion_armor.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/lion_spawn_egg.json
 a24c9d6747f3af8e67fc3c07aa31c82d2d91dea6 assets/bountiful_critters/models/item/longhorn_horn.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/longhorn_spawn_egg.json
