@@ -80,7 +80,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
     public static AttributeSupplier setAttributes() {
         return LonghornEntity.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 30.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.3D)
+                .add(Attributes.MOVEMENT_SPEED, 0.22D)
                 .add(Attributes.ATTACK_DAMAGE, 6.0D)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.25D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.0D)
@@ -104,6 +104,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.1D));
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
+        this.goalSelector.addGoal(2, new FollowOwnerGoal(this, 1.0D, 5.0F, 1.0F, true));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.25D, true));
@@ -282,6 +283,12 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
             boolean flag = this.isOwnedBy(pPlayer) || this.isTame() || TAME_FOOD.contains(itemstack.getItem()) && !this.isTame() && !this.isAngry();
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
         } else if (this.isTame()) {
+            if (itemstack.getItem() == ModItems.LION_ARMOR.get() && !this.isArmored() && !this.isBaby()) {
+                this.usePlayerItem(pPlayer, pHand, itemstack);
+                playSound(SoundEvents.HORSE_ARMOR, 1.0F, 1.0F);
+                setArmored(true);
+                return InteractionResult.SUCCESS;
+            }
             if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
                 this.heal((float)itemstack.getFoodProperties(this).getNutrition());
                 if (!pPlayer.getAbilities().instabuild) {
@@ -289,11 +296,6 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
                 }
 
                 this.gameEvent(GameEvent.EAT, this);
-                return InteractionResult.SUCCESS;
-            } else if (itemstack.getItem() == ModItems.LION_ARMOR.get() && !this.isArmored() && !this.isBaby()) {
-                this.usePlayerItem(pPlayer, pHand, itemstack);
-                playSound(SoundEvents.HORSE_ARMOR, 1.0F, 1.0F);
-                setArmored(true);
                 return InteractionResult.SUCCESS;
             } else {
                 InteractionResult interactionresult = super.mobInteract(pPlayer, pHand);
@@ -342,12 +344,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
         controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "attackController", 4, this::attackPredicate));
     }
 
-    private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
-        if (this.isOrderedToSit()) {
-            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.lion.sit", Animation.LoopType.LOOP));
-            geoAnimatableAnimationState.getController().setAnimationSpeed(1.0F);
-            return PlayState.CONTINUE;
-        }
+    private <T extends GeoAnimatable> PlayState predicate(software.bernie.geckolib.core.animation.AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
         if (geoAnimatableAnimationState.isMoving() && !this.isSprinting()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.lion.walk", Animation.LoopType.LOOP));
             geoAnimatableAnimationState.getController().setAnimationSpeed(1.0F);
@@ -355,6 +352,11 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
         } else if (geoAnimatableAnimationState.isMoving() && this.isSprinting()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.lion.sprint", Animation.LoopType.LOOP));
             geoAnimatableAnimationState.getController().setAnimationSpeed(1.5F);
+            return PlayState.CONTINUE;
+        }
+        if (this.isInSittingPose()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.lion.sit", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(1.0F);
             return PlayState.CONTINUE;
         }
         else geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.lion.idle", Animation.LoopType.LOOP));
