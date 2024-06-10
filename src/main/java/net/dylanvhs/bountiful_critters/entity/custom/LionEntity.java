@@ -149,7 +149,6 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
             }
             this.setArmored(false);
         }
-
     }
 
     public boolean isFood(ItemStack pStack) {
@@ -191,14 +190,14 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
 
     }
 
-    @org.jetbrains.annotations.Nullable
+    @Nullable
     @Override
     public UUID getPersistentAngerTarget() {
         return null;
     }
 
     @Override
-    public void setPersistentAngerTarget(@org.jetbrains.annotations.Nullable UUID pPersistentAngerTarget) {
+    public void setPersistentAngerTarget(@Nullable UUID pPersistentAngerTarget) {
 
     }
 
@@ -294,7 +293,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
                 if (!pPlayer.getAbilities().instabuild) {
                     itemstack.shrink(1);
                 }
-
+                playSound(SoundEvents.GENERIC_EAT, 1.0F, 1.0F);
                 this.gameEvent(GameEvent.EAT, this);
                 return InteractionResult.SUCCESS;
             } else {
@@ -313,7 +312,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
             if (!pPlayer.getAbilities().instabuild) {
                 itemstack.shrink(1);
             }
-
+            playSound(SoundEvents.GENERIC_EAT, 1.0F, 1.0F);
             if (this.random.nextInt(3) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, pPlayer)) {
                 this.tame(pPlayer);
                 this.navigation.stop();
@@ -344,7 +343,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
         controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "attackController", 4, this::attackPredicate));
     }
 
-    private <T extends GeoAnimatable> PlayState predicate(software.bernie.geckolib.core.animation.AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+    private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
         if (geoAnimatableAnimationState.isMoving() && !this.isSprinting()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.lion.walk", Animation.LoopType.LOOP));
             geoAnimatableAnimationState.getController().setAnimationSpeed(1.0F);
