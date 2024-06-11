@@ -243,14 +243,16 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
                 this.passive = true;
 
             }
-            Vec3 vec3 = this.getViewVector(0.0F);
-            float f = Mth.cos(this.getYRot() * ((float)Math.PI / 180F)) * 0.3F;
-            float f1 = Mth.sin(this.getYRot() * ((float)Math.PI / 180F)) * 0.3F;
-            float f2 = 1.2F - this.random.nextFloat() * 0.7F;
+            if (this.level().isClientSide && !this.passive) {
+                Vec3 vec3 = this.getViewVector(0.0F);
+                float f = Mth.cos(this.getYRot() * ((float) Math.PI / 180F)) * 0.3F;
+                float f1 = Mth.sin(this.getYRot() * ((float) Math.PI / 180F)) * 0.3F;
+                float f2 = 1.2F - this.random.nextFloat() * 0.7F;
 
-            for(int i = 0; i < 2; ++i) {
-                this.level().addParticle(ParticleTypes.SNEEZE, this.getX() - vec3.x * (double)f2 + (double)f, this.getY() - vec3.y, this.getZ() - vec3.z * (double)f2 + (double)f1, 0.0D, 0.0D, 0.0D);
-                this.level().addParticle(ParticleTypes.SNEEZE, this.getX() - vec3.x * (double)f2 - (double)f, this.getY() - vec3.y, this.getZ() - vec3.z * (double)f2 - (double)f1, 0.0D, 0.0D, 0.0D);
+                for (int i = 0; i < 2; ++i) {
+                    this.level().addParticle(ParticleTypes.SNEEZE, this.getX() - vec3.x * (double) f2 + (double) f, this.getY() - vec3.y, this.getZ() - vec3.z * (double) f2 + (double) f1, 0.0D, 0.0D, 0.0D);
+                    this.level().addParticle(ParticleTypes.SNEEZE, this.getX() - vec3.x * (double) f2 - (double) f, this.getY() - vec3.y, this.getZ() - vec3.z * (double) f2 - (double) f1, 0.0D, 0.0D, 0.0D);
+                }
             }
             return InteractionResult.SUCCESS;
         } else {
@@ -392,7 +394,7 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
         } else if (this.timeUntilNextSneeze > 0) {
             setSneezing(false);
         }
-        if (this.level().isClientSide && this.isAlive() && !this.isBaby() && this.onGround() && this.timeUntilNextSneeze == 0) {
+        if (this.level().isClientSide && this.isAlive() && !this.isBaby() && this.onGround() && this.timeUntilNextSneeze < 3) {
             for(int i = 0; i < 8; ++i) {
                 Vec3 vec3 = (new Vec3(((double)this.random.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D)).xRot(-this.getXRot() * ((float)Math.PI / 180F)).yRot(-this.getYRot() * ((float)Math.PI / 180F));
                 this.level().addParticle(ParticleTypes.SPIT, this.getX() + this.getLookAngle().x / 2.0D, this.getY(), this.getZ() + this.getLookAngle().z / 2.0D, vec3.x, vec3.y + 0.05D, vec3.z);
