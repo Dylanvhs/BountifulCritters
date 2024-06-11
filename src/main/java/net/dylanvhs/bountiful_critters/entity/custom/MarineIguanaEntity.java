@@ -1,9 +1,12 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
+import net.dylanvhs.bountiful_critters.entity.ai.ModBlockPos;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.ChatFormatting;
+import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -12,6 +15,8 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -20,23 +25,25 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -49,6 +56,11 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable {
 
@@ -60,11 +72,13 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
 
     public int timeUntilNextSneeze = this.random.nextInt(3500) + 3500;
 
+    public boolean passive = false;
+
     public MarineIguanaEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
-        this.setPathfindingMalus(BlockPathTypes.WATER_BORDER, 0.0F);
         this.moveControl = new MarineIguanaEntity.IguanaMoveControl(this);
+        this.lookControl = new MarineIguanaEntity.IguanaLookControl(this, 20);
         this.setMaxUpStep(1.0F);
     }
 
@@ -77,8 +91,22 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
         private final MarineIguanaEntity axolotl;
 
         public IguanaMoveControl(MarineIguanaEntity pAxolotl) {
-            super(pAxolotl, 85, 10, 0.6F, 0.5F, false);
+            super(pAxolotl, 85, 10, 0.6F, 0.6F, true);
             this.axolotl = pAxolotl;
+        }
+
+        public void tick() {
+            super.tick();
+        }
+    }
+
+    class IguanaLookControl extends SmoothSwimmingLookControl {
+        public IguanaLookControl(MarineIguanaEntity pAxolotl, int pMaxYRotFromCenter) {
+            super(pAxolotl, pMaxYRotFromCenter);
+        }
+
+        public void tick() {
+            super.tick();
         }
     }
 
@@ -109,7 +137,7 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
                 return !isInWater() && super.canUse();
             }
         });
-        this.goalSelector.addGoal(3, new MarineIguanaEntity.IguanaEatSeagrass((double)1.2F, 22, 22));
+        this.goalSelector.addGoal(5, new MarineIguanaEntity.IguanaEatSeagrass(this));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F) {
             @Override
             public boolean canUse() {
@@ -130,6 +158,7 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .build();
     }
+
 
     public static <T extends Mob> boolean canSpawn(EntityType type, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223317_3_, RandomSource random) {
         BlockState blockstate = worldIn.getBlockState(p_223317_3_.below());
@@ -199,7 +228,34 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
     @Nonnull
     public InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
         Bucketable.bucketMobPickup(player, hand, this);
-        return super.mobInteract(player, hand);
+        ItemStack itemstack = player.getItemInHand(hand);
+        Item item = itemstack.getItem();
+        if(itemstack.getItem() == ModItems.SALTED_KELP.get() && !this.passive) {
+
+            if (!this.level().isClientSide) {
+                if (!player.isCreative()) {
+                    itemstack.shrink(1);
+                }
+                this.setTarget((LivingEntity)null);
+                this.heal(20.0F);
+                this.playSound(SoundEvents.GENERIC_EAT, 1.0F, 1.0F);
+
+                this.passive = true;
+
+            }
+            Vec3 vec3 = this.getViewVector(0.0F);
+            float f = Mth.cos(this.getYRot() * ((float)Math.PI / 180F)) * 0.3F;
+            float f1 = Mth.sin(this.getYRot() * ((float)Math.PI / 180F)) * 0.3F;
+            float f2 = 1.2F - this.random.nextFloat() * 0.7F;
+
+            for(int i = 0; i < 2; ++i) {
+                this.level().addParticle(ParticleTypes.SNEEZE, this.getX() - vec3.x * (double)f2 + (double)f, this.getY() - vec3.y, this.getZ() - vec3.z * (double)f2 + (double)f1, 0.0D, 0.0D, 0.0D);
+                this.level().addParticle(ParticleTypes.SNEEZE, this.getX() - vec3.x * (double)f2 - (double)f, this.getY() - vec3.y, this.getZ() - vec3.z * (double)f2 - (double)f1, 0.0D, 0.0D, 0.0D);
+            }
+            return InteractionResult.SUCCESS;
+        } else {
+            return InteractionResult.PASS;
+        }
     }
 
 
@@ -264,12 +320,12 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
         return SoundEvents.AXOLOTL_HURT;
     }
 
-    @javax.annotation.Nullable
+    @Nullable
     protected SoundEvent getDeathSound() {
         return SoundEvents.AXOLOTL_DEATH;
     }
 
-    @javax.annotation.Nullable
+    @Nullable
     protected SoundEvent getAmbientSound() {
         return this.isInWater() ? SoundEvents.AXOLOTL_IDLE_WATER : SoundEvents.AXOLOTL_IDLE_AIR;
     }
@@ -290,11 +346,10 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
         } else {
             super.travel(pTravelVector);
         }
-
     }
 
     public boolean canBreatheUnderwater() {
-        return false;
+        return true;
     }
 
     public boolean isPushedByFluid() {
@@ -322,27 +377,34 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
         return super.isImmobile() || this.isSneezing();
     }
 
+    public void tick() {
+        super.tick();
+
+        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && this.onGround() && --this.timeUntilNextSneeze <= 0) {
+            this.playSound(SoundEvents.AXOLOTL_HURT, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+            this.spawnAtLocation(ModItems.SALT.get());
+            this.timeUntilNextSneeze = this.random.nextInt(3500) + 3500;
+            setSneezing(true);
+            double d0 = 0;
+            double d1 = Math.max(0.0D, 1.0D - d0);
+            this.setDeltaMovement(this.getDeltaMovement().add(0.0D, (double)0.4F * d1, 0.0D));
+
+        } else if (this.timeUntilNextSneeze > 0) {
+            setSneezing(false);
+        }
+        if (this.level().isClientSide && this.isAlive() && !this.isBaby() && this.onGround() && this.timeUntilNextSneeze == 0) {
+            for(int i = 0; i < 8; ++i) {
+                Vec3 vec3 = (new Vec3(((double)this.random.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D)).xRot(-this.getXRot() * ((float)Math.PI / 180F)).yRot(-this.getYRot() * ((float)Math.PI / 180F));
+                this.level().addParticle(ParticleTypes.SPIT, this.getX() + this.getLookAngle().x / 2.0D, this.getY(), this.getZ() + this.getLookAngle().z / 2.0D, vec3.x, vec3.y + 0.05D, vec3.z);
+            }
+        }
+    }
+
     @Override
     public void aiStep() {
         super.aiStep();
         if (this.isAlive()) {
             this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.isImmobile() ? 0.0 : 0.2);
-
-            if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && this.onGround() && --this.timeUntilNextSneeze <= 0) {
-                this.playSound(SoundEvents.AXOLOTL_HURT, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-                this.spawnAtLocation(ModItems.SALT.get());
-                this.timeUntilNextSneeze = this.random.nextInt(3500) + 3500;
-                setSneezing(true);
-                double d0 = 0;
-                double d1 = Math.max(0.0D, 1.0D - d0);
-                this.setDeltaMovement(this.getDeltaMovement().add(0.0D, (double)0.4F * d1, 0.0D));
-                for(int i = 0; i < 8; ++i) {
-                    Vec3 vec3 = (new Vec3(((double)this.random.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D)).xRot(-this.getXRot() * ((float)Math.PI / 180F)).yRot(-this.getYRot() * ((float)Math.PI / 180F));
-                    this.level().addParticle(ParticleTypes.SPIT, this.getX() + this.getLookAngle().x / 2.0D, this.getY(), this.getZ() + this.getLookAngle().z / 2.0D, vec3.x, vec3.y + 0.05D, vec3.z);
-                }
-            } else if (this.timeUntilNextSneeze > 0) {
-                setSneezing(false);
-            }
         }
     }
 
@@ -354,72 +416,164 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
         entityData.set(IS_SNEEZING, sneezing);
     }
 
-    public class IguanaEatSeagrass extends MoveToBlockGoal {
-        private static final int WAIT_TICKS = 40;
-        protected int ticksWaited;
+    public class IguanaEatSeagrass extends Goal {
+        private final MarineIguanaEntity iguana;
+        private int idleAtFlowerTime = 0;
+        private int timeoutCounter = 0;
+        private int searchCooldown = 0;
+        private boolean isAboveDestinationBear;
+        private BlockPos destinationBlock;
+        private final BlockSorter targetSorter;
 
-        public IguanaEatSeagrass(double pSpeedModifier, int pSearchRange, int pVerticalSearchRange) {
-            super(MarineIguanaEntity.this, pSpeedModifier, pSearchRange, pVerticalSearchRange);
-        }
 
-        public double acceptedDistance() {
-            return 2.0D;
-        }
 
-        public boolean shouldRecalculatePath() {
-            return this.tryTicks % 100 == 0;
-        }
-
-        protected boolean isValidTarget(LevelReader pLevel, BlockPos pPos) {
-            BlockState blockstate = pLevel.getBlockState(pPos);
-            return blockstate.is(Blocks.TALL_SEAGRASS) ||  blockstate.is(Blocks.SEAGRASS);
-        }
-
-        public void tick() {
-            if (this.isReachedTarget()) {
-                if (this.ticksWaited >= 40) {
-                    this.onReachedTarget();
-                } else {
-                    ++this.ticksWaited;
-                }
-            }
-            super.tick();
-        }
-
-        protected void onReachedTarget() {
-            if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(MarineIguanaEntity.this.level(), MarineIguanaEntity.this)) {
-                BlockState blockstate = MarineIguanaEntity.this.level().getBlockState(this.blockPos);
-                if (blockstate.is(Blocks.SEAGRASS)) {
-                    this.eatSeagrass(blockstate);
-                }
-                if (blockstate.is(Blocks.TALL_SEAGRASS)) {
-                    this.eatTallSeagrass(blockstate);
-                }
-
-            }
-        }
-        private void eatSeagrass(BlockState pState) {
-            MarineIguanaEntity.this.level().destroyBlock(blockPos,false);
-            MarineIguanaEntity.this.playSound(SoundEvents.WET_GRASS_BREAK, 1.0F, 1.0F);
-            spawnAtLocation(ModItems.SEAGRASS_BALL.get());
-        }
-        private void eatTallSeagrass(BlockState pState) {
-            BlockState blockstate = Blocks.SEAGRASS.defaultBlockState();
-            MarineIguanaEntity.this.level().setBlock(blockPos, blockstate, 2);
-            MarineIguanaEntity.this.playSound(SoundEvents.WET_GRASS_BREAK, 1.0F, 1.0F);
-            spawnAtLocation(ModItems.SEAGRASS_BALL.get());
-        }
-
-        public boolean canUse() {
-            return !isBaby() && isInWater() && getAirSupply() > 0 && super.canUse();
+        public IguanaEatSeagrass(MarineIguanaEntity iguana) {
+            super();
+            this.iguana = iguana;
+            this.targetSorter = new BlockSorter(iguana);
+            this.setFlags(EnumSet.of(Goal.Flag.MOVE, Flag.LOOK));
         }
 
         public void start() {
-            this.ticksWaited = 0;
             super.start();
         }
-    }
 
+        public boolean canUse() {
+
+            if (!iguana.isBaby()  && iguana.isInWater() && !iguana.passive) {
+                if(searchCooldown <= 0){
+                    resetTarget();
+                    searchCooldown = 500 + iguana.getRandom().nextInt(500);
+                    return destinationBlock != null;
+                }else{
+                    searchCooldown--;
+                }
+            }
+            return false;
+        }
+
+        public boolean canContinueToUse() {
+            return destinationBlock != null && timeoutCounter < 1200 && (iguana.getTarget() == null || !iguana.getTarget().isAlive());
+        }
+
+        public void stop() {
+            searchCooldown = 50;
+            timeoutCounter = 0;
+            destinationBlock = null;
+        }
+
+        public double getTargetDistanceSq() {
+            return 2.3D;
+        }
+
+        public void tick() {
+            BlockPos blockpos = destinationBlock;
+            float yDist = (float) Math.abs(blockpos.getY() - iguana.getY() - iguana.getBbHeight()/2);
+            this.iguana.getNavigation().moveTo((double) ((float) blockpos.getX()) + 0.5D, blockpos.getY() + 0.5D, (double) ((float) blockpos.getZ()) + 0.5D, 1);
+            if (!isWithinXZDist(blockpos, iguana.position(), this.getTargetDistanceSq()) || yDist > 2F) {
+                this.isAboveDestinationBear = false;
+                ++this.timeoutCounter;
+            } else {
+                this.isAboveDestinationBear = true;
+                --this.timeoutCounter;
+            }
+            if(timeoutCounter > 2400){
+                stop();
+            }
+            if (this.getIsAboveDestination()) {
+                iguana.lookAt(EntityAnchorArgument.Anchor.EYES, new Vec3(destinationBlock.getX() + 0.5D, destinationBlock.getY(), destinationBlock.getZ() + 0.5));
+                if (this.idleAtFlowerTime >= 2) {
+                    idleAtFlowerTime = 0;
+                    this.breakBlock();
+                    playSound(SoundEvents.GENERIC_EAT, 1.0F, 1.0F);
+                    this.stop();
+                } else {
+                    ++this.idleAtFlowerTime;
+                }
+            }
+            super.tick();
+
+        }
+
+        private void resetTarget() {
+            List<BlockPos> allBlocks = new ArrayList<>();
+            int radius = 16;
+            for (BlockPos pos : BlockPos.betweenClosedStream(this.iguana.blockPosition().offset(-radius, -radius, -radius), this.iguana.blockPosition().offset(radius, radius, radius)).map(BlockPos::immutable).collect(Collectors.toList())) {
+                if (!iguana.level().isEmptyBlock(pos) && shouldMoveTo(iguana.level(), pos)) {
+                    if(!iguana.isInWater() || isBlockTouchingWater(pos)){
+                        allBlocks.add(pos);
+                    }
+                }
+            }
+            if (!allBlocks.isEmpty()) {
+                allBlocks.sort(this.targetSorter);
+                for(BlockPos pos : allBlocks){
+                    if(hasLineOfSightBlock(pos)){
+                        this.destinationBlock = pos;
+                        return;
+                    }
+                }
+            }
+            destinationBlock = null;
+        }
+
+        private boolean isBlockTouchingWater(BlockPos pos) {
+            for(Direction dir : Direction.values()){
+                if(iguana.level().getFluidState(pos.relative(dir)).is(FluidTags.WATER)){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private boolean isWithinXZDist(BlockPos blockpos, Vec3 positionVec, double distance) {
+            return blockpos.distSqr(ModBlockPos.fromCoords(positionVec.x(), blockpos.getY(), positionVec.z())) < distance * distance;
+        }
+
+        protected boolean getIsAboveDestination() {
+            return this.isAboveDestinationBear;
+        }
+
+        private void breakBlock() {
+            if (shouldMoveTo(iguana.level(), destinationBlock)) {
+                BlockState state = iguana.level().getBlockState(destinationBlock);
+                if(!iguana.level().isEmptyBlock(destinationBlock) && net.minecraftforge.common.ForgeHooks.canEntityDestroy(iguana.level(), destinationBlock, iguana) && state.getDestroySpeed(iguana.level(), destinationBlock) >= 0){
+                    MarineIguanaEntity.this.level().destroyBlock(destinationBlock,false);
+                    MarineIguanaEntity.this.playSound(SoundEvents.WET_GRASS_BREAK, 1.0F, 1.0F);
+                    spawnAtLocation(ModItems.SEAGRASS_BALL.get());
+                }
+            }
+        }
+
+        private boolean hasLineOfSightBlock(BlockPos destinationBlock) {
+            Vec3 Vector3d = new Vec3(iguana.getX(), iguana.getEyeY(), iguana.getZ());
+            Vec3 blockVec = net.minecraft.world.phys.Vec3.atCenterOf(destinationBlock);
+            BlockHitResult result = iguana.level().clip(new ClipContext(Vector3d, blockVec, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, iguana));
+            return result.getBlockPos().equals(destinationBlock);
+        }
+
+
+        protected boolean shouldMoveTo(LevelReader worldIn, BlockPos pos) {
+            Item blockItem = worldIn.getBlockState(pos).getBlock().asItem();
+            return worldIn.getBlockState(pos).is(Blocks.SEAGRASS) || worldIn.getBlockState(pos).is(Blocks.TALL_SEAGRASS);
+        }
+
+        public record BlockSorter(Entity entity) implements Comparator<BlockPos> {
+            @Override
+            public int compare(BlockPos pos1, BlockPos pos2) {
+                final double distance1 = this.getDistance(pos1);
+                final double distance2 = this.getDistance(pos2);
+                return Double.compare(distance1, distance2);
+            }
+
+            private double getDistance(BlockPos pos) {
+                final double deltaX = this.entity.getX() - (pos.getX() + 0.5);
+                final double deltaY = this.entity.getY() + this.entity.getEyeHeight() - (pos.getY() + 0.5);
+                final double deltaZ = this.entity.getZ() - (pos.getZ() + 0.5);
+                return deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ;
+            }
+        }
+    }
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 4, this::predicate));

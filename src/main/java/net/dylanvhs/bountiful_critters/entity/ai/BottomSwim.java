@@ -4,13 +4,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 
-public class BottomSwim extends RandomSwimmingGoal {
+public class BottomSwim extends RandomStrollGoal {
     private int range = 5;
     public BottomSwim(PathfinderMob creature, double speed, int waterChance) {
         super(creature, speed, waterChance);
