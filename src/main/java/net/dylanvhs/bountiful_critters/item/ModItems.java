@@ -111,7 +111,7 @@ public class ModItems {
             ITEMS.register("pillbug_throwable", () -> new PillbugProjectileItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> LION_ARMOR =
-            ITEMS.register("lion_armor", () -> new Item(new Item.Properties()));
+            ITEMS.register("lion_armor", () -> new Item(new Item.Properties().stacksTo(1)));
 
 
     public static final RegistryObject<Item> RETURNING_MEMORY_MUSIC_DISC = ITEMS.register("returning_memory_music_disc",

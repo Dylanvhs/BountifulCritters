@@ -58,20 +58,46 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     private static final EntityDataAccessor<Boolean> IS_ARMORED = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IS_ARMOR_SLIGHTLY_DAMAGED = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IS_ARMOR_DAMAGED = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IS_ARMOR_REPAIRED = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
     private static final Set<Item> TAME_FOOD = Sets.newHashSet(
             Items.BEEF,Items.COOKED_BEEF,
             Items.PORKCHOP,Items.COOKED_PORKCHOP,
             Items.MUTTON,Items.COOKED_MUTTON,
             Items.CHICKEN,Items.COOKED_CHICKEN,
-            Items.RABBIT,Items.COOKED_RABBIT);
+            Items.RABBIT,Items.COOKED_RABBIT,
+            ModItems.RAW_SUNFISH_MEAT.get(), ModItems.COOKED_SUNFISH_MEAT.get(),
+            ModItems.RAW_ANGELFISH.get(),
+            ModItems.RAW_NEON_TETRA.get(),
+            ModItems.RAW_BARRELEYE.get(),
+            ModItems.RAW_KRILL.get(),
+            ModItems.RAW_FLOUNDER.get(),
+            ModItems.RAW_PILLBUG.get(),
+            Items.COD,Items.COOKED_COD,
+            Items.SALMON,Items.COOKED_SALMON
+
+    );
 
     public static final Ingredient TAME_ITEM = Ingredient.of(
             Items.BEEF,Items.COOKED_BEEF,
             Items.PORKCHOP,Items.COOKED_PORKCHOP,
             Items.MUTTON,Items.COOKED_MUTTON,
             Items.CHICKEN,Items.COOKED_CHICKEN,
-            Items.RABBIT,Items.COOKED_RABBIT
+            Items.RABBIT,Items.COOKED_RABBIT,
+            ModItems.RAW_SUNFISH_MEAT.get(), ModItems.COOKED_SUNFISH_MEAT.get(),
+            ModItems.RAW_ANGELFISH.get(),
+            ModItems.RAW_NEON_TETRA.get(),
+            ModItems.RAW_BARRELEYE.get(),
+            ModItems.RAW_KRILL.get(),
+            ModItems.RAW_FLOUNDER.get(),
+            ModItems.RAW_PILLBUG.get(),
+            Items.COD,Items.COOKED_COD,
+            Items.SALMON,Items.COOKED_SALMON
+
     );
+
+    public int armorDurability = 256;
 
     public LionEntity(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -93,6 +119,9 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(IS_ARMORED, false);
+        this.entityData.define(IS_ARMOR_SLIGHTLY_DAMAGED, false);
+        this.entityData.define(IS_ARMOR_DAMAGED, false);
+        this.entityData.define(IS_ARMOR_REPAIRED, false);
     }
 
     protected void registerGoals() {
@@ -108,13 +137,48 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.25D, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Sheep.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Cow.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Pig.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Chicken.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Rabbit.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, EmuEntity.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, ToucanEntity.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Sheep.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isTame() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Cow.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isTame() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Pig.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isTame() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Chicken.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isTame() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Rabbit.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isTame() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, EmuEntity.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isTame() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, ToucanEntity.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isTame() && super.canUse();
+            }
+        });
         this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D) {
             @Override
             public boolean canUse() {
@@ -210,8 +274,15 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
         super.aiStep();
         if (this.isAlive()) {
             setSprinting(isAggressive());
-            this.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(this.isArmored() ? 0.0D : 10.0D);
-            this.getAttribute(Attributes.ARMOR).setBaseValue(this.isArmored() ? 0.0D : 10.0D);
+
+            setArmorRepaired(this.isArmored() && armorDurability > 128);
+            setArmorSlightlyDamaged(this.isArmored() && armorDurability < 128);
+            setArmorDamaged(this.isArmored() && armorDurability < 64);
+
+            if (this.isArmored() && armorDurability == 0) {
+                setArmored(false);
+                setArmorDamaged(false);
+            }
         }
     }
 
@@ -222,6 +293,13 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
             Entity entity = pSource.getEntity();
             if (!this.level().isClientSide) {
                 this.setOrderedToSit(false);
+            }
+
+            if (this.isArmored() && armorDurability > 0) {
+                --armorDurability;
+                --armorDurability;
+                --armorDurability;
+                --armorDurability;
             }
 
             if (entity != null && !(entity instanceof Player) && !(entity instanceof AbstractArrow)) {
@@ -278,16 +356,32 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
         Item item = itemstack.getItem();
+
         if (this.level().isClientSide) {
+
             boolean flag = this.isOwnedBy(pPlayer) || this.isTame() || TAME_FOOD.contains(itemstack.getItem()) && !this.isTame() && !this.isAngry();
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
+
         } else if (this.isTame()) {
+
             if (itemstack.getItem() == ModItems.LION_ARMOR.get() && !this.isArmored() && !this.isBaby()) {
                 this.usePlayerItem(pPlayer, pHand, itemstack);
                 playSound(SoundEvents.HORSE_ARMOR, 1.0F, 1.0F);
                 setArmored(true);
+                setArmorRepaired(true);
+                armorDurability = 256;
                 return InteractionResult.SUCCESS;
             }
+
+            if (itemstack.getItem() == Items.COPPER_INGOT && this.isArmored() && armorDurability < 256 && !this.isBaby()) {
+                this.usePlayerItem(pPlayer, pHand, itemstack);
+                playSound(SoundEvents.COPPER_PLACE, 1.0F, 1.0F);
+                ++armorDurability;
+                ++armorDurability;
+                return InteractionResult.SUCCESS;
+            }
+
+
             if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
                 this.heal((float)itemstack.getFoodProperties(this).getNutrition());
                 if (!pPlayer.getAbilities().instabuild) {
@@ -296,7 +390,9 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
                 playSound(SoundEvents.GENERIC_EAT, 1.0F, 1.0F);
                 this.gameEvent(GameEvent.EAT, this);
                 return InteractionResult.SUCCESS;
+
             } else {
+
                 InteractionResult interactionresult = super.mobInteract(pPlayer, pHand);
                 if ((!interactionresult.consumesAction() || this.isBaby()) && this.isOwnedBy(pPlayer)) {
                     this.setOrderedToSit(!this.isOrderedToSit());
@@ -335,6 +431,30 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
 
     public void setArmored(boolean armored) {
         entityData.set(IS_ARMORED, armored);
+    }
+
+    public boolean isArmorRepaired() {
+        return entityData.get(IS_ARMOR_REPAIRED);
+    }
+
+    public void setArmorRepaired(boolean armored) {
+        entityData.set(IS_ARMOR_REPAIRED, armored);
+    }
+
+    public boolean isArmorSlightlyDamaged() {
+        return entityData.get(IS_ARMOR_SLIGHTLY_DAMAGED);
+    }
+
+    public void setArmorSlightlyDamaged(boolean armored) {
+        entityData.set(IS_ARMOR_SLIGHTLY_DAMAGED, armored);
+    }
+
+    public boolean isArmorDamaged() {
+        return entityData.get(IS_ARMOR_DAMAGED);
+    }
+
+    public void setArmorDamaged(boolean armored) {
+        entityData.set(IS_ARMOR_DAMAGED, armored);
     }
 
     @Override

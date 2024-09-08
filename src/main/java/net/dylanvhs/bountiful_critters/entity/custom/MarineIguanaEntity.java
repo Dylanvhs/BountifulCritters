@@ -137,7 +137,7 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
                 return !isInWater() && super.canUse();
             }
         });
-        this.goalSelector.addGoal(5, new MarineIguanaEntity.IguanaEatSeagrass(this));
+        this.goalSelector.addGoal(7, new MarineIguanaEntity.IguanaEatSeagrass(this));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F) {
             @Override
             public boolean canUse() {
@@ -459,7 +459,7 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
         }
 
         public void stop() {
-            searchCooldown = 50;
+            searchCooldown = 500;
             timeoutCounter = 0;
             destinationBlock = null;
         }

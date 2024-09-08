@@ -23,6 +23,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
+import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -66,6 +67,7 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
     public HumpbackWhaleEntity(EntityType<? extends HumpbackWhaleEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.moveControl = new HumpbackWhaleEntity.MoveHelperController(this);
+        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 15);
     }
 

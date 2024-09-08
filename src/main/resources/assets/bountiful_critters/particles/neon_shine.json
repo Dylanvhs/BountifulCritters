@@ -1,9 +1,9 @@
 {
   "textures": [
-    "bountiful_critters:neon_shine0",
-    "bountiful_critters:neon_shine1",
-    "bountiful_critters:neon_shine2",
-    "bountiful_critters:neon_shine3",
-    "bountiful_critters:neon_shine4"
+    "bountiful_critters:particle/neon_shine0",
+    "bountiful_critters:particle/neon_shine1",
+    "bountiful_critters:particle/neon_shine2",
+    "bountiful_critters:particle/neon_shine3",
+    "bountiful_critters:particle/neon_shine4"
   ]
 }

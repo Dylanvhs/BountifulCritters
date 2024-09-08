@@ -47,6 +47,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.BOILED_EMU_EGG.get());
                         pOutput.accept(ModItems.LONGHORN_HORN.get());
                         pOutput.accept(ModItems.LONGHORN_DIDGERIDOO.get());
+                        pOutput.accept(ModItems.LION_ARMOR.get());
                         pOutput.accept(ModItems.SALT.get());
                         pOutput.accept(ModBlocks.SALT_LAMP.get());
                         pOutput.accept(ModItems.SALTED_KELP.get());
