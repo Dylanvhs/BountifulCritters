@@ -52,6 +52,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.REPTILE_BAG);
         simpleItem(ModItems.BAGGED_GECKO);
         simpleItem(ModItems.BAGGED_BLUNT_HEADED_TREE_SNAKE);
+        simpleItem(ModItems.SNAKE_HOOK);
+        simpleItem(ModItems.CAPTURED_BLUNT_HEADED_TREE_SNAKE);
         simpleItem(ModItems.RETURNING_MEMORY_MUSIC_DISC);
         simpleItem(ModItems.LION_ARMOR);
 

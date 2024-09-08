@@ -266,6 +266,9 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
         if (isBaby()) {
             return false;
         }
+        if (!hasRightHorn() && !hasLeftHorn()) {
+            return false;
+        }
         return prev;
     }
 
@@ -328,8 +331,8 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
         if (this.stunnedTick > 0) {
             --this.stunnedTick;
             this.stunEffect();
-            if (random.nextFloat() <= 0.05F) {
-                if (random.nextFloat() < 0.05F) {
+            if (random.nextFloat() <= 0.02F) {
+                if (random.nextFloat() < 0.02F) {
                     this.dropHorn();
                 }
             }

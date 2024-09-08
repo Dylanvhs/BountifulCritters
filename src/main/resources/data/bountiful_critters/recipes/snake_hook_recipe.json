@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:copper"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "CCC",
+    " C ",
+    "S  "
+  ],
+  "result": {
+    "item": "bountiful_critters:snake_hook"
+  },
+  "show_notification": true
+}

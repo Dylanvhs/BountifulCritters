@@ -54,6 +54,12 @@ public class ModItems {
     public static final RegistryObject<Item> BAGGED_GECKO = ITEMS.register("bagged_gecko",
             () ->  new BagItem(ModEntities.GECKO::get, ModItems.REPTILE_BAG.get(), (new Item.Properties()).stacksTo(1)));
 
+    public static final RegistryObject<Item> SNAKE_HOOK = ITEMS.register("snake_hook",
+            () ->  new Item(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> CAPTURED_BLUNT_HEADED_TREE_SNAKE = ITEMS.register("captured_blunt_headed_tree_snake",
+            () ->  new HookItem(ModEntities.BLUNT_HEADED_TREE_SNAKE::get, ModItems.SNAKE_HOOK.get(), (new Item.Properties()).stacksTo(1)));
+
     public static final RegistryObject<Item> LONGHORN_DIDGERIDOO = ITEMS.register("longhorn_didgeridoo",
             () -> new LongHornDidgeridooItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> LONGHORN_HORN =

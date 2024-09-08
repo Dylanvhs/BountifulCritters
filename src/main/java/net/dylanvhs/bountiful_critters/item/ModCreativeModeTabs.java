@@ -30,6 +30,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.FLOUNDER_BUCKET.get());
                         pOutput.accept(ModItems.MARINE_IGUANA_BUCKET.get());
                         pOutput.accept(ModItems.POTTED_PILLBUG.get());
+                        pOutput.accept(ModItems.SNAKE_HOOK.get());
+                        pOutput.accept(ModItems.CAPTURED_BLUNT_HEADED_TREE_SNAKE.get());
                         pOutput.accept(ModItems.REPTILE_BAG.get());
                         pOutput.accept(ModItems.BAGGED_GECKO.get());
                         pOutput.accept(ModItems.BAGGED_BLUNT_HEADED_TREE_SNAKE.get());
@@ -47,7 +49,6 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.BOILED_EMU_EGG.get());
                         pOutput.accept(ModItems.LONGHORN_HORN.get());
                         pOutput.accept(ModItems.LONGHORN_DIDGERIDOO.get());
-                        pOutput.accept(ModItems.LION_ARMOR.get());
                         pOutput.accept(ModItems.SALT.get());
                         pOutput.accept(ModBlocks.SALT_LAMP.get());
                         pOutput.accept(ModItems.SALTED_KELP.get());

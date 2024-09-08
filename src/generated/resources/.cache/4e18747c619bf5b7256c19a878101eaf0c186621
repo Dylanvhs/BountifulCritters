@@ -1,4 +1,4 @@
-// 1.20.1	2024-06-10T14:49:32.4361197	Item Models: bountiful_critters
+// 1.20.1	2024-09-08T20:05:17.5513925	Item Models: bountiful_critters
 4b6c5e548ce57d7a0b9c19e1209f2e9a5a1b65c4 assets/bountiful_critters/models/item/angelfish_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/angelfish_spawn_egg.json
 f660cd040dc4b8b28afb8cf842c04747ec176c26 assets/bountiful_critters/models/item/bagged_blunt_headed_tree_snake.json
@@ -7,6 +7,7 @@ f660cd040dc4b8b28afb8cf842c04747ec176c26 assets/bountiful_critters/models/item/b
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/barreleye_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/blunt_headed_tree_snake_spawn_egg.json
 c932650040726c1b26c1a26dd846d1c1d05c14d0 assets/bountiful_critters/models/item/boiled_emu_egg.json
+6a657ee5d8aef79945f90658c737a93a6a39408f assets/bountiful_critters/models/item/captured_blunt_headed_tree_snake.json
 6ec21d0cb96e4b516917bb0f9b4ea06b059cb76d assets/bountiful_critters/models/item/cooked_sunfish_meat.json
 425dd2ceb1fdabf09daa58fc5bef59c719a69e0a assets/bountiful_critters/models/item/emu_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/emu_spawn_egg.json
@@ -42,6 +43,7 @@ db248d842ff5b16c6a81e518754d73f8b65ab49c assets/bountiful_critters/models/item/r
 8fe874132130f27d9cc625f5cf8fba5031333ca3 assets/bountiful_critters/models/item/salt.json
 49ca52f7c5d5b38f601cb26bd15eecb6a7bd7674 assets/bountiful_critters/models/item/salted_kelp.json
 33be1acfd17ad0aaca85aaecc6484569c34ef616 assets/bountiful_critters/models/item/seagrass_ball.json
+7b9fb93b20c7d081f2628ba58e102a87af6be4b2 assets/bountiful_critters/models/item/snake_hook.json
 027057beb7d522384e260369c07f8485c46005fc assets/bountiful_critters/models/item/sticky_arrow.json
 7b80975cc618f6d6d91e18c7ce6868e70ff929e8 assets/bountiful_critters/models/item/stingray_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/stingray_spawn_egg.json
