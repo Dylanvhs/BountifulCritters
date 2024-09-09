@@ -246,7 +246,7 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Hoo
         Hookable.saveDefaultDataToBagTag(this, bucket);
         CompoundTag compoundnbt = bucket.getOrCreateTag();
         compoundnbt.putInt("Age", this.getAge());
-        compoundnbt.putInt("BagVariantTag", this.getVariant());
+        compoundnbt.putInt("HookVariantTag", this.getVariant());
     }
 
     @Override
@@ -255,15 +255,23 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Hoo
         if (compound.contains("Age")) {
             this.setAge(compound.getInt("Age"));
         }
-        if (compound.contains("BagVariantTag", 3)) {
-            this.setVariant(compound.getInt("BagVariantTag"));
+        if (compound.contains("HookVariantTag", 3)) {
+            this.setVariant(compound.getInt("HookVariantTag"));
         }
     }
 
     @Override
     @Nonnull
     public InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
-        return Hookable.bagMobPickup(player, hand, this).orElse(super.mobInteract(player, hand));
+        ItemStack itemstack = player.getItemInHand(hand);
+        ItemStack itemstack4 = player.getItemInHand(InteractionHand.OFF_HAND);
+        if (itemstack.getItem() == ModItems.SNAKE_HOOK.get() && this.isAlive()) {
+            Hookable.hookMobPickup(player, hand, this);
+        }
+        else if (itemstack.getItem() == ModItems.SNAKE_HOOK.get() && itemstack4.getItem() == ModItems.REPTILE_BAG.get() && this.isAlive()) {
+            Hookable.bagMobPickup(player, hand, this);
+        }
+        return super.mobInteract(player, hand);
     }
 
     @Override

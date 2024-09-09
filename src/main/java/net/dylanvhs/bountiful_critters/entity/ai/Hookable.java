@@ -88,12 +88,11 @@ public interface Hookable {
 
     }
 
-    static <T extends LivingEntity & Hookable> Optional<InteractionResult> bagMobPickup(Player pPlayer, InteractionHand pHand, T pEntity) {
+    static <T extends LivingEntity & Hookable> Optional<InteractionResult> hookMobPickup(Player pPlayer, InteractionHand pHand, T pEntity) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
-        ItemStack itemstack4 = pPlayer.getItemInHand(InteractionHand.OFF_HAND);
 
 
-        if (itemstack.getItem() == ModItems.SNAKE_HOOK.get() && pEntity.isAlive()) {
+        if (pEntity.isAlive()) {
             pEntity.playSound(pEntity.getPickupSound(), 1.0F, 1.0F);
             ItemStack itemstack1 = pEntity.getHookItemStack();
             pEntity.saveToHookTag(itemstack1);
@@ -106,7 +105,16 @@ public interface Hookable {
             pEntity.discard();
             return Optional.of(InteractionResult.sidedSuccess(level.isClientSide));
         }
-        else if (itemstack.getItem() == ModItems.SNAKE_HOOK.get() && itemstack4.getItem() == ModItems.REPTILE_BAG.get() && pEntity.isAlive()) {
+        else {
+            return Optional.empty();
+        }
+    }
+
+    static <T extends LivingEntity & Hookable> Optional<InteractionResult> bagMobPickup(Player pPlayer, InteractionHand pHand, T pEntity) {
+        ItemStack itemstack = pPlayer.getItemInHand(pHand);
+
+
+        if (pEntity.isAlive()) {
             pEntity.playSound(pEntity.getPickupSound(), 1.0F, 1.0F);
             ItemStack itemstack1 = pEntity.getBagItemStack();
             pEntity.saveToHookTag(itemstack1);
@@ -117,9 +125,9 @@ public interface Hookable {
                 CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)pPlayer, itemstack1);
             }
             pEntity.discard();
-            itemstack4.shrink(1);
             return Optional.of(InteractionResult.sidedSuccess(level.isClientSide));
-        } else {
+        }
+        else {
             return Optional.empty();
         }
     }
