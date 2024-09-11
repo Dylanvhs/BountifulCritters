@@ -15,7 +15,9 @@
   "item.bountiful_critters.bagged_gecko": "Bagged Gecko",
   "item.bountiful_critters.bagged_blunt_headed_tree_snake": "Bagged Fiddle String Snake",
 
-  "item.bountiful_critters.captured_blunt_headed_tree_snake": "Snake Hook",
+  "item.bountiful_critters.captured_blunt_headed_tree_snake": "Captured Snake",
+
+  "snake.bountiful_critters.blunt_headed_tree_snake": "Fiddle String Snake",
 
 
   "item.bountiful_critters.raw_sunfish_meat": "Raw Sunfish Meat",

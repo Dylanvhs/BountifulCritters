@@ -30,7 +30,7 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<EmuEntity>> EMU =
             ENTITY_TYPES.register("emu",
-                    () -> EntityType.Builder.of(EmuEntity::new, MobCategory.AMBIENT)
+                    () -> EntityType.Builder.of(EmuEntity::new, MobCategory.CREATURE)
                             .sized(1f, 2f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "emu").toString()));
 
@@ -42,19 +42,19 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<MarineIguanaEntity>> MARINE_IGUANA =
             ENTITY_TYPES.register("marine_iguana",
-                    () -> EntityType.Builder.of(MarineIguanaEntity::new, MobCategory.AMBIENT)
+                    () -> EntityType.Builder.of(MarineIguanaEntity::new, MobCategory.AXOLOTLS)
                             .sized(0.9f, 0.5f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "marine_iguana").toString()));
 
     public static final RegistryObject<EntityType<LonghornEntity>> LONGHORN =
             ENTITY_TYPES.register("longhorn",
-                    () -> EntityType.Builder.of(LonghornEntity::new, MobCategory.AMBIENT)
+                    () -> EntityType.Builder.of(LonghornEntity::new, MobCategory.CREATURE)
                             .sized(1.25f, 1.7f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "longhorn").toString()));
 
     public static final RegistryObject<EntityType<ToucanEntity>> TOUCAN =
             ENTITY_TYPES.register("toucan",
-                    () -> EntityType.Builder.of(ToucanEntity::new, MobCategory.AMBIENT)
+                    () -> EntityType.Builder.of(ToucanEntity::new, MobCategory.CREATURE)
                             .sized(0.5f, 1f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "toucan").toString()));
 
@@ -66,7 +66,7 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<PillbugEntity>> PILLBUG =
             ENTITY_TYPES.register("pillbug",
-                    () -> EntityType.Builder.of(PillbugEntity::new, MobCategory.MONSTER)
+                    () -> EntityType.Builder.of(PillbugEntity::new, MobCategory.CREATURE)
                             .sized(0.75f, 0.65f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "pillbug").toString()));
 
@@ -78,13 +78,13 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<GeckoEntity>> GECKO =
             ENTITY_TYPES.register("gecko",
-                    () -> EntityType.Builder.of(GeckoEntity::new, MobCategory.AMBIENT)
+                    () -> EntityType.Builder.of(GeckoEntity::new, MobCategory.CREATURE)
                             .sized(0.8f, 0.7f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "gecko").toString()));
 
     public static final RegistryObject<EntityType<LionEntity>> LION =
             ENTITY_TYPES.register("lion",
-                    () -> EntityType.Builder.of(LionEntity::new, MobCategory.AMBIENT)
+                    () -> EntityType.Builder.of(LionEntity::new, MobCategory.CREATURE)
                             .sized(1f, 2f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "lion").toString()));
 

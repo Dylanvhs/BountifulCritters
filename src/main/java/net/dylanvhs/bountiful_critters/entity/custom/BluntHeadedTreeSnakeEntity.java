@@ -264,7 +264,7 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Hoo
     @Nonnull
     public InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
-        ItemStack itemstack4 = player.getItemInHand(InteractionHand.OFF_HAND);
+        ItemStack itemstack4 = player.getItemBySlot(EquipmentSlot.OFFHAND);
         if (itemstack.getItem() == ModItems.SNAKE_HOOK.get() && this.isAlive()) {
             Hookable.hookMobPickup(player, hand, this);
         }

@@ -5,16 +5,19 @@ import java.util.Objects;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
+import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.ai.Bagable;
 import net.dylanvhs.bountiful_critters.entity.ai.Hookable;
 import net.dylanvhs.bountiful_critters.entity.custom.BluntHeadedTreeSnakeEntity;
 import net.dylanvhs.bountiful_critters.entity.custom.GeckoEntity;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -41,6 +44,10 @@ import net.minecraft.world.level.material.Fluids;
 public class HookItem extends BucketItem {
     private final Supplier<? extends EntityType<?>> entityType;
     private final Item item1;
+    private static final ChatFormatting TITLE_FORMAT = ChatFormatting.GRAY;
+    private static final ChatFormatting DESCRIPTION_FORMAT = ChatFormatting.BLUE;
+
+    private static final Component BLUNT_HEADED_TREE_SNAKE = Component.translatable(Util.makeDescriptionId("snake", new ResourceLocation(BountifulCritters.MOD_ID,"blunt_headed_tree_snake"))).withStyle(TITLE_FORMAT);
 
     public HookItem(Supplier<EntityType<?>> entityType, Item item, Properties properties) {
         this(entityType, Fluids.EMPTY, item, properties);
@@ -126,8 +133,9 @@ public class HookItem extends BucketItem {
             CompoundTag compoundnbt = stack.getTag();
             if (compoundnbt != null && compoundnbt.contains("HookVariantTag", 3)) {
                 int i = compoundnbt.getInt("HookVariantTag");
+                tooltip.add(BLUNT_HEADED_TREE_SNAKE);
                 String s = "entity.bountiful_critters.blunt_headed_tree_snake.variant_" + BluntHeadedTreeSnakeEntity.getVariantName(i);
-                tooltip.add((Component.translatable(s)).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
+                tooltip.add((Component.translatable(s)).withStyle(DESCRIPTION_FORMAT).withStyle(ChatFormatting.ITALIC));
             }
         }
 
