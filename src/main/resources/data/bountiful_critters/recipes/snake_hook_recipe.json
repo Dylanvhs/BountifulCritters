@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "C": {
-      "item": "minecraft:copper"
+      "item": "minecraft:copper_ingot"
     },
     "S": {
       "item": "minecraft:stick"
@@ -11,7 +11,7 @@
   },
   "pattern": [
     "CCC",
-    " C ",
+    " S ",
     "S  "
   ],
   "result": {

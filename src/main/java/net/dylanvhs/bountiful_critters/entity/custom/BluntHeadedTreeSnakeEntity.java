@@ -58,9 +58,10 @@ import software.bernie.geckolib.core.object.PlayState;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Hookable {
+public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Hookable, Bagable {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(BluntHeadedTreeSnakeEntity.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Boolean> FROM_HOOK = SynchedEntityData.defineId(BluntHeadedTreeSnakeEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> FROM_BAG = SynchedEntityData.defineId(BluntHeadedTreeSnakeEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(BluntHeadedTreeSnakeEntity.class, EntityDataSerializers.INT);
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(ModItems.POTTED_PILLBUG.get());
@@ -105,6 +106,7 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Hoo
         super.defineSynchedData();
         this.entityData.define(VARIANT, 0);
         this.entityData.define(DATA_FLAGS_ID, (byte) 0);
+        this.entityData.define(FROM_HOOK, false);
         this.entityData.define(FROM_BAG, false);
     }
 
@@ -112,12 +114,14 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Hoo
         super.addAdditionalSaveData(compound);
         compound.putInt("Variant", this.getVariant());
         compound.putBoolean("FromHook", this.fromHook());
+        compound.putBoolean("FromBag", this.fromBag());
     }
 
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.setVariant(compound.getInt("Variant"));
         this.setFromHook(compound.getBoolean("FromHook"));
+        this.setFromBag(compound.getBoolean("FromBag"));
     }
 
     protected void registerGoals() {
@@ -210,12 +214,12 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Hoo
 
     @Override
     public boolean fromHook() {
-        return this.entityData.get(FROM_BAG);
+        return this.entityData.get(FROM_HOOK);
     }
 
     @Override
     public void setFromHook(boolean p_203706_1_) {
-        this.entityData.set(FROM_BAG, p_203706_1_);
+        this.entityData.set(FROM_HOOK, p_203706_1_);
     }
 
     @Override
@@ -264,12 +268,12 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Hoo
     @Nonnull
     public InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
-        ItemStack itemstack4 = player.getItemBySlot(EquipmentSlot.OFFHAND);
+        ItemStack itemstack4 = player.getOffhandItem();
         if (itemstack.getItem() == ModItems.SNAKE_HOOK.get() && this.isAlive()) {
             Hookable.hookMobPickup(player, hand, this);
         }
-        else if (itemstack.getItem() == ModItems.SNAKE_HOOK.get() && itemstack4.getItem() == ModItems.REPTILE_BAG.get() && this.isAlive()) {
-            Hookable.bagMobPickup(player, hand, this);
+        else if (itemstack4.getItem() == ModItems.REPTILE_BAG.get() && itemstack.getItem() == ModItems.SNAKE_HOOK.get() &&  this.isAlive()) {
+            Bagable.bagMobPickup(player, hand, this);
         }
         return super.mobInteract(player, hand);
     }
@@ -280,7 +284,39 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Hoo
         return SoundEvents.BUNDLE_INSERT;
     }
 
-        public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
+    @Override
+    public boolean fromBag() {
+        return this.entityData.get(FROM_BAG);
+    }
+
+    @Override
+    public void setFromBag(boolean p_203706_1_) {
+        this.entityData.set(FROM_BAG, p_203706_1_);
+    }
+
+    @Override
+    public void saveToBagTag(@Nonnull ItemStack bucket) {
+        if (this.hasCustomName()) {
+            bucket.setHoverName(this.getCustomName());
+        }
+        Bagable.saveDefaultDataToBagTag(this, bucket);
+        CompoundTag compoundnbt = bucket.getOrCreateTag();
+        compoundnbt.putInt("Age", this.getAge());
+        compoundnbt.putInt("BagVariantTag", this.getVariant());
+    }
+
+    @Override
+    public void loadFromBagTag(@Nonnull CompoundTag compound) {
+        Bagable.loadDefaultDataFromBagTag(this, compound);
+        if (compound.contains("Age")) {
+            this.setAge(compound.getInt("Age"));
+        }
+        if (compound.contains("BagVariantTag", 3)) {
+            this.setVariant(compound.getInt("BagVariantTag"));
+        }
+    }
+
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
         boolean flag = false;
         float variantChange = this.getRandom().nextFloat();
         if (reason != MobSpawnType.BUCKET) {

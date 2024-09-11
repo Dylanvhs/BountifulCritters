@@ -1,13 +1,11 @@
 package net.dylanvhs.bountiful_critters.entity.ai;
 
-import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -95,28 +93,6 @@ public interface Hookable {
         if (pEntity.isAlive()) {
             pEntity.playSound(pEntity.getPickupSound(), 1.0F, 1.0F);
             ItemStack itemstack1 = pEntity.getHookItemStack();
-            pEntity.saveToHookTag(itemstack1);
-            ItemStack itemstack2 = ItemUtils.createFilledResult(itemstack, pPlayer, itemstack1, false);
-            pPlayer.setItemInHand(pHand, itemstack2);
-            Level level = pEntity.level();
-            if (!level.isClientSide) {
-                CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)pPlayer, itemstack1);
-            }
-            pEntity.discard();
-            return Optional.of(InteractionResult.sidedSuccess(level.isClientSide));
-        }
-        else {
-            return Optional.empty();
-        }
-    }
-
-    static <T extends LivingEntity & Hookable> Optional<InteractionResult> bagMobPickup(Player pPlayer, InteractionHand pHand, T pEntity) {
-        ItemStack itemstack = pPlayer.getItemInHand(pHand);
-
-
-        if (pEntity.isAlive()) {
-            pEntity.playSound(pEntity.getPickupSound(), 1.0F, 1.0F);
-            ItemStack itemstack1 = pEntity.getBagItemStack();
             pEntity.saveToHookTag(itemstack1);
             ItemStack itemstack2 = ItemUtils.createFilledResult(itemstack, pPlayer, itemstack1, false);
             pPlayer.setItemInHand(pHand, itemstack2);
