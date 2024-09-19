@@ -1,4 +1,4 @@
-// 1.20.1	2024-09-08T20:05:17.5513925	Item Models: bountiful_critters
+// 1.20.1	2024-09-19T22:03:27.7359208	Item Models: bountiful_critters
 4b6c5e548ce57d7a0b9c19e1209f2e9a5a1b65c4 assets/bountiful_critters/models/item/angelfish_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/angelfish_spawn_egg.json
 f660cd040dc4b8b28afb8cf842c04747ec176c26 assets/bountiful_critters/models/item/bagged_blunt_headed_tree_snake.json
@@ -27,6 +27,7 @@ a24c9d6747f3af8e67fc3c07aa31c82d2d91dea6 assets/bountiful_critters/models/item/l
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/marine_iguana_spawn_egg.json
 28fdb706587ca264ef71dad708d85482c249b917 assets/bountiful_critters/models/item/neon_tetra_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/neon_tetra_spawn_egg.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/pheasant_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/pillbug_spawn_egg.json
 e9570321174ff013cfd1784d4b181c3d1147cbb3 assets/bountiful_critters/models/item/poisonous_pillbug.json
 4bd0b165990c9e137b282cf5e978a0070d80cebb assets/bountiful_critters/models/item/potted_pillbug.json

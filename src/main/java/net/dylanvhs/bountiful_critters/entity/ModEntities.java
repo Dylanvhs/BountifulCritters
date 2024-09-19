@@ -112,6 +112,13 @@ public class ModEntities {
                             .sized(0.35f, 0.35f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "flounder").toString()));
 
+    public static final RegistryObject<EntityType<PheasantEntity>> PHEASANT =
+            ENTITY_TYPES.register("pheasant",
+                    () -> EntityType.Builder.of(PheasantEntity::new, MobCategory.CREATURE)
+                            .sized(0.75f, 0.9f)
+                            .build(new ResourceLocation(BountifulCritters.MOD_ID, "pheasant").toString()));
+
+
 
     public static final RegistryObject<EntityType<EmuEggEntity>> EMU_EGG =
                     ENTITY_TYPES.register("emu_egg_projectile", () -> EntityType.Builder.<EmuEggEntity>of(EmuEggEntity::new, MobCategory.MISC)

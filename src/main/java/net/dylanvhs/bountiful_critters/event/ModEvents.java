@@ -43,6 +43,7 @@ public final class ModEvents {
         e.register(ModEntities.ANGELFISH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.WORLD_SURFACE, AngelfishEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
         e.register(ModEntities.NEON_TETRA.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.WORLD_SURFACE, NeonTetraEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
         e.register(ModEntities.FLOUNDER.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.OCEAN_FLOOR, FlounderEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
+        e.register(ModEntities.PHEASANT.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PheasantEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.OR);
     }
 
     @SubscribeEvent
@@ -63,6 +64,7 @@ public final class ModEvents {
         event.put(ModEntities.ANGELFISH.get(), AngelfishEntity.setAttributes());
         event.put(ModEntities.NEON_TETRA.get(), NeonTetraEntity.setAttributes());
         event.put(ModEntities.FLOUNDER.get(), FlounderEntity.setAttributes());
+        event.put(ModEntities.PHEASANT.get(), PheasantEntity.setAttributes());
 
     }
 

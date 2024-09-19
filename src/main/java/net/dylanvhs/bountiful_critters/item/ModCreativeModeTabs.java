@@ -78,6 +78,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.BARRELEYE_SPAWN_EGG.get());
                         pOutput.accept(ModItems.NEON_TETRA_SPAWN_EGG.get());
                         pOutput.accept(ModItems.FLOUNDER_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.PHEASANT_SPAWN_EGG.get());
 
 
 

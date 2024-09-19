@@ -170,6 +170,9 @@ public class ModItems {
     public static final RegistryObject<Item> FLOUNDER_SPAWN_EGG = ITEMS.register("flounder_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.FLOUNDER, 0x5b442f, 0x916e44, new Item.Properties()));
 
+    public static final RegistryObject<Item> PHEASANT_SPAWN_EGG = ITEMS.register("pheasant_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.PHEASANT, 0x632e23, 0x1e2034, new Item.Properties()));
+
     public static void initDispenser() {
         DispenserBlock.registerBehavior(STICKY_ARROW.get(), new AbstractProjectileDispenseBehavior() {
             protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
