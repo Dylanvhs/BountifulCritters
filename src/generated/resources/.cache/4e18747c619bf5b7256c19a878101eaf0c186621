@@ -1,4 +1,4 @@
-// 1.20.1	2024-09-22T13:31:31.1917094	Item Models: bountiful_critters
+// 1.20.1	2024-09-22T16:41:40.067714	Item Models: bountiful_critters
 4b6c5e548ce57d7a0b9c19e1209f2e9a5a1b65c4 assets/bountiful_critters/models/item/angelfish_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/angelfish_spawn_egg.json
 f660cd040dc4b8b28afb8cf842c04747ec176c26 assets/bountiful_critters/models/item/bagged_blunt_headed_tree_snake.json
@@ -9,6 +9,7 @@ f660cd040dc4b8b28afb8cf842c04747ec176c26 assets/bountiful_critters/models/item/b
 c932650040726c1b26c1a26dd846d1c1d05c14d0 assets/bountiful_critters/models/item/boiled_emu_egg.json
 3dd885db0228b7f09735e1ce956a8884bfea65c4 assets/bountiful_critters/models/item/bountiful_music_disc.json
 6a657ee5d8aef79945f90658c737a93a6a39408f assets/bountiful_critters/models/item/captured_blunt_headed_tree_snake.json
+ca4520d57856bdc534808525317277149216f533 assets/bountiful_critters/models/item/cooked_pheasant.json
 6ec21d0cb96e4b516917bb0f9b4ea06b059cb76d assets/bountiful_critters/models/item/cooked_sunfish_meat.json
 425dd2ceb1fdabf09daa58fc5bef59c719a69e0a assets/bountiful_critters/models/item/emu_egg.json
 23beb8b10c70d53dcbf914b4a09d9228e91d65c2 assets/bountiful_critters/models/item/emu_egg_shell_pieces.json
@@ -30,6 +31,8 @@ a24c9d6747f3af8e67fc3c07aa31c82d2d91dea6 assets/bountiful_critters/models/item/l
 bae395e7647d2711b967b8a3267284816cc01ae0 assets/bountiful_critters/models/item/memories_music_disc.json
 28fdb706587ca264ef71dad708d85482c249b917 assets/bountiful_critters/models/item/neon_tetra_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/neon_tetra_spawn_egg.json
+354505b6cc46aeb1c23afb60426891240352fb7c assets/bountiful_critters/models/item/pheasant.json
+5af9499de038c556b4505c8bfd3ecd06b754b598 assets/bountiful_critters/models/item/pheasant_feather.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/pheasant_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/pillbug_spawn_egg.json
 e9570321174ff013cfd1784d4b181c3d1147cbb3 assets/bountiful_critters/models/item/poisonous_pillbug.json

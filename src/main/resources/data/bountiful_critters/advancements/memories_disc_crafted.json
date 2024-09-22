@@ -1,0 +1,37 @@
+{
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "1": {
+      "conditions": {
+        "ingredients": [
+          {
+            "item": "bountiful_critters:emu_egg_shell_pieces"
+          }
+        ],
+        "recipe_id": "bountiful_critters:memories_music_disc_recipe"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.adventure.memories_disc_crafted.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "bountiful_critters:memories_music_disc"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.adventure.memories_disc_crafted.title"
+    }
+  },
+  "requirements": [
+    [
+      "1"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

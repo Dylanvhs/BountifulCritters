@@ -70,6 +70,10 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.POISONOUS_PILLBUG.get());
                         pOutput.accept(ModItems.PILLBUG_THROWABLE.get());
 
+                        pOutput.accept(ModItems.RAW_PHEASANT.get());
+                        pOutput.accept(ModItems.COOKED_PHEASANT.get());
+                        pOutput.accept(ModItems.PHEASANT_FEATHER.get());
+
                         pOutput.accept(ModItems.MEMORIES_MUSIC_DISC.get());
                         pOutput.accept(ModItems.BOUNTIFUL_MUSIC_DISC.get());
 

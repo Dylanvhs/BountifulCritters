@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "bountiful_critters:pheasant"
+  },
+  "result": "bountiful_critters:cooked_pheasant",
+  "experience": 0.20,
+  "cookingtime": 80
+}

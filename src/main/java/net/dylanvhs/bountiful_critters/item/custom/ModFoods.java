@@ -46,6 +46,13 @@ public class ModFoods {
     public static final FoodProperties RAW_FLOUNDER = new FoodProperties.Builder().nutrition(3)
             .saturationMod(0.35f).build();
 
+    public static final FoodProperties RAW_PHEASANT = new FoodProperties.Builder().nutrition(4)
+            .saturationMod(0.25f).effect(() -> new MobEffectInstance(MobEffects.HUNGER, 200), 0.4f).build();
+
+    public static final FoodProperties COOKED_PHEASANT = new FoodProperties.Builder().nutrition(7)
+            .saturationMod(0.7f).build();
+
+
     private static FoodProperties.Builder drink(int pNutrition) {
         return (new FoodProperties.Builder()).nutrition(pNutrition).saturationMod(0.5F);
     }

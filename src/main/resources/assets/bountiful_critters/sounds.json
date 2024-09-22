@@ -186,6 +186,30 @@
     ]
   },
 
+  "pheasant_ambient": {
+    "subtitle": "sounds.bountiful_critters:pheasant_ambient",
+    "sounds": [
+      {
+        "name": "bountiful_critters:pheasant_ambient1"
+      },
+      {
+        "name": "bountiful_critters:pheasant_ambient2"
+      }
+    ]
+  },
+
+  "pheasant_hurt": {
+    "subtitle": "sounds.bountiful_critters:pheasant_hurt",
+    "sounds": [
+      {
+        "name": "bountiful_critters:pheasant_hurt1"
+      },
+      {
+        "name": "bountiful_critters:pheasant_hurt2"
+      }
+    ]
+  },
+
   "longhorn_didgeridoo": {
     "subtitle": "sounds.bountiful_critters:longhorn_didgeridoo",
     "sounds": [

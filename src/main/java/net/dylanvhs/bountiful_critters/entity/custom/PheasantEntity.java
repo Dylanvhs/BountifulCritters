@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -36,6 +38,13 @@ import software.bernie.geckolib.core.object.PlayState;
 import javax.annotation.Nullable;
 
 public class PheasantEntity extends Animal implements GeoAnimatable {
+
+    public float flap;
+    public float flapSpeed;
+    public float oFlapSpeed;
+    public float oFlap;
+    public float flapping = 1.0F;
+    private float nextFlap = 1.0F;
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.SWEET_BERRIES);
@@ -66,8 +75,41 @@ public class PheasantEntity extends Animal implements GeoAnimatable {
         return TEMPTATION_ITEM.test(pStack);
     }
 
+    public void aiStep() {
+        super.aiStep();
+        this.oFlap = this.flap;
+        this.oFlapSpeed = this.flapSpeed;
+        this.flapSpeed += (this.onGround() ? -1.0F : 4.0F) * 0.3F;
+        this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
+        if (!this.onGround() && this.flapping < 1.0F) {
+            this.flapping = 1.0F;
+        }
+        this.flapping *= 0.9F;
+        Vec3 vec3 = this.getDeltaMovement();
+        if (!this.onGround() && vec3.y < 0.0D) {
+            this.setDeltaMovement(vec3.multiply(1.0D, 0.6D, 1.0D));
+        }
+
+        this.flap += this.flapping * 2.0F;
+    }
+
+    protected boolean isFlapping() {
+        return this.flyDist > this.nextFlap;
+    }
+
+    protected void onFlap() {
+        this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
+    }
+
+    public boolean causeFallDamage(float distance, float damageMultiplier) {
+        return false;
+    }
+
+    protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+    }
+
     protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
-        return this.isBaby() ? pSize.height * 0.5F : 2.0F;
+        return this.isBaby() ? pSize.height * 0.95F : 1.2F;
     }
 
     public static <T extends Mob> boolean canSpawn(EntityType type, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223317_3_, RandomSource random) {
@@ -76,11 +118,11 @@ public class PheasantEntity extends Animal implements GeoAnimatable {
     }
 
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.CHICKEN_AMBIENT;
+        return ModSounds.PHEASANT_AMBIENT.get();
     }
 
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        return SoundEvents.CHICKEN_HURT;
+        return ModSounds.PHEASANT_HURT.get();
     }
 
     protected SoundEvent getDeathSound() {
@@ -132,6 +174,11 @@ public class PheasantEntity extends Animal implements GeoAnimatable {
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+        if (!this.onGround()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.pheasant.fall", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(2.5F);
+            return PlayState.CONTINUE;
+        }
         if (geoAnimatableAnimationState.isMoving() && !this.isSprinting()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.pheasant.walk", Animation.LoopType.LOOP));
             geoAnimatableAnimationState.getController().setAnimationSpeed(1.25F);

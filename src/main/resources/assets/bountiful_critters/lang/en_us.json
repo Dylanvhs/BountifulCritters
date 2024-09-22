@@ -44,6 +44,9 @@
   "item.bountiful_critters.poisonous_pillbug": "Poisonous Pill Bug",
   "item.bountiful_critters.potted_pillbug": "Potted Pill Bug",
   "item.bountiful_critters.pillbug_throwable": "Pill Bug",
+  "item.bountiful_critters.pheasant": "Raw Pheasant",
+  "item.bountiful_critters.cooked_pheasant": "Cooked Pheasant",
+  "item.bountiful_critters.pheasant_feather": "Pheasant Feather",
   "item.bountiful_critters.snake_hook": "Snake Hook",
   "item.bountiful_critters.reptile_bag": "Reptile Bag",
   "item.bountiful_critters.lion_armor": "Lion Armor",
@@ -72,6 +75,7 @@
   "item.bountiful_critters.angelfish_spawn_egg" : "Angelfish Spawn Egg",
   "item.bountiful_critters.neon_tetra_spawn_egg" : "Neon Tetra Spawn Egg",
   "item.bountiful_critters.flounder_spawn_egg" : "Flounder Spawn Egg",
+  "item.bountiful_critters.pheasant_spawn_egg" : "Pheasant Spawn Egg",
 
 
   "block.bountiful_critters.roasted_pillbug_block": "Roasted Pill Bug",
@@ -161,6 +165,11 @@
   "advancements.husbandry.collect_seagrass_ball.title" : "Sticky Substance",
   "advancements.husbandry.collect_seagrass_ball.description" : "Get a Seagrass Ball",
 
+  "advancements.adventure.memories_disc_crafted.title" : "Eggs-pert Crafter",
+  "advancements.adventure.memories_disc_crafted.description" : "Craft a Music Disc Using Emu Egg Shell Pieces",
+
+  "advancements.husbandry.collect_salt.title" : "Salty Business",
+  "advancements.husbandry.collect_salt.description" : "Collect Salt",
 
   "sounds.bountiful_critters:emu_ambient": "Emu grunts",
   "sounds.bountiful_critters:emu_hurt": "Emu hurts",
@@ -186,6 +195,9 @@
 
 
   "sounds.bountiful_critters:whale_ambient": "Whale whistles",
+
+  "sounds.bountiful_critters:pheasant_ambient": "Pheasant calls",
+  "sounds.bountiful_critters:pheasant_hurt": "Pheasant hurts",
 
 
   "sounds.bountiful_critters:longhorn_didgeridoo": "Blows didgeridoo",
