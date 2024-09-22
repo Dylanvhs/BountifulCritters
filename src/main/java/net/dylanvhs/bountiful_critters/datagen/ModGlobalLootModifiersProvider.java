@@ -17,8 +17,8 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
     @Override
     protected void start() {
 
-        add("lion_armor_from_suspicious_sand", new SuspiciousSandItemModifier(new LootItemCondition[] {
-                new LootTableIdCondition.Builder(new ResourceLocation("archaeology/desert_pyramid")).build() }, ModItems.LION_ARMOR.get()));
+        add("bountiful_music_disc_from_suspicious_sand", new SuspiciousSandItemModifier(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("archaeology/desert_pyramid")).build() }, ModItems.BOUNTIFUL_MUSIC_DISC.get()));
 
     }
 }

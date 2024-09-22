@@ -44,6 +44,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.RAW_NEON_TETRA);
         simpleItem(ModItems.RAW_FLOUNDER);
         simpleItem(ModItems.EMU_EGG);
+        simpleItem(ModItems.EMU_EGG_SHELL_PIECES);
         simpleItem(ModItems.BOILED_EMU_EGG);
         simpleItem(ModItems.RAW_PILLBUG);
         simpleItem(ModItems.ROASTED_PILLBUG);
@@ -54,7 +55,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.BAGGED_BLUNT_HEADED_TREE_SNAKE);
         simpleItem(ModItems.SNAKE_HOOK);
         simpleItem(ModItems.CAPTURED_BLUNT_HEADED_TREE_SNAKE);
-        simpleItem(ModItems.RETURNING_MEMORY_MUSIC_DISC);
+        simpleItem(ModItems.MEMORIES_MUSIC_DISC);
+        simpleItem(ModItems.BOUNTIFUL_MUSIC_DISC);
         simpleItem(ModItems.LION_ARMOR);
 
 

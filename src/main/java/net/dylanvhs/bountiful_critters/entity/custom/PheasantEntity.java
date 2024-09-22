@@ -134,7 +134,7 @@ public class PheasantEntity extends Animal implements GeoAnimatable {
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
         if (geoAnimatableAnimationState.isMoving() && !this.isSprinting()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.pheasant.walk", Animation.LoopType.LOOP));
-            geoAnimatableAnimationState.getController().setAnimationSpeed(1F);
+            geoAnimatableAnimationState.getController().setAnimationSpeed(1.25F);
             return PlayState.CONTINUE;
 
         } else if (this.isSprinting()) {

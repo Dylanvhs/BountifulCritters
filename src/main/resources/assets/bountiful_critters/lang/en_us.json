@@ -31,6 +31,7 @@
   "item.bountiful_critters.raw_flounder": "Raw Flounder",
   "item.bountiful_critters.krill_cocktail": "Krill Cocktail",
   "item.bountiful_critters.emu_egg": "Emu Egg",
+  "item.bountiful_critters.emu_egg_shell_pieces": "Emu Egg Shell Pieces",
   "item.bountiful_critters.boiled_emu_egg": "Boiled Emu Egg",
   "item.bountiful_critters.longhorn_horn": "Longhorn Horn",
   "item.bountiful_critters.longhorn_didgeridoo": "Longhorn Didgeridoo",
@@ -48,8 +49,11 @@
   "item.bountiful_critters.lion_armor": "Lion Armor",
 
 
-  "item.bountiful_critters.returning_memory_music_disc": "Music Disc",
-  "item.bountiful_critters.returning_memory_music_disc.desc": "Dylanvhs - Returning Memory",
+  "item.bountiful_critters.memories_music_disc": "Music Disc",
+  "item.bountiful_critters.memories_music_disc.desc": "Dylanvhs - Memories",
+
+  "item.bountiful_critters.bountiful_music_disc": "Music Disc",
+  "item.bountiful_critters.bountiful_music_disc.desc": "Dylanvhs - Bountiful",
 
 
   "item.bountiful_critters.emu_spawn_egg" : "Emu Spawn Egg",

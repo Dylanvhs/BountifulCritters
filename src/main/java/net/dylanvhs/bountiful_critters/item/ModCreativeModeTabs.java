@@ -30,37 +30,48 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.FLOUNDER_BUCKET.get());
                         pOutput.accept(ModItems.MARINE_IGUANA_BUCKET.get());
                         pOutput.accept(ModItems.POTTED_PILLBUG.get());
+
                         pOutput.accept(ModItems.SNAKE_HOOK.get());
                         pOutput.accept(ModItems.CAPTURED_BLUNT_HEADED_TREE_SNAKE.get());
                         pOutput.accept(ModItems.REPTILE_BAG.get());
                         pOutput.accept(ModItems.BAGGED_GECKO.get());
                         pOutput.accept(ModItems.BAGGED_BLUNT_HEADED_TREE_SNAKE.get());
+
                         pOutput.accept(ModItems.RAW_KRILL.get());
                         pOutput.accept(ModItems.FRIED_KRILL.get());
                         pOutput.accept(ModItems.KRILL_COCKTAIL.get());
+
                         pOutput.accept(ModItems.RAW_SUNFISH_MEAT.get());
                         pOutput.accept(ModItems.COOKED_SUNFISH_MEAT.get());
                         pOutput.accept(ModItems.SUNFISH_SUSHI.get());
+
                         pOutput.accept(ModItems.RAW_ANGELFISH.get());
                         pOutput.accept(ModItems.RAW_BARRELEYE.get());
                         pOutput.accept(ModItems.RAW_NEON_TETRA.get());
                         pOutput.accept(ModItems.RAW_FLOUNDER.get());
+
                         pOutput.accept(ModItems.EMU_EGG.get());
+                        pOutput.accept(ModItems.EMU_EGG_SHELL_PIECES.get());
                         pOutput.accept(ModItems.BOILED_EMU_EGG.get());
+
                         pOutput.accept(ModItems.LONGHORN_HORN.get());
                         pOutput.accept(ModItems.LONGHORN_DIDGERIDOO.get());
+
                         pOutput.accept(ModItems.SALT.get());
                         pOutput.accept(ModBlocks.SALT_LAMP.get());
                         pOutput.accept(ModItems.SALTED_KELP.get());
+
                         pOutput.accept(ModItems.SEAGRASS_BALL.get());
                         pOutput.accept(ModItems.STICKY_ARROW.get());
                         pOutput.accept(ModBlocks.SEAGRASS_BALL_BLOCK.get());
+
                         pOutput.accept(ModItems.RAW_PILLBUG.get());
                         pOutput.accept(ModItems.ROASTED_PILLBUG.get());
                         pOutput.accept(ModItems.POISONOUS_PILLBUG.get());
                         pOutput.accept(ModItems.PILLBUG_THROWABLE.get());
-                        pOutput.accept(ModItems.RETURNING_MEMORY_MUSIC_DISC.get());
 
+                        pOutput.accept(ModItems.MEMORIES_MUSIC_DISC.get());
+                        pOutput.accept(ModItems.BOUNTIFUL_MUSIC_DISC.get());
 
                         pOutput.accept(ModItems.STINGRAY_SPAWN_EGG.get());
                         pOutput.accept(ModItems.SUNFISH_SPAWN_EGG.get());
@@ -79,9 +90,6 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.NEON_TETRA_SPAWN_EGG.get());
                         pOutput.accept(ModItems.FLOUNDER_SPAWN_EGG.get());
                         pOutput.accept(ModItems.PHEASANT_SPAWN_EGG.get());
-
-
-
 
                     })
                     .build());

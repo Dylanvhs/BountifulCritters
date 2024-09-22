@@ -1,8 +1,17 @@
 {
-  "returning_memory": {
+  "memories": {
     "sounds": [
       {
-        "name": "bountiful_critters:returning_memory",
+        "name": "bountiful_critters:memories",
+        "stream": true
+      }
+    ]
+  },
+
+  "bountiful": {
+    "sounds": [
+      {
+        "name": "bountiful_critters:bountiful",
         "stream": true
       }
     ]

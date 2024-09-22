@@ -135,6 +135,7 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
             case 1 -> "green";
             case 2 -> "tokay";
             case 3 -> "electric_blue_day";
+            case 4 -> "yellow_headed";
             default -> "leopard";
         };
     }
@@ -326,6 +327,8 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
             }
         }
         if(variantChange <= 0.25F){
+            this.setVariant(4);
+        } else if(variantChange <= 0.30F){
             this.setVariant(3);
         } else if(variantChange <= 0.40F){
             this.setVariant(2);

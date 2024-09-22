@@ -21,10 +21,12 @@ public class ModItemTagGenerator extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
         this.tag(ItemTags.MUSIC_DISCS)
-                .add(ModItems.RETURNING_MEMORY_MUSIC_DISC.get());
+                .add(ModItems.MEMORIES_MUSIC_DISC.get())
+                .add(ModItems.BOUNTIFUL_MUSIC_DISC.get());
 
         this.tag(ItemTags.CREEPER_DROP_MUSIC_DISCS)
-                .add(ModItems.RETURNING_MEMORY_MUSIC_DISC.get());
+                .add(ModItems.MEMORIES_MUSIC_DISC.get())
+                .add(ModItems.BOUNTIFUL_MUSIC_DISC.get());
 
     }
 }
