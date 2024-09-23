@@ -115,7 +115,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<PheasantEntity>> PHEASANT =
             ENTITY_TYPES.register("pheasant",
                     () -> EntityType.Builder.of(PheasantEntity::new, MobCategory.CREATURE)
-                            .sized(0.75f, 0.9f)
+                            .sized(0.75f, 1.25f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "pheasant").toString()));
 
 

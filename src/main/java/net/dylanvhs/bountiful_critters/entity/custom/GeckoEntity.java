@@ -18,7 +18,6 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -28,19 +27,20 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -55,18 +55,20 @@ import software.bernie.geckolib.core.object.PlayState;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
 
-public class GeckoEntity extends Animal implements GeoEntity, Bagable {
+public class GeckoEntity extends TamableAnimal implements GeoEntity, Bagable {
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(GeckoEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> FROM_BAG = SynchedEntityData.defineId(GeckoEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_WARNING = SynchedEntityData.defineId(GeckoEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(GeckoEntity.class, EntityDataSerializers.INT);
-    public static final Ingredient TEMPTATION_ITEM = Ingredient.of(ModItems.RAW_PILLBUG.get());
+    public static final Ingredient TEMPTATION_ITEM = Ingredient.of(ModItems.RAW_PILLBUG.get(), Items.SPIDER_EYE);
     private boolean canBePushed = true;
+    protected int tame;
 
-    public GeckoEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
+    public GeckoEntity(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
@@ -85,6 +87,11 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
             int i = this.random.nextBoolean() ? this.getVariant() : ((GeckoEntity) pOtherParent).getVariant();
             gecko.setVariant(i);
             gecko.setPersistenceRequired();
+            UUID uuid = this.getOwnerUUID();
+            if (uuid != null) {
+                gecko.setOwnerUUID(uuid);
+                gecko.setTame(true);
+            }
         }
         return gecko;
     }
@@ -177,6 +184,9 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
         if (compound.contains("Age")) {
             this.setAge(compound.getInt("Age"));
         }
+        if (compound.contains("Age")) {
+            this.setAge(compound.getInt("Age"));
+        }
         if (compound.contains("BagVariantTag", 3)) {
             this.setVariant(compound.getInt("BagVariantTag"));
         }
@@ -184,8 +194,47 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
 
     @Override
     @Nonnull
-    public InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
-        return Bagable.bagMobPickup(player, hand, this).orElse(super.mobInteract(player, hand));
+    public InteractionResult mobInteract(@Nonnull Player pPlayer, @Nonnull InteractionHand pHand) {
+        Bagable.bagMobPickup(pPlayer, pHand, this).orElse(super.mobInteract(pPlayer, pHand));
+        ItemStack itemstack = pPlayer.getItemInHand(pHand);
+        if (this.level().isClientSide) {
+            boolean flag = this.isOwnedBy(pPlayer) || this.isTame() || itemstack.is(ModItems.POISONOUS_PILLBUG.get()) && !this.isTame();
+            return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
+        } else if (this.isTame()) {
+            if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
+                this.heal((float) itemstack.getFoodProperties(this).getNutrition());
+                if (!pPlayer.getAbilities().instabuild) {
+                    itemstack.shrink(1);
+                }
+
+                this.gameEvent(GameEvent.EAT, this);
+                return InteractionResult.SUCCESS;
+            }
+            InteractionResult interactionresult = super.mobInteract(pPlayer, pHand);
+            if ((!interactionresult.consumesAction() || this.isBaby()) && this.isOwnedBy(pPlayer)) {
+                return InteractionResult.SUCCESS;
+            } else {
+                return interactionresult;
+            }
+
+        } else if (itemstack.is(ModItems.POISONOUS_PILLBUG.get())) {
+            if (!pPlayer.getAbilities().instabuild) {
+                itemstack.shrink(1);
+            }
+            if (this.random.nextInt(3) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, pPlayer)) {
+                this.tame(pPlayer);
+                this.navigation.stop();
+                this.setTarget((LivingEntity)null);
+                this.setOrderedToSit(true);
+                this.level().broadcastEntityEvent(this, (byte)7);
+            } else {
+                this.level().broadcastEntityEvent(this, (byte)6);
+            }
+
+            return InteractionResult.SUCCESS;
+        } else {
+            return super.mobInteract(pPlayer, pHand);
+        }
     }
 
     @Override
@@ -219,6 +268,8 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
         this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.25D));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, TEMPTATION_ITEM, false));
+        this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 1.25D));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 5.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));

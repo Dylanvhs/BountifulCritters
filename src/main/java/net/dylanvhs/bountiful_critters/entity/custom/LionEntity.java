@@ -104,7 +104,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
     }
 
     public static AttributeSupplier setAttributes() {
-        return LonghornEntity.createMobAttributes()
+        return LionEntity.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 30.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.22D)
                 .add(Attributes.ATTACK_DAMAGE, 6.0D)
