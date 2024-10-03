@@ -47,6 +47,7 @@
   "item.bountiful_critters.pheasant": "Raw Pheasant",
   "item.bountiful_critters.cooked_pheasant": "Cooked Pheasant",
   "item.bountiful_critters.pheasant_feather": "Pheasant Feather",
+  "item.bountiful_critters.pheasant_egg": "Pheasant Egg",
   "item.bountiful_critters.snake_hook": "Snake Hook",
   "item.bountiful_critters.reptile_bag": "Reptile Bag",
   "item.bountiful_critters.lion_armor": "Lion Armor",
@@ -131,6 +132,7 @@
   "entity.bountiful_critters.flounder" : "Flounder",
   "entity.bountiful_critters.pillbug_projectile" : "Pill Bug",
   "entity.bountiful_critters.emu_egg_projectile" : "Emu Egg",
+  "entity.bountiful_critters.pheasant_egg_projectile" : "Pheasant Egg",
   "entity.bountiful_critters.sticky_arrow_projectile" : "Sticky Arrow",
 
 

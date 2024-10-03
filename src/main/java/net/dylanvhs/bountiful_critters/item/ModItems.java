@@ -124,6 +124,8 @@ public class ModItems {
             ITEMS.register("cooked_pheasant", () -> new Item(new Item.Properties().food(ModFoods.COOKED_PHEASANT)));
     public static final RegistryObject<Item> PHEASANT_FEATHER =
             ITEMS.register("pheasant_feather", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PHEASANT_EGG =
+            ITEMS.register("pheasant_egg", () -> new PheasantEggItem(new Item.Properties().stacksTo(16)));
 
     public static final RegistryObject<Item> LION_ARMOR =
             ITEMS.register("lion_armor", () -> new Item(new Item.Properties().stacksTo(1)));

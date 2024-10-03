@@ -124,6 +124,10 @@ public class ModEntities {
                     ENTITY_TYPES.register("emu_egg_projectile", () -> EntityType.Builder.<EmuEggEntity>of(EmuEggEntity::new, MobCategory.MISC)
                             .sized(0.5f, 0.5f).build("emu_egg_projectile"));
 
+    public static final RegistryObject<EntityType<PheasantEggEntity>> PHEASANT_EGG =
+            ENTITY_TYPES.register("pheasant_egg_projectile", () -> EntityType.Builder.<PheasantEggEntity>of(PheasantEggEntity::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f).build("pheasant_egg_projectile"));
+
     public static final RegistryObject<EntityType<StickyArrowEntity>> STICKY_ARROW =
             ENTITY_TYPES.register("sticky_arrow_projectile", () -> EntityType.Builder.<StickyArrowEntity>of(StickyArrowEntity::new, MobCategory.MISC)
                     .sized(0.5f, 0.5f).setCustomClientFactory(StickyArrowEntity::new).build("sticky_arrow_projectile"));
