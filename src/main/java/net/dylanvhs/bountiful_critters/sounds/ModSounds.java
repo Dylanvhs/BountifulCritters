@@ -31,6 +31,9 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> GECKO_AMBIENT = registerSoundEvents("gecko_ambient");
 
     public static final RegistryObject<SoundEvent> WHALE_AMBIENT = registerSoundEvents("whale_ambient");
+    public static final RegistryObject<SoundEvent> WHALE_HURT = registerSoundEvents("whale_hurt");
+    public static final RegistryObject<SoundEvent> WHALE_DEATH = registerSoundEvents("whale_death");
+    public static final RegistryObject<SoundEvent> WHALE_SPLASH = registerSoundEvents("whale_splash");
 
     public static final RegistryObject<SoundEvent> PHEASANT_AMBIENT = registerSoundEvents("pheasant_ambient");
     public static final RegistryObject<SoundEvent> PHEASANT_HURT = registerSoundEvents("pheasant_hurt");

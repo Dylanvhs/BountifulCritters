@@ -2,6 +2,7 @@ package net.dylanvhs.bountiful_critters.entity.ai;
 
 
 import net.dylanvhs.bountiful_critters.entity.custom.HumpbackWhaleEntity;
+import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -68,6 +69,7 @@ public class HumpbackWhaleJumpGoal extends JumpGoal {
         this.liopleurodon.setDeltaMovement(this.liopleurodon.getDeltaMovement().add((double) direction.getStepX() * 0.6D, 1D, (double) direction.getStepZ() * 0.6D));
         this.liopleurodon.getNavigation().stop();
         this.liopleurodon.setSprinting(true);
+
     }
 
     public void stop() {

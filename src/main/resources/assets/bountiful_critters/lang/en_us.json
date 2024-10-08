@@ -197,6 +197,9 @@
 
 
   "sounds.bountiful_critters:whale_ambient": "Whale whistles",
+  "sounds.bountiful_critters:whale_hurt": "Whale hurts",
+  "sounds.bountiful_critters:whale_death": "Whale dies",
+  "sounds.bountiful_critters:whale_splash": "Whale splashes",
 
   "sounds.bountiful_critters:pheasant_ambient": "Pheasant calls",
   "sounds.bountiful_critters:pheasant_hurt": "Pheasant hurts",

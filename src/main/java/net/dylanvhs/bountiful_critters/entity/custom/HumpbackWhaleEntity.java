@@ -18,6 +18,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -111,6 +112,18 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
 
     protected SoundEvent getAmbientSound() {
         return ModSounds.WHALE_AMBIENT.get();
+    }
+
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return ModSounds.WHALE_HURT.get();
+    }
+
+    protected SoundEvent getDeathSound() {
+        return ModSounds.WHALE_DEATH.get();
+    }
+
+    protected float getSoundVolume() {
+        return 0.5F;
     }
 
     @Override
@@ -363,7 +376,7 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
     }
 
     protected SoundEvent getSwimSplashSound() {
-        return SoundEvents.DOLPHIN_SPLASH;
+        return ModSounds.WHALE_SPLASH.get();
     }
 
     protected SoundEvent getSwimSound() {

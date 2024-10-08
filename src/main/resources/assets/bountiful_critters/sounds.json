@@ -186,6 +186,33 @@
     ]
   },
 
+  "whale_hurt": {
+    "subtitle": "sounds.bountiful_critters:whale_hurt",
+    "sounds": [
+      {
+        "name": "bountiful_critters:whale_hurt_1"
+      }
+    ]
+  },
+
+  "whale_death": {
+    "subtitle": "sounds.bountiful_critters:whale_death",
+    "sounds": [
+      {
+        "name": "bountiful_critters:whale_death_1"
+      }
+    ]
+  },
+
+  "whale_splash": {
+    "subtitle": "sounds.bountiful_critters:whale_splash",
+    "sounds": [
+      {
+        "name": "bountiful_critters:whale_splash_1"
+      }
+    ]
+  },
+
   "pheasant_ambient": {
     "subtitle": "sounds.bountiful_critters:pheasant_ambient",
     "sounds": [
