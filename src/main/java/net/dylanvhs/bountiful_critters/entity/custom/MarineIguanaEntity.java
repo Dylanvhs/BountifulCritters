@@ -384,7 +384,7 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
 
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && this.onGround() && --this.timeUntilNextSneeze <= 0) {
             this.playSound(SoundEvents.AXOLOTL_HURT, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.spawnAtLocation(ModItems.SALT.get());
+            this.spawnAtLocation(ModItems.SALT.get(), 2);
             this.timeUntilNextSneeze = this.random.nextInt(3500) + 3500;
             setSneezing(true);
             double d0 = 0;

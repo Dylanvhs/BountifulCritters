@@ -3,13 +3,17 @@ package net.dylanvhs.bountiful_critters.entity.custom;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -42,6 +46,8 @@ public class EmuEntity extends Animal implements GeoAnimatable {
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.APPLE);
     public int timeUntilNextEgg = this.random.nextInt(6000) + 6000;
     private PanicGoal panicGoal;
+
+    public int filterCooldown;
 
     public EmuEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -119,6 +125,136 @@ public class EmuEntity extends Animal implements GeoAnimatable {
             this.timeUntilNextEgg = this.random.nextInt(6000) + 6000;
         }
         setSprinting(isPanicking());
+    }
+
+    public void addAdditionalSaveData(CompoundTag pCompound) {
+        super.addAdditionalSaveData(pCompound);
+
+        pCompound.putInt("FilterCooldown", this.filterCooldown);
+    }
+
+    public void readAdditionalSaveData(CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        this.filterCooldown = pCompound.getInt("FilterCooldown");
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (!this.isAlive()) {
+            return;
+        }
+        if (this.filterCooldown > 0) {
+            --this.filterCooldown;
+        }
+    }
+
+    @Override
+    public void handleEntityEvent(byte id) {
+        if (id == 39) {
+            this.filterCooldown = 1000;
+        }
+        super.handleEntityEvent(id);
+    }
+
+    @Override
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack heldItem = player.getItemInHand(hand);
+        float moreDrops = this.getRandom().nextFloat();
+        if (this.filterCooldown == 0) {
+            if (heldItem.getItem() == Items.MELON_SLICE && this.isAlive() && !isBaby()) {
+                playSound(SoundEvents.LLAMA_SPIT, 1.0F, 1.0F);
+                heldItem.shrink(1);
+                this.filterCooldown = 100;
+                if (moreDrops <= 0.6F) {
+                    spawnAtLocation(Items.MELON_SEEDS,2);
+                    spawnAtLocation(Items.MELON_SEEDS,2);
+
+                } else if (moreDrops <= 0.75F) {
+                    spawnAtLocation(Items.MELON_SEEDS,2);
+                    spawnAtLocation(Items.MELON_SEEDS,2);
+
+                } else if (moreDrops <= 0.9F) {
+                    spawnAtLocation(Items.MELON_SEEDS,2);
+                    spawnAtLocation(Items.MELON_SEEDS,2);
+
+                } else if (moreDrops <= 0.95F){
+                    spawnAtLocation(Items.MELON_SEEDS,2);
+                    spawnAtLocation(Items.MELON_SEEDS,2);
+                }
+                return InteractionResult.SUCCESS;
+            }
+
+            if (heldItem.getItem() == Items.PUMPKIN && this.isAlive() && !isBaby()) {
+                playSound(SoundEvents.LLAMA_SPIT, 1.0F, 1.0F);
+                heldItem.shrink(1);
+                this.filterCooldown = 100;
+                if (moreDrops <= 0.6F) {
+                    spawnAtLocation(Items.PUMPKIN_SEEDS,2);
+                    spawnAtLocation(Items.PUMPKIN_SEEDS,2);
+
+                } else if (moreDrops <= 0.75F) {
+                    spawnAtLocation(Items.PUMPKIN_SEEDS,2);
+                    spawnAtLocation(Items.PUMPKIN_SEEDS,2);
+
+                } else if (moreDrops <= 0.9F) {
+                    spawnAtLocation(Items.PUMPKIN_SEEDS,2);
+                    spawnAtLocation(Items.PUMPKIN_SEEDS,2);
+
+                }else if (moreDrops <= 0.99F){
+                    spawnAtLocation(Items.PUMPKIN_SEEDS,2);
+                    spawnAtLocation(Items.PUMPKIN_SEEDS,2);
+                }
+                return InteractionResult.SUCCESS;
+            }
+
+            if (heldItem.getItem() == Items.BEETROOT && this.isAlive() && !isBaby()) {
+                playSound(SoundEvents.LLAMA_SPIT, 1.0F, 1.0F);
+                heldItem.shrink(1);
+                this.filterCooldown = 100;
+                if (moreDrops <= 0.6F) {
+                    spawnAtLocation(Items.BEETROOT_SEEDS,2);
+                    spawnAtLocation(Items.BEETROOT_SEEDS,2);
+
+                } else if (moreDrops <= 0.75F) {
+                    spawnAtLocation(Items.BEETROOT_SEEDS,2);
+                    spawnAtLocation(Items.BEETROOT_SEEDS,2);
+
+                } else if (moreDrops <= 0.9F) {
+                    spawnAtLocation(Items.BEETROOT_SEEDS,2);
+                    spawnAtLocation(Items.BEETROOT_SEEDS,2);
+
+                } else if (moreDrops <= 0.99F){
+                    spawnAtLocation(Items.BEETROOT_SEEDS,2);
+                    spawnAtLocation(Items.BEETROOT_SEEDS,2);
+                }
+                return InteractionResult.SUCCESS;
+            }
+
+            if (heldItem.getItem() == Items.EGG && this.isAlive() && !isBaby() || heldItem.getItem() == ModItems.EMU_EGG.get() && this.isAlive() && !isBaby() || heldItem.getItem() == ModItems.PHEASANT_EGG.get() && this.isAlive() && !isBaby()) {
+                playSound(SoundEvents.LLAMA_SPIT, 1.0F, 1.0F);
+                heldItem.shrink(1);
+                this.filterCooldown = 100;
+                if (moreDrops <= 0.6F) {
+                    spawnAtLocation(Items.BONE_MEAL,2);
+                    spawnAtLocation(Items.BONE_MEAL,2);
+
+                } else if (moreDrops <= 0.75F) {
+                    spawnAtLocation(Items.BONE_MEAL,2);
+                    spawnAtLocation(Items.BONE_MEAL,2);
+
+                } else if (moreDrops <= 0.9F) {
+                    spawnAtLocation(Items.BONE_MEAL,2);
+                    spawnAtLocation(Items.BONE_MEAL,2);
+
+                } else if (moreDrops <= 0.99F){
+                    spawnAtLocation(Items.BONE_MEAL,2);
+                    spawnAtLocation(Items.BONE_MEAL,2);
+                }
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return super.mobInteract(player, hand);
     }
 
     private boolean isPanicking() {
@@ -213,14 +349,6 @@ public class EmuEntity extends Animal implements GeoAnimatable {
         } else geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.emu.idle", Animation.LoopType.LOOP));
         geoAnimatableAnimationState.getController().setAnimationSpeed(1F);
         return PlayState.CONTINUE;
-    }
-
-    public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
-    }
-
-    public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
     }
 
     public AnimatableInstanceCache getAnimatableInstanceCache() {

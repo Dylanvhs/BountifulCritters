@@ -109,7 +109,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<FlounderEntity>> FLOUNDER =
             ENTITY_TYPES.register("flounder",
                     () -> EntityType.Builder.of(FlounderEntity::new, MobCategory.WATER_AMBIENT)
-                            .sized(0.35f, 0.35f)
+                            .sized(0.6f, 0.35f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "flounder").toString()));
 
     public static final RegistryObject<EntityType<PheasantEntity>> PHEASANT =
