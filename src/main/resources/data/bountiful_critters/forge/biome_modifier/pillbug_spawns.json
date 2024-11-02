@@ -14,7 +14,7 @@
   ],
   "spawners" : {
     "type" : "bountiful_critters:pillbug",
-    "weight" : 1,
+    "weight" : 4,
     "minCount" : 1,
     "maxCount" : 3
   }

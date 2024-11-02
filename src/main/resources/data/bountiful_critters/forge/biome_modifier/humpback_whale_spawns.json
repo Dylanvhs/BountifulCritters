@@ -7,7 +7,7 @@
   ],
   "spawners" : {
     "type" : "bountiful_critters:humpback_whale",
-    "weight" : 1,
+    "weight" : 3,
     "minCount" : 1,
     "maxCount" : 1
   }

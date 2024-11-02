@@ -6,7 +6,7 @@
   ],
   "spawners" : {
     "type" : "bountiful_critters:lion",
-    "weight" : 1,
+    "weight" : 5,
     "minCount" : 1,
     "maxCount" : 3
   }

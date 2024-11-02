@@ -5,7 +5,7 @@
   ],
   "spawners" : {
     "type" : "bountiful_critters:toucan",
-    "weight" : 3,
+    "weight" : 8,
     "minCount" : 1,
     "maxCount" : 1
   }

@@ -57,7 +57,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-public class GeckoEntity extends TamableAnimal implements GeoEntity, Bagable {
+public class GeckoEntity extends Animal implements GeoEntity, Bagable {
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(GeckoEntity.class, EntityDataSerializers.BYTE);
@@ -68,7 +68,7 @@ public class GeckoEntity extends TamableAnimal implements GeoEntity, Bagable {
     private boolean canBePushed = true;
     protected int tame;
 
-    public GeckoEntity(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
+    public GeckoEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
@@ -87,11 +87,6 @@ public class GeckoEntity extends TamableAnimal implements GeoEntity, Bagable {
             int i = this.random.nextBoolean() ? this.getVariant() : ((GeckoEntity) pOtherParent).getVariant();
             gecko.setVariant(i);
             gecko.setPersistenceRequired();
-            UUID uuid = this.getOwnerUUID();
-            if (uuid != null) {
-                gecko.setOwnerUUID(uuid);
-                gecko.setTame(true);
-            }
         }
         return gecko;
     }
@@ -195,46 +190,7 @@ public class GeckoEntity extends TamableAnimal implements GeoEntity, Bagable {
     @Override
     @Nonnull
     public InteractionResult mobInteract(@Nonnull Player pPlayer, @Nonnull InteractionHand pHand) {
-        Bagable.bagMobPickup(pPlayer, pHand, this).orElse(super.mobInteract(pPlayer, pHand));
-        ItemStack itemstack = pPlayer.getItemInHand(pHand);
-        if (this.level().isClientSide) {
-            boolean flag = this.isOwnedBy(pPlayer) || this.isTame() || itemstack.is(ModItems.POISONOUS_PILLBUG.get()) && !this.isTame();
-            return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
-        } else if (this.isTame()) {
-            if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
-                this.heal((float) itemstack.getFoodProperties(this).getNutrition());
-                if (!pPlayer.getAbilities().instabuild) {
-                    itemstack.shrink(1);
-                }
-
-                this.gameEvent(GameEvent.EAT, this);
-                return InteractionResult.SUCCESS;
-            }
-            InteractionResult interactionresult = super.mobInteract(pPlayer, pHand);
-            if ((!interactionresult.consumesAction() || this.isBaby()) && this.isOwnedBy(pPlayer)) {
-                return InteractionResult.SUCCESS;
-            } else {
-                return interactionresult;
-            }
-
-        } else if (itemstack.is(ModItems.POISONOUS_PILLBUG.get())) {
-            if (!pPlayer.getAbilities().instabuild) {
-                itemstack.shrink(1);
-            }
-            if (this.random.nextInt(3) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, pPlayer)) {
-                this.tame(pPlayer);
-                this.navigation.stop();
-                this.setTarget((LivingEntity)null);
-                this.setOrderedToSit(true);
-                this.level().broadcastEntityEvent(this, (byte)7);
-            } else {
-                this.level().broadcastEntityEvent(this, (byte)6);
-            }
-
-            return InteractionResult.SUCCESS;
-        } else {
-            return super.mobInteract(pPlayer, pHand);
-        }
+        return Bagable.bagMobPickup(pPlayer, pHand, this).orElse(super.mobInteract(pPlayer, pHand));
     }
 
     @Override
@@ -269,7 +225,6 @@ public class GeckoEntity extends TamableAnimal implements GeoEntity, Bagable {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.25D));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, TEMPTATION_ITEM, false));
-        this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 1.25D));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 5.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));

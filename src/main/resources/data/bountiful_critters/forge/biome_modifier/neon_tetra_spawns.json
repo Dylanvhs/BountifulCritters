@@ -1,7 +1,8 @@
 {
   "type" :"forge:add_spawns",
   "biomes" : [
-    "minecraft:jungle"
+    "minecraft:jungle",
+    "minecraft:mangrove_swamp"
   ],
   "spawners" : {
     "type" : "bountiful_critters:neon_tetra",

@@ -3,12 +3,13 @@
   "biomes" : [
     "minecraft:swamp",
     "minecraft:warm_ocean",
-    "minecraft:ocean"
+    "minecraft:ocean",
+    "minecraft:mangrove_swamp"
 
   ],
   "spawners" : {
     "type" : "bountiful_critters:stingray",
-    "weight" : 1,
+    "weight" : 4,
     "minCount" : 1,
     "maxCount" : 1
   }

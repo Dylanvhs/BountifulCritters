@@ -72,7 +72,7 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<BluntHeadedTreeSnakeEntity>> BLUNT_HEADED_TREE_SNAKE =
             ENTITY_TYPES.register("blunt_headed_tree_snake",
-                    () -> EntityType.Builder.of(BluntHeadedTreeSnakeEntity::new, MobCategory.AMBIENT)
+                    () -> EntityType.Builder.of(BluntHeadedTreeSnakeEntity::new, MobCategory.CREATURE)
                             .sized(1f, 1.25f)
                             .build(new ResourceLocation(BountifulCritters.MOD_ID, "blunt_headed_tree_snake").toString()));
 
