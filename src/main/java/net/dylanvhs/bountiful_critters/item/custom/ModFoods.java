@@ -14,8 +14,14 @@ public class ModFoods {
     public static final FoodProperties COOKED_SUNFISH_MEAT = new FoodProperties.Builder().nutrition(7)
             .saturationMod(0.7f).effect(() -> new MobEffectInstance(MobEffects.WATER_BREATHING, 600), 0.5f).build();
 
+    public static final FoodProperties RAW_GOLDEN_SUNFISH_MEAT = new FoodProperties.Builder().nutrition(3)
+            .saturationMod(0.3f).build();
+
+    public static final FoodProperties COOKED_GOLDEN_SUNFISH_MEAT = new FoodProperties.Builder().nutrition(7)
+            .saturationMod(0.7f).effect(() -> new MobEffectInstance(MobEffects.WATER_BREATHING, 600), 1f).effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 200), 1f).effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 200), 1f).effect(() -> new MobEffectInstance(MobEffects.CONDUIT_POWER, 600), 1f).effect(() -> new MobEffectInstance(MobEffects.HEALTH_BOOST, 200), 1f).build();
+
     public static final FoodProperties SUNFISH_SUSHI = new FoodProperties.Builder().nutrition(5)
-            .saturationMod(0.85f).effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 300), 0.75f).effect(() -> new MobEffectInstance(MobEffects.LUCK, 2500), 0.5f).build();
+            .saturationMod(0.85f).effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 200), 0.75f).effect(() -> new MobEffectInstance(MobEffects.LUCK, 2500), 0.5f).build();
 
     public static final FoodProperties RAW_KRILL = new FoodProperties.Builder().nutrition(2)
             .saturationMod(0.2f).build();

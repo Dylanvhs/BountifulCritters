@@ -35,6 +35,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.STICKY_ARROW);
         simpleItem(ModItems.RAW_SUNFISH_MEAT);
         simpleItem(ModItems.COOKED_SUNFISH_MEAT);
+        simpleItem(ModItems.RAW_GOLDEN_SUNFISH_MEAT);
+        simpleItem(ModItems.COOKED_GOLDEN_SUNFISH_MEAT);
         simpleItem(ModItems.SUNFISH_SUSHI);
         simpleItem(ModItems.RAW_KRILL);
         simpleItem(ModItems.FRIED_KRILL);
@@ -61,6 +63,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.CAPTURED_BLUNT_HEADED_TREE_SNAKE);
         simpleItem(ModItems.MEMORIES_MUSIC_DISC);
         simpleItem(ModItems.BOUNTIFUL_MUSIC_DISC);
+        simpleItem(ModItems.SNEEZE_MUSIC_DISC);
         simpleItem(ModItems.LION_ARMOR);
 
 

@@ -17,6 +17,15 @@
     ]
   },
 
+  "sneeze": {
+    "sounds": [
+      {
+        "name": "bountiful_critters:sneeze",
+        "stream": true
+      }
+    ]
+  },
+
   "emu_ambient": {
     "subtitle": "sounds.bountiful_critters:emu_ambient",
     "sounds": [

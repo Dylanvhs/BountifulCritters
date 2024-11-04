@@ -20,5 +20,8 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
         add("bountiful_music_disc_from_suspicious_sand", new SuspiciousSandItemModifier(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("archaeology/desert_pyramid")).build() }, ModItems.BOUNTIFUL_MUSIC_DISC.get()));
 
+        add("bountiful_music_disc_from_suspicious_gravel", new SuspiciousSandItemModifier(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("archaeology/ocean_ruin_warm")).build() }, ModItems.SNEEZE_MUSIC_DISC.get()));
+
     }
 }

@@ -44,6 +44,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.RAW_SUNFISH_MEAT.get());
                         pOutput.accept(ModItems.COOKED_SUNFISH_MEAT.get());
                         pOutput.accept(ModItems.SUNFISH_SUSHI.get());
+                        pOutput.accept(ModItems.RAW_GOLDEN_SUNFISH_MEAT.get());
+                        pOutput.accept(ModItems.COOKED_GOLDEN_SUNFISH_MEAT.get());
 
                         pOutput.accept(ModItems.RAW_ANGELFISH.get());
                         pOutput.accept(ModItems.RAW_BARRELEYE.get());
@@ -77,6 +79,7 @@ public class ModCreativeModeTabs {
 
                         pOutput.accept(ModItems.MEMORIES_MUSIC_DISC.get());
                         pOutput.accept(ModItems.BOUNTIFUL_MUSIC_DISC.get());
+                        pOutput.accept(ModItems.SNEEZE_MUSIC_DISC.get());
 
                         pOutput.accept(ModItems.STINGRAY_SPAWN_EGG.get());
                         pOutput.accept(ModItems.SUNFISH_SPAWN_EGG.get());

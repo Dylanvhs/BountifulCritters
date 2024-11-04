@@ -10,6 +10,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class SunfishRenderer extends GeoEntityRenderer<SunfishEntity> {
     private static final ResourceLocation TEXTURE_OCEAN = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/sunfish_0.png");
     private static final ResourceLocation TEXTURE_COLD = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/sunfish_1.png");
+    private static final ResourceLocation TEXTURE_GOLDEN = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/sunfish_golden.png");
 
     public SunfishRenderer(EntityRendererProvider.Context renderManagerIn) {
         super(renderManagerIn, new SunfishModel());
@@ -22,6 +23,7 @@ public class SunfishRenderer extends GeoEntityRenderer<SunfishEntity> {
     public ResourceLocation getTextureLocation(SunfishEntity entity) {
         return switch (entity.getVariant()) {
             case 1 -> TEXTURE_COLD;
+            case 2 -> TEXTURE_GOLDEN;
             default -> TEXTURE_OCEAN;
         };
     }

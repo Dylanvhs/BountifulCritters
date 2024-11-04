@@ -89,6 +89,10 @@ public class ModItems {
             ITEMS.register("cooked_sunfish_meat", () -> new Item(new Item.Properties().food(ModFoods.COOKED_SUNFISH_MEAT)));
     public static final RegistryObject<Item> SUNFISH_SUSHI =
             ITEMS.register("sunfish_sushi", () -> new Item(new Item.Properties().food(ModFoods.SUNFISH_SUSHI)));
+    public static final RegistryObject<Item> RAW_GOLDEN_SUNFISH_MEAT =
+            ITEMS.register("raw_sunfish_meat", () -> new Item(new Item.Properties().food(ModFoods.RAW_GOLDEN_SUNFISH_MEAT)));
+    public static final RegistryObject<Item> COOKED_GOLDEN_SUNFISH_MEAT =
+            ITEMS.register("cooked_sunfish_meat", () -> new Item(new Item.Properties().food(ModFoods.COOKED_GOLDEN_SUNFISH_MEAT)));
 
     public static final RegistryObject<Item> RAW_ANGELFISH =
             ITEMS.register("raw_angelfish", () -> new Item(new Item.Properties().food(ModFoods.RAW_ANGELFISH)));
@@ -135,7 +139,10 @@ public class ModItems {
             () -> new RecordItem(15, ModSounds.MEMORIES, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 6280));
 
     public static final RegistryObject<Item> BOUNTIFUL_MUSIC_DISC = ITEMS.register("bountiful_music_disc",
-            () -> new RecordItem(15, ModSounds.BOUNTIFUL, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 3680));
+            () -> new RecordItem(13, ModSounds.BOUNTIFUL, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 3680));
+
+    public static final RegistryObject<Item> SNEEZE_MUSIC_DISC = ITEMS.register("sneeze_music_disc",
+            () -> new RecordItem(14, ModSounds.SNEEZE, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 4280));
 
     public static final RegistryObject<Item> EMU_SPAWN_EGG = ITEMS.register("emu_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.EMU, 0x72482e, 0x21486a, new Item.Properties()));

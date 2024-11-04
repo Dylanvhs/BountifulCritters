@@ -65,6 +65,7 @@ public class SunfishEntity extends AbstractFish implements GeoEntity {
     public static String getVariantName(int variant) {
         return switch (variant) {
             case 1 -> "chilly";
+            case 2 -> "golden";
             default -> "brown";
         };
     }

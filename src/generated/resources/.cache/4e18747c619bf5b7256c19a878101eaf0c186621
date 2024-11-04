@@ -1,4 +1,4 @@
-// 1.20.1	2024-10-03T14:33:36.2634094	Item Models: bountiful_critters
+// 1.20.1	2024-11-04T22:35:51.8576769	Item Models: bountiful_critters
 4b6c5e548ce57d7a0b9c19e1209f2e9a5a1b65c4 assets/bountiful_critters/models/item/angelfish_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/angelfish_spawn_egg.json
 f660cd040dc4b8b28afb8cf842c04747ec176c26 assets/bountiful_critters/models/item/bagged_blunt_headed_tree_snake.json
@@ -51,6 +51,7 @@ db248d842ff5b16c6a81e518754d73f8b65ab49c assets/bountiful_critters/models/item/r
 49ca52f7c5d5b38f601cb26bd15eecb6a7bd7674 assets/bountiful_critters/models/item/salted_kelp.json
 33be1acfd17ad0aaca85aaecc6484569c34ef616 assets/bountiful_critters/models/item/seagrass_ball.json
 7b9fb93b20c7d081f2628ba58e102a87af6be4b2 assets/bountiful_critters/models/item/snake_hook.json
+9621972fdd44ee33cac7946364261ee4c428eb76 assets/bountiful_critters/models/item/sneeze_music_disc.json
 027057beb7d522384e260369c07f8485c46005fc assets/bountiful_critters/models/item/sticky_arrow.json
 7b80975cc618f6d6d91e18c7ce6868e70ff929e8 assets/bountiful_critters/models/item/stingray_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/stingray_spawn_egg.json
