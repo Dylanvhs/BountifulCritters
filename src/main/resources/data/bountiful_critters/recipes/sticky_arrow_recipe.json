@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "sticky_arrow",
+  "ingredients": [
+    {
+      "item": "bountiful_critters:seagrass_ball"
+    },
+    {
+      "item": "minecraft:arrow"
+    }
+  ],
+  "result": {
+    "item": "bountiful_critters:sticky_arrow"
+  },
+  "show_notification": true
+}
