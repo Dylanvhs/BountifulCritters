@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:gold_ingot"
+    },
+    "S": {
+      "item": "bountiful_critters:raw_sunfish_meat"
+    }
+
+  },
+  "pattern": [
+    "###",
+    "#S#",
+    "###"
+  ],
+  "result": {
+    "item": "bountiful_critters:raw_golden_sunfish_meat"
+  },
+  "show_notification": true
+}

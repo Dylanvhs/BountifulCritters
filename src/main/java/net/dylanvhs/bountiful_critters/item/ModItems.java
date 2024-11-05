@@ -90,9 +90,9 @@ public class ModItems {
     public static final RegistryObject<Item> SUNFISH_SUSHI =
             ITEMS.register("sunfish_sushi", () -> new Item(new Item.Properties().food(ModFoods.SUNFISH_SUSHI)));
     public static final RegistryObject<Item> RAW_GOLDEN_SUNFISH_MEAT =
-            ITEMS.register("raw_sunfish_meat", () -> new Item(new Item.Properties().food(ModFoods.RAW_GOLDEN_SUNFISH_MEAT)));
+            ITEMS.register("raw_golden_sunfish_meat", () -> new Item(new Item.Properties().food(ModFoods.RAW_GOLDEN_SUNFISH_MEAT)));
     public static final RegistryObject<Item> COOKED_GOLDEN_SUNFISH_MEAT =
-            ITEMS.register("cooked_sunfish_meat", () -> new Item(new Item.Properties().food(ModFoods.COOKED_GOLDEN_SUNFISH_MEAT)));
+            ITEMS.register("cooked_golden_sunfish_meat", () -> new Item(new Item.Properties().food(ModFoods.COOKED_GOLDEN_SUNFISH_MEAT)));
 
     public static final RegistryObject<Item> RAW_ANGELFISH =
             ITEMS.register("raw_angelfish", () -> new Item(new Item.Properties().food(ModFoods.RAW_ANGELFISH)));

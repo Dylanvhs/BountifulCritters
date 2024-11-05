@@ -23,6 +23,8 @@
   "item.bountiful_critters.raw_sunfish_meat": "Raw Sunfish Meat",
   "item.bountiful_critters.cooked_sunfish_meat": "Cooked Sunfish Meat",
   "item.bountiful_critters.sunfish_sushi": "Sunfish Sushi",
+  "item.bountiful_critters.raw_golden_sunfish_meat": "Raw Golden Sunfish Meat",
+  "item.bountiful_critters.cooked_golden_sunfish_meat": "Cooked Golden Sunfish Meat",
   "item.bountiful_critters.raw_krill": "Raw Krill",
   "item.bountiful_critters.fried_krill": "Fried Krill",
   "item.bountiful_critters.raw_angelfish": "Raw Angelfish",
@@ -95,6 +97,7 @@
 
   "entity.bountiful_critters.sunfish.variant_chilly": "Chilly",
   "entity.bountiful_critters.sunfish.variant_brown": "Brown",
+  "entity.bountiful_critters.sunfish.variant_golden": "Golden",
 
 
   "entity.bountiful_critters.marine_iguana.variant_stony": "Stony",

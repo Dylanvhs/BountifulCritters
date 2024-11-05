@@ -3,6 +3,7 @@ package net.dylanvhs.bountiful_critters.entity.custom;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -173,6 +174,13 @@ public class SunfishEntity extends AbstractFish implements GeoEntity {
         });
     }
 
+    public void aiStep() {
+        super.aiStep();
+        if (this.getVariant() == 2) {
+            this.level().addParticle(ParticleTypes.ELECTRIC_SPARK, this.getRandomX(0.6D), this.getRandomY(), this.getRandomZ(0.6D), 0.0D, 0.0D, 0.0D);
+        }
+    }
+
     public void travel(Vec3 pTravelVector) {
         if (this.isEffectiveAi() && this.isInWater()) {
             this.moveRelative(this.getSpeed(), pTravelVector);
@@ -195,7 +203,9 @@ public class SunfishEntity extends AbstractFish implements GeoEntity {
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @javax.annotation.Nullable SpawnGroupData spawnDataIn, @javax.annotation.Nullable CompoundTag dataTag) {
         float variantChange = this.getRandom().nextFloat();
         Holder<Biome> holder = worldIn.getBiome(this.blockPosition());
-        if (holder.is(Biomes.COLD_OCEAN)) {
+        if (random.nextFloat() < 0.01F) {
+            this.setVariant(2);
+        } else if (holder.is(Biomes.COLD_OCEAN)) {
             this.setVariant(1);
         } else if (holder.is(Biomes.DEEP_COLD_OCEAN)) {
             this.setVariant(1);
