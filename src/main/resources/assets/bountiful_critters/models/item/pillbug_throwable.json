@@ -3,7 +3,29 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"0": "bountiful_critters:item/pillbug"
+
 	},
+	"overrides": [
+		{
+			"predicate": {
+				"bountiful_critters:variant": 0
+			},
+			"model": "bountiful_critters:item/pillbug_throwable"
+		},
+		{
+			"predicate": {
+				"bountiful_critters:variant": 1
+			},
+			"model": "bountiful_critters:item/pillbug_poisonous"
+		},
+		{
+			"predicate": {
+				"bountiful_critters:variant": 2
+			},
+			"model": "bountiful_critters:item/pillbug_basketball"
+		}
+	],
+
 	"elements": [
 		{
 			"from": [4, 0, 4],

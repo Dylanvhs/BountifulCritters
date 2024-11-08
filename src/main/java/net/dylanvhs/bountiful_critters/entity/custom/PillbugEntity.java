@@ -1,7 +1,9 @@
+
 package net.dylanvhs.bountiful_critters.entity.custom;
 
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.ModItems;
+import net.minecraft.ChatFormatting;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.level.Level;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
@@ -65,6 +67,11 @@ public class PillbugEntity extends Animal implements GeoEntity {
 
     public PillbugEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
+    }
+
+    public boolean isBasketball() {
+        String n = ChatFormatting.stripFormatting(this.getName().getString());
+        return n != null && (n.toLowerCase().contains("basketball"));
     }
 
     public static <T extends Mob> boolean canSpawn(EntityType type, LevelAccessor worldIn, MobSpawnType reason, BlockPos p_223317_3_, RandomSource random) {
@@ -203,6 +210,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
         else if (heldItem.isEmpty() && !isBaby() && isRolledUp()) {
             ItemStack itemstack2 = new ItemStack(ModItems.PILLBUG_THROWABLE.get());
             player.setItemInHand(hand, itemstack2);
+            this.setBucketData(itemstack2);
             playSound(SoundEvents.ITEM_PICKUP, 1.0F, 1.0F);
             this.discard();
             return InteractionResult.SUCCESS;
@@ -312,8 +320,8 @@ public class PillbugEntity extends Animal implements GeoEntity {
 
         if (!list.isEmpty() || !list1.isEmpty() || !list2.isEmpty()) {
             if (list.stream().noneMatch(Entity::isCrouching)) {
-                    setRollUp(true);
-                    getNavigation().stop();
+                setRollUp(true);
+                getNavigation().stop();
             }
             else {
                 setRollUp(false);
@@ -389,8 +397,8 @@ public class PillbugEntity extends Animal implements GeoEntity {
             return PlayState.CONTINUE;
         } else
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.pillbug.idle", Animation.LoopType.LOOP));
-            geoAnimatableAnimationState.getController().setAnimationSpeed(1.4F);
-            return PlayState.CONTINUE;
+        geoAnimatableAnimationState.getController().setAnimationSpeed(1.4F);
+        return PlayState.CONTINUE;
     }
 
     public AnimatableInstanceCache getAnimatableInstanceCache() {

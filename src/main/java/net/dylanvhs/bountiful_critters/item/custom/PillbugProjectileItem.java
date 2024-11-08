@@ -25,7 +25,11 @@ public class PillbugProjectileItem extends Item {
             PillbugProjectileEntity pillbugProjectileEntity = new PillbugProjectileEntity(pLevel, pPlayer);
             pillbugProjectileEntity.setItem(itemstack);
             pillbugProjectileEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.5F, 1.0F);
-            pLevel.addFreshEntity(pillbugProjectileEntity);
+            if (itemstack.hasTag()) {
+                pLevel.addFreshEntity(pillbugProjectileEntity);
+                pillbugProjectileEntity.setCustomName(this.getName(itemstack));
+            } else  pLevel.addFreshEntity(pillbugProjectileEntity);
+
         }
 
         pPlayer.awardStat(Stats.ITEM_USED.get(this));

@@ -5,6 +5,8 @@ import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -32,6 +34,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -160,15 +163,28 @@ public class EmuEntity extends Animal implements GeoAnimatable {
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack heldItem = player.getItemInHand(hand);
+        ItemStack itemstack1 = Items.MELON_SLICE.getDefaultInstance();
+        ItemStack itemstack2 = Items.PUMPKIN.getDefaultInstance();
+        ItemStack itemstack3 = Items.BEETROOT.getDefaultInstance();
+        ItemStack itemstack4 = Items.EGG.getDefaultInstance();
         float moreDrops = this.getRandom().nextFloat();
         if (this.filterCooldown == 0) {
             if (heldItem.getItem() == Items.MELON_SLICE && this.isAlive() && !isBaby()) {
                 playSound(SoundEvents.LLAMA_SPIT, 1.0F, 1.0F);
+                for(int i = 0; i < 8; ++i) {
+                    Vec3 vec3 = (new Vec3(((double)this.random.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D)).xRot(-this.getXRot() * ((float)Math.PI / 180F)).yRot(-this.getYRot() * ((float)Math.PI / 180F));
+                    this.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, itemstack1), this.getX() + this.getLookAngle().x / 2.0D, this.getEyeHeight(), this.getZ() + this.getLookAngle().z / 4.0D, vec3.x, vec3.y + 0.05D, vec3.z);
+                }
                 heldItem.shrink(1);
                 this.filterCooldown = 100;
                 if (moreDrops <= 0.6F) {
                     spawnAtLocation(Items.MELON_SEEDS,2);
                     spawnAtLocation(Items.MELON_SEEDS,2);
+                    if (moreDrops <= 0.5F) {
+                        spawnAtLocation(Items.MELON_SEEDS,2);
+                        spawnAtLocation(Items.MELON_SEEDS,2);
+
+                    }
 
                 } else if (moreDrops <= 0.75F) {
                     spawnAtLocation(Items.MELON_SEEDS,2);
@@ -180,18 +196,27 @@ public class EmuEntity extends Animal implements GeoAnimatable {
 
                 } else if (moreDrops <= 0.95F){
                     spawnAtLocation(Items.MELON_SEEDS,2);
-                    spawnAtLocation(Items.MELON_SEEDS,2);
+
                 }
+                spawnAtLocation(Items.MELON_SEEDS,2);
                 return InteractionResult.SUCCESS;
             }
 
             if (heldItem.getItem() == Items.PUMPKIN && this.isAlive() && !isBaby()) {
                 playSound(SoundEvents.LLAMA_SPIT, 1.0F, 1.0F);
+                for(int i = 0; i < 8; ++i) {
+                    Vec3 vec3 = (new Vec3(((double)this.random.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D)).xRot(-this.getXRot() * ((float)Math.PI / 180F)).yRot(-this.getYRot() * ((float)Math.PI / 180F));
+                    this.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, itemstack2), this.getX() + this.getLookAngle().x / 2.0D, this.getEyeHeight(), this.getZ() + this.getLookAngle().z / 4.0D, vec3.x, vec3.y + 0.05D, vec3.z);
+                }
                 heldItem.shrink(1);
                 this.filterCooldown = 100;
                 if (moreDrops <= 0.6F) {
                     spawnAtLocation(Items.PUMPKIN_SEEDS,2);
                     spawnAtLocation(Items.PUMPKIN_SEEDS,2);
+                    if (moreDrops <= 0.5F) {
+                        spawnAtLocation(Items.PUMPKIN_SEEDS,2);
+                        spawnAtLocation(Items.PUMPKIN_SEEDS,2);
+                    }
 
                 } else if (moreDrops <= 0.75F) {
                     spawnAtLocation(Items.PUMPKIN_SEEDS,2);
@@ -205,17 +230,28 @@ public class EmuEntity extends Animal implements GeoAnimatable {
                     spawnAtLocation(Items.PUMPKIN_SEEDS,2);
                     spawnAtLocation(Items.PUMPKIN_SEEDS,2);
                 }
+                spawnAtLocation(Items.PUMPKIN_SEEDS,2);
+                spawnAtLocation(Items.PUMPKIN_SEEDS,2);
+                spawnAtLocation(Items.PUMPKIN_SEEDS,2);
+                spawnAtLocation(Items.PUMPKIN_SEEDS,2);
                 return InteractionResult.SUCCESS;
             }
 
             if (heldItem.getItem() == Items.BEETROOT && this.isAlive() && !isBaby()) {
                 playSound(SoundEvents.LLAMA_SPIT, 1.0F, 1.0F);
+                for(int i = 0; i < 8; ++i) {
+                    Vec3 vec3 = (new Vec3(((double)this.random.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D)).xRot(-this.getXRot() * ((float)Math.PI / 180F)).yRot(-this.getYRot() * ((float)Math.PI / 180F));
+                    this.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, itemstack3), this.getX() + this.getLookAngle().x / 2.0D, this.getEyeHeight(), this.getZ() + this.getLookAngle().z / 4.0D, vec3.x, vec3.y + 0.05D, vec3.z);
+                }
                 heldItem.shrink(1);
                 this.filterCooldown = 100;
                 if (moreDrops <= 0.6F) {
                     spawnAtLocation(Items.BEETROOT_SEEDS,2);
                     spawnAtLocation(Items.BEETROOT_SEEDS,2);
-
+                    if (moreDrops <= 0.5F) {
+                        spawnAtLocation(Items.BEETROOT_SEEDS,2);
+                        spawnAtLocation(Items.BEETROOT_SEEDS,2);
+                    }
                 } else if (moreDrops <= 0.75F) {
                     spawnAtLocation(Items.BEETROOT_SEEDS,2);
                     spawnAtLocation(Items.BEETROOT_SEEDS,2);
@@ -228,17 +264,26 @@ public class EmuEntity extends Animal implements GeoAnimatable {
                     spawnAtLocation(Items.BEETROOT_SEEDS,2);
                     spawnAtLocation(Items.BEETROOT_SEEDS,2);
                 }
+                spawnAtLocation(Items.BEETROOT_SEEDS,2);
+                spawnAtLocation(Items.BEETROOT_SEEDS,2);
                 return InteractionResult.SUCCESS;
             }
 
             if (heldItem.getItem() == Items.EGG && this.isAlive() && !isBaby() || heldItem.getItem() == ModItems.EMU_EGG.get() && this.isAlive() && !isBaby() || heldItem.getItem() == ModItems.PHEASANT_EGG.get() && this.isAlive() && !isBaby()) {
                 playSound(SoundEvents.LLAMA_SPIT, 1.0F, 1.0F);
+                for(int i = 0; i < 8; ++i) {
+                    Vec3 vec3 = (new Vec3(((double)this.random.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D)).xRot(-this.getXRot() * ((float)Math.PI / 180F)).yRot(-this.getYRot() * ((float)Math.PI / 180F));
+                    this.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, itemstack4), this.getX() + this.getLookAngle().x / 2.0D, this.getEyeHeight(), this.getZ() + this.getLookAngle().z / 4.0D, vec3.x, vec3.y + 0.05D, vec3.z);
+                }
                 heldItem.shrink(1);
                 this.filterCooldown = 100;
                 if (moreDrops <= 0.6F) {
                     spawnAtLocation(Items.BONE_MEAL,2);
                     spawnAtLocation(Items.BONE_MEAL,2);
-
+                    if (moreDrops <= 0.5F) {
+                        spawnAtLocation(Items.BONE_MEAL,2);
+                        spawnAtLocation(Items.BONE_MEAL,2);
+                    }
                 } else if (moreDrops <= 0.75F) {
                     spawnAtLocation(Items.BONE_MEAL,2);
                     spawnAtLocation(Items.BONE_MEAL,2);
@@ -251,6 +296,9 @@ public class EmuEntity extends Animal implements GeoAnimatable {
                     spawnAtLocation(Items.BONE_MEAL,2);
                     spawnAtLocation(Items.BONE_MEAL,2);
                 }
+                spawnAtLocation(Items.BONE_MEAL,2);
+                spawnAtLocation(Items.BONE_MEAL,2);
+                spawnAtLocation(Items.BONE_MEAL,2);
                 return InteractionResult.SUCCESS;
             }
         }

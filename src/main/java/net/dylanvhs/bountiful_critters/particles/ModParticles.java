@@ -9,5 +9,9 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModParticles {
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, BountifulCritters.MOD_ID);
-    public static final RegistryObject<SimpleParticleType> NEON_SHINE = PARTICLE_TYPES.register("neon_shine", () -> new SimpleParticleType(false));
+    public static final RegistryObject<SimpleParticleType> NEON_SHINE = register("neon_shine",false);
+
+    private static RegistryObject<SimpleParticleType> register(String id, boolean flag) {
+        return PARTICLE_TYPES.register(id, () -> new SimpleParticleType(flag));
+    }
 }

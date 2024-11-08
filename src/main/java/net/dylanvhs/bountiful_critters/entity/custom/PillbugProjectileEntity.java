@@ -71,7 +71,10 @@ public class PillbugProjectileEntity extends ThrowableItemProjectile {
         PillbugEntity pillbug = ModEntities.PILLBUG.get().create(level());
         if (pillbug != null) {
             pillbug.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
-            this.level().addFreshEntity(pillbug);
+            if (this.hasCustomName()) {
+                setCustomName(this.getCustomName());
+                level().addFreshEntity(pillbug);
+            } else level().addFreshEntity(pillbug);
         }
         this.discard();
     }
@@ -81,7 +84,7 @@ public class PillbugProjectileEntity extends ThrowableItemProjectile {
     protected Item getDefaultItem() {
         return null;
     }
-int bounces = 0;
+    int bounces = 0;
     @Override
     protected void onHitBlock(BlockHitResult hit) {
         super.onHitBlock(hit);
@@ -106,7 +109,10 @@ int bounces = 0;
             if (!this.level().isClientSide()) {
                 this.level().broadcastEntityEvent(this, (byte) 3);
                 pillbug.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
-                level().addFreshEntity(pillbug);
+                if (this.hasCustomName()) {
+                    setCustomName(this.getCustomName());
+                    level().addFreshEntity(pillbug);
+                } else level().addFreshEntity(pillbug);
                 this.discard();
             }
         }
@@ -119,7 +125,10 @@ int bounces = 0;
         if(!this.level().isClientSide() && this.isInWater()) {
             this.level().broadcastEntityEvent(this, (byte) 3);
             pillbug.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
-            level().addFreshEntity(pillbug);
+            if (this.hasCustomName()) {
+                setCustomName(this.getCustomName());
+                level().addFreshEntity(pillbug);
+            } else level().addFreshEntity(pillbug);
             this.discard();
         }
     }

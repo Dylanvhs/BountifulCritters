@@ -445,7 +445,7 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
             if (!iguana.isBaby()  && iguana.isInWater() && !iguana.passive) {
                 if(searchCooldown <= 0){
                     resetTarget();
-                    searchCooldown = 500 + iguana.getRandom().nextInt(500);
+                    searchCooldown = 1000 + iguana.getRandom().nextInt(1000);
                     return destinationBlock != null;
                 }else{
                     searchCooldown--;
@@ -459,7 +459,7 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
         }
 
         public void stop() {
-            searchCooldown = 500;
+            searchCooldown = 1000;
             timeoutCounter = 0;
             destinationBlock = null;
         }

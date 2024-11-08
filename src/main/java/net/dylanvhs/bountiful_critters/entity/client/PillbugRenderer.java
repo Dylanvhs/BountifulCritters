@@ -14,9 +14,12 @@ public class PillbugRenderer extends GeoEntityRenderer<PillbugEntity> {
     }
     private static final ResourceLocation TEXTURE = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/pillbug.png");
     private static final ResourceLocation TEXTURE_POISONOUS = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/pillbug_poisonous.png");
+    private static final ResourceLocation TEXTURE_BASKETBALL = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/pillbug_basketball.png");
     @Override
     public ResourceLocation getTextureLocation(PillbugEntity animatable) {
-        if (animatable.isPoisonous()) {
+        if (animatable.isBasketball()) {
+            return TEXTURE_BASKETBALL;
+        } else if (animatable.isPoisonous()) {
             return TEXTURE_POISONOUS;
         } else return TEXTURE;
     }

@@ -2,7 +2,6 @@
   "type" :"forge:add_spawns",
   "biomes" : [
     "minecraft:ocean",
-    "minecraft:stony_shore",
     "minecraft:cold_ocean"
   ],
   "spawners" : {

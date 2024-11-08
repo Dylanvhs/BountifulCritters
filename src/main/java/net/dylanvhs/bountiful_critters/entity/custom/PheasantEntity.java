@@ -156,7 +156,7 @@ public class PheasantEntity extends Animal implements GeoAnimatable {
         super.tick();
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.timeUntilNextEgg <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.spawnAtLocation(ModItems.EMU_EGG.get());
+            this.spawnAtLocation(ModItems.PHEASANT_EGG.get());
             this.timeUntilNextEgg = this.random.nextInt(6000) + 6000;
         }
         setSprinting(isPanicking());
