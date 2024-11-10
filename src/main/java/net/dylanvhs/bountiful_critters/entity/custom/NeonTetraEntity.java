@@ -160,7 +160,7 @@ public class NeonTetraEntity extends AbstractSchoolingFish implements GeoEntity,
     public void aiStep() {
         super.aiStep();
         if (this.isUnderWater() && this.tickCount % 4 == 0) {
-            this.level().addParticle(ModParticles.NEON_SHINE.get(), this.getRandomX(0.15D), this.getY(1.25D), this.getRandomZ(0.15D), 0.0D, 0.0D, 0.0D);
+            this.level().addParticle(ModParticles.NEON_SHINE.get(), this.getRandomX(0.15D), this.getY(0D), this.getRandomZ(0.15D), 0.0D, 0.0D, 0.0D);
         }
     }
 

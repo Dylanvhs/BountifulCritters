@@ -8,11 +8,14 @@ import net.dylanvhs.bountiful_critters.entity.client.*;
 import net.dylanvhs.bountiful_critters.item.ModCreativeModeTabs;
 import net.dylanvhs.bountiful_critters.loot.ModLootModifiers;
 import net.dylanvhs.bountiful_critters.particles.ModParticles;
+import net.dylanvhs.bountiful_critters.particles.client.NeonShineParticle;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
+import net.minecraft.client.particle.GlowParticle;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -24,7 +27,6 @@ import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @Mod(BountifulCritters.MOD_ID)
 public class BountifulCritters
@@ -139,6 +141,10 @@ public class BountifulCritters
             EntityRenderers.register
                     (ModEntities.THROWABLE_PILLBUG.get(), ThrownItemRenderer::new);
 
+        }
+        @SubscribeEvent
+        public static void registerParticles(RegisterParticleProvidersEvent event) {
+            event.registerSpriteSet(ModParticles.NEON_SHINE.get(), NeonShineParticle.Provider::new);
         }
     }
 }
