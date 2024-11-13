@@ -1,11 +1,11 @@
 {
   "type" :"forge:add_spawns",
   "biomes" : [
-    "minecraft:jungle"
+    "minecraft:soul_sand_valley"
   ],
   "spawners" : {
-    "type" : "bountiful_critters:toucan",
-    "weight" : 10,
+    "type" : "bountiful_critters:hogbear",
+    "weight" : 5,
     "minCount" : 1,
     "maxCount" : 1
   }

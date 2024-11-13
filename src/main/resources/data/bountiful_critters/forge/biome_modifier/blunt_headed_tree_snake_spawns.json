@@ -7,7 +7,7 @@
   ],
   "spawners" : {
     "type" : "bountiful_critters:blunt_headed_tree_snake",
-    "weight" : 5,
+    "weight" : 8,
     "minCount" : 1,
     "maxCount" : 2
   }
