@@ -1,45 +1,45 @@
-[10nov.2024 15:08:26.141] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\dylan\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.2.0, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, bountiful_critters, --all, --output, C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\src\generated\resources, --existing, C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\src\main\resources, --mixin.config, bountiful_critters.mixins.json]
-[10nov.2024 15:08:26.151] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.8.1 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
-[10nov.2024 15:08:26.287] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
-[10nov.2024 15:08:26.347] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/dylan/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
-[10nov.2024 15:08:26.667] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.2.0\7f9181f85acc66547685a72020713fc8cbde98\javafmllanguage-1.20.1-47.2.0.jar is missing mods.toml file
-[10nov.2024 15:08:26.669] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.2.0\7872f5205685fdd26fae39b1be79b0e60ca5b7bd\lowcodelanguage-1.20.1-47.2.0.jar is missing mods.toml file
-[10nov.2024 15:08:26.672] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.2.0\d501d161cabed08b3c139a2c6217b02a39f3c3e9\mclanguage-1.20.1-47.2.0.jar is missing mods.toml file
-[10nov.2024 15:08:26.675] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.2.0\ffd3c6debac0a388c9e33ac43c9f5eafb91cb466\fmlcore-1.20.1-47.2.0.jar is missing mods.toml file
-[10nov.2024 15:08:26.838] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
-[10nov.2024 15:08:28.071] [main/WARN] [mixin/]: Compatibility level JAVA_17 specified by bountiful_critters.mixins.json is higher than the maximum level supported by this version of mixin (JAVA_13).
-[10nov.2024 15:08:28.072] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
-[10nov.2024 15:08:28.076] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\dylan\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, bountiful_critters, --all, --output, C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\src\generated\resources, --existing, C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\src\main\resources]
-[10nov.2024 15:08:28.124] [main/INFO] [mixin/]: Attempting to load Fernflower decompiler (Threaded mode)
-[10nov.2024 15:08:28.125] [main/INFO] [mixin/]: Fernflower could not be loaded, exported classes will not be decompiled. NoClassDefFoundError: org/jetbrains/java/decompiler/main/extern/IResultSaver
-[10nov.2024 15:08:28.134] [main/INFO] [mixin/]: Preparing mixins for MixinEnvironment[DEFAULT]
-[10nov.2024 15:08:28.134] [main/INFO] [mixin/]: Selecting config bountiful_critters.mixins.json
-[10nov.2024 15:08:28.139] [main/INFO] [mixin/]: Selecting config geckolib.mixins.json
-[10nov.2024 15:08:28.407] [main/INFO] [mixin/]: Remapping refMap geckolib.refmap.json using C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\build\createSrgToMcp\output.srg
-[10nov.2024 15:08:28.408] [main/INFO] [mixin/]: Preparing bountiful_critters.mixins.json (3)
-[10nov.2024 15:08:28.471] [main/INFO] [mixin/]: Preparing geckolib.mixins.json (1)
-[10nov.2024 15:08:28.500] [main/INFO] [mixin/]: Prepared 4 mixins in 0,366 sec (91,5ms avg) (0ms load, 0ms transform, 0ms plugin)
-[10nov.2024 15:08:28.755] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [bountiful_critters]
-[10nov.2024 15:08:28.864] [main/INFO] [mixin/]: Mixing BlockMixin from bountiful_critters.mixins.json into net.minecraft.world.level.block.Block
-[10nov.2024 15:08:28.966] [main/INFO] [mixin/]: Mixing BlockBehaviorMixin from bountiful_critters.mixins.json into net.minecraft.world.level.block.state.BlockBehaviour
-[10nov.2024 15:08:30.524] [main/INFO] [mixin/]: Mixing DecoratedPotBlockEntityMixin from bountiful_critters.mixins.json into net.minecraft.world.level.block.entity.DecoratedPotBlockEntity
-[10nov.2024 15:08:32.581] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.2.0, for MC 1.20.1 with MCP 20230612.114412
-[10nov.2024 15:08:32.587] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.2.0 Initialized
-[10nov.2024 15:08:32.667] [modloading-worker-0/WARN] [software.bernie.geckolib.GeckoLib/]: Minecraft.getInstance() was null, could not register reload listeners
-[10nov.2024 15:08:33.216] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.dylanvhs.bountiful_critters.entity.custom.StingrayEntity from class net.dylanvhs.bountiful_critters.entity.custom.MarineIguanaEntity
-[10nov.2024 15:08:33.296] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/dylan/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.2.0_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.2.0_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
-[10nov.2024 15:08:33.297] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/dylan/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.2.0_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.2.0_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
-[10nov.2024 15:08:33.472] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
-[10nov.2024 15:08:33.477] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 4 ms
-[10nov.2024 15:08:33.478] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: bountiful_critters
-[10nov.2024 15:08:33.478] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: bountiful_critters finished after 0 ms
-[10nov.2024 15:08:33.478] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: bountiful_critters
-[10nov.2024 15:08:33.516] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: bountiful_critters finished after 38 ms
-[10nov.2024 15:08:33.516] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Global Loot Modifiers : bountiful_critters
-[10nov.2024 15:08:33.532] [main/INFO] [net.minecraft.data.DataGenerator/]: Global Loot Modifiers : bountiful_critters finished after 15 ms
-[10nov.2024 15:08:33.532] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id bountiful_critters
-[10nov.2024 15:08:33.619] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id bountiful_critters finished after 86 ms
-[10nov.2024 15:08:33.619] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id bountiful_critters
-[10nov.2024 15:08:33.633] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id bountiful_critters finished after 14 ms
-[10nov.2024 15:08:33.634] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 161 ms
-[10nov.2024 15:08:33.648] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 66, old count: 66, new count: 67, removed stale: 0, written: 0
+[13nov.2024 18:44:44.813] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\dylan\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.2.0, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, bountiful_critters, --all, --output, C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\src\generated\resources, --existing, C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\src\main\resources, --mixin.config, bountiful_critters.mixins.json]
+[13nov.2024 18:44:44.823] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.8.1 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
+[13nov.2024 18:44:45.010] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
+[13nov.2024 18:44:45.076] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/dylan/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
+[13nov.2024 18:44:45.499] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.2.0\7f9181f85acc66547685a72020713fc8cbde98\javafmllanguage-1.20.1-47.2.0.jar is missing mods.toml file
+[13nov.2024 18:44:45.504] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.2.0\7872f5205685fdd26fae39b1be79b0e60ca5b7bd\lowcodelanguage-1.20.1-47.2.0.jar is missing mods.toml file
+[13nov.2024 18:44:45.508] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.2.0\d501d161cabed08b3c139a2c6217b02a39f3c3e9\mclanguage-1.20.1-47.2.0.jar is missing mods.toml file
+[13nov.2024 18:44:45.512] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.2.0\ffd3c6debac0a388c9e33ac43c9f5eafb91cb466\fmlcore-1.20.1-47.2.0.jar is missing mods.toml file
+[13nov.2024 18:44:45.685] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
+[13nov.2024 18:44:47.233] [main/WARN] [mixin/]: Compatibility level JAVA_17 specified by bountiful_critters.mixins.json is higher than the maximum level supported by this version of mixin (JAVA_13).
+[13nov.2024 18:44:47.234] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
+[13nov.2024 18:44:47.241] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\dylan\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, bountiful_critters, --all, --output, C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\src\generated\resources, --existing, C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\src\main\resources]
+[13nov.2024 18:44:47.304] [main/INFO] [mixin/]: Attempting to load Fernflower decompiler (Threaded mode)
+[13nov.2024 18:44:47.305] [main/INFO] [mixin/]: Fernflower could not be loaded, exported classes will not be decompiled. NoClassDefFoundError: org/jetbrains/java/decompiler/main/extern/IResultSaver
+[13nov.2024 18:44:47.313] [main/INFO] [mixin/]: Preparing mixins for MixinEnvironment[DEFAULT]
+[13nov.2024 18:44:47.313] [main/INFO] [mixin/]: Selecting config bountiful_critters.mixins.json
+[13nov.2024 18:44:47.317] [main/INFO] [mixin/]: Selecting config geckolib.mixins.json
+[13nov.2024 18:44:47.685] [main/INFO] [mixin/]: Remapping refMap geckolib.refmap.json using C:\Program Files\workspaces\bountiful-critters-forge-1.20.1-workspace\build\createSrgToMcp\output.srg
+[13nov.2024 18:44:47.685] [main/INFO] [mixin/]: Preparing bountiful_critters.mixins.json (3)
+[13nov.2024 18:44:47.731] [main/INFO] [mixin/]: Preparing geckolib.mixins.json (1)
+[13nov.2024 18:44:47.767] [main/INFO] [mixin/]: Prepared 4 mixins in 0,453 sec (113,2ms avg) (0ms load, 0ms transform, 0ms plugin)
+[13nov.2024 18:44:48.101] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [bountiful_critters]
+[13nov.2024 18:44:48.228] [main/INFO] [mixin/]: Mixing BlockMixin from bountiful_critters.mixins.json into net.minecraft.world.level.block.Block
+[13nov.2024 18:44:48.307] [main/INFO] [mixin/]: Mixing BlockBehaviorMixin from bountiful_critters.mixins.json into net.minecraft.world.level.block.state.BlockBehaviour
+[13nov.2024 18:44:50.194] [main/INFO] [mixin/]: Mixing DecoratedPotBlockEntityMixin from bountiful_critters.mixins.json into net.minecraft.world.level.block.entity.DecoratedPotBlockEntity
+[13nov.2024 18:44:52.967] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.2.0, for MC 1.20.1 with MCP 20230612.114412
+[13nov.2024 18:44:52.971] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.2.0 Initialized
+[13nov.2024 18:44:53.042] [modloading-worker-0/WARN] [software.bernie.geckolib.GeckoLib/]: Minecraft.getInstance() was null, could not register reload listeners
+[13nov.2024 18:44:53.712] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.dylanvhs.bountiful_critters.entity.custom.StingrayEntity from class net.dylanvhs.bountiful_critters.entity.custom.MarineIguanaEntity
+[13nov.2024 18:44:53.806] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/dylan/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.2.0_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.2.0_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
+[13nov.2024 18:44:53.807] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/dylan/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.2.0_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.2.0_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
+[13nov.2024 18:44:54.044] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
+[13nov.2024 18:44:54.051] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 6 ms
+[13nov.2024 18:44:54.051] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: bountiful_critters
+[13nov.2024 18:44:54.051] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: bountiful_critters finished after 0 ms
+[13nov.2024 18:44:54.051] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: bountiful_critters
+[13nov.2024 18:44:54.091] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: bountiful_critters finished after 39 ms
+[13nov.2024 18:44:54.091] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Global Loot Modifiers : bountiful_critters
+[13nov.2024 18:44:54.114] [main/INFO] [net.minecraft.data.DataGenerator/]: Global Loot Modifiers : bountiful_critters finished after 22 ms
+[13nov.2024 18:44:54.114] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id bountiful_critters
+[13nov.2024 18:44:54.234] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id bountiful_critters finished after 119 ms
+[13nov.2024 18:44:54.234] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id bountiful_critters
+[13nov.2024 18:44:54.247] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id bountiful_critters finished after 12 ms
+[13nov.2024 18:44:54.247] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 203 ms
+[13nov.2024 18:44:54.258] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 67, old count: 66, new count: 68, removed stale: 0, written: 1

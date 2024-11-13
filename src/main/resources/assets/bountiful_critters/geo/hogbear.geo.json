@@ -1,0 +1,137 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.hogbear",
+				"texture_width": 256,
+				"texture_height": 256,
+				"visible_bounds_width": 7,
+				"visible_bounds_height": 4.5,
+				"visible_bounds_offset": [0, 1.75, 0]
+			},
+			"bones": [
+				{
+					"name": "Hogbear",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "body",
+					"parent": "Hogbear",
+					"pivot": [0, 25, 9]
+				},
+				{
+					"name": "bone",
+					"parent": "body",
+					"pivot": [0, 25, 9],
+					"cubes": [
+						{"origin": [-11.5, 13, -11.5], "size": [23, 27, 23], "uv": [0, 0]},
+						{"origin": [-9.5, 15, 11.5], "size": [19, 23, 16], "uv": [0, 50]},
+						{"origin": [0, 40, -12.5], "size": [0, 7, 19], "uv": [92, 0]}
+					]
+				},
+				{
+					"name": "tail",
+					"parent": "body",
+					"pivot": [0, 30.5, 27.5],
+					"cubes": [
+						{"origin": [-1.5, 29, 27.5], "size": [3, 3, 8], "uv": [46, 89]},
+						{"origin": [0, 28, 34.5], "size": [0, 5, 4], "uv": [62, 100]}
+					]
+				},
+				{
+					"name": "head",
+					"parent": "body",
+					"pivot": [0, 26.25, -11],
+					"cubes": [
+						{"origin": [-9.5, 16, -21.5], "size": [19, 19, 10], "uv": [70, 50]},
+						{"origin": [0, 35, -19.5], "size": [0, 8, 8], "uv": [46, 100]},
+						{"origin": [-5.5, 21, -28.5], "size": [11, 12, 7], "uv": [92, 26]}
+					]
+				},
+				{
+					"name": "rear",
+					"parent": "head",
+					"pivot": [-7.5, 33, -16.5],
+					"cubes": [
+						{"origin": [-12.5, 32, -17.5], "size": [6, 6, 2], "uv": [62, 110], "mirror": true}
+					]
+				},
+				{
+					"name": "lear",
+					"parent": "head",
+					"pivot": [7.5, 33, -16.5],
+					"cubes": [
+						{"origin": [6.5, 32, -17.5], "size": [6, 6, 2], "uv": [62, 110]}
+					]
+				},
+				{
+					"name": "rtusk",
+					"parent": "head",
+					"pivot": [-6, 23, -23],
+					"cubes": [
+						{"origin": [-7.5, 17, -24.5], "size": [3, 7, 3], "uv": [78, 110], "mirror": true},
+						{"origin": [-7.5, 17, -28.5], "size": [3, 2, 4], "uv": [90, 110], "mirror": true}
+					]
+				},
+				{
+					"name": "ltusk",
+					"parent": "head",
+					"pivot": [6, 23, -23],
+					"cubes": [
+						{"origin": [4.5, 17, -24.5], "size": [3, 7, 3], "uv": [78, 110]},
+						{"origin": [4.5, 17, -28.5], "size": [3, 2, 4], "uv": [90, 110]}
+					]
+				},
+				{
+					"name": "eyesopen",
+					"parent": "head",
+					"pivot": [8.5, 25, -20],
+					"cubes": [
+						{"origin": [-9.5, 25, -21.5], "size": [19, 3, 10], "uv": [157, 25]}
+					]
+				},
+				{
+					"name": "eyesclosed",
+					"parent": "head",
+					"pivot": [0, 26.25, -11],
+					"cubes": [
+						{"origin": [-9.5, 25, -21.5], "size": [19, 3, 10], "uv": [157, 38]}
+					]
+				},
+				{
+					"name": "rforeleg",
+					"parent": "Hogbear",
+					"pivot": [-9, 15.5, -1.5],
+					"cubes": [
+						{"origin": [-14.5, 0, -7.5], "size": [11, 17, 12], "uv": [0, 89], "mirror": true}
+					]
+				},
+				{
+					"name": "lforeleg",
+					"parent": "Hogbear",
+					"pivot": [9, 15.5, -1.5],
+					"cubes": [
+						{"origin": [3.5, 0, -7.5], "size": [11, 17, 12], "uv": [0, 89]}
+					]
+				},
+				{
+					"name": "rbackleg",
+					"parent": "Hogbear",
+					"pivot": [-7, 17.5, 23.5],
+					"cubes": [
+						{"origin": [-12.5, 0, 17.5], "size": [11, 19, 12], "uv": [70, 79], "mirror": true}
+					]
+				},
+				{
+					"name": "lbackleg",
+					"parent": "Hogbear",
+					"pivot": [7, 17.5, 23.5],
+					"cubes": [
+						{"origin": [1.5, 0, 17.5], "size": [11, 19, 12], "uv": [70, 79]}
+					]
+				}
+			]
+		}
+	]
+}

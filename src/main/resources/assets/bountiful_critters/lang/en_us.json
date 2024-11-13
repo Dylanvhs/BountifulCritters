@@ -82,6 +82,7 @@
   "item.bountiful_critters.neon_tetra_spawn_egg" : "Neon Tetra Spawn Egg",
   "item.bountiful_critters.flounder_spawn_egg" : "Flounder Spawn Egg",
   "item.bountiful_critters.pheasant_spawn_egg" : "Pheasant Spawn Egg",
+  "item.bountiful_critters.hogbear_spawn_egg" : "Hogbear Spawn Egg",
 
 
   "block.bountiful_critters.roasted_pillbug_block": "Roasted Pill Bug",
@@ -137,6 +138,7 @@
   "entity.bountiful_critters.neon_tetra" : "Neon Tetra",
   "entity.bountiful_critters.flounder" : "Flounder",
   "entity.bountiful_critters.pheasant" : "Pheasant",
+  "entity.bountiful_critters.hogbear" : "Hogbear",
   "entity.bountiful_critters.pillbug_projectile" : "Pill Bug",
   "entity.bountiful_critters.emu_egg_projectile" : "Emu Egg",
   "entity.bountiful_critters.pheasant_egg_projectile" : "Pheasant Egg",

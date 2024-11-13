@@ -130,6 +130,9 @@ public class BountifulCritters
                     (ModEntities.PHEASANT.get(), PheasantRenderer:: new);
 
             EntityRenderers.register
+                    (ModEntities.HOGBEAR.get(), HogbearRenderer:: new);
+
+            EntityRenderers.register
                     (ModEntities.STICKY_ARROW.get(), StickyArrowRenderer::new);
 
             EntityRenderers.register

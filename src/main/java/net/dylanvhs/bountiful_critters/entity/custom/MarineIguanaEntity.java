@@ -68,7 +68,7 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(MarineIguanaEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(StingrayEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_SNEEZING = SynchedEntityData.defineId(MarineIguanaEntity.class, EntityDataSerializers.BOOLEAN);
-    public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.KELP);
+    public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.KELP, Items.SEAGRASS);
 
     public int timeUntilNextSneeze = this.random.nextInt(3500) + 3500;
 
