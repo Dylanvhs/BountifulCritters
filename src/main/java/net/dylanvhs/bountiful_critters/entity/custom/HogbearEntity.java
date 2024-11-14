@@ -1,6 +1,7 @@
 package net.dylanvhs.bountiful_critters.entity.custom;
 
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
+import net.dylanvhs.bountiful_critters.entity.ai.FleeSkyGoal;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -8,6 +9,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.*;
@@ -20,10 +22,13 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.animal.horse.SkeletonHorse;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Skeleton;
+import net.minecraft.world.entity.monster.hoglin.Hoglin;
+import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -52,7 +57,6 @@ public class HogbearEntity extends Animal implements Enemy, GeoEntity {
     private static final EntityDataAccessor<Integer> DATA_TYPE_ID = SynchedEntityData.defineId(HogbearEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(HogbearEntity.class, EntityDataSerializers.BYTE);
 
-    private final HogbearEntity hogbearEntity = HogbearEntity.this;
     private static final int FLAG_SLEEPING = 32;
 
     public HogbearEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
@@ -81,23 +85,28 @@ public class HogbearEntity extends Animal implements Enemy, GeoEntity {
 
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new HogbearEntity.HogbearFloatGoal());
-        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
-        this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.1D));
+        this.targetSelector.addGoal(4, (new HurtByTargetGoal(this)).setAlertOthers());
+        this.goalSelector.addGoal(3, new BreedGoal(this, 1.0D));
+        this.goalSelector.addGoal(8, new FollowParentGoal(this, 1.25D));
+        this.goalSelector.addGoal(11, new WaterAvoidingRandomStrollGoal(this, 1.1D));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.25D, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Skeleton.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, SkeletonHorse.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.goalSelector.addGoal(7, new MeleeAttackGoal(this, 1.25D, true));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Skeleton.class, true));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, SkeletonHorse.class, true));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Hoglin.class, true));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Piglin.class, true));
+        this.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.goalSelector.addGoal(7, new HogbearEntity.SleepGoal());
         this.goalSelector.addGoal(12, new HogbearLookAtPlayerGoal(this, Player.class, 24.0F));
         this.goalSelector.addGoal(6, new HogbearEntity.SeekShelterGoal(1.25D));
     }
-
+    protected boolean onSoulSandBlock() {
+        return this.level().getBlockState(this.getBlockPosBelowThatAffectsMyMovement()).is(Blocks.SOUL_SAND);
+    }
     public void aiStep() {
         if (this.isAlive()) {
             setSprinting(isAggressive());
+            this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.onSoulSandBlock() ? 0.3 : 0.2);
         }
 
         if (this.isSleeping() || this.isImmobile()) {
@@ -184,27 +193,27 @@ public class HogbearEntity extends Animal implements Enemy, GeoEntity {
 
     class HogbearFloatGoal extends FloatGoal {
         public HogbearFloatGoal() {
-            super(hogbearEntity);
+            super(HogbearEntity.this);
         }
 
         public void start() {
             super.start();
-            hogbearEntity.clearStates();
+            HogbearEntity.this.clearStates();
         }
 
         public boolean canUse() {
-            return hogbearEntity.isInWater() && hogbearEntity.getFluidHeight(FluidTags.WATER) > 0.25D || hogbearEntity.isInLava() || hogbearEntity.isInFluidType((fluidType, height) -> hogbearEntity.canSwimInFluidType(fluidType) && height > 0.25D);
+            return HogbearEntity.this.isInWater() && HogbearEntity.this.getFluidHeight(FluidTags.WATER) > 0.25D || HogbearEntity.this.isInLava() || HogbearEntity.this.isInFluidType((fluidType, height) -> HogbearEntity.this.canSwimInFluidType(fluidType) && height > 0.25D);
         }
     }
 
     abstract class HogbearBehaviorGoal extends Goal {
         private final TargetingConditions alertableTargeting = TargetingConditions.forCombat().range(12.0D).ignoreLineOfSight().selector(new HogbearAlertableEntitiesSelector());
         protected boolean hasShelter() {
-            BlockPos blockpos = BlockPos.containing(hogbearEntity.getX(), hogbearEntity.getBoundingBox().maxY, hogbearEntity.getZ());
-            return !hogbearEntity.level().canSeeSky(blockpos) && hogbearEntity.getWalkTargetValue(blockpos) >= 0.0F;
+            BlockPos blockpos = BlockPos.containing(HogbearEntity.this.getX(), HogbearEntity.this.getBoundingBox().maxY, HogbearEntity.this.getZ());
+            return !HogbearEntity.this.level().canSeeSky(blockpos)  && HogbearEntity.this.getWalkTargetValue(blockpos) >= 0.0F;
         }
         protected boolean alertable() {
-            return !hogbearEntity.level().getNearbyEntities(LivingEntity.class, this.alertableTargeting, hogbearEntity, hogbearEntity.getBoundingBox().inflate(12.0D, 6.0D, 12.0D)).isEmpty();
+            return !HogbearEntity.this.level().getNearbyEntities(LivingEntity.class, this.alertableTargeting, HogbearEntity.this, HogbearEntity.this.getBoundingBox().inflate(12.0D, 6.0D, 12.0D)).isEmpty();
         }
     }
 
@@ -222,41 +231,42 @@ public class HogbearEntity extends Animal implements Enemy, GeoEntity {
         }
     }
 
-    class SeekShelterGoal extends FleeSunGoal {
+    class SeekShelterGoal extends FleeSkyGoal {
         private int interval = reducedTickDelay(100);
 
         public SeekShelterGoal(double pSpeedModifier) {
-            super(hogbearEntity, pSpeedModifier);
+            super(HogbearEntity.this, pSpeedModifier);
         }
         public boolean canUse() {
-            if (!hogbearEntity.isSleeping() && this.mob.getTarget() == null) {
-                if (hogbearEntity.level().canSeeSky(this.mob.blockPosition())) {
+            if (!HogbearEntity.this.isSleeping() && this.mob.getTarget() == null) {
+                if (HogbearEntity.this.level().canSeeSky(this.mob.blockPosition())) {
                     return this.setWantedPos();
-                } else if (this.interval > 0) {
+                }
+                if (this.interval > 0) {
                     --this.interval;
                     return false;
                 } else {
                     this.interval = 100;
                     BlockPos blockpos = this.mob.blockPosition();
-                    return hogbearEntity.level().canSeeSky(blockpos) && this.setWantedPos();
+                    return HogbearEntity.this.level().canSeeSky(blockpos) && this.setWantedPos();
                 }
             } else {
                 return false;
             }
         }
         public void start() {
-            hogbearEntity.clearStates();
+            HogbearEntity.this.clearStates();
             super.start();
         }
     }
 
     public class HogbearLookControl extends LookControl {
         public HogbearLookControl() {
-            super(hogbearEntity);
+            super(HogbearEntity.this);
         }
 
         public void tick() {
-            if (!hogbearEntity.isSleeping()) {
+            if (!HogbearEntity.this.isSleeping()) {
                 super.tick();
             }
         }
@@ -264,11 +274,11 @@ public class HogbearEntity extends Animal implements Enemy, GeoEntity {
 
     class HogbearMoveControl extends MoveControl {
         public HogbearMoveControl() {
-            super(hogbearEntity);
+            super(HogbearEntity.this);
         }
 
         public void tick() {
-            if (hogbearEntity.canMove()) {
+            if (HogbearEntity.this.canMove()) {
                 super.tick();
             }
 
@@ -277,15 +287,15 @@ public class HogbearEntity extends Animal implements Enemy, GeoEntity {
 
     class SleepGoal extends HogbearEntity.HogbearBehaviorGoal {
         private static final int WAIT_TIME_BEFORE_SLEEP = reducedTickDelay(140);
-        private int countdown = hogbearEntity.random.nextInt(WAIT_TIME_BEFORE_SLEEP);
+        private int countdown = HogbearEntity.this.random.nextInt(WAIT_TIME_BEFORE_SLEEP);
 
         public SleepGoal() {
             this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
         }
 
         public boolean canUse() {
-            if (hogbearEntity.xxa == 0.0F && hogbearEntity.yya == 0.0F && hogbearEntity.zza == 0.0F) {
-                return this.canSleep() || hogbearEntity.isSleeping();
+            if (HogbearEntity.this.xxa == 0.0F && HogbearEntity.this.yya == 0.0F && HogbearEntity.this.zza == 0.0F) {
+                return this.canSleep() || HogbearEntity.this.isSleeping();
             } else {
                 return false;
             }
@@ -300,18 +310,18 @@ public class HogbearEntity extends Animal implements Enemy, GeoEntity {
                 --this.countdown;
                 return false;
             } else {
-                return hogbearEntity.level().isDay() && this.hasShelter() && !this.alertable() && !hogbearEntity.isInPowderSnow;
+                return this.hasShelter() && !this.alertable() && !HogbearEntity.this.isInPowderSnow;
             }
         }
 
         public void stop() {
-            this.countdown = hogbearEntity.random.nextInt(WAIT_TIME_BEFORE_SLEEP);
-            hogbearEntity.clearStates();
+            this.countdown = HogbearEntity.this.random.nextInt(WAIT_TIME_BEFORE_SLEEP);
+            HogbearEntity.this.clearStates();
         }
         public void start() {
-            hogbearEntity.setSleeping(true);
-            hogbearEntity.getNavigation().stop();
-            hogbearEntity.getMoveControl().setWantedPosition(hogbearEntity.getX(), hogbearEntity.getY(), hogbearEntity.getZ(), 0.0D);
+            HogbearEntity.this.setSleeping(true);
+            HogbearEntity.this.getNavigation().stop();
+            HogbearEntity.this.getMoveControl().setWantedPosition(HogbearEntity.this.getX(), HogbearEntity.this.getY(), HogbearEntity.this.getZ(), 0.0D);
         }
     }
 
