@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all":  "bountiful_critters:block/pillblock_shingles"
+  }
+}

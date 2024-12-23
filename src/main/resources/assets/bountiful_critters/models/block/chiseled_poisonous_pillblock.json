@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all":  "bountiful_critters:block/chiseled_poisonous_pillblock"
+  }
+}
