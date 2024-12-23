@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "bountiful_critters:block/poisonous_pillblock",
+    "side": "bountiful_critters:block/poisonous_pillblock",
+    "top": "bountiful_critters:block/poisonous_pillblock"
+  }
+}

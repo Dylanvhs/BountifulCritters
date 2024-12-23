@@ -40,22 +40,22 @@ public class ModBlocks {
             () -> new SeagrassBallBlock(BlockBehaviour.Properties.of().strength(0.2F).sound(SoundType.WET_GRASS).replaceable().noCollission().noOcclusion()));
 
     public static final RegistryObject<Block> PILLBLOCK = registerBlock("pillblock",
-            () -> new Block(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.STONE)));
+            () -> new Block(BlockBehaviour.Properties.of().strength(0.75F).sound(SoundType.STONE)));
     public static final RegistryObject<Block> PILLBLOCK_BRICKS = registerBlock("pillblock_bricks",
-            () -> new Block(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.STONE)));
+            () -> new Block(BlockBehaviour.Properties.of().strength(0.75F).sound(SoundType.STONE)));
     public static final RegistryObject<Block> PILLBLOCK_SHINGLES = registerBlock("pillblock_shingles",
-            () -> new Block(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.STONE)));
+            () -> new Block(BlockBehaviour.Properties.of().strength(0.75F).sound(SoundType.STONE)));
     public static final RegistryObject<Block> CHISELED_PILLBLOCK = registerBlock("chiseled_pillblock",
-            () -> new Block(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.STONE)));
+            () -> new Block(BlockBehaviour.Properties.of().strength(0.75F).sound(SoundType.STONE)));
 
     public static final RegistryObject<Block> POISONOUS_PILLBLOCK = registerBlock("poisonous_pillblock",
-            () -> new Block(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.STONE)));
+            () -> new Block(BlockBehaviour.Properties.of().strength(0.75F).sound(SoundType.STONE)));
     public static final RegistryObject<Block> POISONOUS_PILLBLOCK_BRICKS = registerBlock("poisonous_pillblock_bricks",
-            () -> new Block(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.STONE)));
+            () -> new Block(BlockBehaviour.Properties.of().strength(0.75F).sound(SoundType.STONE)));
     public static final RegistryObject<Block> POISONOUS_PILLBLOCK_SHINGLES = registerBlock("poisonous_pillblock_shingles",
-            () -> new Block(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.STONE)));
+            () -> new Block(BlockBehaviour.Properties.of().strength(0.75F).sound(SoundType.STONE)));
     public static final RegistryObject<Block> CHISELED_POISONOUS_PILLBLOCK = registerBlock("chiseled_poisonous_pillblock",
-            () -> new Block(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.STONE)));
+            () -> new Block(BlockBehaviour.Properties.of().strength(0.75F).sound(SoundType.STONE)));
 
     public static <B extends Block> RegistryObject<B> registerBlock(String name, Supplier<? extends B> supplier) {
         RegistryObject<B> block = BLOCKS.register(name, supplier);

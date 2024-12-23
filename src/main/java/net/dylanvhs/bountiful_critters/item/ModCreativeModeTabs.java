@@ -72,6 +72,16 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.POISONOUS_PILLBUG.get());
                         pOutput.accept(ModItems.PILLBUG_THROWABLE.get());
 
+                        pOutput.accept(ModBlocks.PILLBLOCK.get());
+                        pOutput.accept(ModBlocks.PILLBLOCK_BRICKS.get());
+                        pOutput.accept(ModBlocks.PILLBLOCK_SHINGLES.get());
+                        pOutput.accept(ModBlocks.CHISELED_PILLBLOCK.get());
+
+                        pOutput.accept(ModBlocks.POISONOUS_PILLBLOCK.get());
+                        pOutput.accept(ModBlocks.POISONOUS_PILLBLOCK_BRICKS.get());
+                        pOutput.accept(ModBlocks.POISONOUS_PILLBLOCK_SHINGLES.get());
+                        pOutput.accept(ModBlocks.CHISELED_POISONOUS_PILLBLOCK.get());
+
                         pOutput.accept(ModItems.RAW_PHEASANT.get());
                         pOutput.accept(ModItems.COOKED_PHEASANT.get());
                         pOutput.accept(ModItems.PHEASANT_FEATHER.get());
