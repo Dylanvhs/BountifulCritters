@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "bountiful_critters:block/poisonous_pillblock_shingles_slab"
+    },
+    "type=double": {
+      "model": "bountiful_critters:block/poisonous_pillblock_shingles"
+    },
+    "type=top": {
+      "model": "bountiful_critters:block/poisonous_pillblock_shingles_slab_top"
+    }
+  }
+}

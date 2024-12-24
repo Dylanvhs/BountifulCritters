@@ -73,13 +73,26 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.PILLBUG_THROWABLE.get());
 
                         pOutput.accept(ModBlocks.PILLBLOCK.get());
+                        pOutput.accept(ModBlocks.PILLBLOCK_SLAB.get());
+                        pOutput.accept(ModBlocks.PILLBLOCK_STAIRS.get());
                         pOutput.accept(ModBlocks.PILLBLOCK_BRICKS.get());
+                        pOutput.accept(ModBlocks.PILLBLOCK_BRICKS_SLAB.get());
+                        pOutput.accept(ModBlocks.PILLBLOCK_BRICKS_STAIRS.get());
                         pOutput.accept(ModBlocks.PILLBLOCK_SHINGLES.get());
+                        pOutput.accept(ModBlocks.PILLBLOCK_SHINGLES_SLAB.get());
+                        pOutput.accept(ModBlocks.PILLBLOCK_SHINGLES_STAIRS.get());
                         pOutput.accept(ModBlocks.CHISELED_PILLBLOCK.get());
 
                         pOutput.accept(ModBlocks.POISONOUS_PILLBLOCK.get());
+                        pOutput.accept(ModBlocks.POISONOUS_PILLBLOCK_SLAB.get());
+                        pOutput.accept(ModBlocks.POISONOUS_PILLBLOCK_STAIRS.get());
                         pOutput.accept(ModBlocks.POISONOUS_PILLBLOCK_BRICKS.get());
+                        pOutput.accept(ModBlocks.POISONOUS_PILLBLOCK_BRICKS_SLAB.get());
+                        pOutput.accept(ModBlocks.POISONOUS_PILLBLOCK_BRICKS_STAIRS.get());
+                        pOutput.accept(ModBlocks.POISONOUS_PILLBLOCK_BRICKS_WALL.get());
                         pOutput.accept(ModBlocks.POISONOUS_PILLBLOCK_SHINGLES.get());
+                        pOutput.accept(ModBlocks.POISONOUS_PILLBLOCK_SHINGLES_SLAB.get());
+                        pOutput.accept(ModBlocks.POISONOUS_PILLBLOCK_SHINGLES_STAIRS.get());
                         pOutput.accept(ModBlocks.CHISELED_POISONOUS_PILLBLOCK.get());
 
                         pOutput.accept(ModItems.RAW_PHEASANT.get());

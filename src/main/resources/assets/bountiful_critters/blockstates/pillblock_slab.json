@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "bountiful_critters:block/pillblock_slab"
+    },
+    "type=double": {
+      "model": "bountiful_critters:block/pillblock"
+    },
+    "type=top": {
+      "model": "bountiful_critters:block/pillblock_slab_top"
+    }
+  }
+}

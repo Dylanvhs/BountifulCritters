@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "bountiful_critters:block/pillblock_bricks"
+  }
+}
