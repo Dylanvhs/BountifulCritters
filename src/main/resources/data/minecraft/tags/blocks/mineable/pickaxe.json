@@ -1,0 +1,34 @@
+{
+  "replace": false,
+  "values": [
+    "bountiful_critters:pillblock",
+    "bountiful_critters:pillblock_shingles",
+    "bountiful_critters:pillblock_bricks",
+    "bountiful_critters:chiseled_pillblock",
+
+    "bountiful_critters:pillblock_slab",
+    "bountiful_critters:pillblock_shingles_slab",
+    "bountiful_critters:pillblock_bricks_slab",
+
+    "bountiful_critters:pillblock_stairs",
+    "bountiful_critters:pillblock_bricks_stairs",
+    "bountiful_critters:pillblock_shingles_stairs",
+
+    "bountiful_critters:pillblock_bricks_wall",
+
+    "bountiful_critters:poisonous_pillblock",
+    "bountiful_critters:poisonous_pillblock_shingles",
+    "bountiful_critters:poisonous_pillblock_bricks",
+    "bountiful_critters:chiseled_poisonous_pillblock",
+
+    "bountiful_critters:poisonous_pillblock_slab",
+    "bountiful_critters:poisonous_pillblock_bricks_slab",
+    "bountiful_critters:poisonous_pillblock_shingles_slab",
+
+    "bountiful_critters:poisonous_pillblock_stairs",
+    "bountiful_critters:poisonous_pillblock_bricks_stairs",
+    "bountiful_critters:poisonous_pillblock_shingles_stairs",
+
+    "bountiful_critters:poisonous_pillblock_bricks_wall"
+  ]
+}

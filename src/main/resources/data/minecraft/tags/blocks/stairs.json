@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "bountiful_critters:pillblock_stairs",
+    "bountiful_critters:pillblock_bricks_stairs",
+    "bountiful_critters:pillblock_shingles_stairs",
+    "bountiful_critters:poisonous_pillblock_stairs",
+    "bountiful_critters:poisonous_pillblock_bricks_stairs",
+    "bountiful_critters:poisonous_pillblock_shingles_stairs"
+  ]
+}

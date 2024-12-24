@@ -78,6 +78,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.PILLBLOCK_BRICKS.get());
                         pOutput.accept(ModBlocks.PILLBLOCK_BRICKS_SLAB.get());
                         pOutput.accept(ModBlocks.PILLBLOCK_BRICKS_STAIRS.get());
+                        pOutput.accept(ModBlocks.PILLBLOCK_BRICKS_WALL.get());
                         pOutput.accept(ModBlocks.PILLBLOCK_SHINGLES.get());
                         pOutput.accept(ModBlocks.PILLBLOCK_SHINGLES_SLAB.get());
                         pOutput.accept(ModBlocks.PILLBLOCK_SHINGLES_STAIRS.get());

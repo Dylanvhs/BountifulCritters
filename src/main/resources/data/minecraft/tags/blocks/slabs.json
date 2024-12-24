@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "bountiful_critters:pillblock_slab",
+    "bountiful_critters:pillblock_shingles_slab",
+    "bountiful_critters:pillblock_bricks_slab",
+    "bountiful_critters:poisonous_pillblock_slab",
+    "bountiful_critters:poisonous_pillblock_shingles_slab",
+    "bountiful_critters:poisonous_pillblock_bricks_slab"
+
+  ]
+}
