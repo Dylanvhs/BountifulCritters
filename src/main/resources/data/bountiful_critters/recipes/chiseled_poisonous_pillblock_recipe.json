@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "bountiful_critters:poisonous_pillblock_slab"
+    }
+  },
+  "pattern": [
+    " # ",
+    " # ",
+    "   "
+  ],
+  "result": {
+    "item": "bountiful_critters:chiseled_poisonous_pillblock"
+  },
+  "show_notification": true
+}

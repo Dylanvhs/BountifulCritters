@@ -52,6 +52,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.ROASTED_PILLBUG);
         simpleItem(ModItems.POISONOUS_PILLBUG);
         simpleItem(ModItems.POTTED_PILLBUG);
+        simpleItem(ModItems.PILLBUG_SCUTE);
+        simpleItem(ModItems.POISONOUS_PILLBUG_SCUTE);
         simpleItem(ModItems.RAW_PHEASANT);
         simpleItem(ModItems.COOKED_PHEASANT);
         simpleItem(ModItems.PHEASANT_FEATHER);

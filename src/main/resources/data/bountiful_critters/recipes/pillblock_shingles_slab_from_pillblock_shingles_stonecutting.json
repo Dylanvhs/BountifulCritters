@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 2,
+  "ingredient": {
+    "item": "bountiful_critters:pillblock_shingles"
+  },
+  "result": "bountiful_critters:pillblock_shingles_slab"
+}

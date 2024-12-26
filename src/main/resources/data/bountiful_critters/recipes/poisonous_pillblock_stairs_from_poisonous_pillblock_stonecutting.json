@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "bountiful_critters:poisonous_pillblock"
+  },
+  "result": "bountiful_critters:poisonous_pillblock_stairs"
+}

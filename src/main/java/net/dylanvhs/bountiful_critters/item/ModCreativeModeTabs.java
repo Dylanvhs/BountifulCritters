@@ -71,6 +71,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.ROASTED_PILLBUG.get());
                         pOutput.accept(ModItems.POISONOUS_PILLBUG.get());
                         pOutput.accept(ModItems.PILLBUG_THROWABLE.get());
+                        pOutput.accept(ModItems.PILLBUG_SCUTE.get());
+                        pOutput.accept(ModItems.POISONOUS_PILLBUG_SCUTE.get());
 
                         pOutput.accept(ModBlocks.PILLBLOCK.get());
                         pOutput.accept(ModBlocks.PILLBLOCK_SLAB.get());

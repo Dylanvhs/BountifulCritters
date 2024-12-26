@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "bountiful_critters:pillblock_bricks"
+    }
+  },
+  "pattern": [
+    "   ",
+    "###",
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "item": "bountiful_critters:pillblock_bricks_wall"
+  },
+  "show_notification": true
+}

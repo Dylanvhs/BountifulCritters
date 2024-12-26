@@ -4,23 +4,15 @@ import com.mojang.logging.LogUtils;
 import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.dylanvhs.bountiful_critters.effect.ModMobEffects;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
-import net.dylanvhs.bountiful_critters.entity.client.*;
 import net.dylanvhs.bountiful_critters.item.ModCreativeModeTabs;
 import net.dylanvhs.bountiful_critters.loot.ModLootModifiers;
 import net.dylanvhs.bountiful_critters.particles.ModParticles;
-import net.dylanvhs.bountiful_critters.particles.client.NeonShineParticle;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
-import net.minecraft.client.particle.GlowParticle;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.dylanvhs.bountiful_critters.item.ModItems;
-import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
@@ -70,84 +62,5 @@ public class BountifulCritters
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
 
-    }
-
-    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents
-    {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-
-            EntityRenderers.register
-                    (ModEntities.STINGRAY.get(), StingrayRenderer:: new);
-
-            EntityRenderers.register
-                    (ModEntities.SUNFISH.get(), SunfishRenderer:: new);
-
-            EntityRenderers.register
-                    (ModEntities.EMU.get(), EmuRenderer:: new);
-
-            EntityRenderers.register
-                    (ModEntities.KRILL.get(), KrillRenderer:: new);
-
-            EntityRenderers.register
-                    (ModEntities.MARINE_IGUANA.get(), MarineIguanaRenderer:: new);
-
-            EntityRenderers.register
-                    (ModEntities.LONGHORN.get(), LongHornRenderer:: new);
-
-            EntityRenderers.register
-                    (ModEntities.TOUCAN.get(), ToucanRenderer:: new);
-
-            EntityRenderers.register
-                    (ModEntities.HUMPBACK_WHALE.get(), HumpbackWhaleRenderer:: new);
-
-            EntityRenderers.register
-                    (ModEntities.PILLBUG.get(), PillbugRenderer:: new);
-
-            EntityRenderers.register
-                    (ModEntities.BLUNT_HEADED_TREE_SNAKE.get(), BluntHeadedTreeSnakeRenderer:: new);
-
-            EntityRenderers.register
-                    (ModEntities.GECKO.get(), GeckoRenderer:: new);
-
-            EntityRenderers.register
-                    (ModEntities.LION.get(), LionRenderer:: new);
-
-            EntityRenderers.register
-                    (ModEntities.BARRELEYE.get(), BarreleyeRenderer:: new);
-
-            EntityRenderers.register
-                    (ModEntities.ANGELFISH.get(), AngelfishRenderer:: new);
-
-            EntityRenderers.register
-                    (ModEntities.NEON_TETRA.get(), NeonTetraRenderer:: new);
-
-            EntityRenderers.register
-                    (ModEntities.FLOUNDER.get(), FlounderRenderer:: new);
-
-            EntityRenderers.register
-                    (ModEntities.PHEASANT.get(), PheasantRenderer:: new);
-
-            EntityRenderers.register
-                    (ModEntities.HOGBEAR.get(), HogbearRenderer:: new);
-
-            EntityRenderers.register
-                    (ModEntities.STICKY_ARROW.get(), StickyArrowRenderer::new);
-
-            EntityRenderers.register
-                    (ModEntities.EMU_EGG.get(), ThrownItemRenderer::new);
-
-            EntityRenderers.register
-                    (ModEntities.PHEASANT_EGG.get(), ThrownItemRenderer::new);
-
-            EntityRenderers.register
-                    (ModEntities.THROWABLE_PILLBUG.get(), ThrownItemRenderer::new);
-
-        }
-        @SubscribeEvent
-        public static void registerParticles(RegisterParticleProvidersEvent event) {
-            event.registerSpriteSet(ModParticles.NEON_SHINE.get(), NeonShineParticle.Provider::new);
-        }
     }
 }

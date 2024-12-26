@@ -207,6 +207,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
         }
 
         // DO NOT TOUCH
+        // Unfortunately for you, I will touch
         else if (heldItem.isEmpty() && !isBaby() && isRolledUp()) {
             ItemStack itemstack2 = new ItemStack(ModItems.PILLBUG_THROWABLE.get());
             player.setItemInHand(hand, itemstack2);
@@ -288,12 +289,28 @@ public class PillbugEntity extends Animal implements GeoEntity {
     }
 
     public void die(DamageSource pCause) {
+        float scuteDrops = this.getRandom().nextFloat();
         if (!this.isBaby()) {
             if (this.hasEffect(MobEffects.POISON)) {
                 spawnAtLocation(ModItems.POISONOUS_PILLBUG.get());
+                if (scuteDrops <= 0.3F) {
+                    spawnAtLocation(ModItems.POISONOUS_PILLBUG_SCUTE.get());
+                } else if (scuteDrops <= 0.6F) {
+                    spawnAtLocation(ModItems.POISONOUS_PILLBUG_SCUTE.get());
+                } else if (scuteDrops <= 0.9F) {
+                    spawnAtLocation(ModItems.POISONOUS_PILLBUG_SCUTE.get());
+                }
             } else if (isOnFire()) {
                 spawnAtLocation(ModItems.ROASTED_PILLBUG.get());
             } else spawnAtLocation(ModItems.RAW_PILLBUG.get());
+            if (scuteDrops <= 0.3F) {
+                spawnAtLocation(ModItems.PILLBUG_SCUTE.get());
+            } else if (scuteDrops <= 0.6F) {
+                spawnAtLocation(ModItems.PILLBUG_SCUTE.get());
+            } else if (scuteDrops <= 0.9F) {
+                spawnAtLocation(ModItems.PILLBUG_SCUTE.get());
+            }
+
         }
         setRollUp(false);
         super.die(pCause);

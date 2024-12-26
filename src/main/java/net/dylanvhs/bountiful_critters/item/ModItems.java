@@ -122,6 +122,12 @@ public class ModItems {
     public static final RegistryObject<Item> PILLBUG_THROWABLE =
             ITEMS.register("pillbug_throwable", () -> new PillbugProjectileItem(new Item.Properties().stacksTo(1)));
 
+    public static final RegistryObject<Item> PILLBUG_SCUTE =
+            ITEMS.register("pillbug_scute", () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> POISONOUS_PILLBUG_SCUTE =
+            ITEMS.register("poisonous_pillbug_scute", () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> RAW_PHEASANT =
             ITEMS.register("pheasant", () -> new Item(new Item.Properties().food(ModFoods.RAW_PHEASANT)));
     public static final RegistryObject<Item> COOKED_PHEASANT =

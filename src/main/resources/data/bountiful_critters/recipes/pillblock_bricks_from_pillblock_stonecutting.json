@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "bountiful_critters:pillblock"
+  },
+  "result": "bountiful_critters:pillblock_bricks"
+}
