@@ -15,8 +15,10 @@ import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -72,7 +74,8 @@ public class ModItems {
 
     public static final RegistryObject<Item> SEAGRASS_BALL =
             ITEMS.register("seagrass_ball", () -> new BlockItem(ModBlocks.SEAGRASS_BALL_PLACED.get(),(new Item.Properties())));
-
+    public static final RegistryObject<Item> DRIED_SEAGRASS_BALL =
+            ITEMS.register("dried_seagrass_ball", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STICKY_ARROW =
             ITEMS.register("sticky_arrow", () -> new ModItemArrow(new Item.Properties()));
 
@@ -120,7 +123,7 @@ public class ModItems {
     public static final RegistryObject<Item> ROASTED_PILLBUG =
             ITEMS.register("roasted_pillbug", () -> new BlockItem(ModBlocks.ROASTED_PILLBUG_BLOCK.get(), (new Item.Properties()).stacksTo(1)));
     public static final RegistryObject<Item> PILLBUG_THROWABLE =
-            ITEMS.register("pillbug_throwable", () -> new PillbugProjectileItem(new Item.Properties().stacksTo(1)));
+            ITEMS.register("pillbug_throwable", () -> new PillbugProjectileItem(ModEntities.PILLBUG::get, Fluids.EMPTY, Items.AIR, (new Item.Properties()).stacksTo(1)));
 
     public static final RegistryObject<Item> PILLBUG_SCUTE =
             ITEMS.register("pillbug_scute", () -> new Item(new Item.Properties()));
@@ -180,7 +183,7 @@ public class ModItems {
             () -> new ForgeSpawnEggItem(ModEntities.BLUNT_HEADED_TREE_SNAKE, 0x864e2c, 0x4d2314, new Item.Properties()));
 
     public static final RegistryObject<Item> GECKO_SPAWN_EGG = ITEMS.register("gecko_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.GECKO, 0xdfb643, 0x5f5356, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(ModEntities.GECKO, 0xf8cc2a, 0x545169, new Item.Properties()));
 
     public static final RegistryObject<Item> LION_SPAWN_EGG = ITEMS.register("lion_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.LION, 0xfabb34, 0x996428, new Item.Properties()));

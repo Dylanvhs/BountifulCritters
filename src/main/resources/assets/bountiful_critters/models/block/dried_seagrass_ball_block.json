@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all":  "bountiful_critters:block/dried_seagrass_ball_block"
+  }
+}

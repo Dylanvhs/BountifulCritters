@@ -4,11 +4,19 @@ import com.mojang.logging.LogUtils;
 import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.dylanvhs.bountiful_critters.effect.ModMobEffects;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
+import net.dylanvhs.bountiful_critters.entity.custom.PillbugEntity;
 import net.dylanvhs.bountiful_critters.item.ModCreativeModeTabs;
 import net.dylanvhs.bountiful_critters.loot.ModLootModifiers;
 import net.dylanvhs.bountiful_critters.particles.ModParticles;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.dylanvhs.bountiful_critters.item.ModItems;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockSource;
+import net.minecraft.core.Direction;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -19,6 +27,7 @@ import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Mod(BountifulCritters.MOD_ID)
 public class BountifulCritters
@@ -57,6 +66,26 @@ public class BountifulCritters
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(ModItems::initDispenser);
+        DispenserBlock.registerBehavior(ModItems.PILLBUG_THROWABLE.get(), new DefaultDispenseItemBehavior() {
+            @Override
+            protected ItemStack execute(BlockSource source, ItemStack stack) {
+                ServerLevel level = source.getLevel();
+                BlockPos pos = source.getPos();
+                Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
+
+                PillbugEntity pillbug = new PillbugEntity(ModEntities.PILLBUG.get(), level);
+                UUID id = pillbug.getUUID();
+                pillbug.deserializeNBT(stack.getOrCreateTag().getCompound("PillbugData"));
+                pillbug.setUUID(id);
+                pillbug.moveTo(pos.getX(), pos.getY(), pos.getZ(), 0.0F, 0.0F);
+                pillbug.setProjectile(true);
+                pillbug.shoot(direction.getStepX(), ((float)direction.getStepY() + 0.1F), direction.getStepZ(), 3.0F, 0.0F);
+
+                level.addFreshEntity(pillbug);
+
+                return ItemStack.EMPTY;
+            }
+        });
     }
 
     @SubscribeEvent

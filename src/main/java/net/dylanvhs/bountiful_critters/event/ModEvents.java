@@ -20,6 +20,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @Mod.EventBusSubscriber(modid = BountifulCritters.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ModEvents {
+
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent e) {
 
@@ -90,12 +91,11 @@ public final class ModEvents {
                 (ModEntities.THROWABLE_PILLBUG.get(), ThrownItemRenderer::new);
 
     }
+
     @SubscribeEvent
     public static void registerParticles(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ModParticles.NEON_SHINE.get(), NeonShineParticle.Provider::new);
     }
-
-
 
     @SubscribeEvent
     public static void registerSpawnPlacements(SpawnPlacementRegisterEvent e) {
@@ -141,8 +141,4 @@ public final class ModEvents {
         event.put(ModEntities.HOGBEAR.get(), HogbearEntity.setAttributes());
 
     }
-
-
-
-
 }

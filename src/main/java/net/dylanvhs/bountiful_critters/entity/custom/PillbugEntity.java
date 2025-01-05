@@ -1,10 +1,18 @@
 
 package net.dylanvhs.bountiful_critters.entity.custom;
 
+import net.dylanvhs.bountiful_critters.block.ModBlocks;
+import net.dylanvhs.bountiful_critters.criterion.ModCriterion;
+import net.dylanvhs.bountiful_critters.damage.ModDamageTypes;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
+import net.dylanvhs.bountiful_critters.entity.ai.Bagable;
+import net.dylanvhs.bountiful_critters.entity.ai.Pickable;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -43,9 +51,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -55,15 +66,23 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
+import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-public class PillbugEntity extends Animal implements GeoEntity {
+public class PillbugEntity extends Animal implements GeoEntity, Pickable {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BYTE);
     private static final float SPIDER_SPECIAL_EFFECT_CHANCE = 0.1F;
     private static final EntityDataAccessor<Boolean> IS_ROLLED_UP = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_POISONOUS = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> BOUNCES = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> IS_PROJECTILE = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Optional<UUID>> THROWER = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    private static final EntityDataAccessor<Boolean> FROM_BAG = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BOOLEAN);
     private boolean canBePushed = true;
+    int bounces = 0;
 
     public PillbugEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
@@ -185,11 +204,12 @@ public class PillbugEntity extends Animal implements GeoEntity {
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob ageable) {
         return ModEntities.PILLBUG.get().create(world);
     }
+
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack heldItem = player.getItemInHand(hand);
 
-        if (heldItem.getItem() == Items.FLOWER_POT && this.isAlive() && !isBaby() && !isRolledUp()) {
+        if (heldItem.getItem() == Items.FLOWER_POT && this.isAlive() && !isBaby() && !isRolledUp() && !this.isProjectile()) {
             playSound(SoundEvents.DECORATED_POT_PLACE, 1.0F, 1.0F);
             heldItem.shrink(1);
             ItemStack itemstack1 = new ItemStack(ModItems.POTTED_PILLBUG.get());
@@ -209,15 +229,42 @@ public class PillbugEntity extends Animal implements GeoEntity {
         // DO NOT TOUCH
         // Unfortunately for you, I will touch
         else if (heldItem.isEmpty() && !isBaby() && isRolledUp()) {
-            ItemStack itemstack2 = new ItemStack(ModItems.PILLBUG_THROWABLE.get());
-            player.setItemInHand(hand, itemstack2);
-            this.setBucketData(itemstack2);
-            playSound(SoundEvents.ITEM_PICKUP, 1.0F, 1.0F);
-            this.discard();
-            return InteractionResult.SUCCESS;
+            Pickable.bagMobPickup(player, hand, this).orElse(super.mobInteract(player, hand));
         }
         return super.mobInteract(player, hand);
     }
+
+    public void shoot(double p_37266_, double p_37267_, double p_37268_, float scale, float p_37270_) {
+        Vec3 vec3 = (new Vec3(p_37266_, p_37267_, p_37268_)).normalize().add(this.random.triangle(0.0D, 0.04D * (double)p_37270_), this.random.triangle(0.0D, 0.04D * (double)p_37270_), this.random.triangle(0.0D, 0.04D * (double)p_37270_)).scale(scale);
+        this.setDeltaMovement(vec3);
+        double d0 = vec3.horizontalDistance();
+        this.setYRot((float)(Mth.atan2(vec3.x, vec3.z) * (double)(180F / (float)Math.PI)));
+        this.setXRot((float)(Mth.atan2(vec3.y, d0) * (double)(180F / (float)Math.PI)));
+        this.yRotO = this.getYRot();
+        this.xRotO = this.getXRot();
+    }
+
+    public void shootFromRotation(@Nullable Entity entity, float p_37253_, float p_37254_, float p_37255_, float scale, float inaccuracy) {
+        float f = -Mth.sin(p_37254_ * ((float)Math.PI / 180F)) * Mth.cos(p_37253_ * ((float)Math.PI / 180F));
+        float f1 = -Mth.sin((p_37253_ + p_37255_) * ((float)Math.PI / 180F));
+        float f2 = Mth.cos(p_37254_ * ((float)Math.PI / 180F)) * Mth.cos(p_37253_ * ((float)Math.PI / 180F));
+        this.shoot(f, f1, f2, scale, inaccuracy);
+        if (entity != null) {
+            Vec3 vec3 = entity.getDeltaMovement();
+            this.setDeltaMovement(this.getDeltaMovement().add(vec3.x, entity.onGround() ? 0.0D : vec3.y, vec3.z));
+        }
+    }
+
+    @Override
+    public boolean fromBag() {
+        return this.entityData.get(FROM_BAG);
+    }
+
+    @Override
+    public void setFromBag(boolean p_203706_1_) {
+        this.entityData.set(FROM_BAG, p_203706_1_);
+    }
+
 
     private void setBucketData(ItemStack bucket) {
         if (this.hasCustomName()) {
@@ -226,13 +273,56 @@ public class PillbugEntity extends Animal implements GeoEntity {
     }
 
     @Override
+    @Nonnull
+    public ItemStack getBagItemStack() {
+        ItemStack stack = new ItemStack(ModItems.PILLBUG_THROWABLE.get());
+        if (this.hasCustomName()) {
+            stack.setHoverName(this.getCustomName());
+        }
+        return stack;
+    }
+
+    @Override
+    public void saveToBagTag(@Nonnull ItemStack bucket) {
+        if (this.hasCustomName()) {
+            bucket.setHoverName(this.getCustomName());
+        }
+        Pickable.saveDefaultDataToBagTag(this, bucket);
+        CompoundTag compoundnbt = bucket.getOrCreateTag();
+        compoundnbt.put("PillbugData", serializeNBT());
+        compoundnbt.putInt("Age", this.getAge());
+
+    }
+
+    @Override
+    @Nonnull
+    public SoundEvent getPickupSound() {
+        return ModSounds.PILLBUG_AMBIENT.get();
+    }
+
+    @Override
+    public void loadFromBagTag(@Nonnull CompoundTag compound) {
+        Pickable.loadDefaultDataFromBagTag(this, compound);
+        if (compound.contains("Age")) {
+            this.setAge(compound.getInt("Age"));
+        }
+        if (compound.contains("Age")) {
+            this.setAge(compound.getInt("Age"));
+        }
+    }
+
+    @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
+        compound.putInt("Variant", this.getBounces());
+        compound.putBoolean("FromBag", this.fromBag());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
+        this.setBounces(compound.getInt("Variant"));
+        this.setFromBag(compound.getBoolean("FromBag"));
     }
 
 
@@ -242,6 +332,10 @@ public class PillbugEntity extends Animal implements GeoEntity {
         this.entityData.define(IS_ROLLED_UP, false);
         this.entityData.define(IS_POISONOUS, false);
         this.entityData.define(DATA_FLAGS_ID, (byte) 0);
+        this.entityData.define(BOUNCES, bounces);
+        this.entityData.define(IS_PROJECTILE, false);
+        this.entityData.define(THROWER, Optional.empty());
+        this.entityData.define(FROM_BAG, false);
     }
 
     public boolean isRolledUp() {
@@ -259,6 +353,23 @@ public class PillbugEntity extends Animal implements GeoEntity {
     public void setPoisonous(boolean poisonous) {
         entityData.set(IS_POISONOUS, poisonous);
     }
+
+    public int getBounces() {
+        return this.entityData.get(BOUNCES);
+    }
+
+    public void setBounces(int variant) {
+        this.entityData.set(BOUNCES, Integer.valueOf(variant));
+    }
+
+    public UUID getThrower() {
+        return this.entityData.get(THROWER).orElse(null);
+    }
+
+    public void setThrower(UUID uuid) {
+        this.entityData.set(THROWER, Optional.ofNullable(uuid));
+    }
+
 
     @Override
     protected boolean isImmobile() {
@@ -289,28 +400,21 @@ public class PillbugEntity extends Animal implements GeoEntity {
     }
 
     public void die(DamageSource pCause) {
-        float scuteDrops = this.getRandom().nextFloat();
         if (!this.isBaby()) {
             if (this.hasEffect(MobEffects.POISON)) {
                 spawnAtLocation(ModItems.POISONOUS_PILLBUG.get());
-                if (scuteDrops <= 0.3F) {
-                    spawnAtLocation(ModItems.POISONOUS_PILLBUG_SCUTE.get());
-                } else if (scuteDrops <= 0.6F) {
-                    spawnAtLocation(ModItems.POISONOUS_PILLBUG_SCUTE.get());
-                } else if (scuteDrops <= 0.9F) {
-                    spawnAtLocation(ModItems.POISONOUS_PILLBUG_SCUTE.get());
-                }
             } else if (isOnFire()) {
                 spawnAtLocation(ModItems.ROASTED_PILLBUG.get());
             } else spawnAtLocation(ModItems.RAW_PILLBUG.get());
-            if (scuteDrops <= 0.3F) {
+        }
+        if (!this.isBaby()) {
+            if (this.hasEffect(MobEffects.POISON)) {
+                spawnAtLocation(ModItems.POISONOUS_PILLBUG_SCUTE.get());
+                spawnAtLocation(ModItems.POISONOUS_PILLBUG_SCUTE.get());
+            } else {
                 spawnAtLocation(ModItems.PILLBUG_SCUTE.get());
-            } else if (scuteDrops <= 0.6F) {
-                spawnAtLocation(ModItems.PILLBUG_SCUTE.get());
-            } else if (scuteDrops <= 0.9F) {
                 spawnAtLocation(ModItems.PILLBUG_SCUTE.get());
             }
-
         }
         setRollUp(false);
         super.die(pCause);
@@ -320,10 +424,83 @@ public class PillbugEntity extends Animal implements GeoEntity {
         return source.is(DamageTypes.IN_WALL) || super.isInvulnerableTo(source);
     }
 
+    @Override
+    public void push(Entity entity) {
+        if (isProjectile()) {
+            setProjectile(false);
+        }
+        super.push(entity);
+    }
+
+    @Override
+    protected void actuallyHurt(DamageSource damageSource, float amount) {
+        super.actuallyHurt(damageSource, amount);
+
+        if (damageSource.is(DamageTypes.FELL_OUT_OF_WORLD) && this.isProjectile() && amount > this.getHealth()) {
+            Player player = level().getPlayerByUUID(getThrower());
+            if (player instanceof ServerPlayer serverPlayer) ModCriterion.THROW_PILLBUG_IN_THE_VOID.trigger(serverPlayer);
+        }
+    }
+
 
     @Override
     public void tick() {
         super.tick();
+
+        if (isProjectile()) {
+            List<Entity> entities = level().getEntities(this, getBoundingBox(), Entity::canBeHitByProjectile);
+            for (var entity : entities) {
+                if (getBoundingBox().intersects(entity.getBoundingBox()) && entity.hurt(damageSources().mobProjectile(this, getThrower() != null ? level().getPlayerByUUID(getThrower()) : this), 1.0F)) {
+                    playSound(ModSounds.PILLBUG_BOUNCE.get(), 0.8F, 1.0F);
+                    setProjectile(false);
+                }
+                if (entity instanceof Player player && player.getUUID().equals(UUID.fromString("c7e2fbc4-e21e-40be-b8e1-8ac69ad53416"))) {
+                    System.out.println(entity.getUUID());
+                    if (level().getPlayerByUUID(getThrower()) instanceof ServerPlayer serverPlayer) ModCriterion.THROW_PILLBUG_IN_THE_VOID.trigger(serverPlayer);
+                }
+            }
+            Level world = this.level();
+            BlockPos pos = this.blockPosition() ;
+            int radius = 1;
+            for (int sx = -radius; sx <= radius; sx++) {
+                    for (int sz = -radius; sz <= radius; sz++) {
+                        for (int sy = -radius; sy <= radius; sy++) {
+                            // Same loops but sy and sz, all nested
+                            if (world.getBlockState(pos.offset(sx, sy, sz)).getBlock() == Blocks.GRASS_BLOCK) {
+
+                                BlockHitResult hit = new BlockHitResult(this.position(), Direction.DOWN, this.blockPosition(), false);
+                                this.setBounces(bounces ++);
+                                playSound(ModSounds.PILLBUG_BOUNCE.get(), 0.8F, 1.0F);
+                                Vec3 deltaMovement = this.getDeltaMovement();
+                                Vec3 vec3 = deltaMovement.subtract(deltaMovement.x / 5, 0.0D, deltaMovement.z / 5);
+                                Direction direction = hit.getDirection();
+                                // x / 10.F = bounciness
+                                double booster = 0.3D + (2 / 10.0F);
+                                if (direction == Direction.UP || direction == Direction.DOWN) {
+                                    this.setDeltaMovement(vec3.x, vec3.y < 0.0D ? -vec3.y * booster : 0.0D, vec3.z);
+                                }
+                                if (direction == Direction.WEST || direction == Direction.EAST) {
+                                    this.setDeltaMovement(vec3.x < 0.65D ? -vec3.x * booster * Mth.sin(Mth.PI / 2) : 0.0D, vec3.y, vec3.z);
+                                }
+                                if (direction == Direction.NORTH || direction == Direction.SOUTH) {
+                                    this.setDeltaMovement(vec3.x, vec3.y, vec3.z < 0.65D ? -vec3.z * booster * Mth.sin(3 * Mth.PI / 4) : 0.0D);
+                                }
+                                if (getBounces() >= 4) {
+                                    setProjectile(false);
+                                }
+
+                            }
+                        }
+                    }
+
+            }
+        }
+
+        if (onGround() || isInWater()) {
+            setProjectile(false);
+        }
+
+
         if (!this.level().isClientSide) {
             this.setClimbing(this.horizontalCollision);
             setPoisonous(hasEffect(MobEffects.POISON));
@@ -340,13 +517,11 @@ public class PillbugEntity extends Animal implements GeoEntity {
                 setRollUp(true);
                 getNavigation().stop();
             }
-            else {
-                setRollUp(false);
-            }
+            else setRollUp(false);
+
         }
-        else {
-            setRollUp(false);
-        }
+        else this.setRollUp(this.isProjectile() && !this.isClimbing());
+
     }
 
     @Override
@@ -366,7 +541,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
             int i = pRandom.nextInt(2);
             if (i <= 1) {
                 this.effect = MobEffects.MOVEMENT_SPEED;
-            } else if (i <= 2) {
+            } else if (i == 2) {
                 this.effect = MobEffects.POISON;
             }
         }
@@ -392,6 +567,14 @@ public class PillbugEntity extends Animal implements GeoEntity {
         return pSpawnData;
     }
 
+    public boolean isProjectile() {
+        return this.entityData.get(IS_PROJECTILE);
+    }
+
+    public void setProjectile(boolean projectile) {
+        this.entityData.set(IS_PROJECTILE, projectile);
+    }
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 4, this::predicate));
@@ -399,7 +582,7 @@ public class PillbugEntity extends Animal implements GeoEntity {
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
 
-        if (this.isRolledUp() && this.onGround()) {
+        if (this.isRolledUp()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.pillbug.rolled_up", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else if (this.isClimbing() && geoAnimatableAnimationState.isMoving()) {

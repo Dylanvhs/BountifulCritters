@@ -40,12 +40,15 @@
   "item.bountiful_critters.salt": "Salt",
   "item.bountiful_critters.salted_kelp": "Salted Kelp",
   "item.bountiful_critters.seagrass_ball": "Seagrass Ball",
+  "item.bountiful_critters.dried_seagrass_ball": "Dried Seagrass Ball",
   "item.bountiful_critters.sticky_arrow": "Sticky Arrow",
-  "item.bountiful_critters.raw_pillbug": "Raw Pill Bug",
+  "item.bountiful_critters.raw_pillbug": "Raw Pillbug",
   "item.bountiful_critters.roasted_pillbug": "Roasted Pill Bug",
-  "item.bountiful_critters.poisonous_pillbug": "Poisonous Pill Bug",
-  "item.bountiful_critters.potted_pillbug": "Potted Pill Bug",
-  "item.bountiful_critters.pillbug_throwable": "Pill Bug",
+  "item.bountiful_critters.poisonous_pillbug": "Poisonous Pillbug",
+  "item.bountiful_critters.potted_pillbug": "Potted Pillbug",
+  "item.bountiful_critters.pillbug_throwable": "Pillbug",
+  "item.bountiful_critters.pillbug_scute": "Pillbug Scute",
+  "item.bountiful_critters.poisonous_pillbug_scute": "Poisonous Pillbug Scute",
   "item.bountiful_critters.pheasant": "Raw Pheasant",
   "item.bountiful_critters.cooked_pheasant": "Cooked Pheasant",
   "item.bountiful_critters.pheasant_feather": "Pheasant Feather",
@@ -73,7 +76,7 @@
   "item.bountiful_critters.longhorn_spawn_egg" : "Longhorn Cow Spawn Egg",
   "item.bountiful_critters.toucan_spawn_egg" : "Toucan Spawn Egg",
   "item.bountiful_critters.humpback_whale_spawn_egg" : "Humpback Whale Spawn Egg",
-  "item.bountiful_critters.pillbug_spawn_egg" : "Pill Bug Spawn Egg",
+  "item.bountiful_critters.pillbug_spawn_egg" : "Pillbug Spawn Egg",
   "item.bountiful_critters.blunt_headed_tree_snake_spawn_egg" : "Fiddle String Snake Spawn Egg",
   "item.bountiful_critters.gecko_spawn_egg" : "Gecko Spawn Egg",
   "item.bountiful_critters.lion_spawn_egg" : "Lion Spawn Egg",
@@ -85,7 +88,7 @@
   "item.bountiful_critters.hogbear_spawn_egg" : "Hogbear Spawn Egg",
 
 
-  "block.bountiful_critters.roasted_pillbug_block": "Roasted Pill Bug",
+  "block.bountiful_critters.roasted_pillbug_block": "Roasted Pillbug",
 
   "block.bountiful_critters.pillblock": "Pillblock",
   "block.bountiful_critters.pillblock_slab": "Pillblock Slab",
@@ -113,6 +116,8 @@
 
   "block.bountiful_critters.salt_lamp": "Salt Lamp",
   "block.bountiful_critters.seagrass_ball_block": "Block Of Seagrass Ball",
+  "block.bountiful_critters.dried_seagrass_ball_block": "Block Of Dried Seagrass Ball",
+  "block.bountiful_critters.dried_seagrass_ball_carpet": "Dried Seagrass Ball Carpet",
   "block.bountiful_critters.seagrass_ball_placed": "Seagrass Ball",
 
 
@@ -154,7 +159,7 @@
   "entity.bountiful_critters.longhorn" : "Longhorn Cow",
   "entity.bountiful_critters.toucan" : "Toucan",
   "entity.bountiful_critters.humpback_whale" : "Humpback Whale",
-  "entity.bountiful_critters.pillbug" : "Pill Bug",
+  "entity.bountiful_critters.pillbug" : "Pillbug",
   "entity.bountiful_critters.blunt_headed_tree_snake" : "Fiddle String Snake",
   "entity.bountiful_critters.gecko" : "Gecko",
   "entity.bountiful_critters.lion" : "Lion",
@@ -164,7 +169,7 @@
   "entity.bountiful_critters.flounder" : "Flounder",
   "entity.bountiful_critters.pheasant" : "Pheasant",
   "entity.bountiful_critters.hogbear" : "Hogbear",
-  "entity.bountiful_critters.pillbug_projectile" : "Pill Bug",
+  "entity.bountiful_critters.pillbug_projectile" : "Pillbug",
   "entity.bountiful_critters.emu_egg_projectile" : "Emu Egg",
   "entity.bountiful_critters.pheasant_egg_projectile" : "Pheasant Egg",
   "entity.bountiful_critters.sticky_arrow_projectile" : "Sticky Arrow",
@@ -183,11 +188,11 @@
 
 
   "advancements.husbandry.collect_pillbug.title" : "Unusual Catch",
-  "advancements.husbandry.collect_pillbug.description" : "Collect a Pill Bug",
+  "advancements.husbandry.collect_pillbug.description" : "Collect a Pillbug",
 
 
   "advancements.husbandry.eating_poisonous_pillbug.title" : "Tough Pill To Swallow",
-  "advancements.husbandry.eating_poisonous_pillbug.description" : "Consume a Poisonous Pill Bug",
+  "advancements.husbandry.eating_poisonous_pillbug.description" : "Consume a Poisonous Pillbug.\nNote: Don't try this at home.",
 
 
   "advancements.husbandry.collect_longhorn_horn.title" : "Could Be A Great Didgeridoo",
@@ -202,10 +207,13 @@
   "advancements.husbandry.collect_seagrass_ball.description" : "Get a Seagrass Ball",
 
   "advancements.adventure.memories_disc_crafted.title" : "Eggs-pert Crafter",
-  "advancements.adventure.memories_disc_crafted.description" : "Craft a Music Disc Using Emu Egg Shell Pieces",
+  "advancements.adventure.memories_disc_crafted.description" : "Craft a Music Disc using Emu Egg Shell Pieces",
 
   "advancements.husbandry.collect_salt.title" : "Salty Business",
   "advancements.husbandry.collect_salt.description" : "Collect Salt",
+
+  "advancements.adventure.spyglass_at_marine_iguana.title": "Is It a Monster?",
+  "advancements.adventure.spyglass_at_marine_iguana.description" : "Look at a Marine Iguana through a Spyglass",
 
   "sounds.bountiful_critters:emu_ambient": "Emu grunts",
   "sounds.bountiful_critters:emu_hurt": "Emu hurts",

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/carpet",
+  "textures": {
+    "wool":  "bountiful_critters:block/dried_seagrass_ball_block"
+  }
+}
