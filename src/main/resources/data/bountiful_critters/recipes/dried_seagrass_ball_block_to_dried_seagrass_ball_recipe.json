@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "seagrass_ball",
+  "ingredients": [
+    {
+      "item": "bountiful_critters:dried_seagrass_ball_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "bountiful_critters:dried_seagrass_ball"
+  },
+  "show_notification": true
+}

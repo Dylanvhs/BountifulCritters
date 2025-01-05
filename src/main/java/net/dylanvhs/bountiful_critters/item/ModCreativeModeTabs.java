@@ -66,6 +66,9 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.SEAGRASS_BALL.get());
                         pOutput.accept(ModItems.STICKY_ARROW.get());
                         pOutput.accept(ModBlocks.SEAGRASS_BALL_BLOCK.get());
+                        pOutput.accept(ModItems.DRIED_SEAGRASS_BALL.get());
+                        pOutput.accept(ModBlocks.DRIED_SEAGRASS_BALL_BLOCK.get());
+                        pOutput.accept(ModBlocks.DRIED_SEAGRASS_BALL_CARPET.get());
 
                         pOutput.accept(ModItems.RAW_PILLBUG.get());
                         pOutput.accept(ModItems.ROASTED_PILLBUG.get());

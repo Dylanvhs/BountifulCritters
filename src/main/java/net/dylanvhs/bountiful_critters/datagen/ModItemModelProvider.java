@@ -32,6 +32,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.SALT);
         simpleItem(ModItems.SALTED_KELP);
         simpleItem(ModItems.SEAGRASS_BALL);
+        simpleItem(ModItems.DRIED_SEAGRASS_BALL);
         simpleItem(ModItems.STICKY_ARROW);
         simpleItem(ModItems.RAW_SUNFISH_MEAT);
         simpleItem(ModItems.COOKED_SUNFISH_MEAT);

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "bountiful_critters:seagrass_ball"
+  },
+  "result": "bountiful_critters:dried_seagrass_ball",
+  "experience": 0.20,
+  "cookingtime": 120
+}

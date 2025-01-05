@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -35,6 +36,13 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> SEAGRASS_BALL_BLOCK = registerBlock("seagrass_ball_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.WET_GRASS)));
+
+    public static final RegistryObject<Block> DRIED_SEAGRASS_BALL_BLOCK = registerBlock("dried_seagrass_ball_block",
+            () -> new Block(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.GRASS)));
+
+    public static final RegistryObject<Block> DRIED_SEAGRASS_BALL_CARPET = registerBlock("dried_seagrass_ball_carpet",
+            () -> new   CarpetBlock(BlockBehaviour.Properties.of().strength(0.1F).sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY)));
+
 
     public static final RegistryObject<Block> SEAGRASS_BALL_PLACED = registerBlock("seagrass_ball_placed",
             () -> new SeagrassBallBlock(BlockBehaviour.Properties.of().strength(0.2F).sound(SoundType.WET_GRASS).replaceable().noCollission().noOcclusion()));
