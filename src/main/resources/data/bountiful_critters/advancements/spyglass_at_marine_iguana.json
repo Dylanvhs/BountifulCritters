@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:adventure/root",
+  "parent": "minecraft:adventure/spyglass_at_dragon",
   "criteria": {
     "spyglass_at_marine_iguana": {
       "conditions": {

@@ -40,7 +40,7 @@ public class PheasantEggEntity extends ThrowableItemProjectile {
 
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
-        pResult.getEntity().hurt(this.damageSources().thrown(this, this.getOwner()), 1.0F);
+        pResult.getEntity().hurt(this.damageSources().thrown(this, this.getOwner()), 0.0F);
     }
 
     protected void onHit(HitResult pResult) {
