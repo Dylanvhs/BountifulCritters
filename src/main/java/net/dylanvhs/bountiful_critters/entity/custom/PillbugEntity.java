@@ -442,6 +442,28 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
         }
     }
 
+    @Override
+    protected void onHitBlock(BlockState hitState, Direction direction, BlockPos hitPos) {
+        this.setBounces(bounces ++);
+        playSound(ModSounds.PILLBUG_BOUNCE.get(), 0.8F, 1.0F);
+        Vec3 deltaMovement = this.getDeltaMovement();
+        Vec3 vec3 = deltaMovement.subtract(deltaMovement.x / 5, 0.0D, deltaMovement.z / 5);
+        // x / 10.F = bounciness
+        double booster = 0.3D + (2 / 10.0F);
+        if (direction == Direction.UP || direction == Direction.DOWN) {
+            this.setDeltaMovement(vec3.x, vec3.y < 0.0D ? -vec3.y * booster : 0.0D, vec3.z);
+        }
+        if (direction == Direction.WEST || direction == Direction.EAST) {
+            this.setDeltaMovement(vec3.x < 0.65D ? -vec3.x * booster * Mth.sin(Mth.PI / 2) : 0.0D, vec3.y, vec3.z);
+        }
+        if (direction == Direction.NORTH || direction == Direction.SOUTH) {
+            this.setDeltaMovement(vec3.x, vec3.y, vec3.z < 0.65D ? -vec3.z * booster * Mth.sin(3 * Mth.PI / 4) : 0.0D);
+        }
+        if (getBounces() >= 4) {
+            setProjectile(false);
+        }
+    }
+
 
     @Override
     public void tick() {
@@ -467,27 +489,7 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
                         for (int sy = -radius; sy <= radius; sy++) {
                             // Same loops but sy and sz, all nested
                             if (world.getBlockState(pos.offset(sx, sy, sz)).getBlock() == Blocks.GRASS_BLOCK) {
-
-                                BlockHitResult hit = new BlockHitResult(this.position(), Direction.DOWN, this.blockPosition(), false);
-                                this.setBounces(bounces ++);
-                                playSound(ModSounds.PILLBUG_BOUNCE.get(), 0.8F, 1.0F);
-                                Vec3 deltaMovement = this.getDeltaMovement();
-                                Vec3 vec3 = deltaMovement.subtract(deltaMovement.x / 5, 0.0D, deltaMovement.z / 5);
-                                Direction direction = hit.getDirection();
-                                // x / 10.F = bounciness
-                                double booster = 0.3D + (2 / 10.0F);
-                                if (direction == Direction.UP || direction == Direction.DOWN) {
-                                    this.setDeltaMovement(vec3.x, vec3.y < 0.0D ? -vec3.y * booster : 0.0D, vec3.z);
-                                }
-                                if (direction == Direction.WEST || direction == Direction.EAST) {
-                                    this.setDeltaMovement(vec3.x < 0.65D ? -vec3.x * booster * Mth.sin(Mth.PI / 2) : 0.0D, vec3.y, vec3.z);
-                                }
-                                if (direction == Direction.NORTH || direction == Direction.SOUTH) {
-                                    this.setDeltaMovement(vec3.x, vec3.y, vec3.z < 0.65D ? -vec3.z * booster * Mth.sin(3 * Mth.PI / 4) : 0.0D);
-                                }
-                                if (getBounces() >= 4) {
-                                    setProjectile(false);
-                                }
+                                onHitBlock(, );
 
                             }
                         }

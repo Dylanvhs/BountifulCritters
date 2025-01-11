@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bountiful_critters:item/potted_pillbug"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "bountiful_critters:variant": 0
+      },
+      "model": "bountiful_critters:item/potted_pillbug"
+    },
+    {
+      "predicate": {
+        "bountiful_critters:variant": 1
+      },
+      "model": "bountiful_critters:item/potted_pillbug_poisonous"
+    },
+    {
+      "predicate": {
+        "bountiful_critters:variant": 2
+      },
+      "model": "bountiful_critters:item/potted_pillbug_basketball"
+    }
+  ]
+}
