@@ -488,7 +488,7 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
                         for (int sy = -radius; sy <= radius; sy++) {
                             // Same loops but sy and sz, all nested
                             if (world.getBlockState(pos.offset(sx, sy, sz)).getBlock() == Blocks.GRASS_BLOCK) {
-                                this.onHitBlock(, );
+
 
                             }
                         }
