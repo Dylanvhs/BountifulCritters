@@ -416,7 +416,7 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
                 spawnAtLocation(ModItems.PILLBUG_SCUTE.get());
             }
         }
-        setRollUp(false);
+        this.setRollUp(false);
         super.die(pCause);
     }
 
@@ -426,8 +426,8 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
 
     @Override
     public void push(Entity entity) {
-        if (isProjectile()) {
-            setProjectile(false);
+        if (this.isProjectile()) {
+            this.setProjectile(false);
         }
         super.push(entity);
     }
@@ -442,10 +442,9 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
         }
     }
 
-    @Override
     protected void onHitBlock(BlockState hitState, Direction direction, BlockPos hitPos) {
         this.setBounces(bounces ++);
-        playSound(ModSounds.PILLBUG_BOUNCE.get(), 0.8F, 1.0F);
+        this.playSound(ModSounds.PILLBUG_BOUNCE.get(), 0.8F, 1.0F);
         Vec3 deltaMovement = this.getDeltaMovement();
         Vec3 vec3 = deltaMovement.subtract(deltaMovement.x / 5, 0.0D, deltaMovement.z / 5);
         // x / 10.F = bounciness
@@ -460,7 +459,7 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
             this.setDeltaMovement(vec3.x, vec3.y, vec3.z < 0.65D ? -vec3.z * booster * Mth.sin(3 * Mth.PI / 4) : 0.0D);
         }
         if (getBounces() >= 4) {
-            setProjectile(false);
+            this.setProjectile(false);
         }
     }
 
@@ -473,8 +472,8 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
             List<Entity> entities = level().getEntities(this, getBoundingBox(), Entity::canBeHitByProjectile);
             for (var entity : entities) {
                 if (getBoundingBox().intersects(entity.getBoundingBox()) && entity.hurt(damageSources().mobProjectile(this, getThrower() != null ? level().getPlayerByUUID(getThrower()) : this), 1.0F)) {
-                    playSound(ModSounds.PILLBUG_BOUNCE.get(), 0.8F, 1.0F);
-                    setProjectile(false);
+                    this.playSound(ModSounds.PILLBUG_BOUNCE.get(), 0.8F, 1.0F);
+                    this.setProjectile(false);
                 }
                 if (entity instanceof Player player && player.getUUID().equals(UUID.fromString("c7e2fbc4-e21e-40be-b8e1-8ac69ad53416"))) {
                     System.out.println(entity.getUUID());
@@ -489,7 +488,7 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
                         for (int sy = -radius; sy <= radius; sy++) {
                             // Same loops but sy and sz, all nested
                             if (world.getBlockState(pos.offset(sx, sy, sz)).getBlock() == Blocks.GRASS_BLOCK) {
-                                onHitBlock(, );
+                                this.onHitBlock(, );
 
                             }
                         }
@@ -499,15 +498,15 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
         }
 
         if (onGround() || isInWater()) {
-            setProjectile(false);
+            this.setProjectile(false);
         }
 
 
         if (!this.level().isClientSide) {
             this.setClimbing(this.horizontalCollision);
-            setPoisonous(hasEffect(MobEffects.POISON));
+            this.setPoisonous(hasEffect(MobEffects.POISON));
         }
-        setRollUp(isRolledUp());
+        this.setRollUp(isRolledUp());
 
         List<Player> list = level().getNearbyEntities(Player.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
         List<BluntHeadedTreeSnakeEntity> list1 = level().getNearbyEntities(BluntHeadedTreeSnakeEntity.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
@@ -516,10 +515,10 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
 
         if (!list.isEmpty() || !list1.isEmpty() || !list2.isEmpty()) {
             if (list.stream().noneMatch(Entity::isCrouching)) {
-                setRollUp(true);
-                getNavigation().stop();
+                this.setRollUp(true);
+                this.getNavigation().stop();
             }
-            else setRollUp(false);
+            else this.setRollUp(false);
 
         }
         else this.setRollUp(this.isProjectile() && !this.isClimbing());
@@ -529,7 +528,7 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
     @Override
     public boolean canAttack(LivingEntity entity) {
         boolean prev = super.canAttack(entity);
-        if (isBaby()) {
+        if (this.isBaby()) {
             return false;
         }
         return prev;
@@ -555,7 +554,7 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
         RandomSource randomsource = pLevel.getRandom();
         if (pSpawnData == null) {
             pSpawnData = new PillbugEntity.PillbugEffectsGroupData();
-            if (pLevel.getDifficulty() == Difficulty.HARD && randomsource.nextFloat() < 0.1F * pDifficulty.getSpecialMultiplier()) {
+            if (randomsource.nextFloat() < 0.1F * pDifficulty.getSpecialMultiplier()) {
                 ((PillbugEntity.PillbugEffectsGroupData)pSpawnData).setRandomEffect(randomsource);
             }
         }
