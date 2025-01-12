@@ -5,6 +5,7 @@ import net.dylanvhs.bountiful_critters.entity.PotAccess;
 import net.dylanvhs.bountiful_critters.entity.custom.BluntHeadedTreeSnakeEntity;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -31,9 +32,8 @@ public class PotEvents {
     // Apparently I can only call this on the server so not sure sounds will work but if you feel daring you can do packets
     //SubscribeEvent
     public static void potSnakeTick(Level world, BlockPos pos) {
-        BountifulCritters.LOGGER.info("hello from " + pos.toShortString());
         if (world.getBlockState(pos).is(Blocks.DECORATED_POT) && PotAccess.hasSnake(pos) && !world.isClientSide()) {
-            ModSounds.SNAKE_HISS.get();
+            world.playSound(null, pos, ModSounds.SNAKE_HISS.get(), SoundSource.BLOCKS);
         }
     }
 }

@@ -31,11 +31,11 @@ import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
 
 public class StickyArrowEntity extends Arrow {
-    public StickyArrowEntity(EntityType type, Level worldIn) {
+    public StickyArrowEntity(EntityType<StickyArrowEntity> type, Level worldIn) {
         super(type, worldIn);
     }
 
-    public StickyArrowEntity(EntityType type, double x, double y, double z, Level worldIn) {
+    public StickyArrowEntity(EntityType<StickyArrowEntity> type, double x, double y, double z, Level worldIn) {
         this(type, worldIn);
         this.setPos(x, y, z);
     }

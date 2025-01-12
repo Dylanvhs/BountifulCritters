@@ -1,6 +1,7 @@
 
 package net.dylanvhs.bountiful_critters.entity.custom;
 
+import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.dylanvhs.bountiful_critters.criterion.ModCriterion;
 import net.dylanvhs.bountiful_critters.damage.ModDamageTypes;
@@ -82,7 +83,9 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
     private static final EntityDataAccessor<Optional<UUID>> THROWER = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.OPTIONAL_UUID);
     private static final EntityDataAccessor<Boolean> FROM_BAG = SynchedEntityData.defineId(PillbugEntity.class, EntityDataSerializers.BOOLEAN);
     private boolean canBePushed = true;
-    int bounces = 0;
+
+    private int bounces = 0;
+    private Vec3 velocitySave;
 
     public PillbugEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
@@ -437,63 +440,71 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
         super.actuallyHurt(damageSource, amount);
 
         if (damageSource.is(DamageTypes.FELL_OUT_OF_WORLD) && this.isProjectile() && amount > this.getHealth()) {
-            Player player = level().getPlayerByUUID(getThrower());
+            Player player = this.level().getPlayerByUUID(getThrower());
             if (player instanceof ServerPlayer serverPlayer) ModCriterion.THROW_PILLBUG_IN_THE_VOID.trigger(serverPlayer);
         }
     }
 
     protected void onHitBlock(BlockState hitState, Direction direction, BlockPos hitPos) {
-        this.setBounces(bounces ++);
-        this.playSound(ModSounds.PILLBUG_BOUNCE.get(), 0.8F, 1.0F);
-        Vec3 deltaMovement = this.getDeltaMovement();
-        Vec3 vec3 = deltaMovement.subtract(deltaMovement.x / 5, 0.0D, deltaMovement.z / 5);
-        // x / 10.F = bounciness
-        double booster = 0.3D + (2 / 10.0F);
-        if (direction == Direction.UP || direction == Direction.DOWN) {
-            this.setDeltaMovement(vec3.x, vec3.y < 0.0D ? -vec3.y * booster : 0.0D, vec3.z);
-        }
-        if (direction == Direction.WEST || direction == Direction.EAST) {
-            this.setDeltaMovement(vec3.x < 0.65D ? -vec3.x * booster * Mth.sin(Mth.PI / 2) : 0.0D, vec3.y, vec3.z);
-        }
-        if (direction == Direction.NORTH || direction == Direction.SOUTH) {
-            this.setDeltaMovement(vec3.x, vec3.y, vec3.z < 0.65D ? -vec3.z * booster * Mth.sin(3 * Mth.PI / 4) : 0.0D);
-        }
+        this.setBounces(bounces++);
         if (getBounces() >= 4) {
             this.setProjectile(false);
         }
+
+        this.playSound(ModSounds.PILLBUG_BOUNCE.get(), 0.8F, 1.0F);
+        //if (this.level().isClientSide()) return;
+
+        Vec3 vec3 = this.velocitySave;
+        BountifulCritters.LOGGER.info(vec3 + " before");
+        //Vec3 vec3 = deltaMovement.subtract(deltaMovement.x / 5, 0.0D, deltaMovement.z / 5);
+        // x / 10.F = bounciness
+        double booster = 0.3D + (2 / 10.0F);
+        if (direction == Direction.UP || direction == Direction.DOWN) {
+            this.setDeltaMovement(vec3.x, -vec3.y * booster, vec3.z);
+        }
+        if (direction == Direction.WEST || direction == Direction.EAST) {
+            this.setDeltaMovement(-vec3.x * booster, vec3.y, vec3.z);
+        }
+        if (direction == Direction.NORTH || direction == Direction.SOUTH) {
+            this.setDeltaMovement(vec3.x, vec3.y, -vec3.z * booster);
+        }
+        BountifulCritters.LOGGER.info(this.getDeltaMovement() + " after");
+        //this.hasImpulse = true;
     }
 
 
     @Override
     public void tick() {
+        this.velocitySave = this.getDeltaMovement();
+
         super.tick();
 
-        if (isProjectile()) {
-            List<Entity> entities = level().getEntities(this, getBoundingBox(), Entity::canBeHitByProjectile);
-            for (var entity : entities) {
-                if (getBoundingBox().intersects(entity.getBoundingBox()) && entity.hurt(damageSources().mobProjectile(this, getThrower() != null ? level().getPlayerByUUID(getThrower()) : this), 1.0F)) {
+        Level world = this.level();
+
+        if (this.isProjectile()) {
+            List<Entity> entities = world.getEntities(this, this.getBoundingBox(), Entity::canBeHitByProjectile);
+            for (Entity entity : entities) {
+                if (this.getBoundingBox().intersects(entity.getBoundingBox()) && entity.hurt(damageSources().mobProjectile(this, getThrower() != null ? world.getPlayerByUUID(getThrower()) : this), 1.0F)) {
                     this.playSound(ModSounds.PILLBUG_BOUNCE.get(), 0.8F, 1.0F);
                     this.setProjectile(false);
                 }
                 if (entity instanceof Player player && player.getUUID().equals(UUID.fromString("c7e2fbc4-e21e-40be-b8e1-8ac69ad53416"))) {
                     System.out.println(entity.getUUID());
-                    if (level().getPlayerByUUID(getThrower()) instanceof ServerPlayer serverPlayer) ModCriterion.THROW_PILLBUG_IN_THE_VOID.trigger(serverPlayer);
+                    if (world.getPlayerByUUID(this.getThrower()) instanceof ServerPlayer serverPlayer) ModCriterion.THROW_PILLBUG_IN_THE_VOID.trigger(serverPlayer);
                 }
             }
-            Level world = this.level();
-            BlockPos pos = this.blockPosition() ;
-            int radius = 1;
-            for (int sx = -radius; sx <= radius; sx++) {
-                    for (int sz = -radius; sz <= radius; sz++) {
-                        for (int sy = -radius; sy <= radius; sy++) {
-                            // Same loops but sy and sz, all nested
-                            if (world.getBlockState(pos.offset(sx, sy, sz)).getBlock() == Blocks.GRASS_BLOCK) {
 
-
-                            }
-                        }
-                    }
-
+            BlockPos pos = this.blockPosition();
+            BlockState hitState;
+            BlockPos hitPos;
+            for (Direction direction : Direction.values()) {
+                hitPos = pos.relative(direction);
+                hitState = world.getBlockState(hitPos);
+                if (hitState.isFaceSturdy(world, hitPos, direction.getOpposite())) {
+                    this.onHitBlock(hitState, direction, hitPos);
+                    //BountifulCritters.LOGGER.info("Hit " + direction);
+                    return;
+                }
             }
         }
 
@@ -501,16 +512,15 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
             this.setProjectile(false);
         }
 
-
-        if (!this.level().isClientSide) {
+        if (!world.isClientSide) {
             this.setClimbing(this.horizontalCollision);
             this.setPoisonous(hasEffect(MobEffects.POISON));
         }
-        this.setRollUp(isRolledUp());
+        this.setRollUp(this.isRolledUp());
 
-        List<Player> list = level().getNearbyEntities(Player.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
-        List<BluntHeadedTreeSnakeEntity> list1 = level().getNearbyEntities(BluntHeadedTreeSnakeEntity.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
-        List<GeckoEntity> list2 = level().getNearbyEntities(GeckoEntity.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
+        List<Player> list = world.getNearbyEntities(Player.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
+        List<BluntHeadedTreeSnakeEntity> list1 = world.getNearbyEntities(BluntHeadedTreeSnakeEntity.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
+        List<GeckoEntity> list2 = world.getNearbyEntities(GeckoEntity.class, TargetingConditions.DEFAULT, this, getBoundingBox().inflate(5.0D, 2.0D, 5.0D));
 
 
         if (!list.isEmpty() || !list1.isEmpty() || !list2.isEmpty()) {
@@ -522,7 +532,6 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
 
         }
         else this.setRollUp(this.isProjectile() && !this.isClimbing());
-
     }
 
     @Override
