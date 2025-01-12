@@ -59,9 +59,14 @@ public class LionModel extends GeoModel<LionEntity> {
             head.setScaleZ(1.0F);
         }
 
-        if (!animatable.isSprinting()) {
+        if (!animatable.isSprinting() && !animatable.isOrderedToSit()) {
             head.setRotY(extraDataOfType.netHeadYaw() * ((float) Math.PI / 180F));
             head.setRotX(extraDataOfType.headPitch() * ((float) Math.PI / 180F));
+        }
+        if (!animatable.hasMane()) {
+            mane.setScaleX(0.0F);
+            mane.setScaleY(0.0F);
+            mane.setScaleZ(0.0F);
         }
     }
 }

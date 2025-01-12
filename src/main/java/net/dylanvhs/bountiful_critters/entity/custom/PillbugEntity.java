@@ -508,7 +508,7 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
             }
         }
 
-        if (onGround() || isInWater()) {
+        if (isInWater()) {
             this.setProjectile(false);
         }
 

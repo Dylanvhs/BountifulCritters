@@ -67,6 +67,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.BOUNTIFUL_MUSIC_DISC);
         simpleItem(ModItems.SNEEZE_MUSIC_DISC);
         simpleItem(ModItems.LION_ARMOR);
+        simpleItem(ModItems.LION_MANE_FUR);
 
 
         withExistingParent(ModItems.EMU_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));

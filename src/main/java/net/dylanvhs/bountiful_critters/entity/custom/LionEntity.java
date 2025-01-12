@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -11,6 +12,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,6 +26,7 @@ import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.Monster;
@@ -33,6 +36,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -56,11 +60,14 @@ import java.util.UUID;
 public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
-
+    public int timeUntilNextMane = this.random.nextInt(12000) + 12000;
     private static final EntityDataAccessor<Boolean> IS_ARMORED = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_ARMOR_SLIGHTLY_DAMAGED = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_ARMOR_DAMAGED = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_ARMOR_REPAIRED = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Byte> DATA_FUR_ID = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Boolean> DATA_HAS_MANE = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
     private static final Set<Item> TAME_FOOD = Sets.newHashSet(
             Items.BEEF,Items.COOKED_BEEF,
             Items.PORKCHOP,Items.COOKED_PORKCHOP,
@@ -116,12 +123,28 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
     }
 
     @Override
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+        compound.putBoolean("HasMane", this.hasMane());
+
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        this.entityData.set(DATA_HAS_MANE, compound.getBoolean("HasMane"));
+    }
+
+    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
+        this.entityData.define(VARIANT, 0);
         this.entityData.define(IS_ARMORED, false);
         this.entityData.define(IS_ARMOR_SLIGHTLY_DAMAGED, false);
         this.entityData.define(IS_ARMOR_DAMAGED, false);
         this.entityData.define(IS_ARMOR_REPAIRED, false);
+        this.entityData.define(DATA_FUR_ID, (byte)0);
+        this.entityData.define(DATA_HAS_MANE,true);
     }
 
     protected void registerGoals() {
@@ -201,6 +224,9 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
                 lion.setOwnerUUID(uuid);
                 lion.setTame(true);
             }
+            int i = this.random.nextBoolean() ? this.getVariant() : ((LionEntity) pOtherParent).getVariant();
+            lion.setVariant(i);
+            lion.setPersistenceRequired();
         }
         return lion;
     }
@@ -285,6 +311,12 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
             }
         }
     }
+    public void tick() {
+        super.tick();
+        if (!this.level().isClientSide && !this.hasMane() && this.isAlive() && !this.isBaby() && --this.timeUntilNextMane <= 0) {
+            this.setMane(true);
+        }
+    }
 
     public boolean hurt(DamageSource pSource, float pAmount) {
         if (this.isInvulnerableTo(pSource)) {
@@ -313,7 +345,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
     @Override
     public boolean canAttack(LivingEntity entity) {
         boolean prev = super.canAttack(entity);
-        if (isBaby()) {
+        if (this.isBaby()) {
             return false;
         }
         return prev;
@@ -336,6 +368,22 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
         return entityIn.is(this);
     }
 
+    public int getVariant() {
+        return this.entityData.get(VARIANT);
+    }
+
+    private void setVariant(int variant) {
+        this.entityData.set(VARIANT, variant);
+    }
+
+    public boolean hasMane() {
+        return this.entityData.get(DATA_HAS_MANE);
+    }
+
+    public void setMane(boolean mane) {
+        entityData.set(DATA_HAS_MANE, mane);
+    }
+
     public boolean wantsToAttack(LivingEntity pTarget, LivingEntity pOwner) {
         if (!(pTarget instanceof Creeper) && !(pTarget instanceof Ghast)) {
             if (pTarget instanceof LionEntity) {
@@ -356,6 +404,21 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
         Item item = itemstack.getItem();
+
+        if (itemstack.getItem() == Items.SHEARS) {
+            if (!this.level().isClientSide && this.readyForShearing()) {
+                this.shear(SoundSource.PLAYERS);
+                this.gameEvent(GameEvent.SHEAR, pPlayer);
+                this.setMane(false);
+                this.timeUntilNextMane = this.random.nextInt(12000) + 12000;
+                itemstack.hurtAndBreak(1, pPlayer, (p_29822_) -> {
+                    p_29822_.broadcastBreakEvent(pHand);
+                });
+                return InteractionResult.SUCCESS;
+            } else {
+                return InteractionResult.CONSUME;
+            }
+        }
 
         if (this.level().isClientSide) {
 
@@ -420,9 +483,57 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
             }
 
             return InteractionResult.SUCCESS;
-        } else {
+        }
+        else {
             return super.mobInteract(pPlayer, pHand);
         }
+    }
+
+    public boolean isSheared() {
+        return (this.entityData.get(DATA_FUR_ID) & 16) != 0;
+    }
+
+    public void setSheared(boolean pSheared) {
+        byte b0 = this.entityData.get(DATA_FUR_ID);
+        if (pSheared) {
+            this.entityData.set(DATA_FUR_ID, (byte)(b0 | 16));
+        } else {
+            this.entityData.set(DATA_FUR_ID, (byte)(b0 & -17));
+        }
+
+    }
+
+    public void shear(SoundSource pCategory) {
+        this.level().playSound((Player)null, this, SoundEvents.SHEEP_SHEAR, pCategory, 1.0F, 1.0F);
+        this.setSheared(true);
+        int i = 1 + this.random.nextInt(3);
+        for(int j = 0; j < i; ++j) {
+            ItemEntity itementity = this.spawnAtLocation(ModItems.LION_MANE_FUR.get());
+            if (itementity != null) {
+                itementity.setDeltaMovement(itementity.getDeltaMovement().add((double)((this.random.nextFloat() - this.random.nextFloat()) * 0.1F), (double)(this.random.nextFloat() * 0.05F), (double)((this.random.nextFloat() - this.random.nextFloat()) * 0.1F)));
+            }
+        }
+
+    }
+
+    public boolean readyForShearing() {
+        return this.isAlive() && !this.isSheared() && !this.isBaby() && this.hasMane();
+    }
+
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
+        float variantChange = this.getRandom().nextFloat();
+        if(variantChange <= 0.25F){
+            this.setVariant(0);
+        } else if(variantChange <= 0.30F){
+            this.setVariant(1);
+        } else if(variantChange <= 0.40F){
+            this.setVariant(0);
+        } else if(variantChange <= 0.55F){
+            this.setVariant(1);
+        } else {
+            this.setVariant(0);
+        }
+        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
     public boolean isArmored() {

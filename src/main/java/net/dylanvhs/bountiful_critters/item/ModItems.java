@@ -142,6 +142,8 @@ public class ModItems {
 
     public static final RegistryObject<Item> LION_ARMOR =
             ITEMS.register("lion_armor", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> LION_MANE_FUR =
+            ITEMS.register("lion_mane_fur", () -> new Item(new Item.Properties()));
 
 
     public static final RegistryObject<Item> MEMORIES_MUSIC_DISC = ITEMS.register("memories_music_disc",

@@ -22,15 +22,18 @@ public class LionRenderer extends GeoEntityRenderer<LionEntity> {
         addRenderLayer(new LionArmorLayer(this));
     }
     private static final ResourceLocation DEFAULT = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/lion/lion0.png");
+    private static final ResourceLocation WHITE = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/lion/lion1.png");
     private static final ResourceLocation ARMORED = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/lion/lion_armor.png");
     private static final ResourceLocation ARMOR_LAYER = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/lion/lion_armor_layer.png");
     private static final ResourceLocation ARMOR_LAYER_SLIGHTLY_DAMAGED = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/lion/lion_armor_layer_slightly_damaged.png");
     private static final ResourceLocation ARMOR_LAYER_DAMAGED = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/lion/lion_armor_layer_damaged.png");
     @Override
     public ResourceLocation getTextureLocation(LionEntity animatable) {
-        if (animatable.isArmored()) {
-            return ARMORED;
-        } else return DEFAULT;
+       return switch (animatable.getVariant()) {
+            case 1 -> WHITE;
+            default -> DEFAULT;
+        };
+
     }
 
     @Override

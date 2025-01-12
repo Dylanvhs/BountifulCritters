@@ -1,4 +1,4 @@
-// 1.20.1	2025-01-05T14:35:39.3275239	Item Models: bountiful_critters
+// 1.20.1	2025-01-12T23:47:15.5773886	Item Models: bountiful_critters
 4b6c5e548ce57d7a0b9c19e1209f2e9a5a1b65c4 assets/bountiful_critters/models/item/angelfish_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/angelfish_spawn_egg.json
 f660cd040dc4b8b28afb8cf842c04747ec176c26 assets/bountiful_critters/models/item/bagged_blunt_headed_tree_snake.json
@@ -26,6 +26,7 @@ b783a11abed0e35e74cd2a6b6ea056c76c4f3c13 assets/bountiful_critters/models/item/f
 8b47a25aa81284afc3497f9bb6a5172ec4afbf3d assets/bountiful_critters/models/item/krill_cocktail.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/krill_spawn_egg.json
 9b60cf31a93d89b623fb8932cffc59acd8868e20 assets/bountiful_critters/models/item/lion_armor.json
+dc2fa48ce98a3bcecf0946b3d479e2b9a67a97f1 assets/bountiful_critters/models/item/lion_mane_fur.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/lion_spawn_egg.json
 a24c9d6747f3af8e67fc3c07aa31c82d2d91dea6 assets/bountiful_critters/models/item/longhorn_horn.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/longhorn_spawn_egg.json
@@ -42,7 +43,6 @@ bae395e7647d2711b967b8a3267284816cc01ae0 assets/bountiful_critters/models/item/m
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/pillbug_spawn_egg.json
 e9570321174ff013cfd1784d4b181c3d1147cbb3 assets/bountiful_critters/models/item/poisonous_pillbug.json
 4e31f434a399c058c2c26d69216f79a8d396364c assets/bountiful_critters/models/item/poisonous_pillbug_scute.json
-4bd0b165990c9e137b282cf5e978a0070d80cebb assets/bountiful_critters/models/item/potted_pillbug.json
 60dc8c0a563d74abbde3791062a0295513f4d8ac assets/bountiful_critters/models/item/raw_angelfish.json
 855d0c7ed15cae355be673d231c3679f03b059c5 assets/bountiful_critters/models/item/raw_barreleye.json
 c6419f9ede83b7a5ed9805d9b6b87be9e8695e09 assets/bountiful_critters/models/item/raw_flounder.json
