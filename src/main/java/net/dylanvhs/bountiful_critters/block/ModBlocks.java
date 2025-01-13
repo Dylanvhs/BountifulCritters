@@ -32,7 +32,12 @@ public class ModBlocks {
             new RoastedPillbugBlock(BlockBehaviour.Properties.of().forceSolidOn().strength(0.5F).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY).noOcclusion()));
 
     public static final RegistryObject<Block> SALT_LAMP = registerBlock("salt_lamp", () ->
-            new SaltLampBlock(BlockBehaviour.Properties.of().lightLevel(litBlockEmission(15)).strength(0.3F).sound(SoundType.GLASS).isValidSpawn(ModBlocks::always)));
+            new SaltLampBlock(BlockBehaviour.Properties.of().lightLevel(litBlockEmission(15)).strength(0.5F).sound(SoundType.GLASS).isValidSpawn(ModBlocks::always)));
+    public static final RegistryObject<Block> SALT_BLOCK = registerBlock("salt_block",
+            () -> new Block(BlockBehaviour.Properties.of().strength(1.0F).sound(SoundType.STONE)));
+    public static final RegistryObject<Block> POLISHED_SALT_BLOCK = registerBlock("polished_salt_block",
+            () -> new Block(BlockBehaviour.Properties.of().strength(1.0F).sound(SoundType.STONE)));
+
 
     public static final RegistryObject<Block> SEAGRASS_BALL_BLOCK = registerBlock("seagrass_ball_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.WET_GRASS)));

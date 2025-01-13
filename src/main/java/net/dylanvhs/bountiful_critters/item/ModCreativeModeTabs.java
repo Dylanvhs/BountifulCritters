@@ -60,6 +60,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.LONGHORN_DIDGERIDOO.get());
 
                         pOutput.accept(ModItems.SALT.get());
+                        pOutput.accept(ModBlocks.SALT_BLOCK.get());
+                        pOutput.accept(ModBlocks.POLISHED_SALT_BLOCK.get());
                         pOutput.accept(ModBlocks.SALT_LAMP.get());
                         pOutput.accept(ModItems.SALTED_KELP.get());
 

@@ -56,6 +56,7 @@
   "item.bountiful_critters.snake_hook": "Snake Hook",
   "item.bountiful_critters.reptile_bag": "Reptile Bag",
   "item.bountiful_critters.lion_armor": "Lion Armor",
+  "item.bountiful_critters.lion_mane_fur": "Lion Mane Fur",
 
 
   "item.bountiful_critters.memories_music_disc": "Music Disc",
@@ -119,6 +120,8 @@
   "block.bountiful_critters.dried_seagrass_ball_block": "Block Of Dried Seagrass Ball",
   "block.bountiful_critters.dried_seagrass_ball_carpet": "Dried Seagrass Ball Carpet",
   "block.bountiful_critters.seagrass_ball_placed": "Seagrass Ball",
+  "block.bountiful_critters.salt_block": "Block Of Salt",
+  "block.bountiful_critters.polished_salt_block": "Polished Salt Block",
 
 
   "entity.bountiful_critters.stingray.variant_gray": "Gray",
