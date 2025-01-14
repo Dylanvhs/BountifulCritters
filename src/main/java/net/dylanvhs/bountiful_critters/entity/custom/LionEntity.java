@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -11,6 +12,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -41,6 +43,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -60,7 +63,7 @@ import java.util.UUID;
 public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
-    public int timeUntilNextMane = this.random.nextInt(12000) + 12000;
+    public int timeUntilNextMane = this.random.nextInt(8000) + 8000;
     private static final EntityDataAccessor<Boolean> IS_ARMORED = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_ARMOR_SLIGHTLY_DAMAGED = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_ARMOR_DAMAGED = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
@@ -68,6 +71,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Byte> DATA_FUR_ID = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> DATA_HAS_MANE = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
+    public boolean waxed = false;
     private static final Set<Item> TAME_FOOD = Sets.newHashSet(
             Items.BEEF,Items.COOKED_BEEF,
             Items.PORKCHOP,Items.COOKED_PORKCHOP,
@@ -313,7 +317,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
     }
     public void tick() {
         super.tick();
-        if (!this.level().isClientSide && !this.hasMane() && this.isAlive() && !this.isBaby() && --this.timeUntilNextMane <= 0) {
+        if (!this.level().isClientSide && !this.hasMane() && this.isAlive() && !this.isBaby() && !this.waxed && --this.timeUntilNextMane <= 0) {
             this.setMane(true);
         }
     }
@@ -410,7 +414,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
                 this.shear(SoundSource.PLAYERS);
                 this.gameEvent(GameEvent.SHEAR, pPlayer);
                 this.setMane(false);
-                this.timeUntilNextMane = this.random.nextInt(12000) + 12000;
+                this.timeUntilNextMane = this.random.nextInt(8000) + 8000;
                 itemstack.hurtAndBreak(1, pPlayer, (p_29822_) -> {
                     p_29822_.broadcastBreakEvent(pHand);
                 });
@@ -418,6 +422,33 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
             } else {
                 return InteractionResult.CONSUME;
             }
+        }
+
+        if(itemstack.getItem() == Items.HONEYCOMB && !this.waxed && !this.hasMane()) {
+
+            if (!this.level().isClientSide) {
+                if (!pPlayer.isCreative()) {
+                    itemstack.shrink(1);
+                }
+                this.setTarget((LivingEntity)null);
+                this.heal(20.0F);
+                this.playSound(SoundEvents.HONEYCOMB_WAX_ON, 1.0F, 1.0F);
+
+                this.waxed = true;
+
+            }
+            if (this.level().isClientSide && !this.waxed) {
+                Vec3 vec3 = this.getViewVector(0.0F);
+                float f = Mth.cos(this.getYRot() * ((float) Math.PI / 180F)) * 0.3F;
+                float f1 = Mth.sin(this.getYRot() * ((float) Math.PI / 180F)) * 0.3F;
+                float f2 = 1.2F - this.random.nextFloat() * 0.7F;
+
+                for (int i = 0; i < 2; ++i) {
+                    this.level().addParticle(ParticleTypes.WAX_ON, this.getX() - vec3.x * (double) f2 + (double) f, this.getY() - vec3.y, this.getZ() - vec3.z * (double) f2 + (double) f1, 0.0D, 0.0D, 0.0D);
+                    this.level().addParticle(ParticleTypes.WAX_ON, this.getX() - vec3.x * (double) f2 - (double) f, this.getY() - vec3.y, this.getZ() - vec3.z * (double) f2 - (double) f1, 0.0D, 0.0D, 0.0D);
+                }
+            }
+            return InteractionResult.SUCCESS;
         }
 
         if (this.level().isClientSide) {
