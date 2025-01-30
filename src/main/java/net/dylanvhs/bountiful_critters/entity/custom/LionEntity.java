@@ -12,6 +12,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -430,10 +431,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
                 if (!pPlayer.isCreative()) {
                     itemstack.shrink(1);
                 }
-                this.setTarget((LivingEntity)null);
-                this.heal(20.0F);
                 this.playSound(SoundEvents.HONEYCOMB_WAX_ON, 1.0F, 1.0F);
-
                 this.waxed = true;
 
             }
@@ -446,6 +444,29 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
                 for (int i = 0; i < 2; ++i) {
                     this.level().addParticle(ParticleTypes.WAX_ON, this.getX() - vec3.x * (double) f2 + (double) f, this.getY() - vec3.y, this.getZ() - vec3.z * (double) f2 + (double) f1, 0.0D, 0.0D, 0.0D);
                     this.level().addParticle(ParticleTypes.WAX_ON, this.getX() - vec3.x * (double) f2 - (double) f, this.getY() - vec3.y, this.getZ() - vec3.z * (double) f2 - (double) f1, 0.0D, 0.0D, 0.0D);
+                }
+            }
+            return InteractionResult.SUCCESS;
+        }
+
+        if (itemstack.getItem() == ModItems.LION_MANE_FUR.get() && this.waxed) {
+            if (!this.level().isClientSide) {
+                if (!pPlayer.isCreative()) {
+                    itemstack.shrink(1);
+                }
+                this.playSound(SoundEvents.AXE_WAX_OFF, 1.0F, 1.0F);
+                this.waxed = false;
+
+            }
+            if (this.level().isClientSide && this.waxed) {
+                Vec3 vec3 = this.getViewVector(0.0F);
+                float f = Mth.cos(this.getYRot() * ((float) Math.PI / 180F)) * 0.3F;
+                float f1 = Mth.sin(this.getYRot() * ((float) Math.PI / 180F)) * 0.3F;
+                float f2 = 1.2F - this.random.nextFloat() * 0.7F;
+
+                for (int i = 0; i < 2; ++i) {
+                    this.level().addParticle(ParticleTypes.WAX_OFF, this.getX() - vec3.x * (double) f2 + (double) f, this.getY() - vec3.y, this.getZ() - vec3.z * (double) f2 + (double) f1, 0.0D, 0.0D, 0.0D);
+                    this.level().addParticle(ParticleTypes.WAX_OFF, this.getX() - vec3.x * (double) f2 - (double) f, this.getY() - vec3.y, this.getZ() - vec3.z * (double) f2 - (double) f1, 0.0D, 0.0D, 0.0D);
                 }
             }
             return InteractionResult.SUCCESS;
