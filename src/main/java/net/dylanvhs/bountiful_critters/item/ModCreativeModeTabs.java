@@ -113,6 +113,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.MEMORIES_MUSIC_DISC.get());
                         pOutput.accept(ModItems.BOUNTIFUL_MUSIC_DISC.get());
                         pOutput.accept(ModItems.SNEEZE_MUSIC_DISC.get());
+                        pOutput.accept(ModItems.BUGS_MUSIC_DISC.get());
 
                         pOutput.accept(ModItems.STINGRAY_SPAWN_EGG.get());
                         pOutput.accept(ModItems.SUNFISH_SPAWN_EGG.get());

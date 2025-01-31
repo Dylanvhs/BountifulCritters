@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "bountiful_critters:emu_egg_shell_pieces"
+      "item": "bountiful_critters:pillbug_scute"
     },
     "X": {
-      "item": "bountiful_critters:boiled_emu_egg"
+      "item": "bountiful_critters:poisonous_pillbug_scute"
     }
   },
   "pattern": [
@@ -15,7 +15,7 @@
     "###"
   ],
   "result": {
-    "item": "bountiful_critters:memories_music_disc"
+    "item": "bountiful_critters:bugs_music_disc"
   },
   "show_notification": true
 }

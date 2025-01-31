@@ -23,7 +23,8 @@ public class ModItemTagGenerator extends ItemTagsProvider {
         this.tag(ItemTags.MUSIC_DISCS)
                 .add(ModItems.MEMORIES_MUSIC_DISC.get())
                 .add(ModItems.BOUNTIFUL_MUSIC_DISC.get())
-                .add(ModItems.SNEEZE_MUSIC_DISC.get());
+                .add(ModItems.SNEEZE_MUSIC_DISC.get())
+                .add(ModItems.BUGS_MUSIC_DISC.get());
 
 
     }

@@ -25,7 +25,14 @@
       }
     ]
   },
-
+  "bugs": {
+    "sounds": [
+      {
+        "name": "bountiful_critters:bugs",
+        "stream": true
+      }
+    ]
+  },
   "emu_ambient": {
     "subtitle": "sounds.bountiful_critters:emu_ambient",
     "sounds": [

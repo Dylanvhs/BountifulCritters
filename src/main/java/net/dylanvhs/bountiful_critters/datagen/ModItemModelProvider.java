@@ -66,6 +66,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.MEMORIES_MUSIC_DISC);
         simpleItem(ModItems.BOUNTIFUL_MUSIC_DISC);
         simpleItem(ModItems.SNEEZE_MUSIC_DISC);
+        simpleItem(ModItems.BUGS_MUSIC_DISC);
         simpleItem(ModItems.LION_ARMOR);
         simpleItem(ModItems.LION_MANE_FUR);
 

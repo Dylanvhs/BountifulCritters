@@ -43,6 +43,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> MEMORIES = registerSoundEvents("memories");
     public static final RegistryObject<SoundEvent> BOUNTIFUL = registerSoundEvents("bountiful");
     public static final RegistryObject<SoundEvent> SNEEZE = registerSoundEvents("sneeze");
+    public static final RegistryObject<SoundEvent> BUGS = registerSoundEvents("bugs");
 
 
 

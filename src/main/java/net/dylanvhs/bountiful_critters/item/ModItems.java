@@ -155,6 +155,9 @@ public class ModItems {
     public static final RegistryObject<Item> SNEEZE_MUSIC_DISC = ITEMS.register("sneeze_music_disc",
             () -> new RecordItem(14, ModSounds.SNEEZE, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 4280));
 
+    public static final RegistryObject<Item> BUGS_MUSIC_DISC = ITEMS.register("bugs_music_disc",
+            () -> new RecordItem(14, ModSounds.BUGS, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 4280));
+
     public static final RegistryObject<Item> EMU_SPAWN_EGG = ITEMS.register("emu_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.EMU, 0x72482e, 0x21486a, new Item.Properties()));
     public static final RegistryObject<Item> STINGRAY_SPAWN_EGG = ITEMS.register("stingray_spawn_egg",
