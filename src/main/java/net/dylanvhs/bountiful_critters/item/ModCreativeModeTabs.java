@@ -108,8 +108,6 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.PHEASANT_FEATHER.get());
                         pOutput.accept(ModItems.PHEASANT_EGG.get());
 
-                        pOutput.accept(ModItems.LION_MANE_FUR.get());
-
                         pOutput.accept(ModItems.MEMORIES_MUSIC_DISC.get());
                         pOutput.accept(ModItems.BOUNTIFUL_MUSIC_DISC.get());
                         pOutput.accept(ModItems.SNEEZE_MUSIC_DISC.get());

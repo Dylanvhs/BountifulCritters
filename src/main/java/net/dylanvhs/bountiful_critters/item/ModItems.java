@@ -142,8 +142,6 @@ public class ModItems {
 
     public static final RegistryObject<Item> LION_ARMOR =
             ITEMS.register("lion_armor", () -> new Item(new Item.Properties().stacksTo(1)));
-    public static final RegistryObject<Item> LION_MANE_FUR =
-            ITEMS.register("lion_mane_fur", () -> new Item(new Item.Properties()));
 
 
     public static final RegistryObject<Item> MEMORIES_MUSIC_DISC = ITEMS.register("memories_music_disc",
@@ -156,7 +154,7 @@ public class ModItems {
             () -> new RecordItem(14, ModSounds.SNEEZE, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 4280));
 
     public static final RegistryObject<Item> BUGS_MUSIC_DISC = ITEMS.register("bugs_music_disc",
-            () -> new RecordItem(14, ModSounds.BUGS, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 4280));
+            () -> new RecordItem(14, ModSounds.BUGS, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 4400));
 
     public static final RegistryObject<Item> EMU_SPAWN_EGG = ITEMS.register("emu_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.EMU, 0x72482e, 0x21486a, new Item.Properties()));

@@ -1,4 +1,4 @@
-// 1.20.1	2025-01-12T23:47:15.5773886	Item Models: bountiful_critters
+// 1.20.1	2025-01-31T18:28:53.7158559	Item Models: bountiful_critters
 4b6c5e548ce57d7a0b9c19e1209f2e9a5a1b65c4 assets/bountiful_critters/models/item/angelfish_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/angelfish_spawn_egg.json
 f660cd040dc4b8b28afb8cf842c04747ec176c26 assets/bountiful_critters/models/item/bagged_blunt_headed_tree_snake.json
@@ -8,6 +8,7 @@ f660cd040dc4b8b28afb8cf842c04747ec176c26 assets/bountiful_critters/models/item/b
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/blunt_headed_tree_snake_spawn_egg.json
 c932650040726c1b26c1a26dd846d1c1d05c14d0 assets/bountiful_critters/models/item/boiled_emu_egg.json
 3dd885db0228b7f09735e1ce956a8884bfea65c4 assets/bountiful_critters/models/item/bountiful_music_disc.json
+a66eb54621236fba75084aa6030da7d16be17217 assets/bountiful_critters/models/item/bugs_music_disc.json
 6a657ee5d8aef79945f90658c737a93a6a39408f assets/bountiful_critters/models/item/captured_blunt_headed_tree_snake.json
 e16086ccaeba2f432b3251c937030235aab25397 assets/bountiful_critters/models/item/cooked_golden_sunfish_meat.json
 ca4520d57856bdc534808525317277149216f533 assets/bountiful_critters/models/item/cooked_pheasant.json

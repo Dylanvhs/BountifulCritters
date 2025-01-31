@@ -449,7 +449,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
             return InteractionResult.SUCCESS;
         }
 
-        if (itemstack.getItem() == ModItems.LION_MANE_FUR.get() && this.waxed) {
+        if (itemstack.getItem() == Items.BROWN_WOOL && this.waxed) {
             if (!this.level().isClientSide) {
                 if (!pPlayer.isCreative()) {
                     itemstack.shrink(1);
@@ -560,7 +560,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
         this.setSheared(true);
         int i = 1 + this.random.nextInt(3);
         for(int j = 0; j < i; ++j) {
-            ItemEntity itementity = this.spawnAtLocation(ModItems.LION_MANE_FUR.get());
+            ItemEntity itementity = this.spawnAtLocation(Items.BROWN_WOOL);
             if (itementity != null) {
                 itementity.setDeltaMovement(itementity.getDeltaMovement().add((double)((this.random.nextFloat() - this.random.nextFloat()) * 0.1F), (double)(this.random.nextFloat() * 0.05F), (double)((this.random.nextFloat() - this.random.nextFloat()) * 0.1F)));
             }
