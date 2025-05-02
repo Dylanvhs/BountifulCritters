@@ -1,8 +1,7 @@
 package net.dylanvhs.bountiful_critters.entity.ai;
 
 
-import net.dylanvhs.bountiful_critters.entity.custom.HumpbackWhaleEntity;
-import net.dylanvhs.bountiful_critters.sounds.ModSounds;
+import net.dylanvhs.bountiful_critters.entity.custom.aquatic.HumpbackWhaleEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;

@@ -1,18 +1,17 @@
-package net.dylanvhs.bountiful_critters.entity.ai;
+package net.dylanvhs.bountiful_critters.entity.ai.navigation;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 
 public class BottomSwim extends RandomStrollGoal {
-    private int range = 5;
+    private int range = 3;
     public BottomSwim(PathfinderMob creature, double speed, int waterChance) {
         super(creature, speed, waterChance);
     }

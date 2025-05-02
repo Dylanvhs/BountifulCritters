@@ -1,12 +1,9 @@
 package net.dylanvhs.bountiful_critters.mixin;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
-import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.PotAccess;
-import net.dylanvhs.bountiful_critters.entity.custom.BluntHeadedTreeSnakeEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
@@ -15,7 +12,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(DecoratedPotBlockEntity.class)
 public abstract class DecoratedPotBlockEntityMixin extends BlockEntity {

@@ -13,17 +13,12 @@
 			"bones": [
 				{
 					"name": "sunfish",
-					"pivot": [0, 0, 0]
+					"pivot": [0, 14, 0]
 				},
 				{
 					"name": "body",
 					"parent": "sunfish",
-					"pivot": [3, 14.5, -5.5]
-				},
-				{
-					"name": "bone",
-					"parent": "body",
-					"pivot": [0, 0, 0],
+					"pivot": [0, 14.5, 2.5],
 					"cubes": [
 						{"origin": [-3, 0, -11], "size": [6, 28, 25], "uv": [0, 0]},
 						{"origin": [-3.5, 12, -11.25], "size": [7, 3, 2], "uv": [49, 0]}

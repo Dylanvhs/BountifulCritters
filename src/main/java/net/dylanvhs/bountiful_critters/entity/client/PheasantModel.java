@@ -1,7 +1,7 @@
 package net.dylanvhs.bountiful_critters.entity.client;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
-import net.dylanvhs.bountiful_critters.entity.custom.PheasantEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.land.PheasantEntity;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;

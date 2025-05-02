@@ -1,9 +1,9 @@
 package net.dylanvhs.bountiful_critters.item.custom;
 
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
-import net.dylanvhs.bountiful_critters.entity.custom.MarineIguanaEntity;
-import net.dylanvhs.bountiful_critters.entity.custom.StingrayEntity;
-import net.dylanvhs.bountiful_critters.entity.custom.SunfishEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.semi_aquatic.MarineIguanaEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.aquatic.StingrayEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.aquatic.SunfishEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

@@ -2,7 +2,7 @@ package net.dylanvhs.bountiful_critters.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.dylanvhs.bountiful_critters.BountifulCritters;
-import net.dylanvhs.bountiful_critters.entity.custom.HumpbackWhaleEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.aquatic.HumpbackWhaleEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;

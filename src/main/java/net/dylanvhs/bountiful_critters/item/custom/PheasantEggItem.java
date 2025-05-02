@@ -1,6 +1,6 @@
 package net.dylanvhs.bountiful_critters.item.custom;
 
-import net.dylanvhs.bountiful_critters.entity.custom.PheasantEggEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.projectile.PheasantEggEntity;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;

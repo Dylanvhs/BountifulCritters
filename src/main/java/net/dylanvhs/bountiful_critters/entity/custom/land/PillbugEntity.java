@@ -1,19 +1,17 @@
 
-package net.dylanvhs.bountiful_critters.entity.custom;
+package net.dylanvhs.bountiful_critters.entity.custom.land;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
-import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.dylanvhs.bountiful_critters.criterion.ModCriterion;
-import net.dylanvhs.bountiful_critters.damage.ModDamageTypes;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
-import net.dylanvhs.bountiful_critters.entity.ai.Bagable;
 import net.dylanvhs.bountiful_critters.entity.ai.Pickable;
+import net.dylanvhs.bountiful_critters.entity.ai.navigation.SmartBodyHelper;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.level.Level;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -27,7 +25,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -52,12 +49,11 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -86,6 +82,14 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
 
     private int bounces = 0;
     private Vec3 velocitySave;
+
+    @Override
+    protected @NotNull BodyRotationControl createBodyControl() {
+        SmartBodyHelper helper = new SmartBodyHelper(this);
+        helper.bodyLagMoving = 0.75F;
+        helper.bodyLagStill = 0.25F;
+        return helper;
+    }
 
     public PillbugEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);

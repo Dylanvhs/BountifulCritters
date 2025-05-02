@@ -1,6 +1,7 @@
-package net.dylanvhs.bountiful_critters.entity.custom;
+package net.dylanvhs.bountiful_critters.entity.custom.projectile;
 
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
+import net.dylanvhs.bountiful_critters.entity.custom.land.EmuEntity;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;

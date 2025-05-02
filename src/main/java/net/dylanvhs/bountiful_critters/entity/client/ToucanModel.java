@@ -1,7 +1,7 @@
 package net.dylanvhs.bountiful_critters.entity.client;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
-import net.dylanvhs.bountiful_critters.entity.custom.ToucanEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.flying.ToucanEntity;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 

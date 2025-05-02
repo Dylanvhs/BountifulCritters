@@ -1,7 +1,7 @@
 package net.dylanvhs.bountiful_critters.entity.client;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
-import net.dylanvhs.bountiful_critters.entity.custom.AngelfishEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.aquatic.AngelfishEntity;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 

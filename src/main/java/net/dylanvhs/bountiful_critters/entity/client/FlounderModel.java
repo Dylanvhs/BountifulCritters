@@ -1,7 +1,7 @@
 package net.dylanvhs.bountiful_critters.entity.client;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
-import net.dylanvhs.bountiful_critters.entity.custom.FlounderEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.aquatic.FlounderEntity;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 

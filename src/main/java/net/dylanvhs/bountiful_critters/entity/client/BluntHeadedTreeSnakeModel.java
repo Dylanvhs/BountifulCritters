@@ -2,11 +2,8 @@ package net.dylanvhs.bountiful_critters.entity.client;
 
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
-import net.dylanvhs.bountiful_critters.entity.custom.BluntHeadedTreeSnakeEntity;
-import net.dylanvhs.bountiful_critters.entity.custom.EmuEntity;
-import net.minecraft.client.model.geom.ModelPart;
+import net.dylanvhs.bountiful_critters.entity.custom.land.BluntHeadedTreeSnakeEntity;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
 import software.bernie.geckolib.core.animation.AnimationState;

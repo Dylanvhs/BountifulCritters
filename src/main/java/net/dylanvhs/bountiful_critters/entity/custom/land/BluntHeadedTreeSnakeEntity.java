@@ -1,13 +1,13 @@
-package net.dylanvhs.bountiful_critters.entity.custom;
+package net.dylanvhs.bountiful_critters.entity.custom.land;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.PotAccess;
 import net.dylanvhs.bountiful_critters.entity.ai.Bagable;
 import net.dylanvhs.bountiful_critters.entity.ai.Hookable;
+import net.dylanvhs.bountiful_critters.entity.ai.navigation.SmartBodyHelper;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -15,7 +15,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
@@ -30,6 +29,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
@@ -47,6 +47,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -65,6 +66,14 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Hoo
     private static final EntityDataAccessor<Boolean> FROM_BAG = SynchedEntityData.defineId(BluntHeadedTreeSnakeEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(BluntHeadedTreeSnakeEntity.class, EntityDataSerializers.INT);
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(ModItems.POTTED_PILLBUG.get());
+
+    @Override
+    protected @NotNull BodyRotationControl createBodyControl() {
+        SmartBodyHelper helper = new SmartBodyHelper(this);
+        helper.bodyLagMoving = 0.75F;
+        helper.bodyLagStill = 0.25F;
+        return helper;
+    }
 
     public BluntHeadedTreeSnakeEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);

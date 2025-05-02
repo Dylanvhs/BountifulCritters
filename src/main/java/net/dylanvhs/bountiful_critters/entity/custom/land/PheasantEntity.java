@@ -1,6 +1,7 @@
-package net.dylanvhs.bountiful_critters.entity.custom;
+package net.dylanvhs.bountiful_critters.entity.custom.land;
 
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
+import net.dylanvhs.bountiful_critters.entity.ai.navigation.SmartBodyHelper;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
@@ -14,6 +15,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
@@ -28,6 +30,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -51,6 +54,14 @@ public class PheasantEntity extends Animal implements GeoAnimatable {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.SWEET_BERRIES);
     private PanicGoal panicGoal;
+
+    @Override
+    protected @NotNull BodyRotationControl createBodyControl() {
+        SmartBodyHelper helper = new SmartBodyHelper(this);
+        helper.bodyLagMoving = 0.75F;
+        helper.bodyLagStill = 0.25F;
+        return helper;
+    }
 
     public PheasantEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);

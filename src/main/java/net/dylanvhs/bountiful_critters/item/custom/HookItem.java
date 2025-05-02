@@ -7,10 +7,8 @@ import javax.annotation.Nullable;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
-import net.dylanvhs.bountiful_critters.entity.ai.Bagable;
 import net.dylanvhs.bountiful_critters.entity.ai.Hookable;
-import net.dylanvhs.bountiful_critters.entity.custom.BluntHeadedTreeSnakeEntity;
-import net.dylanvhs.bountiful_critters.entity.custom.GeckoEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.land.BluntHeadedTreeSnakeEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;

@@ -6,7 +6,7 @@
   ],
   "spawners" : {
     "type" : "bountiful_critters:neon_tetra",
-    "weight" : 2,
+    "weight" : 12,
     "minCount" : 3,
     "maxCount" : 5
   }

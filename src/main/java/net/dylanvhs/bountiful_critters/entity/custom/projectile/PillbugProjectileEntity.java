@@ -1,7 +1,8 @@
-package net.dylanvhs.bountiful_critters.entity.custom;
+package net.dylanvhs.bountiful_critters.entity.custom.projectile;
 
 import net.dylanvhs.bountiful_critters.damage.ModDamageTypes;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
+import net.dylanvhs.bountiful_critters.entity.custom.land.PillbugEntity;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

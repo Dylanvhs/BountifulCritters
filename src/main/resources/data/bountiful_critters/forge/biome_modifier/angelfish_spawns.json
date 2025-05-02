@@ -5,7 +5,7 @@
   ],
   "spawners" : {
     "type" : "bountiful_critters:angelfish",
-    "weight" : 2,
+    "weight" : 12,
     "minCount" : 3,
     "maxCount" : 5
   }

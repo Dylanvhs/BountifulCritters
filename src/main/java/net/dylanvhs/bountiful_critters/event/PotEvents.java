@@ -2,14 +2,12 @@ package net.dylanvhs.bountiful_critters.event;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.entity.PotAccess;
-import net.dylanvhs.bountiful_critters.entity.custom.BluntHeadedTreeSnakeEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.land.BluntHeadedTreeSnakeEntity;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DecoratedPotBlock;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;

@@ -1,4 +1,4 @@
-package net.dylanvhs.bountiful_critters.entity.ai;
+package net.dylanvhs.bountiful_critters.entity.ai.goal;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;

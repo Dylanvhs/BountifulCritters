@@ -1,4 +1,4 @@
-package net.dylanvhs.bountiful_critters.entity.ai;
+package net.dylanvhs.bountiful_critters.entity.ai.goal;
 
 import java.util.EnumSet;
 import javax.annotation.Nullable;

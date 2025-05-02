@@ -4,7 +4,7 @@ import com.mojang.logging.LogUtils;
 import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.dylanvhs.bountiful_critters.effect.ModMobEffects;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
-import net.dylanvhs.bountiful_critters.entity.custom.PillbugEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.land.PillbugEntity;
 import net.dylanvhs.bountiful_critters.item.ModCreativeModeTabs;
 import net.dylanvhs.bountiful_critters.loot.ModLootModifiers;
 import net.dylanvhs.bountiful_critters.particles.ModParticles;

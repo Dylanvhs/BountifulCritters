@@ -2,7 +2,7 @@ package net.dylanvhs.bountiful_critters.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.dylanvhs.bountiful_critters.BountifulCritters;
-import net.dylanvhs.bountiful_critters.entity.custom.FlounderEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.aquatic.FlounderEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;

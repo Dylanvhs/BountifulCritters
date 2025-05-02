@@ -1,7 +1,14 @@
 package net.dylanvhs.bountiful_critters.entity;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
-import net.dylanvhs.bountiful_critters.entity.custom.*;
+import net.dylanvhs.bountiful_critters.entity.custom.aquatic.*;
+import net.dylanvhs.bountiful_critters.entity.custom.flying.ToucanEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.land.*;
+import net.dylanvhs.bountiful_critters.entity.custom.projectile.EmuEggEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.projectile.PheasantEggEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.projectile.PillbugProjectileEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.projectile.StickyArrowEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.semi_aquatic.MarineIguanaEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;

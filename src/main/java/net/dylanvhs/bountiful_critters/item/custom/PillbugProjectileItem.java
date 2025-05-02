@@ -2,7 +2,7 @@ package net.dylanvhs.bountiful_critters.item.custom;
 
 import net.dylanvhs.bountiful_critters.criterion.ModCriterion;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
-import net.dylanvhs.bountiful_critters.entity.custom.PillbugEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.land.PillbugEntity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;

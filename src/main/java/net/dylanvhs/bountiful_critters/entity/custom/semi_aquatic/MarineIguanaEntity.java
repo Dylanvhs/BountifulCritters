@@ -1,7 +1,10 @@
-package net.dylanvhs.bountiful_critters.entity.custom;
+package net.dylanvhs.bountiful_critters.entity.custom.semi_aquatic;
 
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.ai.ModBlockPos;
+import net.dylanvhs.bountiful_critters.entity.ai.navigation.SmartBodyHelper;
+import net.dylanvhs.bountiful_critters.entity.ai.navigation.SmoothSwimmingMoveControlButNotBad;
+import net.dylanvhs.bountiful_critters.entity.custom.aquatic.StingrayEntity;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
@@ -25,13 +28,12 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.player.Player;
@@ -46,6 +48,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -74,6 +77,14 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
 
     public boolean passive = false;
 
+    @Override
+    protected @NotNull BodyRotationControl createBodyControl() {
+        SmartBodyHelper helper = new SmartBodyHelper(this);
+        helper.bodyLagMoving = 0.75F;
+        helper.bodyLagStill = 0.25F;
+        return helper;
+    }
+
     public MarineIguanaEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
@@ -87,7 +98,7 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
         return new ItemStack(ModItems.MARINE_IGUANA_SPAWN_EGG.get());
     }
 
-    static class IguanaMoveControl extends SmoothSwimmingMoveControl {
+    static class IguanaMoveControl extends SmoothSwimmingMoveControlButNotBad {
         private final MarineIguanaEntity axolotl;
 
         public IguanaMoveControl(MarineIguanaEntity pAxolotl) {

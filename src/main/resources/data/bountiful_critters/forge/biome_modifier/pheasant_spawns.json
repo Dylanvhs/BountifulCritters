@@ -11,7 +11,7 @@
   ],
   "spawners" : {
     "type" : "bountiful_critters:pheasant",
-    "weight" : 6,
+    "weight" : 16,
     "minCount" : 1,
     "maxCount" : 3
   }

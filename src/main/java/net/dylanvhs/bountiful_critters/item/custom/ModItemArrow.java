@@ -1,6 +1,6 @@
 package net.dylanvhs.bountiful_critters.item.custom;
 
-import net.dylanvhs.bountiful_critters.entity.custom.StickyArrowEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.projectile.StickyArrowEntity;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;

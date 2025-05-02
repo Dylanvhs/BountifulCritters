@@ -1,8 +1,11 @@
-package net.dylanvhs.bountiful_critters.entity.custom;
+package net.dylanvhs.bountiful_critters.entity.custom.aquatic;
 
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
-import net.dylanvhs.bountiful_critters.entity.ai.CustomBreathAirGoal;
+import net.dylanvhs.bountiful_critters.entity.ai.goal.CustomBreathAirGoal;
 import net.dylanvhs.bountiful_critters.entity.ai.HumpbackWhaleJumpGoal;
+import net.dylanvhs.bountiful_critters.entity.ai.goal.CustomRandomSwimGoal;
+import net.dylanvhs.bountiful_critters.entity.ai.navigation.SmartBodyHelper;
+import net.dylanvhs.bountiful_critters.entity.ai.navigation.SmoothSwimmingMoveControlButNotBad;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
@@ -22,9 +25,9 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
-import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -41,6 +44,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -65,10 +69,19 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
 
     private boolean canBePushed = false;
 
+    // Body control / navigation
+    @Override
+    protected @NotNull BodyRotationControl createBodyControl() {
+        SmartBodyHelper helper = new SmartBodyHelper(this);
+        helper.bodyLagMoving = 0.35F;
+        helper.bodyLagStill = 0.25F;
+        return helper;
+    }
+
     public HumpbackWhaleEntity(EntityType<? extends HumpbackWhaleEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.moveControl = new HumpbackWhaleEntity.MoveHelperController(this);
-        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
+        this.moveControl = new SmoothSwimmingMoveControlButNotBad(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 15);
     }
 
@@ -98,7 +111,7 @@ public class HumpbackWhaleEntity extends Animal implements GeoAnimatable {
         this.goalSelector.addGoal(4, new HumpbackWhaleJumpGoal(this, 1));
         this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.2F, true));
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
-        this.goalSelector.addGoal(2, new RandomSwimmingGoal(this, 1.0D, 10));
+        this.goalSelector.addGoal(0, new CustomRandomSwimGoal(this, 0.8, 1, 40, 30, 3));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, KrillEntity.class, true));
     }
     @Nullable
