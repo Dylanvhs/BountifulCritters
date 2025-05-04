@@ -1,6 +1,6 @@
 package net.dylanvhs.bountiful_critters.item.custom;
 
-import net.dylanvhs.bountiful_critters.entity.ai.Pickable;
+import net.dylanvhs.bountiful_critters.entity.ai.interfaces.Pickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;

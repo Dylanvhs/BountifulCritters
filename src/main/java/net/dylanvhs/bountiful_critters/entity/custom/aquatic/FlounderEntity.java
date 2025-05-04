@@ -1,6 +1,6 @@
 package net.dylanvhs.bountiful_critters.entity.custom.aquatic;
 
-import net.dylanvhs.bountiful_critters.entity.ai.navigation.BottomSwim;
+import net.dylanvhs.bountiful_critters.entity.ai.goal.BottomSwimGoal;
 import net.dylanvhs.bountiful_critters.entity.ai.navigation.SmartBodyHelper;
 import net.dylanvhs.bountiful_critters.entity.ai.navigation.SmoothSwimmingMoveControlButNotBad;
 import net.dylanvhs.bountiful_critters.item.ModItems;
@@ -20,7 +20,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
-import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
@@ -78,7 +77,7 @@ public class FlounderEntity extends AbstractFish implements GeoEntity, Bucketabl
         this.goalSelector.addGoal(1, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
-        this.goalSelector.addGoal(12, new BottomSwim(this, 0.3D, 10));
+        this.goalSelector.addGoal(12, new BottomSwimGoal(this, 0.3D, 10));
         this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Animal.class, 8.0F, 1.3D, 1.3D));
         this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Monster.class, 8.0F, 1.3D, 1.3D));
         this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, WaterAnimal.class, 8.0F, 1.3D, 1.3D));
@@ -213,5 +212,4 @@ public class FlounderEntity extends AbstractFish implements GeoEntity, Bucketabl
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
-
 }

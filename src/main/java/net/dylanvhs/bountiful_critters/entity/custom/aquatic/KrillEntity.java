@@ -150,7 +150,7 @@ public class KrillEntity extends AbstractSchoolingFish implements GeoEntity, Buc
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(0, new FollowFlockLeaderGoal(this));
-        this.goalSelector.addGoal(1, new CustomRandomSwimGoal(this, 1, 1, 20, 20, 3));
+        this.goalSelector.addGoal(1, new CustomRandomSwimGoal(this, 0.8, 1, 20, 20, 3));
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8D, 15) {
             @Override
             public boolean canUse() {

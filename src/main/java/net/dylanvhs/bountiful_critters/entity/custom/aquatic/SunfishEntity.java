@@ -177,7 +177,7 @@ public class SunfishEntity extends AbstractFish implements GeoEntity {
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, Guardian.class, 8.0F, 1.0D, 1.0D));
         this.goalSelector.addGoal(1, new PanicGoal(this, 2.0D));
-        this.goalSelector.addGoal(1, new CustomRandomSwimGoal(this, 1, 1, 20, 20, 3));
+        this.goalSelector.addGoal(1, new CustomRandomSwimGoal(this, 1, 1, 30, 30, 3));
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8D, 15) {
             @Override
             public boolean canUse() {

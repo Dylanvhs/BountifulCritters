@@ -1,4 +1,4 @@
-package net.dylanvhs.bountiful_critters.entity.ai.navigation;
+package net.dylanvhs.bountiful_critters.entity.ai.goal;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
@@ -10,22 +10,31 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 
-public class BottomSwim extends RandomStrollGoal {
-    private int range = 3;
-    public BottomSwim(PathfinderMob creature, double speed, int waterChance) {
+public class BottomSwimGoal extends RandomStrollGoal {
+    private int waterChance = 0;
+    private int range = 5;
+    public BottomSwimGoal(PathfinderMob creature, double speed, int waterChance) {
         super(creature, speed, waterChance);
     }
 
-    public BottomSwim(PathfinderMob creature, double speed, int waterChance, int range) {
+    public BottomSwimGoal(PathfinderMob creature, double speed, int waterChance, int range) {
         super(creature, speed, waterChance);
+        this.waterChance = waterChance;
         this.range = range;
     }
     public boolean canUse(){
-        return mob.isInWater() && super.canUse();
+        if (!this.mob.isInWater()) {
+            return false;
+        }
+        return super.canUse();
     }
 
     public boolean canContinueToUse() {
-        return mob.isInWater() && super.canContinueToUse();
+        if (!this.mob.isInWater()) {
+            return false;
+
+        }
+        return super.canContinueToUse();
     }
 
     @Nullable

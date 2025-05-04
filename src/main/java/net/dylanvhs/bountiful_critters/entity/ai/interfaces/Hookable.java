@@ -1,4 +1,4 @@
-package net.dylanvhs.bountiful_critters.entity.ai;
+package net.dylanvhs.bountiful_critters.entity.ai.interfaces;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.nbt.CompoundTag;

@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
-import net.dylanvhs.bountiful_critters.entity.ai.Bagable;
+import net.dylanvhs.bountiful_critters.entity.ai.interfaces.Bagable;
 import net.dylanvhs.bountiful_critters.entity.custom.land.BluntHeadedTreeSnakeEntity;
 import net.dylanvhs.bountiful_critters.entity.custom.land.GeckoEntity;
 import net.minecraft.ChatFormatting;

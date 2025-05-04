@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
-import net.dylanvhs.bountiful_critters.entity.ai.Hookable;
+import net.dylanvhs.bountiful_critters.entity.ai.interfaces.Hookable;
 import net.dylanvhs.bountiful_critters.entity.custom.land.BluntHeadedTreeSnakeEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;

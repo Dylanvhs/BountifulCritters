@@ -102,7 +102,7 @@ public class MarineIguanaEntity extends Animal implements GeoEntity, Bucketable 
         private final MarineIguanaEntity axolotl;
 
         public IguanaMoveControl(MarineIguanaEntity pAxolotl) {
-            super(pAxolotl, 85, 10, 0.6F, 0.6F, true);
+            super(pAxolotl, 85, 10, 0.5F, 0.6F, true);
             this.axolotl = pAxolotl;
         }
 
