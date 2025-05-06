@@ -45,7 +45,7 @@ public class BountifulCritters
 
         ModItems.register(modEventBus);
 
-        ModEntities.register(modEventBus);
+        ModEntities.ENTITY_TYPES.register(modEventBus);
 
         ModSounds.register(modEventBus);
 
