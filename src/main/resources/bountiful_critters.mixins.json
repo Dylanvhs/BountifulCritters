@@ -6,7 +6,8 @@
   "mixins": [
     "BlockBehaviorMixin",
     "DecoratedPotBlockEntityMixin",
-    "BlockMixin"
+    "BlockMixin",
+    "BlockStateMixin"
   ],
   "client": [
   ],
