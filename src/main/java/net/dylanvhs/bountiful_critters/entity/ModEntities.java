@@ -1,6 +1,6 @@
 package net.dylanvhs.bountiful_critters.entity;
 
-import net.dylanvhs.bountiful_critters.BountifulCritters;
+import net.dylanvhs.bountiful_critters.RegistryHelper;
 import net.dylanvhs.bountiful_critters.entity.custom.aquatic.*;
 import net.dylanvhs.bountiful_critters.entity.custom.flying.ToucanEntity;
 import net.dylanvhs.bountiful_critters.entity.custom.land.*;
@@ -9,20 +9,16 @@ import net.dylanvhs.bountiful_critters.entity.custom.projectile.PheasantEggEntit
 import net.dylanvhs.bountiful_critters.entity.custom.projectile.PillbugProjectileEntity;
 import net.dylanvhs.bountiful_critters.entity.custom.projectile.StickyArrowEntity;
 import net.dylanvhs.bountiful_critters.entity.custom.semi_aquatic.MarineIguanaEntity;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 
 public class ModEntities {
-    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
-            DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, BountifulCritters.MOD_ID);
+    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = RegistryHelper.ENTITIES;
 
     public static final RegistryObject<EntityType<StingrayEntity>> STINGRAY =
             register("stingray",
@@ -112,8 +108,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<HogbearEntity>> HOGBEAR =
             register("hogbear",
                     EntityType.Builder.of(HogbearEntity::new, MobCategory.MONSTER)
-                    .sized(2f, 2.75f));
-
+                            .sized(2f, 2.75f));
 
 
     public static final RegistryObject<EntityType<EmuEggEntity>> EMU_EGG =
@@ -135,4 +130,5 @@ public class ModEntities {
     private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
         return ENTITY_TYPES.register(registryname, () -> entityTypeBuilder.build(registryname));
     }
+    public static void init(){}
 }

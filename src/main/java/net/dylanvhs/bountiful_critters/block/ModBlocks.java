@@ -1,6 +1,6 @@
 package net.dylanvhs.bountiful_critters.block;
 
-import net.dylanvhs.bountiful_critters.BountifulCritters;
+import net.dylanvhs.bountiful_critters.RegistryHelper;
 import net.dylanvhs.bountiful_critters.block.custom.RoastedPillbugBlock;
 import net.dylanvhs.bountiful_critters.block.custom.SaltLampBlock;
 import net.dylanvhs.bountiful_critters.block.custom.SeagrassBallBlock;
@@ -15,19 +15,17 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 
+@SuppressWarnings("deprecation")
 public class ModBlocks {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,
-            BountifulCritters.MOD_ID);
+    public static final DeferredRegister<Block> BLOCKS = RegistryHelper.BLOCKS;
     public static final RegistryObject<Block> ROASTED_PILLBUG_BLOCK = registerBlock("roasted_pillbug_block", () ->
             new RoastedPillbugBlock(BlockBehaviour.Properties.of().forceSolidOn().strength(0.5F).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY).noOcclusion()));
 
@@ -138,16 +136,15 @@ public class ModBlocks {
     }
 
     private static ToIntFunction<BlockState> litBlockEmission(int pLightValue) {
-        return (p_50763_) -> {
-            return p_50763_.getValue(BlockStateProperties.LIT) ? pLightValue : 0;
-        };
+        return (state) -> state.getValue(BlockStateProperties.LIT) ? pLightValue : 0;
     }
 
-    private static Boolean never(BlockState p_50779_, BlockGetter p_50780_, BlockPos p_50781_, EntityType<?> p_50782_) {
-        return (boolean)false;
+    private static Boolean never(BlockState state, BlockGetter getter, BlockPos pos, EntityType<?> entityType) {
+        return false;
     }
 
-    private static Boolean always(BlockState p_50810_, BlockGetter p_50811_, BlockPos p_50812_, EntityType<?> p_50813_) {
-        return (boolean)true;
+    private static Boolean always(BlockState state, BlockGetter getter, BlockPos pos, EntityType<?> entityType) {
+        return true;
     }
+    public static void init(){}
 }

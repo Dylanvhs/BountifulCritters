@@ -30,22 +30,19 @@ import java.util.List;
 import java.util.UUID;
 
 @Mod(BountifulCritters.MOD_ID)
-public class BountifulCritters
-{
+public class BountifulCritters {
 
     public static final String MOD_ID = "bountiful_critters";
 
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final List<Runnable> CALLBACKS = new ArrayList<>();
-    public BountifulCritters()
-    {
+
+    public BountifulCritters() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        RegistryHelper.register(modEventBus);
+
         ModCreativeModeTabs.register(modEventBus);
-
-        ModItems.register(modEventBus);
-
-        ModEntities.ENTITY_TYPES.register(modEventBus);
 
         ModSounds.register(modEventBus);
 
@@ -53,13 +50,11 @@ public class BountifulCritters
 
         ModParticles.PARTICLE_TYPES.register(modEventBus);
 
-        ModBlocks.BLOCKS.register(modEventBus);
-
         ModMobEffects.EFFECT_DEF_REG.register(modEventBus);
 
-
-
-
+        ModItems.init();
+        ModBlocks.init();
+        ModEntities.init();
 
         modEventBus.addListener(this::commonSetup);
     }
@@ -79,7 +74,7 @@ public class BountifulCritters
                 pillbug.setUUID(id);
                 pillbug.moveTo(pos.getX(), pos.getY(), pos.getZ(), 0.0F, 0.0F);
                 pillbug.setProjectile(true);
-                pillbug.shoot(direction.getStepX(), ((float)direction.getStepY() + 0.1F), direction.getStepZ(), 3.0F, 0.0F);
+                pillbug.shoot(direction.getStepX(), ((float) direction.getStepY() + 0.1F), direction.getStepZ(), 3.0F, 0.0F);
 
                 level.addFreshEntity(pillbug);
 

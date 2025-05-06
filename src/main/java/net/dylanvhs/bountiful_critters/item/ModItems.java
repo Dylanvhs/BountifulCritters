@@ -1,6 +1,6 @@
 package net.dylanvhs.bountiful_critters.item;
 
-import net.dylanvhs.bountiful_critters.BountifulCritters;
+import net.dylanvhs.bountiful_critters.RegistryHelper;
 import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.custom.projectile.EmuEggEntity;
@@ -19,31 +19,29 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
 public class ModItems {
-    public static final DeferredRegister<Item> ITEMS =
-            DeferredRegister.create(ForgeRegistries.ITEMS, BountifulCritters.MOD_ID);
-    public static final RegistryObject<Item> STINGRAY_BUCKET = ITEMS.register("stingray_bucket",
-            () -> new ItemModFishBucket(ModEntities.STINGRAY, Fluids.WATER, new Item.Properties()));
-    public static final RegistryObject<Item> SUNFISH_BUCKET = ITEMS.register("sunfish_bucket",
-            () -> new ItemModFishBucket(ModEntities.SUNFISH, Fluids.WATER, new Item.Properties()));
-    public static final RegistryObject<Item> KRILL_BUCKET = ITEMS.register("krill_bucket",
-            () -> new ItemModFishBucket(ModEntities.KRILL, Fluids.WATER, new Item.Properties()));
-    public static final RegistryObject<Item> ANGELFISH_BUCKET = ITEMS.register("angelfish_bucket",
-            () -> new ItemModFishBucket(ModEntities.ANGELFISH, Fluids.WATER, new Item.Properties()));
-    public static final RegistryObject<Item> BARRELEYE_BUCKET = ITEMS.register("barreleye_bucket",
-            () -> new ItemModFishBucket(ModEntities.BARRELEYE, Fluids.WATER, new Item.Properties()));
-    public static final RegistryObject<Item> NEON_TETRA_BUCKET = ITEMS.register("neon_tetra_bucket",
-            () -> new ItemModFishBucket(ModEntities.NEON_TETRA, Fluids.WATER, new Item.Properties()));
-    public static final RegistryObject<Item> FLOUNDER_BUCKET = ITEMS.register("flounder_bucket",
-            () -> new ItemModFishBucket(ModEntities.FLOUNDER, Fluids.WATER, new Item.Properties()));
-    public static final RegistryObject<Item> MARINE_IGUANA_BUCKET = ITEMS.register("marine_iguana_bucket",
-            () -> new ItemModFishBucket(ModEntities.MARINE_IGUANA, Fluids.WATER, new Item.Properties()));
+    public static final DeferredRegister<Item> ITEMS = RegistryHelper.ITEMS;
+    public static final RegistryObject<Item> STINGRAY_BUCKET = RegistryHelper.ofItem("stingray_bucket",
+            () -> new ItemModFishBucket(ModEntities.STINGRAY, Fluids.WATER, new Item.Properties())).model().build();
+    public static final RegistryObject<Item> SUNFISH_BUCKET = RegistryHelper.ofItem("sunfish_bucket",
+            () -> new ItemModFishBucket(ModEntities.SUNFISH, Fluids.WATER, new Item.Properties())).model().build();
+    public static final RegistryObject<Item> KRILL_BUCKET = RegistryHelper.ofItem("krill_bucket",
+            () -> new ItemModFishBucket(ModEntities.KRILL, Fluids.WATER, new Item.Properties())).model().build();
+    public static final RegistryObject<Item> ANGELFISH_BUCKET = RegistryHelper.ofItem("angelfish_bucket",
+            () -> new ItemModFishBucket(ModEntities.ANGELFISH, Fluids.WATER, new Item.Properties())).model().build();
+    public static final RegistryObject<Item> BARRELEYE_BUCKET = RegistryHelper.ofItem("barreleye_bucket",
+            () -> new ItemModFishBucket(ModEntities.BARRELEYE, Fluids.WATER, new Item.Properties())).model().build();
+    public static final RegistryObject<Item> NEON_TETRA_BUCKET = RegistryHelper.ofItem("neon_tetra_bucket",
+            () -> new ItemModFishBucket(ModEntities.NEON_TETRA, Fluids.WATER, new Item.Properties())).model().build();
+    public static final RegistryObject<Item> FLOUNDER_BUCKET = RegistryHelper.ofItem("flounder_bucket",
+            () -> new ItemModFishBucket(ModEntities.FLOUNDER, Fluids.WATER, new Item.Properties())).model().build();
+    public static final RegistryObject<Item> MARINE_IGUANA_BUCKET = RegistryHelper.ofItem("marine_iguana_bucket",
+            () -> new ItemModFishBucket(ModEntities.MARINE_IGUANA, Fluids.WATER, new Item.Properties())).model().build();
+
     public static final RegistryObject<Item> POTTED_PILLBUG = ITEMS.register("potted_pillbug",
             () ->  new ModCatchableItem(ModEntities.PILLBUG::get, Items.FLOWER_POT, false, new Item.Properties().stacksTo(1)));
 
@@ -284,9 +282,6 @@ public class ModItems {
         DispenserBlock.registerBehavior(BAGGED_GECKO.get(), bagDispenseBehavior);
     }
 
-
-    public static void register(IEventBus eventBus) {
-        ITEMS.register(eventBus);
-    }
+    public static void init(){}
 }
 
