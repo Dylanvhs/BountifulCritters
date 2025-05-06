@@ -10,8 +10,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Block.class)
 public abstract class BlockMixin {
-    @Inject(method = "isRandomlyTicking", at = @At("RETURN"), cancellable = true)
-    public void tickPots(BlockState state, CallbackInfoReturnable<Boolean> cir) {
-        if (state.is(Blocks.DECORATED_POT)) cir.setReturnValue(true);
-    }
+    //will see if it'll fix the cause
+//    @Inject(method = "isRandomlyTicking", at = @At("RETURN"), cancellable = true)
+//    public void tickPots(BlockState state, CallbackInfoReturnable<Boolean> cir) {
+//        if (state.is(Blocks.DECORATED_POT)) cir.setReturnValue(true);
+//    }
 }
