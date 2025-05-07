@@ -71,7 +71,7 @@ public class GeckoEntity extends Animal implements GeoEntity, Bagable {
     @Override
     protected @NotNull BodyRotationControl createBodyControl() {
         SmartBodyHelper helper = new SmartBodyHelper(this);
-        helper.bodyLagMoving = 0.75F;
+        helper.bodyLagMoving = 0.4F;
         helper.bodyLagStill = 0.25F;
         return helper;
     }

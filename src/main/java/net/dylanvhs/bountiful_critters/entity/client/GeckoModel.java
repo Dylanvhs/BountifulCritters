@@ -51,6 +51,10 @@ public class GeckoModel extends GeoModel<GeckoEntity> {
             head.setScaleY(1.0F);
             head.setScaleZ(1.0F);
         }
+        if (!animatable.isSprinting()) {
+            head.setRotY(extraDataOfType.netHeadYaw() * ((float)Math.PI / 180F));
+            head.setRotX(extraDataOfType.headPitch() * ((float)Math.PI / 180F));
+        }
     }
 
 

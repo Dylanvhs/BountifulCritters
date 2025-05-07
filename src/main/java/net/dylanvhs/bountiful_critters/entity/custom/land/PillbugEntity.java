@@ -85,7 +85,7 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
     @Override
     protected @NotNull BodyRotationControl createBodyControl() {
         SmartBodyHelper helper = new SmartBodyHelper(this);
-        helper.bodyLagMoving = 0.75F;
+        helper.bodyLagMoving = 0.4F;
         helper.bodyLagStill = 0.25F;
         return helper;
     }
