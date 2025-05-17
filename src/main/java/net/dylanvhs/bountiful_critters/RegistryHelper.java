@@ -35,17 +35,17 @@ public class RegistryHelper {
         ENTITIES.register(bus);
     }
     public static class BlockBuilder {
-        public BlockBuilder(String name, Supplier<? extends Block> block, boolean doubleBlock, boolean item) {
+        public BlockBuilder(String name, Supplier<Block> block, boolean doubleBlock, boolean item) {
             this.name = name;
             this.block = doubleBlock ? registerDoubleBlock(name, block, item) : registerBlock(name, block, item);
         }
 
-        public RegistryObject<? extends Block> build() {
+        public RegistryObject<Block> build() {
             return this.block;
         }
 
         public String name;
-        public RegistryObject<? extends Block> block;
+        public RegistryObject<Block> block;
 
         public BlockBuilder drop() {
             return this.drop(this.block.get());
@@ -183,15 +183,15 @@ public class RegistryHelper {
         }
     }
 
-    public static BlockBuilder ofBlock(String id, Supplier<? extends Block> block) {
+    public static BlockBuilder ofBlock(String id, Supplier<Block> block) {
         return RegistryHelper.ofBlock(id, block, true);
     }
 
-    public static BlockBuilder ofBlock(String id, Supplier<? extends Block> block, boolean doubleBlock, boolean item) {
+    public static BlockBuilder ofBlock(String id, Supplier<Block> block, boolean doubleBlock, boolean item) {
         return new BlockBuilder(id, block, doubleBlock, item);
     }
 
-    public static BlockBuilder ofBlock(String id, Supplier<? extends Block> block, boolean item) {
+    public static BlockBuilder ofBlock(String id, Supplier<Block> block, boolean item) {
         return new BlockBuilder(id, block, false, item);
     }
 

@@ -3,6 +3,7 @@
   "minVersion": "0.8",
   "package": "net.dylanvhs.bountiful_critters.mixin",
   "compatibilityLevel": "JAVA_17",
+  "refmap": "bountiful_critters.refmap.json",
   "mixins": [
     "BlockBehaviorMixin",
     "DecoratedPotBlockEntityMixin",
