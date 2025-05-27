@@ -127,7 +127,7 @@
       "y": 90
     },
     "facing=south,half=top,shape=inner_right": {
-      "model": "minecraft:block/pillblock_shingles_stairs_inner",
+      "model": "bountiful_critters:block/pillblock_shingles_stairs_inner",
       "uvlock": true,
       "x": 180,
       "y": 180
