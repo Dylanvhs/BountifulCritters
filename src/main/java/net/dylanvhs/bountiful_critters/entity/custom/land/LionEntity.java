@@ -124,6 +124,8 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
 
     public LionEntity(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+        this.setMane(true);
+
     }
 
     public static AttributeSupplier setAttributes() {
