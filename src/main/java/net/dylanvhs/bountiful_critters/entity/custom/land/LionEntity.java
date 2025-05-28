@@ -97,8 +97,11 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
             ModItems.RAW_KRILL.get(),
             ModItems.RAW_FLOUNDER.get(),
             ModItems.RAW_PILLBUG.get(),
+            ModItems.RAW_PHEASANT.get(),
+            ModItems.COOKED_PHEASANT.get(),
             Items.COD,Items.COOKED_COD,
-            Items.SALMON,Items.COOKED_SALMON
+            Items.SALMON,Items.COOKED_SALMON,
+            Items.ROTTEN_FLESH
 
     );
 
@@ -115,8 +118,11 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
             ModItems.RAW_KRILL.get(),
             ModItems.RAW_FLOUNDER.get(),
             ModItems.RAW_PILLBUG.get(),
+            ModItems.RAW_PHEASANT.get(),
+            ModItems.COOKED_PHEASANT.get(),
             Items.COD,Items.COOKED_COD,
-            Items.SALMON,Items.COOKED_SALMON
+            Items.SALMON,Items.COOKED_SALMON,
+            Items.ROTTEN_FLESH
 
     );
 

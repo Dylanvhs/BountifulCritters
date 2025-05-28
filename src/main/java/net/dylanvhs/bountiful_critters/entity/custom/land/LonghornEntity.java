@@ -61,7 +61,7 @@ import java.util.UUID;
 public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnimatable {
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
-    public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.GRASS);
+    public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.WHEAT);
 
     private static final EntityDataAccessor<Boolean> DATA_HAS_LEFT_HORN = SynchedEntityData.defineId(LonghornEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_HAS_RIGHT_HORN = SynchedEntityData.defineId(LonghornEntity.class, EntityDataSerializers.BOOLEAN);

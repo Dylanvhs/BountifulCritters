@@ -172,12 +172,6 @@ public class KrillEntity extends AbstractSchoolingFish implements GeoEntity, Buc
         }
 
     }
-
-    public boolean isName() {
-        String n = ChatFormatting.stripFormatting(this.getName().getString());
-        return n != null && (n.toLowerCase().contains("graus"));
-    }
-
     protected SoundEvent getAmbientSound() {
         return SoundEvents.TROPICAL_FISH_AMBIENT;
     }

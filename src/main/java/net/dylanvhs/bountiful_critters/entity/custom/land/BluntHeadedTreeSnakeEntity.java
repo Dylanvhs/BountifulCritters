@@ -65,7 +65,7 @@ public class BluntHeadedTreeSnakeEntity extends Animal implements GeoEntity, Hoo
     private static final EntityDataAccessor<Boolean> FROM_HOOK = SynchedEntityData.defineId(BluntHeadedTreeSnakeEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> FROM_BAG = SynchedEntityData.defineId(BluntHeadedTreeSnakeEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(BluntHeadedTreeSnakeEntity.class, EntityDataSerializers.INT);
-    public static final Ingredient TEMPTATION_ITEM = Ingredient.of(ModItems.POTTED_PILLBUG.get());
+    public static final Ingredient TEMPTATION_ITEM = Ingredient.of(ModItems.POTTED_PILLBUG.get(), ModItems.PHEASANT_EGG.get(), ModItems.EMU_EGG.get(), Items.EGG);
 
     @Override
     protected @NotNull BodyRotationControl createBodyControl() {
