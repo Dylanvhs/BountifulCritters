@@ -2,8 +2,10 @@ package net.dylanvhs.bountiful_critters.entity.custom.land;
 
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.ai.navigation.SmartBodyHelper;
+import net.dylanvhs.bountiful_critters.entity.custom.aquatic.StingrayEntity;
 import net.dylanvhs.bountiful_critters.item.ModItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -16,6 +18,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -35,6 +38,9 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -65,6 +71,7 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
 
     private static final EntityDataAccessor<Boolean> DATA_HAS_LEFT_HORN = SynchedEntityData.defineId(LonghornEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_HAS_RIGHT_HORN = SynchedEntityData.defineId(LonghornEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(LonghornEntity.class, EntityDataSerializers.INT);
     private int stunnedTick;
     private boolean canBePushed = true;
     private UUID persistentAngerTarget;
@@ -77,6 +84,14 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
     private static final EntityDataAccessor<Boolean> HAS_TARGET = SynchedEntityData.defineId(LonghornEntity.class, EntityDataSerializers.BOOLEAN);
     public LonghornEntity(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+    }
+
+    public static String getVariantName(int variant) {
+        return switch (variant) {
+            case 1 -> "temperate";
+            case 2 -> "cold";
+            default -> "warm";
+        };
     }
 
     @Override
@@ -106,6 +121,9 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
     public LonghornEntity getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
         LonghornEntity longhorn = ModEntities.LONGHORN.get().create(pLevel);
         if (longhorn != null) {
+            int i = this.random.nextBoolean() ? this.getVariant() : ((LonghornEntity) pOtherParent).getVariant();
+            longhorn.setVariant(i);
+            longhorn.setPersistenceRequired();
             UUID uuid = this.getOwnerUUID();
             if (uuid != null) {
                 longhorn.setOwnerUUID(uuid);
@@ -114,6 +132,7 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
         }
         return longhorn;
     }
+
 
     protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
         return pSize.height * 0.8F;
@@ -182,12 +201,31 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
         this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(8.0D);
     }
 
+    public int getVariant() {
+        return this.entityData.get(VARIANT);
+    }
+
+    private void setVariant(int variant) {
+        this.entityData.set(VARIANT, variant);
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(CHARGE_COOLDOWN_TICKS, 0);
+        this.entityData.define(HAS_TARGET, false);
+        this.entityData.define(DATA_HAS_LEFT_HORN, true);
+        this.entityData.define(DATA_HAS_RIGHT_HORN, true);
+        this.entityData.define(VARIANT, 0);
+    }
+
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("StunTick", this.stunnedTick);
         compound.putBoolean("HasLeftHorn", this.hasLeftHorn());
         compound.putBoolean("HasRightHorn", this.hasRightHorn());
+        compound.putInt("Variant", this.getVariant());
     }
 
     @Override
@@ -196,14 +234,7 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
         this.stunnedTick = compound.getInt("StunTick");
         this.entityData.set(DATA_HAS_LEFT_HORN, compound.getBoolean("HasLeftHorn"));
         this.entityData.set(DATA_HAS_RIGHT_HORN, compound.getBoolean("HasRightHorn"));
-    }
-    @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(CHARGE_COOLDOWN_TICKS, 0);
-        this.entityData.define(HAS_TARGET, false);
-        this.entityData.define(DATA_HAS_LEFT_HORN, true);
-        this.entityData.define(DATA_HAS_RIGHT_HORN, true);
+        this.setVariant(compound.getInt("Variant"));
     }
 
     public boolean hasLeftHorn() {
@@ -639,6 +670,56 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
         } else {
             return super.mobInteract(pPlayer, pHand);
         }
+    }
+
+    @javax.annotation.Nullable
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @javax.annotation.Nullable SpawnGroupData spawnDataIn, @javax.annotation.Nullable CompoundTag dataTag) {
+        float variantChange = this.getRandom().nextFloat();
+        Holder<Biome> holder = worldIn.getBiome(this.blockPosition());
+        if (holder.is(Biomes.SWAMP)) {
+            this.setVariant(0);
+        } else if (holder.is(Biomes.SAVANNA)) {
+            this.setVariant(0);
+        } else if (holder.is(Biomes.SAVANNA_PLATEAU)) {
+            this.setVariant(0);
+        } else if (holder.is(Biomes.WINDSWEPT_SAVANNA)) {
+            this.setVariant(0);
+        } else if (holder.is(Biomes.JUNGLE)) {
+            this.setVariant(0);
+        } else if (holder.is(Biomes.BAMBOO_JUNGLE)) {
+            this.setVariant(0);
+        } else if (holder.is(Biomes.SPARSE_JUNGLE)) {
+            this.setVariant(0);
+        } else if (holder.is(Biomes.BADLANDS)) {
+            this.setVariant(0);
+        } else if (holder.is(Biomes.ERODED_BADLANDS)) {
+            this.setVariant(2);
+        } else if (holder.is(Biomes.WOODED_BADLANDS)) {
+            this.setVariant(2);
+        } else if (holder.is(Biomes.SNOWY_PLAINS)) {
+            this.setVariant(2);
+        } else if (holder.is(Biomes.SNOWY_BEACH)) {
+            this.setVariant(2);
+        } else if (holder.is(Biomes.SNOWY_SLOPES)) {
+            this.setVariant(2);
+        } else if (holder.is(Biomes.SNOWY_TAIGA)) {
+            this.setVariant(2);
+        } else if (holder.is(Biomes.FROZEN_PEAKS)) {
+            this.setVariant(2);
+        } else if (holder.is(Biomes.JAGGED_PEAKS)) {
+            this.setVariant(2);
+        } else if (holder.is(Biomes.STONY_PEAKS)) {
+            this.setVariant(2);
+        } else if (holder.is(Biomes.GROVE)) {
+            this.setVariant(2);
+        } else if (holder.is(Biomes.WINDSWEPT_GRAVELLY_HILLS)) {
+            this.setVariant(2);
+        } else if (holder.is(Biomes.WINDSWEPT_HILLS)) {
+            this.setVariant(2);
+        } else {
+            this.setVariant(1);
+        }
+        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
 

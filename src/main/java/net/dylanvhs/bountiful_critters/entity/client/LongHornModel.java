@@ -11,14 +11,23 @@ import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.model.data.EntityModelData;
 
 public class LongHornModel extends GeoModel<LonghornEntity> {
+
+    private static final ResourceLocation MODEL_TEMPERATE = new ResourceLocation(BountifulCritters.MOD_ID, "geo/longhorn_temperate.geo.json");
+    private static final ResourceLocation MODEL_WARM = new ResourceLocation(BountifulCritters.MOD_ID, "geo/longhorn_warm.geo.json");
+    private static final ResourceLocation MODEL_COLD = new ResourceLocation(BountifulCritters.MOD_ID, "geo/longhorn_cold.geo.json");
+
     @Override
     public ResourceLocation getModelResource(LonghornEntity animatable) {
-        return new ResourceLocation(BountifulCritters.MOD_ID, "geo/long_horn.geo.json");
+        return switch (animatable.getVariant()) {
+            case 1 -> MODEL_TEMPERATE;
+            case 2 -> MODEL_COLD;
+            default -> MODEL_WARM;
+        };
     }
 
     @Override
     public ResourceLocation getTextureResource(LonghornEntity animatable) {
-        return new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/long_horn.png");
+        return new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/longhorn_warm.png");
     }
 
     @Override

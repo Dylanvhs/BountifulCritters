@@ -12,13 +12,17 @@ public class LongHornRenderer extends GeoEntityRenderer<LonghornEntity> {
     public LongHornRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new LongHornModel());
     }
-    private static final ResourceLocation TEXTURE = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/long_horn.png");
-    private static final ResourceLocation TEXTURE_TAMED = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/long_horn_tamed.png");
+    private static final ResourceLocation TEXTURE_TEMPERATE = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/longhorn/longhorn_temperate.png");
+    private static final ResourceLocation TEXTURE_WARM = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/longhorn/longhorn_warm.png");
+    private static final ResourceLocation TEXTURE_COLD = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/longhorn/longhorn_cold.png");
+
     @Override
     public ResourceLocation getTextureLocation(LonghornEntity animatable) {
-        if (animatable.isTame()) {
-            return TEXTURE_TAMED;
-        } else return TEXTURE;
+        return switch (animatable.getVariant()) {
+            case 1 -> TEXTURE_TEMPERATE;
+            case 2 -> TEXTURE_COLD;
+            default -> TEXTURE_WARM;
+        };
     }
 
     @Override
