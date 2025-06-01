@@ -1,4 +1,4 @@
-// 1.20.1	2025-05-17T18:21:31.5471427	Item Models: bountiful_critters
+// 1.20.1	2025-06-01T21:13:25.2564379	Item Models: bountiful_critters
 4b6c5e548ce57d7a0b9c19e1209f2e9a5a1b65c4 assets/bountiful_critters/models/item/angelfish_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/angelfish_spawn_egg.json
 f660cd040dc4b8b28afb8cf842c04747ec176c26 assets/bountiful_critters/models/item/bagged_blunt_headed_tree_snake.json
@@ -9,7 +9,6 @@ f660cd040dc4b8b28afb8cf842c04747ec176c26 assets/bountiful_critters/models/item/b
 c932650040726c1b26c1a26dd846d1c1d05c14d0 assets/bountiful_critters/models/item/boiled_emu_egg.json
 3dd885db0228b7f09735e1ce956a8884bfea65c4 assets/bountiful_critters/models/item/bountiful_music_disc.json
 a66eb54621236fba75084aa6030da7d16be17217 assets/bountiful_critters/models/item/bugs_music_disc.json
-6a657ee5d8aef79945f90658c737a93a6a39408f assets/bountiful_critters/models/item/captured_blunt_headed_tree_snake.json
 e16086ccaeba2f432b3251c937030235aab25397 assets/bountiful_critters/models/item/cooked_golden_sunfish_meat.json
 ca4520d57856bdc534808525317277149216f533 assets/bountiful_critters/models/item/cooked_pheasant.json
 6ec21d0cb96e4b516917bb0f9b4ea06b059cb76d assets/bountiful_critters/models/item/cooked_sunfish_meat.json
@@ -56,7 +55,6 @@ db248d842ff5b16c6a81e518754d73f8b65ab49c assets/bountiful_critters/models/item/r
 8fe874132130f27d9cc625f5cf8fba5031333ca3 assets/bountiful_critters/models/item/salt.json
 49ca52f7c5d5b38f601cb26bd15eecb6a7bd7674 assets/bountiful_critters/models/item/salted_kelp.json
 33be1acfd17ad0aaca85aaecc6484569c34ef616 assets/bountiful_critters/models/item/seagrass_ball.json
-7b9fb93b20c7d081f2628ba58e102a87af6be4b2 assets/bountiful_critters/models/item/snake_hook.json
 9621972fdd44ee33cac7946364261ee4c428eb76 assets/bountiful_critters/models/item/sneeze_music_disc.json
 027057beb7d522384e260369c07f8485c46005fc assets/bountiful_critters/models/item/sticky_arrow.json
 7b80975cc618f6d6d91e18c7ce6868e70ff929e8 assets/bountiful_critters/models/item/stingray_bucket.json
@@ -64,4 +62,5 @@ db248d842ff5b16c6a81e518754d73f8b65ab49c assets/bountiful_critters/models/item/r
 e739a3982ab87b30648e98a193c782924e29b70f assets/bountiful_critters/models/item/sunfish_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/sunfish_spawn_egg.json
 eb5b085c3785d0c32449b180781a37fd0e0c3fd7 assets/bountiful_critters/models/item/sunfish_sushi.json
+7bdfb3d4ecc69bd37ed3b6b6e98b5dc863940d1a assets/bountiful_critters/models/item/toucan_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/bountiful_critters/models/item/toucan_spawn_egg.json

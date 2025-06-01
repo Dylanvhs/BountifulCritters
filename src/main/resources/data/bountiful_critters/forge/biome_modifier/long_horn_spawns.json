@@ -1,7 +1,9 @@
 {
   "type" :"forge:add_spawns",
   "biomes" : [
-    "minecraft:savanna"
+    "minecraft:savanna",
+    "minecraft:plains",
+    "minecraft:snowy_plains"
   ],
   "spawners" : {
     "type" : "bountiful_critters:longhorn",

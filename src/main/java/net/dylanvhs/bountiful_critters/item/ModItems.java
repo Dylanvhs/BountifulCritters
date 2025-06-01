@@ -4,7 +4,9 @@ import net.dylanvhs.bountiful_critters.RegistryHelper;
 import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.custom.projectile.EmuEggEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.projectile.PheasantEggEntity;
 import net.dylanvhs.bountiful_critters.entity.custom.projectile.StickyArrowEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.projectile.ToucanEggEntity;
 import net.dylanvhs.bountiful_critters.item.custom.*;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
@@ -55,10 +57,10 @@ public class ModItems {
             () ->  new BagItem(ModEntities.GECKO::get, ModItems.REPTILE_BAG.get(), (new Item.Properties()).stacksTo(1))).model().build();
 
     public static final RegistryObject<Item> SNAKE_HOOK = RegistryHelper.ofItem("snake_hook",
-            () ->  new Item(new Item.Properties().stacksTo(1))).model().build();
+            () ->  new Item(new Item.Properties().stacksTo(1))).build();
 
     public static final RegistryObject<Item> CAPTURED_BLUNT_HEADED_TREE_SNAKE = RegistryHelper.ofItem("captured_blunt_headed_tree_snake",
-            () ->  new HookItem(ModEntities.BLUNT_HEADED_TREE_SNAKE::get, ModItems.SNAKE_HOOK.get(), (new Item.Properties()).stacksTo(1))).model().build();
+            () ->  new HookItem(ModEntities.BLUNT_HEADED_TREE_SNAKE::get, ModItems.SNAKE_HOOK.get(), (new Item.Properties()).stacksTo(1))).build();
 
     public static final RegistryObject<Item> LONGHORN_DIDGERIDOO = RegistryHelper.ofItem("longhorn_didgeridoo",
             () -> new LongHornDidgeridooItem(new Item.Properties().stacksTo(1))).build();
@@ -137,6 +139,10 @@ public class ModItems {
             RegistryHelper.ofItem("pheasant_feather", () -> new Item(new Item.Properties())).model().build();
     public static final RegistryObject<Item> PHEASANT_EGG =
             RegistryHelper.ofItem("pheasant_egg", () -> new PheasantEggItem(new Item.Properties().stacksTo(16))).model().build();
+
+    public static final RegistryObject<Item> TOUCAN_EGG =
+            RegistryHelper.ofItem("toucan_egg", () -> new ToucanEggItem(new Item.Properties().stacksTo(16))).model().build();
+
 
     public static final RegistryObject<Item> LION_ARMOR =
             RegistryHelper.ofItem("lion_armor", () -> new Item(new Item.Properties().stacksTo(1))).model().build();
@@ -219,6 +225,16 @@ public class ModItems {
         DispenserBlock.registerBehavior(EMU_EGG.get(), new AbstractProjectileDispenseBehavior() {
             protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
                 return new EmuEggEntity(worldIn, position.x(), position.y(), position.z());
+            }
+        });
+        DispenserBlock.registerBehavior(PHEASANT_EGG.get(), new AbstractProjectileDispenseBehavior() {
+            protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
+                return new PheasantEggEntity(worldIn, position.x(), position.y(), position.z());
+            }
+        });
+        DispenserBlock.registerBehavior(TOUCAN_EGG.get(), new AbstractProjectileDispenseBehavior() {
+            protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
+                return new ToucanEggEntity(worldIn, position.x(), position.y(), position.z());
             }
         });
 

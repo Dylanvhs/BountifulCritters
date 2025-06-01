@@ -16,7 +16,7 @@
     "hidden": false
   },
   "rewards": {
-    "experience": 250
+    "experience": 150
   },
   "criteria": {
     "1": { "trigger": "minecraft:inventory_changed", "conditions": { "items": [ { "items": ["bountiful_critters:seagrass_ball"]} ] } }

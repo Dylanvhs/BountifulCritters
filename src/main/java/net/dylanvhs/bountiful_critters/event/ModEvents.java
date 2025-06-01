@@ -93,6 +93,9 @@ public final class ModEvents {
         EntityRenderers.register
                 (ModEntities.THROWABLE_PILLBUG.get(), ThrownItemRenderer::new);
 
+        EntityRenderers.register
+                (ModEntities.TOUCAN_EGG.get(), ThrownItemRenderer::new);
+
     }
 
     @SubscribeEvent

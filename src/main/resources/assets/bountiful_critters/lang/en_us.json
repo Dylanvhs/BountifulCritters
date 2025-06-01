@@ -56,6 +56,7 @@
   "item.bountiful_critters.snake_hook": "Snake Hook",
   "item.bountiful_critters.reptile_bag": "Reptile Bag",
   "item.bountiful_critters.lion_armor": "Lion Armor",
+  "item.bountiful_critters.toucan_egg": "Toucan Egg",
 
 
   "item.bountiful_critters.memories_music_disc": "Music Disc",
@@ -177,6 +178,7 @@
   "entity.bountiful_critters.pillbug_projectile" : "Pillbug",
   "entity.bountiful_critters.emu_egg_projectile" : "Emu Egg",
   "entity.bountiful_critters.pheasant_egg_projectile" : "Pheasant Egg",
+  "entity.bountiful_critters.toucan_egg_projectile" : "Toucan Egg",
   "entity.bountiful_critters.sticky_arrow_projectile" : "Sticky Arrow",
 
 

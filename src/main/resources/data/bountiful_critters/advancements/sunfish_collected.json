@@ -16,7 +16,7 @@
     "hidden": false
   },
   "rewards": {
-    "experience": 200
+    "experience": 50
   },
   "criteria": {
     "1": { "trigger": "minecraft:inventory_changed", "conditions": { "items": [ { "items": ["bountiful_critters:sunfish_bucket"]} ] } }

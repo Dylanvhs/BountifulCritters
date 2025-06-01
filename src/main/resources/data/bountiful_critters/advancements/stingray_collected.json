@@ -16,7 +16,7 @@
     "hidden": false
   },
   "rewards": {
-    "experience": 100
+    "experience": 50
   },
   "criteria": {
     "1": { "trigger": "minecraft:inventory_changed", "conditions": { "items": [ { "items": ["bountiful_critters:stingray_bucket"]} ] } }

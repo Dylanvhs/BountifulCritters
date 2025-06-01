@@ -676,9 +676,7 @@ public class LonghornEntity extends TamableAnimal implements NeutralMob, GeoAnim
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @javax.annotation.Nullable SpawnGroupData spawnDataIn, @javax.annotation.Nullable CompoundTag dataTag) {
         float variantChange = this.getRandom().nextFloat();
         Holder<Biome> holder = worldIn.getBiome(this.blockPosition());
-        if (holder.is(Biomes.SWAMP)) {
-            this.setVariant(0);
-        } else if (holder.is(Biomes.SAVANNA)) {
+        if (holder.is(Biomes.SAVANNA)) {
             this.setVariant(0);
         } else if (holder.is(Biomes.SAVANNA_PLATEAU)) {
             this.setVariant(0);

@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "bountiful_critters:raw_angelfish",
+    "bountiful_critters:raw_barreleye",
+    "bountiful_critters:raw_flounder",
+    "bountiful_critters:raw_neon_tetra",
+    "bountiful_critters:raw_sunfish_meat",
+    "bountiful_critters:cooked_sunfish_meat",
+    "bountiful_critters:raw_golden_sunfish_meat",
+    "bountiful_critters:raw_krill",
+    "bountiful_critters:fried_krill"
+
+  ]
+}

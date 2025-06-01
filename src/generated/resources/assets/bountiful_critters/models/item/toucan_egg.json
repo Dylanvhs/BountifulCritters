@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "bountiful_critters:item/snake_hook"
+    "layer0": "bountiful_critters:item/toucan_egg"
   }
 }

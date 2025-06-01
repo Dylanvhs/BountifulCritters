@@ -4,10 +4,7 @@ import net.dylanvhs.bountiful_critters.RegistryHelper;
 import net.dylanvhs.bountiful_critters.entity.custom.aquatic.*;
 import net.dylanvhs.bountiful_critters.entity.custom.flying.ToucanEntity;
 import net.dylanvhs.bountiful_critters.entity.custom.land.*;
-import net.dylanvhs.bountiful_critters.entity.custom.projectile.EmuEggEntity;
-import net.dylanvhs.bountiful_critters.entity.custom.projectile.PheasantEggEntity;
-import net.dylanvhs.bountiful_critters.entity.custom.projectile.PillbugProjectileEntity;
-import net.dylanvhs.bountiful_critters.entity.custom.projectile.StickyArrowEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.projectile.*;
 import net.dylanvhs.bountiful_critters.entity.custom.semi_aquatic.MarineIguanaEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -113,10 +110,14 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<EmuEggEntity>> EMU_EGG =
             register("emu_egg_projectile", EntityType.Builder.<EmuEggEntity>of(EmuEggEntity::new, MobCategory.MISC)
-                    .sized(0.5f, 0.5f));
+                    .sized(0.75f, 0.75f));
 
     public static final RegistryObject<EntityType<PheasantEggEntity>> PHEASANT_EGG =
             register("pheasant_egg_projectile", EntityType.Builder.<PheasantEggEntity>of(PheasantEggEntity::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f));
+
+    public static final RegistryObject<EntityType<ToucanEggEntity>> TOUCAN_EGG =
+            register("toucan_egg_projectile", EntityType.Builder.<ToucanEggEntity>of(ToucanEggEntity::new, MobCategory.MISC)
                     .sized(0.5f, 0.5f));
 
     public static final RegistryObject<EntityType<StickyArrowEntity>> STICKY_ARROW =
