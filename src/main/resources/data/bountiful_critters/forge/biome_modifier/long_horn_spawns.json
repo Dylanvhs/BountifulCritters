@@ -7,7 +7,7 @@
   ],
   "spawners" : {
     "type" : "bountiful_critters:longhorn",
-    "weight" : 15,
+    "weight" : 12,
     "minCount" : 1,
     "maxCount" : 3
   }
