@@ -500,7 +500,7 @@ public class ToucanEntity extends TamableAnimal implements GeoEntity, FlyingAnim
 
         protected boolean isValidTarget(LevelReader pLevel, BlockPos pPos) {
             BlockState blockstate = pLevel.getBlockState(pPos);
-            return blockstate.is(Blocks.MELON);
+            return blockstate.is(Blocks.MELON) || blockstate.is(Blocks.PUMPKIN);
         }
 
         public void tick() {
@@ -523,6 +523,9 @@ public class ToucanEntity extends TamableAnimal implements GeoEntity, FlyingAnim
                 if (blockstate.is(Blocks.MELON)) {
                     this.pickMelon(blockstate);
                 }
+                if (blockstate.is(Blocks.PUMPKIN)) {
+                    this.pickPumpkin(blockstate);
+                }
             }
         }
 
@@ -537,6 +540,22 @@ public class ToucanEntity extends TamableAnimal implements GeoEntity, FlyingAnim
 
             if (j > 0) {
                 Block.popResource(ToucanEntity.this.level(), this.blockPos, new ItemStack(Items.MELON_SLICE, j));
+            }
+
+            ToucanEntity.this.playSound(SoundEvents.WOOD_BREAK, 1.0F, 1.0F);
+            ToucanEntity.this.level().destroyBlock(blockPos,false);
+        }
+        private void pickPumpkin(BlockState pState) {
+            int i = 1;
+            int j = 1 + ToucanEntity.this.level().random.nextInt(2) + (i == 3 ? 1 : 0);
+            ItemStack itemstack = ToucanEntity.this.getItemBySlot(EquipmentSlot.MAINHAND);
+            if (itemstack.isEmpty()) {
+                ToucanEntity.this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.PUMPKIN));
+                --j;
+            }
+
+            if (j > 0) {
+                Block.popResource(ToucanEntity.this.level(), this.blockPos, new ItemStack(Items.PUMPKIN, j));
             }
 
             ToucanEntity.this.playSound(SoundEvents.WOOD_BREAK, 1.0F, 1.0F);
