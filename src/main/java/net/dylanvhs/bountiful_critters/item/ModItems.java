@@ -149,7 +149,7 @@ public class ModItems {
 
 
     public static final RegistryObject<Item> MEMORIES_MUSIC_DISC = RegistryHelper.ofItem("memories_music_disc",
-            () -> new RecordItem(15, ModSounds.MEMORIES, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 6280)).model().build();
+            () -> new RecordItem(15, ModSounds.MEMORIES, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 4360)).model().build();
 
     public static final RegistryObject<Item> BOUNTIFUL_MUSIC_DISC = RegistryHelper.ofItem("bountiful_music_disc",
             () -> new RecordItem(13, ModSounds.BOUNTIFUL, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 3680)).model().build();
