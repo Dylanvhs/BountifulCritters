@@ -450,7 +450,7 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
 
     protected void onHitBlock(BlockState hitState, Direction direction, BlockPos hitPos) {
         this.setBounces(bounces++);
-        if (getBounces() >= 4) {
+        if (getBounces() >= 6) {
             this.setProjectile(false);
         }
 
@@ -461,7 +461,7 @@ public class PillbugEntity extends Animal implements GeoEntity, Pickable {
         BountifulCritters.LOGGER.info(vec3 + " before");
         //Vec3 vec3 = deltaMovement.subtract(deltaMovement.x / 5, 0.0D, deltaMovement.z / 5);
         // x / 10.F = bounciness
-        double booster = 0.3D + (2 / 10.0F);
+        double booster = 0.4D + (5 / 10.0F);
         if (direction == Direction.UP || direction == Direction.DOWN) {
             this.setDeltaMovement(vec3.x, -vec3.y * booster, vec3.z);
         }

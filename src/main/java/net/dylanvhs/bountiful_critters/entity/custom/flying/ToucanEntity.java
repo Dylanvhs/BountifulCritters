@@ -287,7 +287,7 @@ public class ToucanEntity extends TamableAnimal implements GeoEntity, FlyingAnim
         return this.entityData.get(VARIANT);
     }
 
-    private void setVariant(int variant) {
+    public void setVariant(int variant) {
         this.entityData.set(VARIANT, variant);
     }
 

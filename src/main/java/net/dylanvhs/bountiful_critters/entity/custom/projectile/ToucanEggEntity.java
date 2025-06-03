@@ -55,11 +55,14 @@ public class ToucanEggEntity extends ThrowableItemProjectile {
                 }
 
                 for(int j = 0; j < i; ++j) {
-                    ToucanEntity chicken = ModEntities.TOUCAN.get().create(this.level());
-                    if (chicken != null) {
-                        chicken.setAge(-24000);
-                        chicken.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
-                        this.level().addFreshEntity(chicken);
+                    ToucanEntity toucan = ModEntities.TOUCAN.get().create(this.level());
+                    if (toucan != null) {
+                        if (this.random.nextInt(2) == 0) {
+                            toucan.setVariant(1);
+                        } else toucan.setVariant(0);
+                        toucan.setAge(-24000);
+                        toucan.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
+                        this.level().addFreshEntity(toucan);
                     }
                 }
             }

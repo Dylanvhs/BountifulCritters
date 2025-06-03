@@ -68,7 +68,7 @@ public class ModItems {
             RegistryHelper.ofItem("longhorn_horn", () -> new Item(new Item.Properties())).model().build();
 
     public static final RegistryObject<Item> SALT =
-            RegistryHelper.ofItem("salt", () -> new Item(new Item.Properties())).model().build();
+            RegistryHelper.ofItem("salt", () -> new Item(new Item.Properties().food(ModFoods.SALT))).model().build();
     public static final RegistryObject<Item> SALTED_KELP =
             RegistryHelper.ofItem("salted_kelp", () -> new Item(new Item.Properties().food(ModFoods.SALTED_KELP))).model().build();
 

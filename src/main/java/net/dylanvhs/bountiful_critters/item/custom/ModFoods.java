@@ -37,6 +37,8 @@ public class ModFoods {
     public static final FoodProperties POISONOUS_PILLBUG = new FoodProperties.Builder().nutrition(1)
             .saturationMod(0.1f).effect(() -> new MobEffectInstance(MobEffects.POISON, 200), 1f).effect(() -> new MobEffectInstance(MobEffects.HUNGER, 200), 1f).effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 200), 1f).build();
 
+    public static final FoodProperties SALT = new FoodProperties.Builder().nutrition(1)
+            .saturationMod(0.2f).build();
     public static final FoodProperties SALTED_KELP = new FoodProperties.Builder().nutrition(5)
             .saturationMod(0.5f).effect(() -> new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 600), 0.75f).build();
 
