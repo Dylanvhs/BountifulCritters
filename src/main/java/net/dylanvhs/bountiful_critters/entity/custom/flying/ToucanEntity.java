@@ -23,6 +23,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -126,6 +127,10 @@ public class ToucanEntity extends TamableAnimal implements GeoEntity, FlyingAnim
             this.spawnAtLocation(ModItems.TOUCAN_EGG.get());
             this.timeUntilNextEgg = this.random.nextInt(6000) + 6000;
         }
+    }
+
+    public boolean isInvulnerableTo(DamageSource source) {
+        return source.is(DamageTypes.IN_WALL) || super.isInvulnerableTo(source);
     }
 
     @Nullable
