@@ -5,7 +5,9 @@ import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.ai.navigation.SmartBodyHelper;
 import net.dylanvhs.bountiful_critters.entity.custom.flying.ToucanEntity;
 import net.dylanvhs.bountiful_critters.item.ModItems;
+import net.dylanvhs.bountiful_critters.util.Crackiness;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -14,6 +16,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -38,6 +41,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -62,19 +66,19 @@ import javax.annotation.Nullable;
 import java.util.Set;
 import java.util.UUID;
 
-
 public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public int timeUntilNextMane = this.random.nextInt(8000) + 8000;
     private static final EntityDataAccessor<Boolean> IS_ARMORED = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> IS_ARMOR_SLIGHTLY_DAMAGED = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> IS_ARMOR_DAMAGED = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> IS_ARMOR_REPAIRED = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Byte> DATA_FUR_ID = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> DATA_HAS_MANE = SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
     public boolean waxed = false;
+    private ItemStack bodyArmorItem = new ItemStack(ModItems.LION_ARMOR.get());
+    public ItemStack getBodyArmorItem() {
+        return this.bodyArmorItem;
+    }
 
     @Override
     protected @NotNull BodyRotationControl createBodyControl() {
@@ -126,7 +130,6 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
 
     );
 
-    public int armorDurability = 256;
 
     public LionEntity(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -149,6 +152,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
+        compound.putInt("Variant", this.getVariant());
         compound.putBoolean("HasMane", this.hasMane());
 
     }
@@ -156,6 +160,7 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
+        this.setVariant(compound.getInt("Variant"));
         this.entityData.set(DATA_HAS_MANE, compound.getBoolean("HasMane"));
     }
 
@@ -164,9 +169,6 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
         super.defineSynchedData();
         this.entityData.define(VARIANT, 0);
         this.entityData.define(IS_ARMORED, false);
-        this.entityData.define(IS_ARMOR_SLIGHTLY_DAMAGED, false);
-        this.entityData.define(IS_ARMOR_DAMAGED, false);
-        this.entityData.define(IS_ARMOR_REPAIRED, false);
         this.entityData.define(DATA_FUR_ID, (byte)0);
         this.entityData.define(DATA_HAS_MANE,true);
     }
@@ -301,7 +303,6 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
 
     @Override
     public void setRemainingPersistentAngerTime(int pRemainingPersistentAngerTime) {
-
     }
 
     @Nullable
@@ -312,27 +313,16 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
 
     @Override
     public void setPersistentAngerTarget(@Nullable UUID pPersistentAngerTarget) {
-
     }
 
     @Override
     public void startPersistentAngerTimer() {
-
     }
 
     public void aiStep() {
         super.aiStep();
         if (this.isAlive()) {
             setSprinting(isAggressive());
-
-            setArmorRepaired(this.isArmored() && armorDurability > 128);
-            setArmorSlightlyDamaged(this.isArmored() && armorDurability < 128);
-            setArmorDamaged(this.isArmored() && armorDurability < 64);
-
-            if (this.isArmored() && armorDurability == 0) {
-                setArmored(false);
-                setArmorDamaged(false);
-            }
         }
     }
     public void tick() {
@@ -349,13 +339,6 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
             Entity entity = pSource.getEntity();
             if (!this.level().isClientSide) {
                 this.setOrderedToSit(false);
-            }
-
-            if (this.isArmored() && armorDurability > 0) {
-                --armorDurability;
-                --armorDurability;
-                --armorDurability;
-                --armorDurability;
             }
 
             if (entity != null && !(entity instanceof Player) && !(entity instanceof AbstractArrow)) {
@@ -423,6 +406,47 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
         } else {
             return false;
         }
+    }
+    @Override
+    protected void actuallyHurt(DamageSource p_331660_, float p_334536_) {
+        if (!this.canArmorAbsorb(p_331660_)) {
+            super.actuallyHurt(p_331660_, p_334536_);
+        } else {
+            ItemStack itemstack = this.getBodyArmorItem();
+            int i = itemstack.getDamageValue();
+            int j = itemstack.getMaxDamage();
+            itemstack.hurtAndBreak(1, this, (p_32290_) -> {
+                p_32290_.broadcastBreakEvent(EquipmentSlot.CHEST);
+            });
+            if (Crackiness.LION_ARMOR.byDamage(i, j) != Crackiness.LION_ARMOR.byDamage(this.getBodyArmorItem())) {
+                this.playSound(SoundEvents.ITEM_BREAK);
+                if (this.level() instanceof ServerLevel serverlevel) {
+                    serverlevel.sendParticles(
+                            new ItemParticleOption(ParticleTypes.ITEM, Items.COPPER_INGOT.getDefaultInstance()),
+                            this.getX(),
+                            this.getY() + 1.0,
+                            this.getZ(),
+                            20,
+                            0.2,
+                            0.1,
+                            0.2,
+                            0.1
+                    );
+                }
+            }
+        }
+    }
+    private boolean canArmorAbsorb(DamageSource p_335120_) {
+        return this.isArmored() && !p_335120_.is(DamageTypeTags.BYPASSES_ARMOR);
+    }
+    @Override
+    public boolean doHurtTarget(Entity p_30372_) {
+        boolean flag = p_30372_.hurt(this.damageSources().mobAttack(this), (float)((int)this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
+        if (flag) {
+            this.doEnchantDamageEffects(this, p_30372_);
+        }
+
+        return flag;
     }
 
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
@@ -498,23 +522,17 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
 
         } else if (this.isTame()) {
 
-            if (itemstack.getItem() == ModItems.LION_ARMOR.get() && !this.isArmored() && !this.isBaby()) {
+            if (itemstack.getItem() == ModItems.LION_ARMOR.get() && !this.isArmored() && !this.isBaby() && this.isOwnedBy(pPlayer)) {
                 this.usePlayerItem(pPlayer, pHand, itemstack);
-                playSound(SoundEvents.HORSE_ARMOR, 1.0F, 1.0F);
                 setArmored(true);
-                setArmorRepaired(true);
-                armorDurability = 256;
+                playSound(SoundEvents.HORSE_ARMOR, 1.0F, 1.0F);
                 return InteractionResult.SUCCESS;
+            } else if (itemstack.canPerformAction(net.minecraftforge.common.ToolActions.SHEARS_HARVEST)
+                    && this.isOwnedBy(pPlayer)
+                    && this.isArmored()
+                    && (!EnchantmentHelper.hasBindingCurse(this.getBodyArmorItem()) || pPlayer.isCreative())) {
+                return InteractionResult.PASS;
             }
-
-            if (itemstack.getItem() == Items.COPPER_INGOT && this.isArmored() && armorDurability < 256 && !this.isBaby()) {
-                this.usePlayerItem(pPlayer, pHand, itemstack);
-                playSound(SoundEvents.COPPER_PLACE, 1.0F, 1.0F);
-                ++armorDurability;
-                ++armorDurability;
-                return InteractionResult.SUCCESS;
-            }
-
 
             if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
                 this.heal((float)itemstack.getFoodProperties(this).getNutrition());
@@ -613,30 +631,6 @@ public class LionEntity extends TamableAnimal implements NeutralMob, GeoEntity {
 
     public void setArmored(boolean armored) {
         entityData.set(IS_ARMORED, armored);
-    }
-
-    public boolean isArmorRepaired() {
-        return entityData.get(IS_ARMOR_REPAIRED);
-    }
-
-    public void setArmorRepaired(boolean armored) {
-        entityData.set(IS_ARMOR_REPAIRED, armored);
-    }
-
-    public boolean isArmorSlightlyDamaged() {
-        return entityData.get(IS_ARMOR_SLIGHTLY_DAMAGED);
-    }
-
-    public void setArmorSlightlyDamaged(boolean armored) {
-        entityData.set(IS_ARMOR_SLIGHTLY_DAMAGED, armored);
-    }
-
-    public boolean isArmorDamaged() {
-        return entityData.get(IS_ARMOR_DAMAGED);
-    }
-
-    public void setArmorDamaged(boolean armored) {
-        entityData.set(IS_ARMOR_DAMAGED, armored);
     }
 
     @Override

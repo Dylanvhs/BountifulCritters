@@ -145,7 +145,7 @@ public class ModItems {
 
 
     public static final RegistryObject<Item> LION_ARMOR =
-            RegistryHelper.ofItem("lion_armor", () -> new Item(new Item.Properties().stacksTo(1))).model().build();
+            RegistryHelper.ofItem("lion_armor", () -> new Item(new Item.Properties().stacksTo(1).durability(4))).model().build();
 
 
     public static final RegistryObject<Item> MEMORIES_MUSIC_DISC = RegistryHelper.ofItem("memories_music_disc",

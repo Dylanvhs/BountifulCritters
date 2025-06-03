@@ -91,9 +91,6 @@ public final class ModEvents {
                 (ModEntities.PHEASANT_EGG.get(), ThrownItemRenderer::new);
 
         EntityRenderers.register
-                (ModEntities.THROWABLE_PILLBUG.get(), ThrownItemRenderer::new);
-
-        EntityRenderers.register
                 (ModEntities.TOUCAN_EGG.get(), ThrownItemRenderer::new);
 
     }

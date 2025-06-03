@@ -110,23 +110,19 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<EmuEggEntity>> EMU_EGG =
             register("emu_egg_projectile", EntityType.Builder.<EmuEggEntity>of(EmuEggEntity::new, MobCategory.MISC)
-                    .sized(0.75f, 0.75f));
+                    .sized(0.45f, 0.45f).clientTrackingRange(4).updateInterval(10));
 
     public static final RegistryObject<EntityType<PheasantEggEntity>> PHEASANT_EGG =
             register("pheasant_egg_projectile", EntityType.Builder.<PheasantEggEntity>of(PheasantEggEntity::new, MobCategory.MISC)
-                    .sized(0.5f, 0.5f));
+                    .sized(0.35f, 0.35f).clientTrackingRange(4).updateInterval(10));
 
     public static final RegistryObject<EntityType<ToucanEggEntity>> TOUCAN_EGG =
             register("toucan_egg_projectile", EntityType.Builder.<ToucanEggEntity>of(ToucanEggEntity::new, MobCategory.MISC)
-                    .sized(0.5f, 0.5f));
+                    .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10));
 
     public static final RegistryObject<EntityType<StickyArrowEntity>> STICKY_ARROW =
             register("sticky_arrow_projectile", EntityType.Builder.<StickyArrowEntity>of(StickyArrowEntity::new, MobCategory.MISC)
-                    .sized(0.5f, 0.5f).setCustomClientFactory(StickyArrowEntity::new));
-
-    public static final RegistryObject<EntityType<PillbugProjectileEntity>> THROWABLE_PILLBUG =
-            register("pillbug_projectile", EntityType.Builder.<PillbugProjectileEntity>of(PillbugProjectileEntity::new, MobCategory.MISC)
-                    .sized(0.5f, 0.5f));
+                    .sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20).setCustomClientFactory(StickyArrowEntity::new));
 
     private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
         return ENTITY_TYPES.register(registryname, () -> entityTypeBuilder.build(registryname));

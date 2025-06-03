@@ -15,6 +15,8 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
+import java.util.Map;
+
 public class LionRenderer extends GeoEntityRenderer<LionEntity> {
     public LionRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new LionModel());
@@ -22,17 +24,24 @@ public class LionRenderer extends GeoEntityRenderer<LionEntity> {
     }
     private static final ResourceLocation DEFAULT = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/lion/lion0.png");
     private static final ResourceLocation WHITE = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/lion/lion1.png");
-    private static final ResourceLocation ARMORED = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/lion/lion_armor.png");
+    private static final ResourceLocation DEFAULT_ARMORED = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/lion/lion0_armor.png");
+    private static final ResourceLocation WHITE_ARMORED = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/lion/lion1_armor.png");
     private static final ResourceLocation ARMOR_LAYER = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/lion/lion_armor_layer.png");
     private static final ResourceLocation ARMOR_LAYER_SLIGHTLY_DAMAGED = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/lion/lion_armor_layer_slightly_damaged.png");
     private static final ResourceLocation ARMOR_LAYER_DAMAGED = new ResourceLocation(BountifulCritters.MOD_ID, "textures/entity/lion/lion_armor_layer_damaged.png");
+
     @Override
     public ResourceLocation getTextureLocation(LionEntity animatable) {
-       return switch (animatable.getVariant()) {
+        if (animatable.isArmored() && animatable.getVariant() == 0) {
+            return DEFAULT_ARMORED;
+        }
+        if (animatable.isArmored() && animatable.getVariant() == 1) {
+            return WHITE_ARMORED;
+        }
+        return switch (animatable.getVariant()) {
             case 1 -> WHITE;
             default -> DEFAULT;
         };
-
     }
 
     @Override
@@ -47,15 +56,7 @@ public class LionRenderer extends GeoEntityRenderer<LionEntity> {
         }
 
         protected RenderType getRenderType(LionEntity animatable) {
-            if (animatable.isArmorRepaired() && !animatable.isArmorDamaged() && !animatable.isArmorSlightlyDamaged() && animatable.armorDurability > 128){
-                return RenderType.entityCutout(ARMOR_LAYER);
-            } else if (animatable.isArmorSlightlyDamaged() && !animatable.isArmorDamaged() && !animatable.isArmorRepaired()){
-                return RenderType.entityCutout(ARMOR_LAYER_SLIGHTLY_DAMAGED);
-            } else if (animatable.isArmorDamaged() && !animatable.isArmorSlightlyDamaged() && !animatable.isArmorRepaired()) {
-                return RenderType.entityCutout(ARMOR_LAYER_DAMAGED);
-            } else{
-                return RenderType.entityCutout(ARMOR_LAYER);
-            }
+            return RenderType.entityCutout(ARMOR_LAYER);
         }
         @Override
         public void render(PoseStack poseStack, LionEntity animatable, BakedGeoModel bakedModel, @Nullable RenderType renderType, MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
