@@ -80,12 +80,12 @@ public class OakNestBlock extends BaseEntityBlock {
             if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) == 0) {
                 oakNestEntity.angerHoopoes(player, blockState, OakNestEntity.NestState.EMERGENCY);
                 level.updateNeighbourForOutputSignal(blockPos, this);
-                this.angerNearbyBirts(level, blockPos);
+                this.angerNearbyHoopoes(level, blockPos);
             }
         }
     }
 
-    private void angerNearbyBirts(Level world, BlockPos pos) {
+    private void angerNearbyHoopoes(Level world, BlockPos pos) {
         List<HoopoeEntity> hoopoeList = world.getEntitiesOfClass(HoopoeEntity.class, new AABB(pos).inflate(8.0, 6.0, 8.0));
         if (!hoopoeList.isEmpty()) {
             List<Player> playerList = world.getEntitiesOfClass(Player.class, new AABB(pos).inflate(8.0, 6.0, 8.0));
@@ -133,7 +133,7 @@ public class OakNestBlock extends BaseEntityBlock {
             boolean bl = !blockEntity1.hasNoHoopoes();
             if (bl) {
                 CompoundTag nbtCompound = new CompoundTag();
-                nbtCompound.put("Birts", blockEntity1.getHoopoes());
+                nbtCompound.put("Hoopoes", blockEntity1.getHoopoes());
                 BlockItem.setBlockEntityData(itemStack, ModBlockEntities.OAK_NEST.get(), nbtCompound);
                 nbtCompound = new CompoundTag();
                 itemStack.addTagElement("BlockStateTag", nbtCompound);
