@@ -4,6 +4,7 @@ import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
 import net.dylanvhs.bountiful_critters.entity.client.*;
 import net.dylanvhs.bountiful_critters.entity.custom.aquatic.*;
+import net.dylanvhs.bountiful_critters.entity.custom.flying.HoopoeEntity;
 import net.dylanvhs.bountiful_critters.entity.custom.flying.ToucanEntity;
 import net.dylanvhs.bountiful_critters.entity.custom.land.*;
 import net.dylanvhs.bountiful_critters.entity.custom.semi_aquatic.MarineIguanaEntity;
@@ -79,6 +80,9 @@ public final class ModEvents {
                 (ModEntities.PHEASANT.get(), PheasantRenderer:: new);
 
         EntityRenderers.register
+                (ModEntities.HOOPOE.get(), HoopoeRenderer:: new);
+
+        EntityRenderers.register
                 (ModEntities.HOGBEAR.get(), HogbearRenderer:: new);
 
         EntityRenderers.register
@@ -92,6 +96,9 @@ public final class ModEvents {
 
         EntityRenderers.register
                 (ModEntities.TOUCAN_EGG.get(), ThrownItemRenderer::new);
+
+        EntityRenderers.register
+                (ModEntities.HOOPOE_EGG.get(), ThrownItemRenderer::new);
 
     }
 
@@ -141,6 +148,7 @@ public final class ModEvents {
         event.put(ModEntities.NEON_TETRA.get(), NeonTetraEntity.setAttributes());
         event.put(ModEntities.FLOUNDER.get(), FlounderEntity.setAttributes());
         event.put(ModEntities.PHEASANT.get(), PheasantEntity.setAttributes());
+        event.put(ModEntities.HOOPOE.get(), HoopoeEntity.setAttributes());
         event.put(ModEntities.HOGBEAR.get(), HogbearEntity.setAttributes());
 
     }

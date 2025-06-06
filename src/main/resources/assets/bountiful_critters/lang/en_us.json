@@ -57,6 +57,7 @@
   "item.bountiful_critters.reptile_bag": "Reptile Bag",
   "item.bountiful_critters.lion_armor": "Lion Armor",
   "item.bountiful_critters.toucan_egg": "Toucan Egg",
+  "item.bountiful_critters.hoopoe_egg": "Hoopoe Egg",
 
 
   "item.bountiful_critters.memories_music_disc": "Music Disc",
@@ -89,6 +90,7 @@
   "item.bountiful_critters.neon_tetra_spawn_egg" : "Neon Tetra Spawn Egg",
   "item.bountiful_critters.flounder_spawn_egg" : "Flounder Spawn Egg",
   "item.bountiful_critters.pheasant_spawn_egg" : "Pheasant Spawn Egg",
+  "item.bountiful_critters.hoopoe_spawn_egg" : "Hoopoe Spawn Egg",
   "item.bountiful_critters.hogbear_spawn_egg" : "Hogbear Spawn Egg",
 
 
@@ -125,6 +127,7 @@
   "block.bountiful_critters.seagrass_ball_placed": "Seagrass Ball",
   "block.bountiful_critters.salt_block": "Block Of Salt",
   "block.bountiful_critters.polished_salt_block": "Polished Salt Block",
+  "block.bountiful_critters.oak_nest": "Oak Nest",
 
 
   "entity.bountiful_critters.stingray.variant_gray": "Gray",
@@ -174,10 +177,12 @@
   "entity.bountiful_critters.neon_tetra" : "Neon Tetra",
   "entity.bountiful_critters.flounder" : "Flounder",
   "entity.bountiful_critters.pheasant" : "Pheasant",
+  "entity.bountiful_critters.hoopoe" : "Hoopoe",
   "entity.bountiful_critters.hogbear" : "Hogbear",
   "entity.bountiful_critters.emu_egg_projectile" : "Emu Egg",
   "entity.bountiful_critters.pheasant_egg_projectile" : "Pheasant Egg",
   "entity.bountiful_critters.toucan_egg_projectile" : "Toucan Egg",
+  "entity.bountiful_critters.hoopoe_egg_projectile" : "Hoopoe Egg",
   "entity.bountiful_critters.sticky_arrow_projectile" : "Sticky Arrow",
 
 

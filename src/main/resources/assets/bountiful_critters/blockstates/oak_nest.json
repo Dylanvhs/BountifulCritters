@@ -1,0 +1,79 @@
+{
+  "variants": {
+    "facing=east,hoopoe_eggs=0": {
+      "model": "bountiful_critters:block/oak_nest",
+      "y": 90
+    },
+    "facing=east,hoopoe_eggs=1": {
+      "model": "bountiful_critters:block/oak_nest_egg_1",
+      "y": 90
+    },
+    "facing=east,hoopoe_eggs=2": {
+      "model": "bountiful_critters:block/oak_nest_egg_2",
+      "y": 90
+    },
+    "facing=east,hoopoe_eggs=3": {
+      "model": "bountiful_critters:block/oak_nest_egg_3",
+      "y": 90
+    },
+    "facing=east,hoopoe_eggs=4": {
+      "model": "bountiful_critters:block/oak_nest_egg_4",
+      "y": 90
+    },
+    "facing=north,hoopoe_eggs=0": {
+      "model": "bountiful_critters:block/oak_nest"
+    },
+    "facing=north,hoopoe_eggs=1": {
+      "model": "bountiful_critters:block/oak_nest_egg_1"
+    },
+    "facing=north,hoopoe_eggs=2": {
+      "model": "bountiful_critters:block/oak_nest_egg_2"
+    },
+    "facing=north,hoopoe_eggs=3": {
+      "model": "bountiful_critters:block/oak_nest_egg_3"
+    },
+    "facing=north,hoopoe_eggs=4": {
+      "model": "bountiful_critters:block/oak_nest_egg_4"
+    },
+    "facing=south,hoopoe_eggs=0": {
+      "model": "bountiful_critters:block/oak_nest",
+      "y": 180
+    },
+    "facing=south,hoopoe_eggs=1": {
+      "model": "bountiful_critters:block/oak_nest_egg_1",
+      "y": 180
+    },
+    "facing=south,hoopoe_eggs=2": {
+      "model": "bountiful_critters:block/oak_nest_egg_2",
+      "y": 180
+    },
+    "facing=south,hoopoe_eggs=3": {
+      "model": "bountiful_critters:block/oak_nest_egg_3",
+      "y": 180
+    },
+    "facing=south,hoopoe_eggs=4": {
+      "model": "bountiful_critters:block/oak_nest_egg_4",
+      "y": 180
+    },
+    "facing=west,hoopoe_eggs=0": {
+      "model": "bountiful_critters:block/oak_nest",
+      "y": 270
+    },
+    "facing=west,hoopoe_eggs=1": {
+      "model": "bountiful_critters:block/oak_nest_egg_1",
+      "y": 270
+    },
+    "facing=west,hoopoe_eggs=2": {
+      "model": "bountiful_critters:block/oak_nest_egg_2",
+      "y": 270
+    },
+    "facing=west,hoopoe_eggs=3": {
+      "model": "bountiful_critters:block/oak_nest_egg_3",
+      "y": 270
+    },
+    "facing=west,hoopoe_eggs=4": {
+      "model": "bountiful_critters:block/oak_nest_egg_4",
+      "y": 270
+    }
+  }
+}

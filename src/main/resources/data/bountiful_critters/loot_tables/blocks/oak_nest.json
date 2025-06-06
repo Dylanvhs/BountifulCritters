@@ -1,0 +1,60 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "minecraft:silk_touch",
+                        "levels": {
+                          "min": 1
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "function": "minecraft:copy_nbt",
+                  "ops": [
+                    {
+                      "op": "replace",
+                      "source": "Hoopoes",
+                      "target": "BlockEntityTag.Hoopoes"
+                    }
+                  ],
+                  "source": "block_entity"
+                },
+                {
+                  "block": "bountiful_critters:oak_nest",
+                  "function": "minecraft:copy_state",
+                  "properties": [
+                    "hoopoe_eggs"
+                  ]
+                }
+              ],
+              "name": "bountiful_critters:oak_nest"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "bountiful_critters:oak_nest"
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "bountiful_critters:blocks/oak_nest"
+}

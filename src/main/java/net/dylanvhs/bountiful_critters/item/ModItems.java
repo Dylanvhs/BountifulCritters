@@ -3,10 +3,7 @@ package net.dylanvhs.bountiful_critters.item;
 import net.dylanvhs.bountiful_critters.RegistryHelper;
 import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
-import net.dylanvhs.bountiful_critters.entity.custom.projectile.EmuEggEntity;
-import net.dylanvhs.bountiful_critters.entity.custom.projectile.PheasantEggEntity;
-import net.dylanvhs.bountiful_critters.entity.custom.projectile.StickyArrowEntity;
-import net.dylanvhs.bountiful_critters.entity.custom.projectile.ToucanEggEntity;
+import net.dylanvhs.bountiful_critters.entity.custom.projectile.*;
 import net.dylanvhs.bountiful_critters.item.custom.*;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
@@ -143,6 +140,9 @@ public class ModItems {
     public static final RegistryObject<Item> TOUCAN_EGG =
             RegistryHelper.ofItem("toucan_egg", () -> new ToucanEggItem(new Item.Properties().stacksTo(16))).model().build();
 
+    public static final RegistryObject<Item> HOOPOE_EGG =
+            RegistryHelper.ofItem("hoopoe_egg", () -> new HoopoeEggItem(new Item.Properties().stacksTo(16))).model().build();
+
 
     public static final RegistryObject<Item> LION_ARMOR =
             RegistryHelper.ofItem("lion_armor", () -> new Item(new Item.Properties().stacksTo(1).durability(4))).model().build();
@@ -213,6 +213,9 @@ public class ModItems {
     public static final RegistryObject<Item> HOGBEAR_SPAWN_EGG = RegistryHelper.ofItem("hogbear_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.HOGBEAR, 0x695a4e, 0x988e86, new Item.Properties())).build();
 
+    public static final RegistryObject<Item> HOOPOE_SPAWN_EGG = RegistryHelper.ofItem("hoopoe_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.HOOPOE, 0xe78c42, 0x645e71, new Item.Properties())).build();
+
     public static void initDispenser() {
         DispenserBlock.registerBehavior(STICKY_ARROW.get(), new AbstractProjectileDispenseBehavior() {
             protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
@@ -235,6 +238,11 @@ public class ModItems {
         DispenserBlock.registerBehavior(TOUCAN_EGG.get(), new AbstractProjectileDispenseBehavior() {
             protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
                 return new ToucanEggEntity(worldIn, position.x(), position.y(), position.z());
+            }
+        });
+        DispenserBlock.registerBehavior(HOOPOE_EGG.get(), new AbstractProjectileDispenseBehavior() {
+            protected @NotNull Projectile getProjectile(@NotNull Level worldIn, @NotNull Position position, @NotNull ItemStack stackIn) {
+                return new HoopoeEggEntity(worldIn, position.x(), position.y(), position.z());
             }
         });
 

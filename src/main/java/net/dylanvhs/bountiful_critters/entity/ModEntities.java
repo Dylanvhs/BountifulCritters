@@ -2,6 +2,7 @@ package net.dylanvhs.bountiful_critters.entity;
 
 import net.dylanvhs.bountiful_critters.RegistryHelper;
 import net.dylanvhs.bountiful_critters.entity.custom.aquatic.*;
+import net.dylanvhs.bountiful_critters.entity.custom.flying.HoopoeEntity;
 import net.dylanvhs.bountiful_critters.entity.custom.flying.ToucanEntity;
 import net.dylanvhs.bountiful_critters.entity.custom.land.*;
 import net.dylanvhs.bountiful_critters.entity.custom.projectile.*;
@@ -102,6 +103,12 @@ public class ModEntities {
                     EntityType.Builder.of(PheasantEntity::new, MobCategory.CREATURE)
                             .sized(0.75f, 1.25f));
 
+    public static final RegistryObject<EntityType<HoopoeEntity>> HOOPOE =
+            register("hoopoe",
+                    EntityType.Builder.of(HoopoeEntity::new, MobCategory.CREATURE)
+                            .sized(0.5f, 1f));
+
+
     public static final RegistryObject<EntityType<HogbearEntity>> HOGBEAR =
             register("hogbear",
                     EntityType.Builder.of(HogbearEntity::new, MobCategory.MONSTER)
@@ -118,6 +125,10 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<ToucanEggEntity>> TOUCAN_EGG =
             register("toucan_egg_projectile", EntityType.Builder.<ToucanEggEntity>of(ToucanEggEntity::new, MobCategory.MISC)
+                    .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10));
+
+    public static final RegistryObject<EntityType<HoopoeEggEntity>> HOOPOE_EGG =
+            register("hoopoe_egg_projectile", EntityType.Builder.<HoopoeEggEntity>of(HoopoeEggEntity::new, MobCategory.MISC)
                     .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10));
 
     public static final RegistryObject<EntityType<StickyArrowEntity>> STICKY_ARROW =

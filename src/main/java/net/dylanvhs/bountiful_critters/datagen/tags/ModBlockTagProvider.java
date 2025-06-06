@@ -2,6 +2,7 @@ package net.dylanvhs.bountiful_critters.datagen.tags;
 
 import net.dylanvhs.bountiful_critters.BountifulCritters;
 import net.dylanvhs.bountiful_critters.RegistryHelper;
+import net.dylanvhs.bountiful_critters.tags.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.TagKey;

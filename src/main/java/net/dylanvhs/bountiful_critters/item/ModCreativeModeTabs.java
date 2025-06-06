@@ -56,6 +56,16 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.EMU_EGG_SHELL_PIECES.get());
                         pOutput.accept(ModItems.BOILED_EMU_EGG.get());
 
+                        pOutput.accept(ModItems.RAW_PHEASANT.get());
+                        pOutput.accept(ModItems.COOKED_PHEASANT.get());
+                        pOutput.accept(ModItems.PHEASANT_FEATHER.get());
+                        pOutput.accept(ModItems.PHEASANT_EGG.get());
+
+                        pOutput.accept(ModItems.TOUCAN_EGG.get());
+
+                        pOutput.accept(ModBlocks.OAK_NEST.get());
+                        pOutput.accept(ModItems.HOOPOE_EGG.get());
+
                         pOutput.accept(ModItems.LONGHORN_HORN.get());
                         pOutput.accept(ModItems.LONGHORN_DIDGERIDOO.get());
 
@@ -71,6 +81,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.DRIED_SEAGRASS_BALL.get());
                         pOutput.accept(ModBlocks.DRIED_SEAGRASS_BALL_BLOCK.get());
                         pOutput.accept(ModBlocks.DRIED_SEAGRASS_BALL_CARPET.get());
+
+                        pOutput.accept(ModItems.LION_ARMOR.get());
 
                         pOutput.accept(ModItems.RAW_PILLBUG.get());
                         pOutput.accept(ModItems.ROASTED_PILLBUG.get());
@@ -103,15 +115,6 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.POISONOUS_PILLBLOCK_SHINGLES_STAIRS.get());
                         pOutput.accept(ModBlocks.CHISELED_POISONOUS_PILLBLOCK.get());
 
-                        pOutput.accept(ModItems.RAW_PHEASANT.get());
-                        pOutput.accept(ModItems.COOKED_PHEASANT.get());
-                        pOutput.accept(ModItems.PHEASANT_FEATHER.get());
-                        pOutput.accept(ModItems.PHEASANT_EGG.get());
-
-                        pOutput.accept(ModItems.TOUCAN_EGG.get());
-
-                        pOutput.accept(ModItems.LION_ARMOR.get());
-
                         pOutput.accept(ModItems.MEMORIES_MUSIC_DISC.get());
                         pOutput.accept(ModItems.BOUNTIFUL_MUSIC_DISC.get());
                         pOutput.accept(ModItems.SNEEZE_MUSIC_DISC.get());
@@ -119,22 +122,22 @@ public class ModCreativeModeTabs {
 
                         pOutput.accept(ModItems.STINGRAY_SPAWN_EGG.get());
                         pOutput.accept(ModItems.SUNFISH_SPAWN_EGG.get());
-                        pOutput.accept(ModItems.KRILL_SPAWN_EGG.get());
-                        pOutput.accept(ModItems.EMU_SPAWN_EGG.get());
-                        pOutput.accept(ModItems.MARINE_IGUANA_SPAWN_EGG.get());
-                        pOutput.accept(ModItems.LONGHORN_SPAWN_EGG.get());
-                        pOutput.accept(ModItems.TOUCAN_SPAWN_EGG.get());
                         pOutput.accept(ModItems.HUMPBACK_WHALE_SPAWN_EGG.get());
-                        pOutput.accept(ModItems.PILLBUG_SPAWN_EGG.get());
-                        pOutput.accept(ModItems.BLUNT_HEADED_TREE_SNAKE_SPAWN_EGG.get());
-                        pOutput.accept(ModItems.GECKO_SPAWN_EGG.get());
-                        pOutput.accept(ModItems.LION_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.KRILL_SPAWN_EGG.get());
                         pOutput.accept(ModItems.ANGELFISH_SPAWN_EGG.get());
                         pOutput.accept(ModItems.BARRELEYE_SPAWN_EGG.get());
                         pOutput.accept(ModItems.NEON_TETRA_SPAWN_EGG.get());
                         pOutput.accept(ModItems.FLOUNDER_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.MARINE_IGUANA_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.BLUNT_HEADED_TREE_SNAKE_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.GECKO_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.EMU_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.TOUCAN_SPAWN_EGG.get());
                         pOutput.accept(ModItems.PHEASANT_SPAWN_EGG.get());
-
+                        pOutput.accept(ModItems.HOOPOE_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.PILLBUG_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.LONGHORN_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.LION_SPAWN_EGG.get());
 
                     })
                     .build());

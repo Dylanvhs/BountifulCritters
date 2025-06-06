@@ -1,6 +1,7 @@
 package net.dylanvhs.bountiful_critters.block;
 
 import net.dylanvhs.bountiful_critters.RegistryHelper;
+import net.dylanvhs.bountiful_critters.block.custom.OakNestBlock;
 import net.dylanvhs.bountiful_critters.block.custom.RoastedPillbugBlock;
 import net.dylanvhs.bountiful_critters.block.custom.SaltLampBlock;
 import net.dylanvhs.bountiful_critters.block.custom.SeagrassBallBlock;
@@ -47,6 +48,9 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> SEAGRASS_BALL_PLACED = RegistryHelper.ofBlock("seagrass_ball_placed",
             () -> new SeagrassBallBlock(BlockBehaviour.Properties.of().strength(0.2F).sound(SoundType.WET_GRASS).replaceable().noCollission().noOcclusion()), false).build();
+
+    public static final RegistryObject<Block> OAK_NEST = RegistryHelper.ofBlock("oak_nest",
+            () -> new OakNestBlock(BlockBehaviour.Properties.of().strength(1.5F).sound(SoundType.WOOD))).build();
 
 
     public static final RegistryObject<Block> PILLBLOCK = RegistryHelper.ofBlock("pillblock",

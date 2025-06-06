@@ -1,6 +1,7 @@
 package net.dylanvhs.bountiful_critters;
 
 import com.mojang.logging.LogUtils;
+import net.dylanvhs.bountiful_critters.block.ModBlockEntities;
 import net.dylanvhs.bountiful_critters.block.ModBlocks;
 import net.dylanvhs.bountiful_critters.effect.ModMobEffects;
 import net.dylanvhs.bountiful_critters.entity.ModEntities;
@@ -10,6 +11,7 @@ import net.dylanvhs.bountiful_critters.loot.ModLootModifiers;
 import net.dylanvhs.bountiful_critters.particles.ModParticles;
 import net.dylanvhs.bountiful_critters.sounds.ModSounds;
 import net.dylanvhs.bountiful_critters.item.ModItems;
+import net.dylanvhs.bountiful_critters.world.poi.ModPointOfInterestTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
@@ -30,7 +32,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Mod(BountifulCritters.MOD_ID)
-public class BountifulCritters {
+public class    BountifulCritters {
 
     public static final String MOD_ID = "bountiful_critters";
 
@@ -52,10 +54,13 @@ public class BountifulCritters {
 
         ModMobEffects.EFFECT_DEF_REG.register(modEventBus);
 
+        ModPointOfInterestTypes.POI_TYPES.register(modEventBus);
+
+        ModBlockEntities.BLOCK_ENTITY_TYPES.register(modEventBus);
+
         ModItems.init();
         ModBlocks.init();
         ModEntities.init();
-
         modEventBus.addListener(this::commonSetup);
     }
 

@@ -274,10 +274,11 @@ public class ToucanEntity extends TamableAnimal implements GeoEntity, FlyingAnim
     }
 
     public static AttributeSupplier setAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH,
-                6.0D).add(Attributes.FLYING_SPEED,
-                (double)0.4F).add(Attributes.MOVEMENT_SPEED, (double)0.2F)
-                 .build();
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 10.0D)
+                .add(Attributes.FLYING_SPEED, (double)0.5F)
+                .add(Attributes.MOVEMENT_SPEED, (double)0.2F)
+                .build();
     }
 
     protected PathNavigation createNavigation(Level pLevel) {
@@ -446,8 +447,6 @@ public class ToucanEntity extends TamableAnimal implements GeoEntity, FlyingAnim
         }
 
     }
-
-
 
     class ToucanSearchForItemsGoal extends Goal {
         public ToucanSearchForItemsGoal() {
